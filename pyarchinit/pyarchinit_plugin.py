@@ -66,7 +66,7 @@ from pyarchinit_Archeozoology_mainapp import pyarchinit_Archeozoology
 from pyarchinit_UT_mainapp import pyarchinit_UT
 from pyarchinit_images_directory_export_mainapp import pyarchinit_Images_directory_export
 from pyarchinit_images_comparision_main import Comparision
-
+from dbmanagment import pyarchinit_dbmanagment
 from pyarchinitplugindialog import PyarchinitPluginDialog
 
 class PyArchInitPlugin:
@@ -190,6 +190,11 @@ class PyArchInitPlugin:
 		self.actionComparision = QAction(QIcon(icon_Comparision), "pyArchInit Images Comparision", self.iface.mainWindow())
 		self.actionComparision.setWhatsThis("pyArchInit Images Comparision")
 		QObject.connect(self.actionComparision, SIGNAL("triggered()"),self.runComparision)
+		
+		icon_Dbmanagment = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','beckup.jpg'))
+		self.actionDbmanagment = QAction(QIcon(icon_Dbmanagment), "pyArchInit Scheda gestione db", self.iface.mainWindow())
+		self.actionDbmanagment.setWhatsThis("pyArchInit Scheda gestione db")
+		QObject.connect(self.actionDbmanagment, SIGNAL("triggered()"), self.runDbmanagment)
 
 		#MENU
 		self.menu=QMenu("pyArchInit")
@@ -213,6 +218,9 @@ class PyArchInitPlugin:
 		self.menu.addActions([self.actionConf])
 		self.menu.addSeparator()
 		self.menu.addActions([self.actionInfo])
+		self.menu.addSeparator()
+		self.menu.addActions([self.actionDbmanagment])
+
 
 		menuBar = self.iface.mainWindow().menuBar()
 		menuBar.addMenu(self.menu)
@@ -244,6 +252,10 @@ class PyArchInitPlugin:
 		self.toolBar.addAction(self.actionConf)
 		self.toolBar.addSeparator()
 		self.toolBar.addAction(self.actionInfo)
+		self.toolBar.addSeparator()
+		self.toolBar.addAction(self.actionDbmanagment)
+		
+		
 
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionSite)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionPer)
@@ -263,6 +275,7 @@ class PyArchInitPlugin:
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionImages_Directory_export)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionConf)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionInfo)
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionDbmanagment)
 
 
 	def runSite(self):
@@ -355,6 +368,12 @@ class PyArchInitPlugin:
 		pluginComparision.show()
 		self.pluginGui = pluginComparision # save
 
+	def runDbmanagment(self):
+		pluginDbmanagment = pyarchinit_dbmanagment(self)
+		pluginDbmanagment.show()
+		self.pluginGui = pluginDbmanagment # save
+
+
 	def unload(self):
 		# Remove the plugin
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionSite)
@@ -375,6 +394,7 @@ class PyArchInitPlugin:
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionConf)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionGisTimeController)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionInfo)
+		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionDbmanagment)
 
 		self.iface.removeToolBarIcon(self.actionSite)
 		self.iface.removeToolBarIcon(self.actionPer)
@@ -394,6 +414,7 @@ class PyArchInitPlugin:
 		self.iface.removeToolBarIcon(self.actionGisTimeController)
 		self.iface.removeToolBarIcon(self.actionConf)
 		self.iface.removeToolBarIcon(self.actionInfo)
+		self.iface.removeToolBarIcon(self.actionDbmanagment)
 
 		# remove tool bar
 		del self.toolBar
