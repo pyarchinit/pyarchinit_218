@@ -56,7 +56,7 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
 	
 	def on_beckup_pressed (self):
                 
-	     	from pyarchinit_OS_utility import *
+	     	#from pyarchinit_OS_utility import *
 		import os
 		import time
 
@@ -64,14 +64,18 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
 			home = os.environ['HOME']
 		elif os.name == 'nt':
 			home = os.environ['HOMEPATH']
-		PDF_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_db_beckup')
+		PDF_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_db_beckup/')
 		filename = ('%s%s%s') % (PDF_path, os.sep, 'semivariogramma.png')
+		
+
 		username = 'postgres'
 
-		defaultdb = 'pyarchinit'
+		defaultdb = 'postgres'
 
 		port = '5432'
-		backupdir='/home/enzo/pyarchinit_db_beckup/'
+
+		backupdir = PDF_path
+
 		date = time.strftime('%Y-%m-%d-%H-%M-%S')
 
 		#GET DB NAMES
