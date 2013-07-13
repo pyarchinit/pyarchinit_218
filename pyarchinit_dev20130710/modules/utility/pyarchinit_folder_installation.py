@@ -74,6 +74,9 @@ class pyarchinit_Folder_installation:
 
 		home_TEST_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_Test_folder')
 		OS_utility.create_dir(home_TEST_path)
+
+		home_BECKUP_linux_path = ('%s%s%s') % (home, os.sep,'pyarchinit_db_beckup')
+		OS_utility.create_dir(home_BECKUP_linux_path)
 		
-		home_BECKUP_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_db_beckup')
-		OS_utility.create_dir(home_BECKUP_path)
+		home_BECKUP_win_path = ('%s') % ('pyarchinit_db_beckup')
+		OS_utility.create_dir(home_BECKUP_win_path)
