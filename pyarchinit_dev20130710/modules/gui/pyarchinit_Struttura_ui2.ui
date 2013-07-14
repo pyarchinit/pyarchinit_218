@@ -682,31 +682,6 @@
           <property name="editable">
            <bool>true</bool>
           </property>
-          <item>
-           <property name="text">
-            <string/>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Edificio privato</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Edificio pubblico</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Struttura funeraria</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Focolare</string>
-           </property>
-          </item>
          </widget>
         </item>
         <item row="0" column="1">
@@ -721,66 +696,6 @@
           <property name="editable">
            <bool>true</bool>
           </property>
-          <item>
-           <property name="text">
-            <string/>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Mastaba</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Chiesa</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Palazzo</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Casa rurale</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Muro</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Recinto</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>A fossa</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Tumulus</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Mounds</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Shelter</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Hut</string>
-           </property>
-          </item>
          </widget>
         </item>
         <item row="1" column="0">
@@ -809,21 +724,6 @@
           <property name="editable">
            <bool>true</bool>
           </property>
-          <item>
-           <property name="text">
-            <string/>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Struttura combustione</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Struttura focolare</string>
-           </property>
-          </item>
          </widget>
         </item>
         <item row="1" column="2">
@@ -844,8 +744,8 @@
     <rect>
      <x>13</x>
      <y>276</y>
-     <width>631</width>
-     <height>453</height>
+     <width>641</width>
+     <height>477</height>
     </rect>
    </property>
    <property name="font">
@@ -854,7 +754,7 @@
     </font>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -899,8 +799,8 @@
           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Lucida Grande'; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Lucida Grande'; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>
@@ -1133,12 +1033,6 @@ p, li { white-space: pre-wrap; }
          <property name="columnCount">
           <number>4</number>
          </property>
-         <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>150</number>
-         </attribute>
-         <attribute name="horizontalHeaderDefaultSectionSize">
-          <number>150</number>
-         </attribute>
          <row/>
          <column>
           <property name="text">
@@ -1173,7 +1067,7 @@ p, li { white-space: pre-wrap; }
     <widget class="QPushButton" name="pushButton_insert_row_elementi">
      <property name="geometry">
       <rect>
-       <x>170</x>
+       <x>150</x>
        <y>150</y>
        <width>102</width>
        <height>32</height>
@@ -1193,7 +1087,7 @@ p, li { white-space: pre-wrap; }
       <rect>
        <x>27</x>
        <y>157</y>
-       <width>131</width>
+       <width>121</width>
        <height>17</height>
       </rect>
      </property>
@@ -1209,18 +1103,6 @@ p, li { white-space: pre-wrap; }
        <width>581</width>
        <height>80</height>
       </rect>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>581</width>
-       <height>80</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>581</width>
-       <height>80</height>
-      </size>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -1243,18 +1125,6 @@ p, li { white-space: pre-wrap; }
      <property name="columnCount">
       <number>2</number>
      </property>
-     <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>200</number>
-     </attribute>
-     <attribute name="horizontalHeaderMinimumSectionSize">
-      <number>50</number>
-     </attribute>
-     <attribute name="horizontalHeaderMinimumSectionSize">
-      <number>50</number>
-     </attribute>
-     <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>200</number>
-     </attribute>
      <row/>
      <column>
       <property name="text">
@@ -1272,7 +1142,7 @@ p, li { white-space: pre-wrap; }
       <rect>
        <x>27</x>
        <y>303</y>
-       <width>91</width>
+       <width>76</width>
        <height>17</height>
       </rect>
      </property>
@@ -1284,16 +1154,10 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>27</x>
-       <y>329</y>
+       <y>328</y>
        <width>581</width>
-       <height>191</height>
+       <height>80</height>
       </rect>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>581</width>
-       <height>191</height>
-      </size>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -1316,18 +1180,6 @@ p, li { white-space: pre-wrap; }
      <property name="columnCount">
       <number>3</number>
      </property>
-     <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>180</number>
-     </attribute>
-     <attribute name="horizontalHeaderMinimumSectionSize">
-      <number>50</number>
-     </attribute>
-     <attribute name="horizontalHeaderMinimumSectionSize">
-      <number>50</number>
-     </attribute>
-     <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>180</number>
-     </attribute>
      <row/>
      <column>
       <property name="text">
@@ -1348,8 +1200,8 @@ p, li { white-space: pre-wrap; }
     <widget class="QPushButton" name="pushButton_insert_row_misurazioni">
      <property name="geometry">
       <rect>
-       <x>140</x>
-       <y>290</y>
+       <x>100</x>
+       <y>300</y>
        <width>102</width>
        <height>32</height>
       </rect>
@@ -1372,12 +1224,6 @@ p, li { white-space: pre-wrap; }
        <height>101</height>
       </rect>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>581</width>
-       <height>101</height>
-      </size>
-     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -1399,12 +1245,6 @@ p, li { white-space: pre-wrap; }
      <property name="columnCount">
       <number>1</number>
      </property>
-     <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>200</number>
-     </attribute>
-     <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>200</number>
-     </attribute>
      <row/>
      <column>
       <property name="text">
@@ -1417,7 +1257,7 @@ p, li { white-space: pre-wrap; }
       <rect>
        <x>30</x>
        <y>10</y>
-       <width>131</width>
+       <width>117</width>
        <height>17</height>
       </rect>
      </property>
@@ -1428,7 +1268,7 @@ p, li { white-space: pre-wrap; }
     <widget class="QPushButton" name="pushButton_insert_row_materiali">
      <property name="geometry">
       <rect>
-       <x>180</x>
+       <x>150</x>
        <y>0</y>
        <width>102</width>
        <height>32</height>
@@ -1444,24 +1284,10 @@ p, li { white-space: pre-wrap; }
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="tab_4">
-    <attribute name="title">
-     <string>Tools</string>
-    </attribute>
-    <layout class="QFormLayout" name="formLayout_2">
-     <item row="0" column="0">
-      <widget class="QPushButton" name="pushButton_pdf_exp">
-       <property name="text">
-        <string>PDF exp</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
   </widget>
  </widget>
  <resources>
-  <include location="../../resources.qrc"/>
+  <include location="resources.qrc"/>
  </resources>
  <connections/>
 </ui>

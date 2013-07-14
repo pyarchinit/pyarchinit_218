@@ -180,12 +180,10 @@ class single_US_pdf_sheet:
 			pass
 		else:
 			for string_doc in eval(self.documentazione):
-				if bool(string_doc) == True:
-					if len(string_doc) == 2:
-						self.documentazione_print += str(string_doc[0]) + ": " + str(string_doc[1]) + "<br/>"
-					if len(string_doc) == 1:
-						self.documentazione_print += str(string_doc[0]) + "<br/>"
-
+				if len(string_doc) == 2:
+					self.documentazione_print += str(string_doc[0]) + ": " + str(string_doc[1]) + "<br/>"
+				if len(string_doc) == 1:
+					self.documentazione_print += str(string_doc[0]) + "<br/>"
 	def datestrfdate(self):
 		now = date.today()
 		today = now.strftime("%d-%m-%Y")
@@ -210,8 +208,8 @@ class single_US_pdf_sheet:
 		#format labels
 
 		#0 row
-		intestazione = Paragraph("<b>SCHEDA DI UNITA' STRATIGRAFICA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
-		intestazione2 = Paragraph("<b>pyArchInit</b><br/>www.pyarchinit.blogspot.com", styNormal)
+		intestazione = Paragraph("<b>SCHEDA DI UNIT&Agrave; STRATIGRAFICA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
+		intestazione2 = Paragraph("<b>Universit&agrave; di Ferrara</b><br/>www.unife.it", styNormal)
 
 		#1 row
 		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
@@ -272,7 +270,7 @@ class single_US_pdf_sheet:
 			pass
 
 		#6 row
-		attivita = Paragraph("<b>Attivita'</b><br/>" + self.attivita,styNormal)
+		attivita = Paragraph("<b>Attivit&agrave;</b><br/>" + self.attivita,styNormal)
 		struttura = Paragraph("<b>Struttura</b><br/>" + self.struttura,styNormal)
 		quota_min = Paragraph("<b>Quota Min:</b><br/>"+ self.quota_min,styNormal)
 		quota_max = Paragraph("<b>Quota Max:</b><br/>"+ self.quota_max,styNormal)

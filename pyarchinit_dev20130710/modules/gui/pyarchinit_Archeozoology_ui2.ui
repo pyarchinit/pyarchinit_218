@@ -907,22 +907,7 @@
         </layout>
        </item>
        <item>
-        <layout class="QGridLayout" name="gridLayout_8">
-         <item row="0" column="0">
-          <widget class="QPushButton" name="calcola">
-           <property name="text">
-            <string>Genera Semivariogramma</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QPushButton" name="matrix">
-           <property name="text">
-            <string>Genera una Matrice di Correlazione</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <layout class="QGridLayout" name="gridLayout_8"/>
        </item>
       </layout>
      </item>

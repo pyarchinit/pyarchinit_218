@@ -25,13 +25,13 @@
 import sys
 
 def name():
-  return "pyArchinit Dev - Archeological GIS Tools"
+  return "pyArchinit - Archeological GIS Tools"
 
 def description():
   return "Under Testing - Use for testing only - PyArchInit it's tool to manage archaeological dataset - Only Windows 7 Tested"
 
 def version():
-  return "Version 1.0 dev"
+  return "Version 0.20121216"
 
 def plugin_type():
   return QgisPlugin.UI # UI plugin

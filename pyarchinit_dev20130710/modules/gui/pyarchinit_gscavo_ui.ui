@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DialogArcheoZoology</class>
- <widget class="QDialog" name="DialogArcheoZoology">
+ <class>Dialogiornalediscavo</class>
+ <widget class="QDialog" name="Dialogiornalediscavo">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -20,7 +20,7 @@
    <string>pyArchInit Gestione Scavi - Archeozoologia Quantificazioni</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resources.qrc">
+   <iconset resource="../../../../../../.qgis2/python/plugins/prova_con_scheda/modules/gui/resources.qrc">
     <normaloff>:/images/iconSite.png</normaloff>:/images/iconSite.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_9">
@@ -63,7 +63,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="resources.qrc">
+                <iconset resource="../../../../../../.qgis2/python/plugins/prova_con_scheda/modules/gui/resources.qrc">
                  <normaloff>:/images/5_leftArrows.png</normaloff>:/images/5_leftArrows.png</iconset>
                </property>
               </widget>
@@ -77,7 +77,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="resources.qrc">
+                <iconset resource="../../../../../../.qgis2/python/plugins/prova_con_scheda/modules/gui/resources.qrc">
                  <normaloff>:/images/4_leftArrow.png</normaloff>:/images/4_leftArrow.png</iconset>
                </property>
               </widget>
@@ -91,7 +91,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="resources.qrc">
+                <iconset resource="../../../../../../.qgis2/python/plugins/prova_con_scheda/modules/gui/resources.qrc">
                  <normaloff>:/images/6_rightArrow.png</normaloff>:/images/6_rightArrow.png</iconset>
                </property>
               </widget>
@@ -105,7 +105,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="resources.qrc">
+                <iconset resource="../../../../../../.qgis2/python/plugins/prova_con_scheda/modules/gui/resources.qrc">
                  <normaloff>:/images/7_rightArrows.png</normaloff>:/images/7_rightArrows.png</iconset>
                </property>
               </widget>
@@ -124,7 +124,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="resources.qrc">
+                <iconset resource="../../../../../../.qgis2/python/plugins/prova_con_scheda/modules/gui/resources.qrc">
                  <normaloff>:/images/newrec.png</normaloff>:/images/newrec.png</iconset>
                </property>
               </widget>
@@ -143,7 +143,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="resources.qrc">
+                <iconset resource="../../../../../../.qgis2/python/plugins/prova_con_scheda/modules/gui/resources.qrc">
                  <normaloff>:/images/b_save.png</normaloff>:/images/b_save.png</iconset>
                </property>
                <property name="autoDefault">
@@ -165,7 +165,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="resources.qrc">
+                <iconset resource="../../../../../../.qgis2/python/plugins/prova_con_scheda/modules/gui/resources.qrc">
                  <normaloff>:/images/delete.png</normaloff>:/images/delete.png</iconset>
                </property>
               </widget>
@@ -197,7 +197,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="resources.qrc">
+                <iconset resource="../../../../../../.qgis2/python/plugins/prova_con_scheda/modules/gui/resources.qrc">
                  <normaloff>:/images/new_search.png</normaloff>:/images/new_search.png</iconset>
                </property>
               </widget>
@@ -216,7 +216,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="resources.qrc">
+                <iconset resource="../../../../../../.qgis2/python/plugins/prova_con_scheda/modules/gui/resources.qrc">
                  <normaloff>:/images/search.png</normaloff>:/images/search.png</iconset>
                </property>
               </widget>
@@ -235,7 +235,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="resources.qrc">
+                <iconset resource="../../../../../../.qgis2/python/plugins/prova_con_scheda/modules/gui/resources.qrc">
                  <normaloff>:/images/sort.png</normaloff>:/images/sort.png</iconset>
                </property>
               </widget>
@@ -254,7 +254,7 @@
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="resources.qrc">
+                <iconset resource="../../../../../../.qgis2/python/plugins/prova_con_scheda/modules/gui/resources.qrc">
                  <normaloff>:/images/view_all.png</normaloff>:/images/view_all.png</iconset>
                </property>
               </widget>
@@ -546,7 +546,10 @@
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_7">
-         <item row="0" column="0" rowspan="3" colspan="5">
+         <property name="verticalSpacing">
+          <number>4</number>
+         </property>
+         <item row="0" column="0" rowspan="3" colspan="6">
           <widget class="QComboBox" name="comboBox_sito">
            <property name="enabled">
             <bool>false</bool>
@@ -595,7 +598,7 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="1">
+         <item row="7" column="1">
           <widget class="QLabel" name="label_8">
            <property name="font">
             <font>
@@ -610,7 +613,7 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="0">
+         <item row="7" column="0">
           <widget class="QLabel" name="label_7">
            <property name="font">
             <font>
@@ -628,34 +631,48 @@
          <item row="5" column="0">
           <widget class="QLineEdit" name="lineEdit_area"/>
          </item>
-         <item row="5" column="1">
-          <widget class="QLineEdit" name="lineEdit_us"/>
-         </item>
-         <item row="5" column="2">
+         <item row="5" column="3">
           <widget class="QLineEdit" name="lineEdit_quadrato"/>
          </item>
-         <item row="6" column="2">
+         <item row="7" column="3">
           <widget class="QLabel" name="label_2">
            <property name="text">
-            <string>Quadrato</string>
+            <string>Data</string>
            </property>
            <property name="buddy">
             <cstring>lineEdit_quadrato</cstring>
            </property>
           </widget>
          </item>
-         <item row="5" column="3">
+         <item row="5" column="1">
+          <widget class="QLineEdit" name="lineEdit_us">
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="maxLength">
+            <number>32776</number>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="2">
           <spacer name="horizontalSpacer_7">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>500</width>
+             <width>10</width>
              <height>20</height>
             </size>
            </property>
           </spacer>
+         </item>
+         <item row="5" column="4">
+          <widget class="QPushButton" name="calendar">
+           <property name="text">
+            <string>Calendar</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -664,261 +681,20 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <layout class="QGridLayout" name="gridLayout_6">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_3">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Coordinate</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QLineEdit" name="lineEdit_coord_x">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>0</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="3">
-          <widget class="QLineEdit" name="lineEdit_coord_y">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>0</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLineEdit" name="lineEdit_bos_bison"/>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>Bos/Bison</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_9">
-           <property name="text">
-            <string>DATI QUANTITATIVI</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="4">
-          <widget class="QLineEdit" name="lineEdit_coord_z">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>16777215</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLineEdit" name="lineEdit_calcinati">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QLineEdit" name="lineEdit_camoscio"/>
-         </item>
-         <item row="3" column="1">
-          <widget class="QLabel" name="label_11">
-           <property name="text">
-            <string>Calcinati</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="2">
-          <widget class="QLabel" name="label_12">
-           <property name="text">
-            <string>Camoscio</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="3">
-          <widget class="QLineEdit" name="lineEdit_combuste"/>
-         </item>
-         <item row="3" column="3">
-          <widget class="QLabel" name="label_16">
-           <property name="text">
-            <string>Combuste</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>x</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignHCenter|Qt::AlignTop</set>
-           </property>
-           <property name="indent">
-            <number>0</number>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="3">
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>y</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignHCenter|Qt::AlignTop</set>
-           </property>
-           <property name="indent">
-            <number>0</number>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="4">
-          <widget class="QLabel" name="label_10">
-           <property name="text">
-            <string>z</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignHCenter|Qt::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="2">
-          <widget class="QLabel" name="label_19">
-           <property name="text">
-            <string>Stambecco</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLineEdit" name="lineEdit_capriolo"/>
-         </item>
-         <item row="4" column="1">
-          <widget class="QLineEdit" name="lineEdit_cervi"/>
-         </item>
-         <item row="4" column="3">
-          <widget class="QLineEdit" name="lineEdit_strie"/>
-         </item>
-         <item row="4" column="2">
-          <widget class="QLineEdit" name="lineEdit_stambecco"/>
-         </item>
-         <item row="5" column="1">
-          <widget class="QLabel" name="label_15">
-           <property name="text">
-            <string>Cervi</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QLabel" name="label_13">
-           <property name="text">
-            <string>Capriolo</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="3">
-          <widget class="QLabel" name="label_20">
-           <property name="text">
-            <string>Strie</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="4">
-          <widget class="QLineEdit" name="lineEdit_Coni"/>
-         </item>
-         <item row="3" column="5">
-          <widget class="QLabel" name="label_18">
-           <property name="text">
-            <string>PDI</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="4">
-          <widget class="QLabel" name="label_17">
-           <property name="text">
-            <string>Coni</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="5">
-          <widget class="QLineEdit" name="lineEdit_pdi"/>
-         </item>
-         <item row="4" column="4">
-          <widget class="QLineEdit" name="lineEdit_canidi"/>
-         </item>
-         <item row="4" column="5">
-          <widget class="QLineEdit" name="lineEdit_ursidi"/>
-         </item>
-         <item row="5" column="4">
-          <widget class="QLabel" name="label_21">
-           <property name="text">
-            <string>Canidi</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="5">
-          <widget class="QLabel" name="label_22">
-           <property name="text">
-            <string>Ursidi</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <widget class="QLineEdit" name="lineEdit_megacero"/>
-         </item>
-         <item row="7" column="0">
-          <widget class="QLabel" name="label_14">
-           <property name="text">
-            <string>Megacero</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
         <layout class="QGridLayout" name="gridLayout_8">
          <item row="0" column="0">
-          <widget class="QPushButton" name="calcola">
-           <property name="text">
-            <string>Genera Semivariogramma</string>
+          <widget class="QTextBrowser" name="giornalescavo">
+           <property name="frameShape">
+            <enum>QFrame::WinPanel</enum>
            </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QPushButton" name="matrix">
-           <property name="text">
-            <string>Genera una Matrice di Correlazione</string>
+           <property name="frameShadow">
+            <enum>QFrame::Plain</enum>
+           </property>
+           <property name="lineWrapMode">
+            <enum>QTextEdit::WidgetWidth</enum>
+           </property>
+           <property name="textInteractionFlags">
+            <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse|Qt::TextBrowserInteraction|Qt::TextEditable|Qt::TextEditorInteraction|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
            </property>
           </widget>
          </item>
@@ -931,7 +707,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="resources.qrc"/>
+  <include location="../../../../../../.qgis2/python/plugins/prova_con_scheda/modules/gui/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

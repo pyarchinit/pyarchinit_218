@@ -34,8 +34,6 @@ from  pyarchinit_db_manager import *
 
 from datetime import date
 from psycopg2 import *
-#--import rpy
-from pyper import *
 
 #--import pyArchInit modules--#
 from  pyarchinit_Archeozoology_ui import Ui_DialogArcheoZoology
@@ -167,10 +165,6 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		self.pushButton_search_go.setEnabled(n)
 		
 		self.pushButton_sort.setEnabled(n)
-		
-		self.calcola.setEnabled(n)
-		
-		self.matrix.setEnabled(n)
 
 	def enable_button_search(self, n):
 		self.pushButton_connect.setEnabled(n)
@@ -192,10 +186,6 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		self.pushButton_save.setEnabled(n)
 
 		self.pushButton_sort.setEnabled(n)
-
-		self.calcola.setEnabled(n)
-		
-		self.matrix.setEnabled(n)
 
 	def on_pushButton_connect_pressed(self):
 		from pyarchinit_conn_strings import *
@@ -578,145 +568,6 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 			self.label_sort.setText(self.SORTED_ITEMS["n"])
 			self.setComboBoxEnable(["self.comboBox_sito"],"True")
 
-		
-	def on_calcola_pressed (self):#####modifiche apportate per il calcolo statistico con R
-	     	# bottone per creare semivariogrammi
-                
-	     	from pyarchinit_OS_utility import *
-		import Image
-		if os.name == 'posix':
-			home = os.environ['HOME']
-		elif os.name == 'nt':
-			home = os.environ['HOMEPATH']
-		PDF_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_R_folder')
-		filename = ('%s%s%s') % (PDF_path, os.sep, 'semivariogramma.png')
-		
-	     	r = R()
-		#r('load("/home/postgres/.RData")')
-		r('library(RPostgreSQL)')
-		r('library(gstat)')
-		r('drv <- dbDriver("PostgreSQL")')
-		r('con <- dbConnect(drv, host="127.0.0.1", dbname="pyarchinit", port="5432", password="postgres", user="postgres")')
-		r('archezoology_table<-dbReadTable(con,"archeozoology_table")')
-		r('VGM_PARAM_A3 <- gstat(id="bos_bison", formula=combusto~1,locations=~coord_x+coord_y, data=archezoology_table, nmax = 10)')
-		r('VGM_PARAM_A3 <- gstat(VGM_PARAM_A3, "calcinati", strie~1, locations=~coord_x+coord_y, archezoology_table, nmax = 10)')
-		r('VGM_PARAM_A3 <- gstat(VGM_PARAM_A3, "camoscio", cervo~1, locations=~coord_x+coord_y,archezoology_table, nmax = 10)')
-		r('VGM_PARAM_A3 <- gstat(VGM_PARAM_A3, model=vgm(1, "Sph", 5, 0), fill.all=TRUE)')
- 		r('ESV_A3 <- variogram(VGM_PARAM_A3, cutoff=9)')
-		r('VARMODEL_A3 = fit.lmc(ESV_A3, VGM_PARAM_A3)')
-		r('png("pyarchinit_R_folder/semivariogramma.png", width=2500, height=2500, res=400); plot(ESV_A3, model = VARMODEL_A3,xlab=,ylab=,pch=20, cex=0.7, col="red",main="Linear Model of Coregionalization for A3 variables")')
-		#im = Image.open(open(filename))
-		#im.show()
-
-
-	def on_matrix_pressed (self):
-		#bottone per creare matrici di correlaz
-		from pyarchinit_OS_utility import *
-		import Image
-		if os.name == 'posix':
-			home = os.environ['HOME']
-		elif os.name == 'nt':
-			home = os.environ['HOMEPATH']
-		PDF_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_R_folder')
-		filename = ('%s%s%s') % (PDF_path, os.sep, 'correlation_matrix.png')
-		y =('%s%s%s') % (PDF_path, os.sep, 'statistica_descrittiva.xls')
-		from pyper import *
-		r = R()
-		#r('load("/home/postgres/.RData")')
-		r('library(RPostgreSQL)')
-		r('library(lattice)')
-		r('drv <- dbDriver("PostgreSQL")')
-		r('con <- dbConnect(drv, host="127.0.0.1", dbname="pyarchinit", port="5432", password="postgres", user="postgres")')
-		r('archezoology_table<-dbReadTable(con,"archeozoology_table")')
-		r('png("pyarchinit_R_folder/correlation_matrix.png", width=3500, height=3500, res=200)')
-		r('''		
-			panel.hist <- function(x, ...)      {
-  usr <- par("usr"); on.exit(par(usr))
-  par(usr = c(usr[1:2], 0, 1.5) )
-  h <- hist(x, plot = FALSE)
-  breaks <- h$breaks; nB <- length(breaks)
-  y <- h$counts; y <- y/max(y)
-  rect(breaks[-nB], 0, breaks[-1], y, col="cornsilk2", ...)
-}
-panel.cor <- function(x, y, digits=3, prefix="", cex.cor)     {
-  usr <- par("usr"); on.exit(par(usr))
-  par(usr = c(0, 1, 0, 1))
-  r <- cor(x, y, use="complete.obs")
-  rabs <- abs(r)
-  txt <- format(c(r, 0.123456789), digits=digits)[1]
-  txt <- paste(prefix, "r=", txt, sep="")
-  cl = 0.95         ### Confidence limit = 1-(level of significance)
-  rtp <-cor.test(x,y,method="pearson",alternative="two.sided", 
-                 conf.level=cl)
-  pp <- format(c(rtp$p.value, 0.123456789), digits=digits)[1]
-  pp <- paste(prefix, "p.val=", pp, sep="") ###p.value pearson cor.test
-  if ( rabs<0.25 ) {
-    text(0.5, 0.6, txt, cex = 1.5, col="blue")
-  } else if ( rabs>0.4999 ) {
-    text(0.5, 0.6, txt, cex = 1.5, col="red")
-  } else {
-    text(0.5, 0.6, txt, cex = 1.5, col="green")
-  }
-  if(missing(cex.cor))
-    if ( rtp$p.value > (1-cl) ) {
-      text(0.5, 0.4, pp, cex=1.5,col="hotpink")  #p.val Pearson > alfa
-    } else {
-      text(0.5, 0.4, pp, cex=1.5,col="green4")  #p.val Pearson <= alfa
-    }
-}
-
-pairs(archezoology_table[9:19],
-      lower.panel = panel.smooth,    # matrice inferiore: scatterplot
-      upper.panel = panel.cor,       # matrice superiore: r Pearson e cor.test
-      diag.panel = panel.hist)       # diagonale: istogrammi di frequenza
-
-title(sub="Rosso = coppie con r>|0.5|, Verde = coppie con |0.25|<r<|0.5|;
-      p.val verde scuro = coppie per cui si definisce r con una confidenza del 95%",
-      cex.sub=0.7)		
-		''')#### creazione ed esportazione della statistica descrittiva
-		x = r('''
-		tmp <- data.frame(archezoology_table)
-		keep <- names(tmp)
-		first <- TRUE
-		for (i in 1:ncol(tmp)) {
-		x <- unlist(tmp[i])
-		if (!is.numeric(x)) { # Not a numeric vector!
-		Res <- list(median=NA, mean=NA, var=NA, stddev=NA, coefvar=NA,             min=NA, max=NA, sum=NA, range=NA, nas=NA, nulls=NA, count=NA)
-		} else {
-		Nas <- sum(as.numeric(is.na(x)))
-		x <- x[!is.na(x)]
-		Vals <- length(x)
-		Nulls <- sum(as.numeric(x==0))
-		Min <- min(x)
-		Max <- max(x)
-		Range <- Max-Min
-		Sum <- sum(x)
-		Median <- median(x)
-		Mean <- mean(x)
-		Var <- var(x)
-		StdDev <- sqrt(Var)
-		CoefVar <- StdDev/Mean
-		Res <- list(median=Median, mean=Mean, var=Var, stddev=StdDev, coefvar=CoefVar,  min=Min, max=Max, sum=Sum, range=Range, nas=Nas, nulls=Nulls, count=Vals)
-		}
-		if (first) {
-		Out <- data.frame(Res)
-		first <- FALSE 
-		} else {
-		Out <- rbind(Out, Res)
-		}
-		}
-		row.names(Out) <- as.list(keep)
-		Out
-		''')	
-			
-		f = open(y, 'w')
-		f.write(str(x))
-		f.close()
-		#####fine modifiche apportate per il calcolo statistico con R
-		#im = Image.open(open(filename, 'rb'))
-		#im.show()
-		
-		
 	def on_pushButton_search_go_pressed(self):
 		if self.BROWSE_STATUS != "f":
 			QMessageBox.warning(self, "ATTENZIONE", "Per eseguire una nuova ricerca clicca sul pulsante 'new search' ",  QMessageBox.Ok)
@@ -785,11 +636,6 @@ title(sub="Rosso = coppie con r>|0.5|, Verde = coppie con |0.25|<r<|0.5|;
 				stambecco = ''
 			else:
 				stambecco = int(self.lineEdit_stambecco.text())
-
-			if self.lineEdit_strie.text() == "":
-				strie = ''
-			else:
-				strie = int(self.lineEdit_strie.text())
 
 			if self.lineEdit_canidi.text() == "":
 				canidi = ''

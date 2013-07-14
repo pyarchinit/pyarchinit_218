@@ -44,7 +44,7 @@ from pyarchinit_UT_mainapp import pyarchinit_UT
 from pyarchinit_images_directory_export_mainapp import pyarchinit_Images_directory_export
 from pyarchinit_PDF_administrator_mainapp import pyarchinit_PDFAdministrator
 from ui_pyarchinitplugin import Ui_PyarchinitPlugin
-
+from dbmanagment import pyarchinit_dbmanagment
 #from ui_login import Ui_LoginDialog
 ##from qgiscloudapi.qgiscloudapi import *
 ##from db_connections import DbConnections
@@ -86,6 +86,8 @@ class PyarchinitPluginDialog(QDockWidget):
 		
 		QObject.connect(self.ui.btnPDFmen, SIGNAL("clicked()"), self.runPDFadministrator)
 		QObject.connect(self.ui.btnUTtable, SIGNAL("clicked()"), self.runUT)
+		
+		
 
 	def runSite(self):
 		pluginGui = pyarchinit_Site(self.iface)
@@ -176,3 +178,8 @@ class PyarchinitPluginDialog(QDockWidget):
 		pluginPDFadmin = pyarchinit_PDFAdministrator(self.iface)
 		pluginPDFadmin.show()
 		self.pluginGui = pluginPDFadmin # save
+
+	def rundbmanagment(self):
+		plugindbmanagment = pyarchinit_dbmanagment(self.iface)
+		plugindbmanagment.show()
+		self.pluginGui = plugindbmanagment # save

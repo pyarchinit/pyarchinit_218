@@ -35,19 +35,19 @@ from  pyarchinit_db_manager import *
 from datetime import date
 from psycopg2 import *
 #--import rpy
-from pyper import *
+
 
 #--import pyArchInit modules--#
-from  pyarchinit_Archeozoology_ui import Ui_DialogArcheoZoology
-from  pyarchinit_Archeozoology_ui import *
+from  pyarchinit_gscavo_ui import Ui_Dialogiornalediscavo
+from  pyarchinit_gscavo_ui import *
 from  pyarchinit_utility import *
 from  pyarchinit_error_check import *
 
 from  pyarchinit_pyqgis import Pyarchinit_pyqgis
 from  sortpanelmain import SortPanelMain
 
-class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
-	MSG_BOX_TITLE = "PyArchInit - pyarchinit_version 0.4 - Scheda Archeozoologia Quantificazioni"
+class pyarchinit_gscavo(QDialog, Ui_Dialogiornalediscavo):
+	MSG_BOX_TITLE = "PyArchInit - pyarchinit_version 0.4 - Scheda Giornale di Scavo"
 	DATA_LIST = []
 	DATA_LIST_REC_CORR = []
 	DATA_LIST_REC_TEMP = []
@@ -60,79 +60,34 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 	SORT_STATUS = "n"
 	UTILITY = Utility()
 	DB_MANAGER = ""
-	TABLE_NAME = 'archeozoology_table'
-	MAPPER_TABLE_CLASS = "ARCHEOZOOLOGY"
+	TABLE_NAME = 'gscavo_table'
+	MAPPER_TABLE_CLASS = "GSCAVO"
 	NOME_SCHEDA = "Scheda Archeozoologia"
-	ID_TABLE = "id_archzoo"
+	ID_TABLE = "id_gscavo"
 	CONVERSION_DICT = {
 	ID_TABLE:ID_TABLE, 
 	'Sito':'sito',
 	'Area':'area',
 	'US':'us',
-	'Quadrato':'quadrato',
-	'Coordinata x':'coord_x',
-	'Coordinata y':'coord_y',
-	'Coordinata z':'coord_z',
-	'Bos/Bison':'bos_bison',
-	'Calcinati':'calcinati',
-	'Camoscio':'camoscio',
-	'Capriolo':'capriolo',
-	'Cervo':'cervo',
-	'Combusto':'combusto',
-	'Coni':'coni',
-	'Pdi':'pdi',
-	'Stambecco':'stambecco',
-	'Strie':'strie',
-	'Canidi':'canidi',
-	'Ursidi':'ursidi',
-	'Megacero':'megacero'
+	'Calendar':'calendar',
+	'Giornale':'giornale'
 	}
 	SORT_ITEMS = [
 				ID_TABLE,
 				'Sito',
 				'Area',
 				'US',
-				'Quadrato',
-				'Coordinata x',
-				'Coordinata y',
-				'Coordinata z',
-				'Bos/Bison',
-				'Calcinati',
-				'Camoscio',
-				'Capriolo',
-				'Cervo',
-				'Combusto',
-				'Coni',
-				'Pdi',
-				'Stambecco',
-				'Strie',
-				'Canidi',
-				'Ursidi',
-				'Megacero'
+				'CALENDAR',
+				'Giornale'
 				]
 
 	TABLE_FIELDS = [
 					'sito',
 					'area',
 					'us',
-					'quadrato',
-					'coord_x',
-					'coord_y',
-					'coord_z',
-					'bos_bison',
-					'calcinati',
-					'camoscio',
-					'capriolo',
-					'cervo',
-					'combusto',
-					'coni',
-					'pdi',
-					'stambecco',
-					'strie',
-					'canidi',
-					'ursidi',
-					'megacero'
-				]
+					'calendar',
+					'giornale'
+					]
 
 	def __init__(self, iface):
 		self.iface = iface
@@ -168,7 +123,7 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		
 		self.pushButton_sort.setEnabled(n)
 		
-		self.calcola.setEnabled(n)
+		self.calendar.setEnabled(n)
 		
 		self.matrix.setEnabled(n)
 
@@ -193,7 +148,7 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 
 		self.pushButton_sort.setEnabled(n)
 
-		self.calcola.setEnabled(n)
+		self.calendar.setEnabled(n)
 		
 		self.matrix.setEnabled(n)
 
@@ -325,7 +280,7 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 			QMessageBox.warning(self, "ATTENZIONE", "Campo Sito. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
 			test = 1
 		elif EC.data_is_empty(str(self.lineEdit_quadrato.text())) == 0:
-			QMessageBox.warning(self, "ATTENZIONE", "Campo Quadrato. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			QMessageBox.warning(self, "ATTENZIONE", "Campo US. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
 			test = 1
 
 		return test
@@ -336,115 +291,14 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		else:
 			us = int(self.lineEdit_us.text())
 
-		if self.lineEdit_coord_x.text() == "":
-			coord_x = None
-		else:
-			coord_x = float(self.lineEdit_coord_x.text())
-
-		#f = open("test_coord.txt", "w")
-		#f.write(str(coord_x))
-		#f.close()
-
-		if self.lineEdit_coord_y.text() == "":
-			coord_y = None
-		else:
-			coord_y = float(self.lineEdit_coord_y.text())
-
-		if self.lineEdit_coord_z.text() == "":
-			coord_z = None
-		else:
-			coord_z = float(self.lineEdit_coord_z.text())
-
-		if self.lineEdit_bos_bison.text() == "":
-			bos_bison = None
-		else:
-			bos_bison = int(self.lineEdit_bos_bison.text())
-
-		if self.lineEdit_calcinati.text() == "":
-			calcinati = None
-		else:
-			calcinati = int(self.lineEdit_calcinati.text())
-
-		if self.lineEdit_camoscio.text() == "":
-			camoscio = None
-		else:
-			camoscio = int(self.lineEdit_camoscio.text())
-
-		if self.lineEdit_capriolo.text() == "":
-			capriolo = None
-		else:
-			capriolo = int(self.lineEdit_capriolo.text())
-
-		if self.lineEdit_cervi.text() == "":
-			cervo = None
-		else:
-			cervo = int(self.lineEdit_cervi.text())
-
-		if self.lineEdit_combuste.text() == "":
-			combusto = None
-		else:
-			combusto = int(self.lineEdit_combuste.text())
-
-		if self.lineEdit_Coni.text() == "":
-			coni = None
-		else:
-			coni = int(self.lineEdit_Coni.text())
-
-		if self.lineEdit_pdi.text() == "":
-			pdi = None
-		else:
-			pdi = int(self.lineEdit_pdi.text())
-
-		if self.lineEdit_stambecco.text() == "":
-			stambecco = None
-		else:
-			stambecco = int(self.lineEdit_stambecco.text())
-
-		if self.lineEdit_strie.text() == "":
-			strie = None
-		else:
-			strie = int(self.lineEdit_strie.text())
-
-
-		if self.lineEdit_canidi.text() == "":
-			canidi = None
-		else:
-			canidi = int(self.lineEdit_canidi.text())
-
-		if self.lineEdit_ursidi.text() == "":
-			ursidi = None
-		else:
-			ursidi = int(self.lineEdit_ursidi.text())
-
-		if self.lineEdit_megacero.text() == "":
-			megacero = None
-		else:
-			megacero = int(self.lineEdit_megacero.text())
-
-			
+				
 		try:
-			data = self.DB_MANAGER.insert_values_archeozoology(
+			data = self.DB_MANAGER.insert_values_gscavo(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
 			str(self.comboBox_sito.currentText()), 					#1 - Sito
-			str(self.lineEdit_area.text()),
+			str(self.calendar.date()),
 			us,
-			str(self.lineEdit_quadrato.text()),
-			coord_x,
-			coord_y,
-			coord_z,
-			bos_bison,
-			calcinati,
-			camoscio,
-			capriolo,
-			cervo,
-			combusto,
-			coni,
-			pdi,
-			stambecco,
-			strie,
-			canidi,
-			ursidi,
-			megacero)
+			str(self.giornalescavo.text()))
 			
 			try:
 				self.DB_MANAGER.insert_data_session(data)
@@ -579,143 +433,14 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 			self.setComboBoxEnable(["self.comboBox_sito"],"True")
 
 		
-	def on_calcola_pressed (self):#####modifiche apportate per il calcolo statistico con R
+	def on_calendar_pressed (self):#####modifiche apportate per il calcolo statistico con R
 	     	# bottone per creare semivariogrammi
                 
-	     	from pyarchinit_OS_utility import *
-		import Image
-		if os.name == 'posix':
-			home = os.environ['HOME']
-		elif os.name == 'nt':
-			home = os.environ['HOMEPATH']
-		PDF_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_R_folder')
-		filename = ('%s%s%s') % (PDF_path, os.sep, 'semivariogramma.png')
-		
-	     	r = R()
-		#r('load("/home/postgres/.RData")')
-		r('library(RPostgreSQL)')
-		r('library(gstat)')
-		r('drv <- dbDriver("PostgreSQL")')
-		r('con <- dbConnect(drv, host="127.0.0.1", dbname="pyarchinit", port="5432", password="postgres", user="postgres")')
-		r('archezoology_table<-dbReadTable(con,"archeozoology_table")')
-		r('VGM_PARAM_A3 <- gstat(id="bos_bison", formula=combusto~1,locations=~coord_x+coord_y, data=archezoology_table, nmax = 10)')
-		r('VGM_PARAM_A3 <- gstat(VGM_PARAM_A3, "calcinati", strie~1, locations=~coord_x+coord_y, archezoology_table, nmax = 10)')
-		r('VGM_PARAM_A3 <- gstat(VGM_PARAM_A3, "camoscio", cervo~1, locations=~coord_x+coord_y,archezoology_table, nmax = 10)')
-		r('VGM_PARAM_A3 <- gstat(VGM_PARAM_A3, model=vgm(1, "Sph", 5, 0), fill.all=TRUE)')
- 		r('ESV_A3 <- variogram(VGM_PARAM_A3, cutoff=9)')
-		r('VARMODEL_A3 = fit.lmc(ESV_A3, VGM_PARAM_A3)')
-		r('png("pyarchinit_R_folder/semivariogramma.png", width=2500, height=2500, res=400); plot(ESV_A3, model = VARMODEL_A3,xlab=,ylab=,pch=20, cex=0.7, col="red",main="Linear Model of Coregionalization for A3 variables")')
-		#im = Image.open(open(filename))
-		#im.show()
+	     	import calendar
 
-
-	def on_matrix_pressed (self):
-		#bottone per creare matrici di correlaz
-		from pyarchinit_OS_utility import *
-		import Image
-		if os.name == 'posix':
-			home = os.environ['HOME']
-		elif os.name == 'nt':
-			home = os.environ['HOMEPATH']
-		PDF_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_R_folder')
-		filename = ('%s%s%s') % (PDF_path, os.sep, 'correlation_matrix.png')
-		y =('%s%s%s') % (PDF_path, os.sep, 'statistica_descrittiva.xls')
-		from pyper import *
-		r = R()
-		#r('load("/home/postgres/.RData")')
-		r('library(RPostgreSQL)')
-		r('library(lattice)')
-		r('drv <- dbDriver("PostgreSQL")')
-		r('con <- dbConnect(drv, host="127.0.0.1", dbname="pyarchinit", port="5432", password="postgres", user="postgres")')
-		r('archezoology_table<-dbReadTable(con,"archeozoology_table")')
-		r('png("pyarchinit_R_folder/correlation_matrix.png", width=3500, height=3500, res=200)')
-		r('''		
-			panel.hist <- function(x, ...)      {
-  usr <- par("usr"); on.exit(par(usr))
-  par(usr = c(usr[1:2], 0, 1.5) )
-  h <- hist(x, plot = FALSE)
-  breaks <- h$breaks; nB <- length(breaks)
-  y <- h$counts; y <- y/max(y)
-  rect(breaks[-nB], 0, breaks[-1], y, col="cornsilk2", ...)
-}
-panel.cor <- function(x, y, digits=3, prefix="", cex.cor)     {
-  usr <- par("usr"); on.exit(par(usr))
-  par(usr = c(0, 1, 0, 1))
-  r <- cor(x, y, use="complete.obs")
-  rabs <- abs(r)
-  txt <- format(c(r, 0.123456789), digits=digits)[1]
-  txt <- paste(prefix, "r=", txt, sep="")
-  cl = 0.95         ### Confidence limit = 1-(level of significance)
-  rtp <-cor.test(x,y,method="pearson",alternative="two.sided", 
-                 conf.level=cl)
-  pp <- format(c(rtp$p.value, 0.123456789), digits=digits)[1]
-  pp <- paste(prefix, "p.val=", pp, sep="") ###p.value pearson cor.test
-  if ( rabs<0.25 ) {
-    text(0.5, 0.6, txt, cex = 1.5, col="blue")
-  } else if ( rabs>0.4999 ) {
-    text(0.5, 0.6, txt, cex = 1.5, col="red")
-  } else {
-    text(0.5, 0.6, txt, cex = 1.5, col="green")
-  }
-  if(missing(cex.cor))
-    if ( rtp$p.value > (1-cl) ) {
-      text(0.5, 0.4, pp, cex=1.5,col="hotpink")  #p.val Pearson > alfa
-    } else {
-      text(0.5, 0.4, pp, cex=1.5,col="green4")  #p.val Pearson <= alfa
-    }
-}
-
-pairs(archezoology_table[9:19],
-      lower.panel = panel.smooth,    # matrice inferiore: scatterplot
-      upper.panel = panel.cor,       # matrice superiore: r Pearson e cor.test
-      diag.panel = panel.hist)       # diagonale: istogrammi di frequenza
-
-title(sub="Rosso = coppie con r>|0.5|, Verde = coppie con |0.25|<r<|0.5|;
-      p.val verde scuro = coppie per cui si definisce r con una confidenza del 95%",
-      cex.sub=0.7)		
-		''')#### creazione ed esportazione della statistica descrittiva
-		x = r('''
-		tmp <- data.frame(archezoology_table)
-		keep <- names(tmp)
-		first <- TRUE
-		for (i in 1:ncol(tmp)) {
-		x <- unlist(tmp[i])
-		if (!is.numeric(x)) { # Not a numeric vector!
-		Res <- list(median=NA, mean=NA, var=NA, stddev=NA, coefvar=NA,             min=NA, max=NA, sum=NA, range=NA, nas=NA, nulls=NA, count=NA)
-		} else {
-		Nas <- sum(as.numeric(is.na(x)))
-		x <- x[!is.na(x)]
-		Vals <- length(x)
-		Nulls <- sum(as.numeric(x==0))
-		Min <- min(x)
-		Max <- max(x)
-		Range <- Max-Min
-		Sum <- sum(x)
-		Median <- median(x)
-		Mean <- mean(x)
-		Var <- var(x)
-		StdDev <- sqrt(Var)
-		CoefVar <- StdDev/Mean
-		Res <- list(median=Median, mean=Mean, var=Var, stddev=StdDev, coefvar=CoefVar,  min=Min, max=Max, sum=Sum, range=Range, nas=Nas, nulls=Nulls, count=Vals)
-		}
-		if (first) {
-		Out <- data.frame(Res)
-		first <- FALSE 
-		} else {
-		Out <- rbind(Out, Res)
-		}
-		}
-		row.names(Out) <- as.list(keep)
-		Out
-		''')	
-			
-		f = open(y, 'w')
-		f.write(str(x))
-		f.close()
-		#####fine modifiche apportate per il calcolo statistico con R
-		#im = Image.open(open(filename, 'rb'))
-		#im.show()
-		
+		cal = calendar.month(2008, 1)
+		print "Here is the calendar:"
+		print cal;	
 		
 	def on_pushButton_search_go_pressed(self):
 		if self.BROWSE_STATUS != "f":
@@ -726,108 +451,20 @@ title(sub="Rosso = coppie con r>|0.5|, Verde = coppie con |0.25|<r<|0.5|;
 			else:
 				us = int(self.lineEdit_us.text())
 
-			if self.lineEdit_coord_x.text() == "":
-				coord_x = ''
+			if self.calendar.text() == "":
+				us = ''
 			else:
-				coord_x = int(self.lineEdit_coord_x.text())
+				us = date(self.calendar.date())
 
-			if self.lineEdit_coord_y.text() == "":
-				coord_y = ''
-			else:
-				coord_y = int(self.lineEdit_coord_y.text())
-
-			if self.lineEdit_coord_z.text() == "":
-				coord_z = ''
-			else:
-				coord_z = int(self.lineEdit_coord_z.text())
-
-			if self.lineEdit_bos_bison.text() == "":
-				bos_bison = ''
-			else:
-				bos_bison = int(self.lineEdit_bos_bison.text())
-
-			if self.lineEdit_calcinati.text() == "":
-				calcinati = ''
-			else:
-				calcinati = int(self.lineEdit_calcinati.text())
-
-			if self.lineEdit_camoscio.text() == "":
-				camoscio = ''
-			else:
-				camoscio = int(self.lineEdit_camoscio.text())
-
-			if self.lineEdit_capriolo.text() == "":
-				capriolo = ''
-			else:
-				capriolo = int(self.lineEdit_capriolo.text())
-
-			if self.lineEdit_cervi.text() == "":
-				cervo = ''
-			else:
-				cervo = int(self.lineEdit_cervi.text())
-
-			if self.lineEdit_combuste.text() == "":
-				combusto = ''
-			else:
-				combusto = int(self.lineEdit_combuste.text())
-
-			if self.lineEdit_Coni.text() == "":
-				coni = ''
-			else:
-				coni = int(self.lineEdit_Coni.text())
-
-			if self.lineEdit_pdi.text() == "":
-				pdi = ''
-			else:
-				pdi = int(self.lineEdit_pdi.text())
-
-			if self.lineEdit_stambecco.text() == "":
-				stambecco = ''
-			else:
-				stambecco = int(self.lineEdit_stambecco.text())
-
-			if self.lineEdit_strie.text() == "":
-				strie = ''
-			else:
-				strie = int(self.lineEdit_strie.text())
-
-			if self.lineEdit_canidi.text() == "":
-				canidi = ''
-			else:
-				canidi = int(self.lineEdit_canidi.text())
-
-			if self.lineEdit_ursidi.text() == "":
-				ursidi = ''
-			else:
-				ursidi = int(self.lineEdit_ursidi.text())
-
-			if self.lineEdit_megacero.text() == "":
-				megacero = ''
-			else:
-				megacero = int(self.lineEdit_megacero.text())
 			
 			
 			search_dict = {
 			self.TABLE_FIELDS[0]  : "'"+str(self.comboBox_sito.currentText())+"'", 									#1 - Sito
 			self.TABLE_FIELDS[1]  : "'"+str(self.lineEdit_area.text())+"'",									#2 - Area
 			self.TABLE_FIELDS[2]  : us,																				#3 - US
-			self.TABLE_FIELDS[3]  : "'"+str(self.lineEdit_quadrato.text())+"'",								#4 - Definizione stratigrafica
-			self.TABLE_FIELDS[4]  : coord_x,							#5 - Definizione intepretata
-			self.TABLE_FIELDS[5]  : coord_y,									#6 - descrizione
-			self.TABLE_FIELDS[6]  : coord_z,								#7 - interpretazione
-			self.TABLE_FIELDS[7]  : bos_bison,								#8 - periodo iniziale
-			self.TABLE_FIELDS[8]  : calcinati,								#9 - fase iniziale
-			self.TABLE_FIELDS[9]  : camoscio,	 							#10 - periodo finale iniziale
-			self.TABLE_FIELDS[10] : capriolo, 								#11 - fase finale
-			self.TABLE_FIELDS[11] : cervo,								#12 - attivita  
-			self.TABLE_FIELDS[12] : combusto,										#13 - attivita  
-			self.TABLE_FIELDS[13] : coni,											#14 - anno scavo
-			self.TABLE_FIELDS[14] : pdi, 								#15 - metodo
-			self.TABLE_FIELDS[15] : stambecco,								#16 - data schedatura
-			self.TABLE_FIELDS[16] : strie,							#17 - schedatore
-			self.TABLE_FIELDS[17] : canidi,							#18 - formazione
-			self.TABLE_FIELDS[18] : ursidi,							#19 - conservazione
-			self.TABLE_FIELDS[19] : megacero,								#20 - colore
+			self.TABLE_FIELDS[3]  : "'"+str(self.calendar.text())+"'",								#4 - Definizione stratigrafica
+			self.TABLE_FIELDS[4]  : giornale,							#5 - Definizione intepretata
+											#20 - colore
 			}
 
 			u = Utility()
@@ -935,23 +572,9 @@ title(sub="Rosso = coppie con r>|0.5|, Verde = coppie con |0.25|<r<|0.5|;
 		self.comboBox_sito.setEditText("")
 		self.lineEdit_area.clear()
 		self.lineEdit_us.clear()
-		self.lineEdit_quadrato.clear()
-		self.lineEdit_coord_x.clear()
-		self.lineEdit_coord_y.clear()
-		self.lineEdit_coord_z.clear()
-		self.lineEdit_bos_bison.clear()
-		self.lineEdit_calcinati.clear()
-		self.lineEdit_camoscio.clear()
-		self.lineEdit_capriolo.clear()
-		self.lineEdit_cervi.clear()
-		self.lineEdit_combuste.clear()
-		self.lineEdit_Coni.clear()
-		self.lineEdit_pdi.clear()
-		self.lineEdit_stambecco.clear()
-		self.lineEdit_strie.clear()
-		self.lineEdit_canidi.clear()
-		self.lineEdit_ursidi.clear()
-		self.lineEdit_megacero.clear()
+		self.calendar.clear()
+		self.giornale.clear()
+		
 
 
 	def fill_fields(self, n=0):
@@ -966,87 +589,12 @@ title(sub="Rosso = coppie con r>|0.5|, Verde = coppie con |0.25|<r<|0.5|;
 				self.lineEdit_us.setText(str(self.DATA_LIST[self.rec_num].us))
 			
 			 						#2 - Periodo
-			self.lineEdit_quadrato.setText(str(self.DATA_LIST[self.rec_num].quadrato)) 						#2 - Periodo
+			self.calendar.setText(str(self.DATA_LIST[self.rec_num].calendar)) 						#2 - Periodo
 
 			if self.DATA_LIST[self.rec_num].coord_x == None:												#4 - cronologia iniziale
-				self.lineEdit_coord_x.setText("")
+				self.giornalescavo.setText("")
 			else:
-				self.lineEdit_coord_x.setText(str(self.DATA_LIST[self.rec_num].coord_x))
-
-			if self.DATA_LIST[self.rec_num].coord_y == None:												#4 - cronologia iniziale
-				self.lineEdit_coord_y.setText("")
-			else:
-				self.lineEdit_coord_y.setText(str(self.DATA_LIST[self.rec_num].coord_y))
-
-			if self.DATA_LIST[self.rec_num].coord_z == None:												#4 - cronologia iniziale
-				self.lineEdit_coord_z.setText("")
-			else:
-				self.lineEdit_coord_z.setText(str(self.DATA_LIST[self.rec_num].coord_z))
-
-			if self.DATA_LIST[self.rec_num].bos_bison == None:												#4 - cronologia iniziale
-				self.lineEdit_bos_bison.setText("")
-			else:
-				self.lineEdit_bos_bison.setText(str(self.DATA_LIST[self.rec_num].bos_bison))
-
-			if self.DATA_LIST[self.rec_num].calcinati == None:												#4 - cronologia iniziale
-				self.lineEdit_calcinati.setText("")
-			else:
-				self.lineEdit_calcinati.setText(str(self.DATA_LIST[self.rec_num].calcinati))
-
-			if self.DATA_LIST[self.rec_num].camoscio == None:												#4 - cronologia iniziale
-				self.lineEdit_camoscio.setText("")
-			else:
-				self.lineEdit_camoscio.setText(str(self.DATA_LIST[self.rec_num].camoscio))
-
-			if self.DATA_LIST[self.rec_num].capriolo == None:												#4 - cronologia iniziale
-				self.lineEdit_capriolo.setText("")
-			else:
-				self.lineEdit_capriolo.setText(str(self.DATA_LIST[self.rec_num].capriolo))
-
-			if self.DATA_LIST[self.rec_num].cervo == None:												#4 - cronologia iniziale
-				self.lineEdit_cervi.setText("")
-			else:
-				self.lineEdit_cervi.setText(str(self.DATA_LIST[self.rec_num].cervo))
-
-			if self.DATA_LIST[self.rec_num].combusto == None:												#4 - cronologia iniziale
-				self.lineEdit_combuste.setText("")
-			else:
-				self.lineEdit_combuste.setText(str(self.DATA_LIST[self.rec_num].combusto))
-
-			if self.DATA_LIST[self.rec_num].coni == None:												#4 - cronologia iniziale
-				self.lineEdit_Coni.setText("")
-			else:
-				self.lineEdit_Coni.setText(str(self.DATA_LIST[self.rec_num].coni))
-
-			if self.DATA_LIST[self.rec_num].pdi == None:												#4 - cronologia iniziale
-				self.lineEdit_pdi.setText("")
-			else:
-				self.lineEdit_pdi.setText(str(self.DATA_LIST[self.rec_num].pdi))
-
-			if self.DATA_LIST[self.rec_num].stambecco == None:												#4 - cronologia iniziale
-				self.lineEdit_stambecco.setText("")
-			else:
-				self.lineEdit_stambecco.setText(str(self.DATA_LIST[self.rec_num].stambecco))
-
-			if self.DATA_LIST[self.rec_num].strie == None:												#4 - cronologia iniziale
-				self.lineEdit_strie.setText("")
-			else:
-				self.lineEdit_strie.setText(str(self.DATA_LIST[self.rec_num].strie))
-
-			if self.DATA_LIST[self.rec_num].canidi == None:												#4 - cronologia iniziale
-				self.lineEdit_canidi.setText("")
-			else:
-				self.lineEdit_canidi.setText(str(self.DATA_LIST[self.rec_num].canidi))
-	
-			if self.DATA_LIST[self.rec_num].ursidi == None:												#4 - cronologia iniziale
-				self.lineEdit_ursidi.setText("")
-			else:
-				self.lineEdit_ursidi.setText(str(self.DATA_LIST[self.rec_num].ursidi))
-	
-			if self.DATA_LIST[self.rec_num].megacero == None:												#4 - cronologia iniziale
-				self.lineEdit_megacero.setText("")
-			else:
-				self.lineEdit_megacero.setText(str(self.DATA_LIST[self.rec_num].megacero))
+				self.giornalescavo.setText(str(self.DATA_LIST[self.rec_num].giornale))
 
 		except Exception, e:
 			QMessageBox.warning(self, "Errore Fill Fields", str(e),  QMessageBox.Ok)
@@ -1065,107 +613,15 @@ title(sub="Rosso = coppie con r>|0.5|, Verde = coppie con |0.25|<r<|0.5|;
 		else:
 			us = str(self.lineEdit_us.text())
 
-		if self.lineEdit_coord_x.text() == "":
-			coord_x = None
-		else:
-			coord_x = float(self.lineEdit_coord_x.text())
-
-		if self.lineEdit_coord_y.text() == "":
-			coord_y = None
-		else:
-			coord_y = float(self.lineEdit_coord_y.text())
-
-		if self.lineEdit_coord_z.text() == "":
-			coord_z = None
-		else:
-			coord_z = float(self.lineEdit_coord_z.text())
-
-		if self.lineEdit_bos_bison.text() == "":
-			bos_bison = None
-		else:
-			bos_bison = str(self.lineEdit_bos_bison.text())
-
-		if self.lineEdit_calcinati.text() == "":
-			calcinati = None
-		else:
-			calcinati = str(self.lineEdit_calcinati.text())
-
-		if self.lineEdit_camoscio.text() == "":
-			camoscio = None
-		else:
-			camoscio = str(self.lineEdit_camoscio.text())
-
-		if self.lineEdit_capriolo.text() == "":
-			capriolo = None
-		else:
-			capriolo = str(self.lineEdit_capriolo.text())
-
-		if self.lineEdit_cervi.text() == "":
-			cervo = None
-		else:
-			cervo = str(self.lineEdit_cervi.text())
-
-		if self.lineEdit_combuste.text() == "":
-			combusto = None
-		else:
-			combusto = str(self.lineEdit_combuste.text())
-
-		if self.lineEdit_Coni.text() == "":
-			coni = None
-		else:
-			coni = str(self.lineEdit_Coni.text())
-
-		if self.lineEdit_pdi.text() == "":
-			pdi = None
-		else:
-			pdi = str(self.lineEdit_pdi.text())
-
-		if self.lineEdit_stambecco.text() == "":
-			stambecco = None
-		else:
-			stambecco = str(self.lineEdit_stambecco.text())
-
-		if self.lineEdit_strie.text() == "":
-			strie = None
-		else:
-			strie = str(self.lineEdit_strie.text())
-
-		if self.lineEdit_canidi.text() == "":
-			canidi = None
-		else:
-			canidi = str(self.lineEdit_canidi.text())
-
-		if self.lineEdit_ursidi.text() == "":
-			ursidi = None
-		else:
-			ursidi = str(self.lineEdit_ursidi.text())
-
-		if self.lineEdit_megacero.text() == "":
-			megacero = None
-		else:
-			megacero = str(self.lineEdit_megacero.text())
+		
 
 		self.DATA_LIST_REC_TEMP = [
 		str(self.comboBox_sito.currentText()), 						#1 - Sito
 		str(self.lineEdit_area.text()), 					#2 - periodo
 		str(us),
-		str(self.lineEdit_quadrato.text()), 					#3 - fase
-		str(coord_x),
-		str(coord_y),
-		str(coord_z),
-		str(bos_bison),
-		str(calcinati),
-		str(camoscio),
-		str(capriolo),
-		str(cervo),
-		str(combusto),
-		str(coni),
-		str(pdi),
-		str(stambecco),
-		str(strie),
-		str(canidi),
-		str(ursidi),
-		str(megacero)]												#8 - cont_per provvisorio
+		str(self.calendar.text()), 					#3 - fase
+		str(giornale),
+		]												#8 - cont_per provvisorio
 
 
 	def set_LIST_REC_CORR(self):

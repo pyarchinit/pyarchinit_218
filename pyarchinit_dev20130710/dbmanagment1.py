@@ -46,61 +46,17 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
 		
 
 		self.beckup.setEnabled(n)
-		
+
 	def enable_button_search(self, n):
 
 		
 
-		self.beckup.setEnabled(n)
-			
+		self.beckup.setEnabled(n)	
 
 	
 	def on_beckup_pressed (self):
-                from pyarchinit_OS_utility import *
-                from time import gmtime, strftime
-                import subprocess
-                import os
-                import glob
-                import time
-	     
-		
-
-		if os.name == 'posix':
-			home = os.environ['HOME']
-		elif os.name == 'nt':
-			home = os.environ['HOMEPATH']
-		PDF_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_db_beckup')
-		#filename = ('%s%s%s') % (PDF_path, os.sep, 'semivariogramma.png')
-		
-
                 
-                 
-                
-
-                dump_dir = 'pyarchinit_db_beckup/'
-                db_username = 'postgres'
-                #db_password = ''
-                db_names = ['pyarchinit']
-
-                for db_name in db_names:
-                    try:
-                        file_path = ''
-                        dumper = " -U %s -Z 9 -f %s -F c %s  "
-                #        os.putenv('PGPASSWORD', db_password)
-                        bkp_file = '%s_%s.sql' % (db_name, time.strftime('%Y%m%d_%H_%M_%S'))
-                #        glob_list = glob.glob(dump_dir + db_name + '*' + '.pgdump')
-                        file_path = os.path.join(dump_dir, bkp_file)
-                        command = 'pg_dump' + dumper % (db_username, file_path, db_name)
-                        subprocess.call(command, shell=True)
-                        subprocess.call('gzip ' + file_path, shell=True)
-                    except:
-			print "Beckup fallito!!" % (db_name)                # Now perform the backup.
-                	
-			
-
-	def on_beckup_total_pressed (self):
-                
-	     	from pyarchinit_OS_utility import *
+	     	#from pyarchinit_OS_utility import *
 		import os
 		import time
 
@@ -138,7 +94,6 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
 			os.popen("nice -n 19 pg_dump -C -F c -U%s -p%s %s > %s" % (username, port, base, filename))
 
 
-
 	def on_upload_pressed(self):
 		self.percorso = QtGui.QFileDialog.getOpenFileName(self, 'Open file', '/')
 		#QMessageBox.warning(self, "Messaggio", str(self.FILE), QMessageBox.Ok)
@@ -146,9 +101,9 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
 
 	def on_restore_pressed (self):
 		path = self.percorso
-		os.popen ("dropdb -U postgres pyarchinit")
-		os.popen ("createdb -U postgres -p 5432 -h localhost -E UTF8  -T postgis2 -e pyarchinit")
-		os.popen ("pg_restore --host localhost --port 5432 --username postgres --dbname pyarchinit --role postgres --no-password  --verbose %s" % (str(path)))
+		os.popen ("dropdb pyarchinit")
+		os.popen ("createdb -p 5432 -h localhost -E UTF8 -e pyarchinit -T postgis2")
+		os.popen ("pg_restore --host localhost --port 5432 --username 'postgres' --dbname 'pyarchinit' --role 'postgres' --no-password  --verbose %s" % (str(path)))
 		
 
 if __name__ == "__main__":
