@@ -1,0 +1,5 @@
+- check 2/11/2012
+- check del 12/11/2012 continua la sistemazione del sistema 
+di aggiornamento e inserimento nuovi record
+con controllo sull'integrita del dato 
+FARE TEST SU DATA ERROR CHECK

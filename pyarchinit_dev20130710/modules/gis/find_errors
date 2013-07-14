@@ -1,0 +1,11 @@
+l = [(1, 2), (3, 4), (5, 6), (6,5)]
+msg_tup = "Errori nei rapporti:"
+for i in l:
+    temp_tup = (i[1],i[0])
+    if l.count(temp_tup) != 0:
+        msg_tup = msg_tup + '\n'+str(i) + '\n' + str(temp_tup)
+        l.remove(i)
+        l.remove(temp_tup)
+
+self.testin
+        
