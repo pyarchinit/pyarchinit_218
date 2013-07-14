@@ -146,9 +146,9 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
 
 	def on_restore_pressed (self):
 		path = self.percorso
-		os.popen ("dropdb pyarchinit")
-		os.popen ("createdb -p 5432 -h localhost -E UTF8 -e pyarchinit -T postgis2")
-		os.popen ("pg_restore --host localhost --port 5432 --username 'postgres' --dbname 'pyarchinit' --role 'postgres' --no-password  --verbose %s" % (str(path)))
+		os.popen ("dropdb -U postgres pyarchinit")
+		os.popen ("createdb -U postgres -p 5432 -h localhost -E UTF8  -T template_postgis_20 -e pyarchinit")
+		os.popen ("pg_restore --host localhost --port 5432 --username postgres --dbname pyarchinit --role postgres --no-password  --verbose %s" % (str(path)))
 		
 
 if __name__ == "__main__":
