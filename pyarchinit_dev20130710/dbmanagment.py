@@ -81,9 +81,18 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
                 db_username = 'postgres'
                 #db_password = ''
                 db_names = ['pyarchinit']
-
+		
                 for db_name in db_names:
                     try:
+			#app = QtGui.QApplication(sys.argv)
+			barra = QtGui.QProgressBar(self)
+			barra.show()
+			barra.setMinimum(0)
+			barra.setMaximum(9)
+			for a in range(10):
+				time.sleep(1)
+				barra.setValue(a)
+				#app.exec_()		
                         file_path = ''
                         dumper = " -U %s -Z 9 -f %s -F c %s  "
                 #        os.putenv('PGPASSWORD', db_password)
@@ -93,6 +102,7 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
                         command = 'pg_dump' + dumper % (db_username, file_path, db_name)
                         subprocess.call(command, shell=True)
                         subprocess.call('gzip ' + file_path, shell=True)
+			
 			QMessageBox.warning(self, "Messaggio", "Backup completato", QMessageBox.Ok)
                     except Exception, e:
 			QMessageBox.warning(self, "Messaggio", "Backup fallito!!" + str(e), QMessageBox.Ok)
@@ -132,6 +142,15 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
 		#MAKING DB BACKUP
 		for base in os.popen(get_db_names).readlines():
 		    try:
+			#app = QtGui.QApplication(sys.argv)
+			barra = QtGui.QProgressBar(self)
+			barra.show()
+			barra.setMinimum(0)
+			barra.setMaximum(9)
+			for a in range(10):
+				time.sleep(1)
+				barra.setValue(a)
+				#app.exec_()	
 			base = base.strip()
 			fulldir = backupdir + base
 			if not os.path.exists(fulldir):
@@ -149,7 +168,16 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
 
 
 	def on_restore_pressed (self):
-	    try: 	
+	    try: 
+		#app = QtGui.QApplication(sys.argv)
+		barra = QtGui.QProgressBar(self)
+		barra.show()
+		barra.setMinimum(0)
+		barra.setMaximum(9)
+		for a in range(10):
+			time.sleep(1)
+			barra.setValue(a)
+			#app.exec_()		
 		path = self.percorso
 		os.popen ("dropdb -U postgres pyarchinit")
 		os.popen ("createdb -U postgres -p 5432 -h localhost -E UTF8  -T template_postgis_20 -e pyarchinit")
@@ -157,13 +185,18 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
 		QMessageBox.warning(self, "Messaggio", "Ripristino completato", QMessageBox.Ok)
 	    except Exception, e:
 		QMessageBox.warning(self, "Messaggio", "Ripristino fallito!!" + str(e), QMessageBox.Ok)
+
 		
 
 if __name__ == "__main__":
 	app = QApplication(sys.argv)
 	ui = pyarchinit_dbmanagment()
 	ui.show()
+	barra.show()
 	sys.exit(app.exec_())
+		
+
+	
 		
 
 	
