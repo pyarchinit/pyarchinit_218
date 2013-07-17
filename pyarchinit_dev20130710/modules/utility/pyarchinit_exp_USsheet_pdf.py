@@ -1,5 +1,7 @@
 import os
 import copy
+from reportlab.lib.pagesizes import (A0, A1, A2, A3, A4, A5, A6, B0, B1, B2, B3,B4, B5, B6, LETTER, LEGAL, ELEVENSEVENTEEN,landscape)
+  
 from reportlab.lib.testutils import makeSuiteForClasses, outputfile, printLocation
 from reportlab.lib import colors
 from reportlab.lib.units import inch, cm, mm
@@ -180,12 +182,10 @@ class single_US_pdf_sheet:
 			pass
 		else:
 			for string_doc in eval(self.documentazione):
-				if bool(string_doc) == True:
-					if len(string_doc) == 2:
-						self.documentazione_print += str(string_doc[0]) + ": " + str(string_doc[1]) + "<br/>"
-					if len(string_doc) == 1:
-						self.documentazione_print += str(string_doc[0]) + "<br/>"
-
+				if len(string_doc) == 2:
+					self.documentazione_print += str(string_doc[0]) + ": " + str(string_doc[1]) + "<br/>"
+				if len(string_doc) == 1:
+					self.documentazione_print += str(string_doc[0]) + "<br/>"
 	def datestrfdate(self):
 		now = date.today()
 		today = now.strftime("%d-%m-%Y")
@@ -200,18 +200,20 @@ class single_US_pdf_sheet:
 		styNormal.spaceBefore = 20
 		styNormal.spaceAfter = 20
 		styNormal.alignment = 0 #LEFT
-
+		
+		
 		styleSheet = getSampleStyleSheet()
 		styDescrizione = styleSheet['Normal']
 		styDescrizione.spaceBefore = 20
 		styDescrizione.spaceAfter = 20
 		styDescrizione.alignment = 4 #Justified
-
+		
+		
 		#format labels
 
 		#0 row
-		intestazione = Paragraph("<b>SCHEDA DI UNITA' STRATIGRAFICA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
-		intestazione2 = Paragraph("<b>pyArchInit</b><br/>www.pyarchinit.blogspot.com", styNormal)
+		intestazione = Paragraph("<b>SCHEDA DI UNIT&Agrave; STRATIGRAFICA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
+		intestazione2 = Paragraph("<b>Pyarchinit</b><br/>https://sites.google.com/site/pyarchinit/", styNormal)
 
 		#1 row
 		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
@@ -258,21 +260,21 @@ class single_US_pdf_sheet:
 		campioni = Paragraph("<b>Campioni</b><br/>"  + campioni, styNormal)
 		formazione = Paragraph("<b>Formazione</b><br/>"  + self.formazione, styNormal)
 
-		#5 row
+		#05 row
 		descrizione = ''
 		try:
-			descrizione = Paragraph("<b>Descrizione</b><br/>" + str(self.descrizione), styDescrizione)
+			descrizione = Paragraph("<b>Descrizione</b><br/>" + self.descrizione, styDescrizione)
 		except:
 			pass
 
 		interpretazione = ''
 		try:
-			interpretazione = Paragraph("<b>Interpretazione</b><br/>" + str(self.interpretazione),styDescrizione)
+			interpretazione = Paragraph("<b>Interpretazione</b><br/>" + self.interpretazione,styDescrizione)
 		except:
 			pass
 
 		#6 row
-		attivita = Paragraph("<b>Attivita'</b><br/>" + self.attivita,styNormal)
+		attivita = Paragraph("<b>Attivit&agrave;</b><br/>" + self.attivita,styNormal)
 		struttura = Paragraph("<b>Struttura</b><br/>" + self.struttura,styNormal)
 		quota_min = Paragraph("<b>Quota Min:</b><br/>"+ self.quota_min,styNormal)
 		quota_max = Paragraph("<b>Quota Max:</b><br/>"+ self.quota_max,styNormal)
@@ -323,6 +325,9 @@ class single_US_pdf_sheet:
 		sing_doc = self.documentazione_print
 		self.documentazione_print = Paragraph("<b>Documentazione</b><br/>"  + sing_doc, styNormal) 
 		
+		
+		
+		
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
 						[intestazione, '01', '02', '03', '04','05', '06', intestazione2, '08', '09'], #0 row ok
@@ -330,7 +335,8 @@ class single_US_pdf_sheet:
 						[d_stratigrafica, '01', '02','03','04', d_interpretativa,'06', '07', '08', '09'], #2 row ok
 						[stato_conservazione, '01', '02', consistenza,'04', '05', colore, '07', '08', '09'], #3 row ok
 						[inclusi, '01', '02', '03', campioni, '05', '06', '07', formazione, '09'], #4 row ok
-						[descrizione, '01','02', '03', '04', interpretazione, '06', '07', '08', '09'], #5 row ok
+						[descrizione, '01','02', '03', '04','05', '06', '07', '08', '09'], #5 row ok
+						[interpretazione, '01','02', '03', '04','05', '06', '07', '08', '09'], #5 row ok
 						[attivita, '01', '02', struttura,'04', '05', quota_min, '07', quota_max, '09'], #6 row
 						[periodizzazione, '02', '03', '04', '05', '06', '06', '07', '08', '09'], #7 row
 						[iniziale, '01', periodo_iniziale, '03', fase_iniziale, finale, '06',periodo_finale, '08', fase_finale], #8 row
@@ -371,65 +377,66 @@ class single_US_pdf_sheet:
 					('SPAN', (8,4),(9,4)),  #inclusi - campioni - formazione
 
 					#5 row
-					('SPAN', (0,5),(4,5)),  #descrizione
-					('SPAN', (5,5),(9,5)),  #interpretazione
+					('SPAN', (0,5),(9,5)),  #descrizione
+					('SPAN', (0,6),(9,6)),  #interpretazione
 					('VALIGN',(0,5),(9,5),'TOP'), 
 
 					#6 row
-					('SPAN', (0,6),(2,6)),  #Attivita - Struttura - Quota min - Quota max
-					('SPAN', (3,6),(5,6)),  #Attivita - Struttura - Quota min - Quota max
-					('SPAN', (6,6),(7,6)),  #Attivita - Struttura - Quota min - Quota max
-					('SPAN', (8,6),(9,6)),  #Attivita - Struttura - Quota min - Quota max
+					('SPAN', (0,7),(2,7)),  #Attivita - Struttura - Quota min - Quota max
+					('SPAN', (3,7),(5,7)),  #Attivita - Struttura - Quota min - Quota max
+					('SPAN', (6,7),(7,7)),  #Attivita - Struttura - Quota min - Quota max
+					('SPAN', (8,7),(9,7)),  #Attivita - Struttura - Quota min - Quota max
 
 					#7 row
-					('SPAN', (0,7),(9,7)),  #Periodizzazione - Titolo
+					('SPAN', (0,8),(9,8)),  #Periodizzazione - Titolo
 
 					#8 row
-					('SPAN', (0,8),(1,8)),  #iniziale
-					('SPAN', (2,8),(3,8)),  #periodo inizlae
-					('SPAN', (5,8),(6,8)),  #fase iniziale
-					('SPAN', (7,8),(8,8)),  #finale
-					('VALIGN',(0,8),(0,8),'TOP'), 
-					('VALIGN',(5,8),(5,8),'TOP'), 
+					('SPAN', (0,9),(1,9)),  #iniziale
+					('SPAN', (2,9),(3,8)),  #periodo inizlae
+					('SPAN', (5,9),(6,9)),  #fase iniziale
+					('SPAN', (7,9),(8,9)),  #finale
+					('VALIGN',(0,9),(0,9),'TOP'), 
+					('VALIGN',(5,9),(5,9),'TOP'), 
 					
 					#9 row
-					('SPAN', (0,9),(4,9)),  #Rapporti stratigrafici - Titolo
-					('SPAN', (5,9),(9,9)),  #Piante - Titolo
+					('SPAN', (0,10),(4,10)),  #Rapporti stratigrafici - Titolo
+					('SPAN', (5,10),(9,10)),  #Piante - Titolo
 
 					#10 row
-					('SPAN', (0,10),(4,10)),  #Rapporti stratigrafici - Si lega a - Uguale a
-					('SPAN', (5,10),(9,10)),  #Rapporti stratigrafici - Si lega a - Uguale a
+					('SPAN', (0,11),(4,11)),  #Rapporti stratigrafici - Si lega a - Uguale a
+					('SPAN', (5,11),(9,11)),  #Rapporti stratigrafici - Si lega a - Uguale a
 
 					#11 row
-					('SPAN', (0,11),(4,11)),  #Rapporti stratigrafici - Copre - Coperto da
-					('SPAN', (5,11),(9,11)),  #Rapporti stratigrafici - Copre - Coperto da
+					('SPAN', (0,12),(4,12)),  #Rapporti stratigrafici - Copre - Coperto da
+					('SPAN', (5,12),(9,12)),  #Rapporti stratigrafici - Copre - Coperto da
 
 					#12 row
-					('SPAN', (0,12),(4,12)),  #Rapporti stratigrafici - Riempie - Riempito da
-					('SPAN', (5,12),(9,12)),  #Rapporti stratigrafici - Riempie - Riempito da
+					('SPAN', (0,13),(4,13)),  #Rapporti stratigrafici - Riempie - Riempito da
+					('SPAN', (5,13),(9,13)),  #Rapporti stratigrafici - Riempie - Riempito da
 
 					#13 row
-					('SPAN', (0,13),(4,13)),  #Rapporti stratigrafici - Taglia - Tagliato da
-					('SPAN', (5,13),(9,13)),  #Rapporti stratigrafici - Taglia - Tagliato da
+					('SPAN', (0,14),(4,14)),  #Rapporti stratigrafici - Taglia - Tagliato da
+					('SPAN', (5,14),(9,14)),  #Rapporti stratigrafici - Taglia - Tagliato da
 
 					#14 row
-					('SPAN', (0,14),(4,14)),  #Rapporti stratigrafici - Si appoggia a - Gli si appoggia
-					('SPAN', (5,14),(9,14)),  #Rapporti stratigrafici - Si appoggia a - Gli si appoggia
+					('SPAN', (0,14),(4,15)),  #Rapporti stratigrafici - Si appoggia a - Gli si appoggia
+					('SPAN', (5,15),(9,15)),  #Rapporti stratigrafici - Si appoggia a - Gli si appoggia
 
 					('VALIGN',(0,0),(-1,-1),'TOP'),
 
 					#16 row
-					('SPAN', (0,15),(9,15)),  #pie' di pagina
-					('ALIGN',(0,15),(9,15),'CENTER'),
+					('SPAN', (0,16),(9,15)),  #pie' di pagina
+					('ALIGN',(0,16),(9,16),'CENTER'),
 
 					#15 row
-					('SPAN', (1,16),(2,16)),  #scavato anno_di_scavo - metodo_di_scavo, data_schedatura
-					('SPAN', (3,16),(4,16)),  #scavato anno_di_scavo - metodo_di_scavo, data_schedatura
-					('SPAN', (5,16),(6,16)),  #scavato anno_di_scavo - metodo_di_scavo, data_schedatura
-					('SPAN', (7,16),(9,16)),  #scavato anno_di_scavo - metodo_di_scavo, data_schedatura
+					('SPAN', (1,17),(2,17)),  #scavato anno_di_scavo - metodo_di_scavo, data_schedatura
+					('SPAN', (3,17),(4,17)),  #scavato anno_di_scavo - metodo_di_scavo, data_schedatura
+					('SPAN', (5,17),(6,17)),  #scavato anno_di_scavo - metodo_di_scavo, data_schedatura
+					('SPAN', (7,17),(9,17)),  #scavato anno_di_scavo - metodo_di_scavo, data_schedatura
 					]
 
-		t=Table(cell_schema, colWidths=50, rowHeights=None,style= table_style)
+
+		t=Table(cell_schema, colWidths=55, rowHeights=None,style= table_style)
 
 		return t
 
@@ -607,7 +614,7 @@ class generate_pdf:
 			elements.append(PageBreak())
 		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'scheda_US.pdf')
 		f = open(filename, "wb")
-		doc = SimpleDocTemplate(f)
+		doc = SimpleDocTemplate(f, pagesize=A4)
 		doc.build(elements, canvasmaker=NumberedCanvas_USsheet)
 		f.close()
 
@@ -618,7 +625,7 @@ class generate_pdf:
 		styH1 = styleSheet['Heading2']
 		data = self.datestrfdate()
 		lst = []
-		lst.append(Paragraph("<b>ELENCO UNITA' STRATIGRAFICHE</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH1))
+		lst.append(Paragraph("<b>ELENCO UNIT&Agrave; STRATIGRAFICHE</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta Esecutrice: Ad Arte srl</b>" % (sito, data), styH1))
 
 		table_data = []
 		for i in range(len(records)):
