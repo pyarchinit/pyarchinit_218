@@ -42,7 +42,7 @@ class Print_utility:
 	LAYER_STYLE_PATH = ('%s%s%s%s') % (FILEPATH, os.sep, 'styles', os.sep)
 	LAYER_STYLE_PATH_SPATIALITE = ('%s%s%s%s') % (FILEPATH, os.sep, 'styles_spatialite', os.sep)
 	SRS = 3004
-	
+
 	layerUS = ""
 	layerQuote = ""
 ##	layerCL = ""
@@ -96,8 +96,6 @@ class Print_utility:
 				f.write(str("Presenza di errori nel layer"))
 				f.close()
 
-
-
 		elif self.server == 'sqlite':
 			for i in range(len(self.data)):
 				test = self.charge_layer_sqlite(self.data[i].sito, self.data[i].area, self.data[i].us)
@@ -112,7 +110,6 @@ class Print_utility:
 				else:
 					pass
 
-
 			"""
 			for i in self.data:
 				self.charge_layer_postgis(i.sito,i.area,i.us)
@@ -120,12 +117,10 @@ class Print_utility:
 				self.print_map(i)
 			"""
 
-
 	def converter_1_20(self, n):
 		n *= 100
 		res = n / 20
 		return res
-
 
 	def test_bbox(self):
 		#f = open("/test_type.txt", "w")
@@ -143,7 +138,6 @@ class Print_utility:
 		self.height = self.converter_1_20(float(bbox.height())) * 10 #la misura da cm e' portata in mm
 		self.width = self.converter_1_20(float(bbox.width())) * 10 #la misura da cm e' portata in mm
 
-		
 		#f = open("/test_paper_size_5.txt", "w")
 		#f.write(str(self.width))
 		#f.close()
