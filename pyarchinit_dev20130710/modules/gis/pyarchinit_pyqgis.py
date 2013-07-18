@@ -174,7 +174,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
 			else:
-				QMessageBox.warning(self, "TESTER", "OK Layer US non valido",QMessageBox.Ok)
+				QMessageBox.warning(self, "TESTER", "Layer US non valido",QMessageBox.Ok)
 
 			uri.setDataSource('','pyarchinit_quote_view', 'the_geom', gidstr, "ROWID")
 			layerQUOTE=QgsVectorLayer(uri.uri(), 'pyarchinit_quote_view', 'spatialite')
@@ -184,6 +184,8 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'quote_us_view.qml')
 				layerQUOTE.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayers([layerQUOTE], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "OK Layer Quote non valido",QMessageBox.Ok)
 
 		elif settings.SERVER == 'postgres':
 
@@ -209,6 +211,8 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "OK Layer US non valido",QMessageBox.Ok)
 
 			uri.setDataSource("public", "pyarchinit_quote_view", "the_geom", gidstr, "gid")
 			layerQUOTE = QgsVectorLayer(uri.uri(), "Quote Unita' Stratigrafiche", "postgres")
@@ -224,6 +228,8 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 					#f = open('/test_ok.txt','w')
 					#f.write(str(e))
 					#f.close()
+			else:
+				QMessageBox.warning(self, "TESTER", "OK Layer Quote non valido",QMessageBox.Ok)
 
 	def charge_vector_layers_periodo(self, cont_per):
 		self.cont_per = str(cont_per)
