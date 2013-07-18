@@ -680,7 +680,9 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def on_pushButton_exp_tavole_pressed(self):
 		conn = Connection()
 		conn_str = conn.conn_str()
-		if conn_str.find("postgres") == 1:
+		#QMessageBox.warning(self, "Messaggio", str(conn_str), QMessageBox.Ok)
+
+		if conn_str.find("postgresql") == 0:
 			PU = Print_utility(self.iface, self.DATA_LIST)
 			PU.first_batch_try("postgres")
 		else :

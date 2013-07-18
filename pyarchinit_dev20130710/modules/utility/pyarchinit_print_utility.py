@@ -75,10 +75,11 @@ class Print_utility:
     """
 
 	def first_batch_try(self, server):
-		#f = open("/test_print_2.txt", "w")
-		#f.write(str(self.sito))
-		#f.close()
-		if server == 'postgres':
+		self.server = server
+		##		f = open("C:\Users\Windows\pyarchinit_Report_folder\test.txt", "w")
+		##		f.write(str(server))
+		##		f.close()
+		if self.server == 'postgres':
 			for i in range(len(self.data)):
 				test = self.charge_layer_postgis(self.data[i].sito, self.data[i].area, self.data[i].us)
 				self.us = self.data[i].us
@@ -89,9 +90,15 @@ class Print_utility:
 						self.print_map(tav_num)
 					else:
 						self.remove_layer()
-				else:
-					pass
-		elif server == 'sqlite':
+			if test == 0:
+				Report_path = ('%s%s%s') % (self.HOME, os.sep, "pyarchinit_Report_folder/report_errori.txt")
+				f = open(Report_path, "w")
+				f.write(str("Presenza di errori nel layer"))
+				f.close()
+
+
+
+		elif self.server == 'sqlite':
 			for i in range(len(self.data)):
 				test = self.charge_layer_sqlite(self.data[i].sito, self.data[i].area, self.data[i].us)
 				self.us = self.data[i].us
@@ -309,7 +316,7 @@ class Print_utility:
 		pdfPainter.end()
 		"""
 
-	def open_connection_postis(self):
+	def open_connection_postgis(self):
 		cfg_rel_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'config.cfg')
 		file_path = ('%s%s') % (self.HOME, cfg_rel_path)
 		conf = open(file_path, "r")
@@ -393,7 +400,7 @@ class Print_utility:
 ##			QgsMapLayerRegistry.instance().addMapLayer( self.layerGriglia, True)
 
 	def charge_layer_postgis(self, sito, area, us):
-		self.open_connection()
+		self.open_connection_postgis()
 		
 		srs = QgsCoordinateReferenceSystem(3004, QgsCoordinateReferenceSystem.PostgisCrsId)
 
@@ -413,13 +420,6 @@ class Print_utility:
 			QgsMapLayerRegistry.instance().addMapLayer( self.layerUS, True)
 		else:
 			return 0
-
-		if self.layerCL.isValid() == True:
-			self.layerCL.setCrs(srs)
-			self.CLayerId = self.layerCL.getLayerID()
-			style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'caratterizzazioni_linee.qml')
-			self.layerCL.loadNamedStyle(style_path)
-			QgsMapLayerRegistry.instance().addMapLayer(self.layerCL, True)
 
 		gidstr = ("sito_q = '%s' and area_q = '%s' and us_q = '%d'") % (sito, area, us)
 
