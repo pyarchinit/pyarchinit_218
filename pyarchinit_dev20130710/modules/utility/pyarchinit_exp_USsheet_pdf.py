@@ -216,7 +216,11 @@ class single_US_pdf_sheet:
 
 		#0 row
 		intestazione = Paragraph("<b>SCHEDA DI UNIT&Agrave; STRATIGRAFICA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
+<<<<<<< HEAD
 		intestazione2 = Paragraph("<b>Ditta esecutrice: </b><br/>pyarchinit", styNormal)
+=======
+		intestazione2 = Paragraph("<b>Pyarchinit</b><br/>https://sites.google.com/site/pyarchinit/", styNormal)
+>>>>>>> bc6e8be621aebfaad77e7493f71a301d7a9027e3
 
 		#1 row
 		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
@@ -395,7 +399,11 @@ class single_US_pdf_sheet:
 
 					#8 row
 					('SPAN', (0,9),(1,9)),  #iniziale
+<<<<<<< HEAD
 					('SPAN', (2,9),(3,9)),  #periodo inizlae
+=======
+					('SPAN', (2,9),(3,8)),  #periodo inizlae
+>>>>>>> bc6e8be621aebfaad77e7493f71a301d7a9027e3
 					('SPAN', (5,9),(6,9)),  #fase iniziale
 					('SPAN', (7,9),(8,9)),  #finale
 					('VALIGN',(0,9),(0,9),'TOP'), 
@@ -428,7 +436,11 @@ class single_US_pdf_sheet:
 					('VALIGN',(0,0),(-1,-1),'TOP'),
 
 					#16 row
+<<<<<<< HEAD
 					('SPAN', (0,16),(9,16)),  #pie' di pagina
+=======
+					('SPAN', (0,16),(9,15)),  #pie' di pagina
+>>>>>>> bc6e8be621aebfaad77e7493f71a301d7a9027e3
 					('ALIGN',(0,16),(9,16),'CENTER'),
 
 					#15 row
@@ -632,7 +644,11 @@ class generate_pdf:
 		styH1 = styleSheet['Heading2']
 		data = self.datestrfdate()
 		lst = []
+<<<<<<< HEAD
 		lst.append(Paragraph("<b>ELENCO UNIT&Agrave; STRATIGRAFICHE</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta esecutrice: </b>" % (sito, data), styH1))
+=======
+		lst.append(Paragraph("<b>ELENCO UNIT&Agrave; STRATIGRAFICHE</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta Esecutrice: Ad Arte srl</b>" % (sito, data), styH1))
+>>>>>>> bc6e8be621aebfaad77e7493f71a301d7a9027e3
 
 		table_data = []
 		for i in range(len(records)):
