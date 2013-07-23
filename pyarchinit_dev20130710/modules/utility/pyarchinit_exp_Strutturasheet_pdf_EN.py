@@ -124,56 +124,56 @@ class single_Struttura_pdf_sheet:
 		#format labels
 
 		#0 row
-		intestazione = Paragraph("<b>SCHEDA STRUTTURA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
+		intestazione = Paragraph("<b>Feature Form<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
 		intestazione2 = Paragraph("<b>pyArchInit</b><br/>www.pyarchinit.blogspot.com", styNormal)
 
 		#1 row
-		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
-		sigla_struttura = Paragraph("<b>Sigla struttura</b><br/>"  + str(self.sigla_struttura), styNormal)
+		sito = Paragraph("<b>Site</b><br/>"  + str(self.sito), styNormal)
+		sigla_struttura = Paragraph("<b>Sigla Features</b><br/>"  + str(self.sigla_struttura), styNormal)
 		numero_struttura = Paragraph("<b>Nr.</b><br/>"  + str(self.numero_struttura), styNormal)
 
 		#2 row
-		categoria = Paragraph("<b>Categoria</b><br/>"  + self.categoria_struttura, styNormal)
-		tipologia = Paragraph("<b>Tipologia</b><br/>"  + self.tipologia_struttura, styNormal)
-		definizione = Paragraph("<b>Definizione</b><br/>"  + self.definizione_struttura, styNormal)
+		categoria = Paragraph("<b>category</b><br/>"  + self.categoria_struttura, styNormal)
+		tipologia = Paragraph("<b>Tipology</b><br/>"  + self.tipologia_struttura, styNormal)
+		definizione = Paragraph("<b>Definition</b><br/>"  + self.definizione_struttura, styNormal)
 
 		#3 row
 		descrizione = ''
 		try:
-			descrizione = Paragraph("<b>Descrizione</b><br/>" + str(self.descrizione), styDescrizione)
+			descrizione = Paragraph("<b>Description</b><br/>" + str(self.descrizione), styDescrizione)
 		except:
 			pass
 
 		interpretazione = ''
 		try:
-			interpretazione = Paragraph("<b>Interpretazione</b><br/>" + str(self.interpretazione),styDescrizione)
+			interpretazione = Paragraph("<b>Interpretation</b><br/>" + str(self.interpretazione),styDescrizione)
 		except:
 			pass
 		
 		#4 row
-		periodizzazione = Paragraph("<b>PERIODIZZAZIONE</b>",styNormal)
+		periodizzazione = Paragraph("<b>Chronology</b>",styNormal)
 
 		#5 row
-		iniziale = Paragraph("<b>INIZIALE</b>",styNormal)
+		iniziale = Paragraph("<b>STARTING</b>",styNormal)
 		if self.periodo_iniziale == None:
-			periodo_iniziale = Paragraph("<b>Periodo</b><br/>",styNormal)
+			periodo_iniziale = Paragraph("<b>Period</b><br/>",styNormal)
 		else:
-			periodo_iniziale = Paragraph("<b>Periodo</b><br/>" + self.periodo_iniziale,styNormal)
+			periodo_iniziale = Paragraph("<b>Period</b><br/>" + self.periodo_iniziale,styNormal)
 		if self.fase_iniziale == None:
-			fase_iniziale = Paragraph("<b>Fase</b><br/>",styNormal)
+			fase_iniziale = Paragraph("<b>Phase</b><br/>",styNormal)
 		else:
-			fase_iniziale = Paragraph("<b>Fase</b><br/>" + self.fase_iniziale,styNormal)
+			fase_iniziale = Paragraph("<b>Phase</b><br/>" + self.fase_iniziale,styNormal)
 
-		finale = Paragraph("<b>FINALE</b>",styNormal)
+		finale = Paragraph("<b>END</b>",styNormal)
 
 		if self.periodo_finale == None:
-			periodo_finale = Paragraph("<b>Periodo</b><br/>",styNormal)
+			periodo_finale = Paragraph("<b>Period</b><br/>",styNormal)
 		else:
-			periodo_finale = Paragraph("<b>Periodo</b><br/>" + self.periodo_finale,styNormal)
+			periodo_finale = Paragraph("<b>Period</b><br/>" + self.periodo_finale,styNormal)
 		if self.fase_finale == None:
-			fase_finale = Paragraph("<b>Fase</b><br/>",styNormal)
+			fase_finale = Paragraph("<b>Phase</b><br/>",styNormal)
 		else:	
-			fase_finale = Paragraph("<b>Fase</b><br/>" + self.fase_finale,styNormal)
+			fase_finale = Paragraph("<b>Phase</b><br/>" + self.fase_finale,styNormal)
 
 		#6 row
 		datazione_estesa =Paragraph("<b>DATAZIONE ESTESA</b><br/>" + self.datazione_estesa,styNormal)
@@ -193,7 +193,7 @@ class single_Struttura_pdf_sheet:
 					except:
 						pass
 
-		materiali_impiegati = Paragraph("<b>Materiali impiegati</b><br/>"  + materiali_impiegati, styNormal)
+		materiali_impiegati = Paragraph("<b>Materials</b><br/>"  + materiali_impiegati, styNormal)
 
 		#8 row
 		elementi_strutturali = ''
@@ -206,11 +206,11 @@ class single_Struttura_pdf_sheet:
 						pass
 				else:
 					try:
-						elementi_strutturali += ("<br/>Tipologia elemento: %s, quantita: %s") % (str(i[0]), str(i[1])) 
+						elementi_strutturali += ("<br/>Type of feature %s, Quantity: %s") % (str(i[0]), str(i[1])) 
 					except:
 						pass
 
-		elementi_strutturali = Paragraph("<b>Elementi strutturali</b><br/>"  + elementi_strutturali, styNormal)
+		elementi_strutturali = Paragraph("<b>Structural Features</b><br/>"  + elementi_strutturali, styNormal)
 
 		#9 row
 		rapporti_struttura = ''
@@ -223,11 +223,11 @@ class single_Struttura_pdf_sheet:
 						pass
 				else:
 					try:
-						rapporti_struttura += ("<br/>Tipo rapporto: %s, sito: %s, sigla: %s, nr.: %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]))
+						rapporti_struttura += ("<br/>Type of relationship: %s, site: %s, sigla: %s, nr.: %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]))
 					except:
 						pass
 
-		rapporti_struttura = Paragraph("<b>Rapporti struttura</b><br/>"  + rapporti_struttura, styNormal)
+		rapporti_struttura = Paragraph("<b>Features Relationship</b><br/>"  + rapporti_struttura, styNormal)
 
 
 		#10 row
@@ -241,10 +241,10 @@ class single_Struttura_pdf_sheet:
 						pass
 				else:
 					try:
-						misure_struttura += ("<br/><b>Tipo di misura: %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
+						misure_struttura += ("<br/><b>Measuroment: %s, Units: %s, Quantity: %s") % (str(i[0]), str(i[1]), str(i[2]))
 					except:
 						pass
-		misure_struttura = Paragraph("<b>Misurazioni</b><br/>"  + misure_struttura, styNormal)
+		misure_struttura = Paragraph("<b>Measuroment</b><br/>"  + misure_struttura, styNormal)
 
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
@@ -406,6 +406,7 @@ class US_index_pdf_sheet:
 
 
 	
+
 	def makeStyles(self):
 		styles =TableStyle([('GRID',(0,0),(-1,-1),0.0,colors.black),('VALIGN', (0,0), (-1,-1), 'TOP')
 		])  #finale
@@ -434,7 +435,7 @@ class generate_pdf:
 			single_struttura_sheet = single_Struttura_pdf_sheet(records[i])
 			elements.append(single_struttura_sheet.create_sheet())
 			elements.append(PageBreak())
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'scheda_Struttura_'+time.strftime("%Y%m%d_%H_%M_%S_")+'.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'Features-Form_'+time.strftime("%Y%m%d_%H_%M_%S_")+'.pdf')
 		f = open(filename, "wb")
 		doc = SimpleDocTemplate(f)
 		doc.build(elements, canvasmaker=NumberedCanvas_USsheet)

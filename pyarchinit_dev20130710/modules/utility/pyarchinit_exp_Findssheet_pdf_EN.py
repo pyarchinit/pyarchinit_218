@@ -173,28 +173,28 @@ class single_Finds_pdf_sheet:
 		#format labels
 
 		#0 row
-		intestazione = Paragraph("<b>SCHEDA INVENTARIO REPERTI<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
+		intestazione = Paragraph("<b>List Sample Form<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
 		intestazione2 = Paragraph("<b>pyArchInit</b>", styNormal)
 
 		#1 row
-		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
+		sito = Paragraph("<b>Site</b><br/>"  + str(self.sito), styNormal)
 		area = Paragraph("<b>Area</b><br/>"  + str(self.area), styNormal)
-		us = Paragraph("<b>US</b><br/>"  + str(self.us), styNormal)
-		nr_inventario = Paragraph("<b>Nr. Inventario</b><br/>"  + str(self.numero_inventario), styNormal)
+		us = Paragraph("<b>SU</b><br/>"  + str(self.us), styNormal)
+		nr_inventario = Paragraph("<b>Nr. List</b><br/>"  + str(self.numero_inventario), styNormal)
 
 		#2 row
-		criterio_schedatura = Paragraph("<b>Criterio schedatura</b><br/>"  + self.criterio_schedatura, styNormal)
-		tipo_reperto = Paragraph("<b>Tipo reperto</b><br/>"  + self.tipo_reperto, styNormal)
-		definizione = Paragraph("<b>Definizione</b><br/>"  + self.definizione, styNormal)
+		criterio_schedatura = Paragraph("<b>Catalogue</b><br/>"  + self.criterio_schedatura, styNormal)
+		tipo_reperto = Paragraph("<b>Sample Type</b><br/>"  + self.tipo_reperto, styNormal)
+		definizione = Paragraph("<b>Definition</b><br/>"  + self.definizione, styNormal)
 
 		#3 row
-		stato_conservazione = Paragraph("<b>Stato Conservazione</b><br/>"  + self.stato_conservazione, styNormal)
-		datazione = Paragraph("<b>Datazione</b><br/>"  + self.datazione_reperto, styNormal)
+		stato_conservazione = Paragraph("<b>Preservation</b><br/>"  + self.stato_conservazione, styNormal)
+		datazione = Paragraph("<b>Dating</b><br/>"  + self.datazione_reperto, styNormal)
 		
 		#4 row
 		descrizione = ''
 		try:
-			descrizione = Paragraph("<b>Descrizione</b><br/>" + str(self.descrizione), styDescrizione)
+			descrizione = Paragraph("<b>Description</b><br/>" + str(self.descrizione), styDescrizione)
 		except:
 			pass
 
@@ -209,11 +209,11 @@ class single_Finds_pdf_sheet:
 						pass
 				else:
 					try:
-						elementi_reperto += ("<br/>Elemento rinvenuto: %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
+						elementi_reperto += ("<br/>Sample Find: %s, Units: %s, Quantity: %s") % (str(i[0]), str(i[1]), str(i[2]))
 					except:
 						pass
 
-		elementi_reperto = Paragraph("<b>Elementi reperto</b><br/>"  + elementi_reperto, styNormal)
+		elementi_reperto = Paragraph("<b>Sample</b><br/>"  + elementi_reperto, styNormal)
 
 		#6 row
 		misurazioni = ''
@@ -226,10 +226,10 @@ class single_Finds_pdf_sheet:
 						pass
 				else:
 					try:
-						misurazioni += ("<br/><b>Tipo di misura: %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[2]), str(i[1]))
+						misurazioni += ("<br/><b>Measure Type: %s, Units: %s, Quantity: %s") % (str(i[0]), str(i[2]), str(i[1]))
 					except:
 						pass
-		misurazioni = Paragraph("<b>Misurazioni</b><br/>"  + misurazioni, styNormal)
+		misurazioni = Paragraph("<b>Measureaments</b><br/>"  + misurazioni, styNormal)
 
 		#7 row
 		tecnologie = ''
@@ -242,10 +242,10 @@ class single_Finds_pdf_sheet:
 						pass
 				else:
 					try:
-						tecnologie += ("<br/><b>Tipo tecnologia: %s, Posizione: %s, Tipo quantita': %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
+						tecnologie += ("<br/><b>Technology: %s, Position: %s, Quantity Type': %s, Units: %s, Quantity: %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
 					except:
 						pass
-		tecnologie = Paragraph("<b>Tecnologie</b><br/>"  + tecnologie, styNormal)
+		tecnologie = Paragraph("<b>Technology</b><br/>"  + tecnologie, styNormal)
 
 		#8 row
 		rif_biblio = ''
@@ -258,26 +258,26 @@ class single_Finds_pdf_sheet:
 						pass
 				else:
 					try:
-						rif_biblio += ("<b>Autore: %s, Anno: %s, Titolo: %s, Pag.: %s, Fig.: %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
+						rif_biblio += ("<b>Author: %s, Year: %s, Title: %s, Pag.: %s, Fig.:") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
 					except:
 						pass
 
-		rif_biblio = Paragraph("<b>Riferimenti bibliografici</b><br/>"  + rif_biblio, styNormal)
+		rif_biblio = Paragraph("<b>Bibliography</b><br/>"  + rif_biblio, styNormal)
 
 		#9 row
-		riferimenti_stratigrafici = Paragraph("<b>Riferimenti stratigrafici</b>",styNormal)
+		riferimenti_stratigrafici = Paragraph("<b>Stratigraphic Reletionship</b>",styNormal)
 
 		#10 row
 		area = Paragraph("<b>Area</b><br/>" + self.area,styNormal)
-		us = Paragraph("<b>US</b><br/>" + self.us,styNormal)
+		us = Paragraph("<b>SU</b><br/>" + self.us,styNormal)
 
 		#11 row
-		riferimenti_magazzino = Paragraph("<b>Riferimenti magazzino</b>",styNormal)
+		riferimenti_magazzino = Paragraph("<b>Store</b>",styNormal)
 
 		#12 row
-		lavato  = Paragraph("<b>Lavato</b><br/>" + self.lavato,styNormal)
-		nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>" + self.nr_cassa,styNormal)
-		luogo_conservazione = Paragraph("<b>Luogo di conservazione</b><br/>" + self.luogo_conservazione,styNormal)
+		lavato  = Paragraph("<b>Woshed</b><br/>" + self.lavato,styNormal)
+		nr_cassa = Paragraph("<b>Nr. Box</b><br/>" + self.nr_cassa,styNormal)
+		luogo_conservazione = Paragraph("<b>Preservation Place</b><br/>" + self.luogo_conservazione,styNormal)
 
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
@@ -375,14 +375,14 @@ class generate_pdf:
 		today = now.strftime("%d-%m-%Y")
 		return today
 
-	def build_Finds_sheets(self, records):
-                import time
+	def build_Finds_sheets_en(self, records):
+		import time
 		elements = []
 		for i in range(len(records)):
 			single_finds_sheet = single_Finds_pdf_sheet(records[i])
 			elements.append(single_finds_sheet.create_sheet())
 			elements.append(PageBreak())
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'scheda_Finds_'+time.strftime("%Y%m%d_%H_%M_%S_")+'.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'Form_Finds_'+time.strftime("%Y%m%d_%H_%M_%S_")+'.pdf')
 		f = open(filename, "wb")
 		doc = SimpleDocTemplate(f)
 		doc.build(elements, canvasmaker=NumberedCanvas_Findssheet)

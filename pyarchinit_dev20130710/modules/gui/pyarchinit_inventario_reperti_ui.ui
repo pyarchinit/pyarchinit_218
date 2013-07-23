@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>697</width>
-    <height>644</height>
+    <width>797</width>
+    <height>638</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -58,6 +58,9 @@
               <widget class="QPushButton" name="pushButton_first_rec">
                <property name="toolTip">
                 <string>First rec</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string/>
@@ -1122,7 +1125,7 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="0" >
+           <item row="1" column="0">
             <widget class="QLabel" name="label_9">
              <property name="text">
               <string>Forme massime</string>
@@ -1156,14 +1159,14 @@
            <item row="3" column="1">
             <widget class="QLineEdit" name="lineEdit_peso"/>
            </item>
-           <item row="3" column="0" >
+           <item row="3" column="0">
             <widget class="QLabel" name="label_14">
              <property name="text">
               <string>Peso</string>
              </property>
             </widget>
            </item>
-           <item row="4" column="0" >
+           <item row="4" column="0">
             <widget class="QLabel" name="label_15">
              <property name="text">
               <string>Diametro orlo</string>
@@ -1184,7 +1187,7 @@
              </property>
             </widget>
            </item>
-           <item row="5" column="0" >
+           <item row="5" column="0">
             <widget class="QLabel" name="label_24">
              <property name="text">
               <string>E.v.e. orlo</string>
@@ -1942,7 +1945,7 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
+         <item row="1" column="0" colspan="2">
           <widget class="QPushButton" name="pushButton_exp_pdf_sheet">
            <property name="maximumSize">
             <size>
@@ -1951,22 +1954,16 @@
             </size>
            </property>
            <property name="text">
-            <string>Exp schede Pdf </string>
+            <string>Exp schede Pdf (italiano)</string>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <spacer name="horizontalSpacer_4">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+         <item row="2" column="0">
+          <widget class="QPushButton" name="pushButton_exp_pdf_sheet_en">
+           <property name="text">
+            <string>Exp form PDF (English)</string>
            </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>590</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+          </widget>
          </item>
         </layout>
        </widget>

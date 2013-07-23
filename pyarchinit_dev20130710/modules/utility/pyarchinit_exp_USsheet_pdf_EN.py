@@ -215,22 +215,22 @@ class single_US_pdf_sheet:
 		#format labels
 
 		#0 row
-		intestazione = Paragraph("<b>SCHEDA DI UNIT&Agrave; STRATIGRAFICA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
-		intestazione2 = Paragraph("<b>Ditta esecutrice: </b><br/>pyarchinit", styNormal)
+		intestazione = Paragraph("<b>Stratigraphic Unit Form<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
+		intestazione2 = Paragraph("<b>Company Carrying: </b><br/>www.unife.it", styNormal)
 
 		#1 row
-		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
+		sito = Paragraph("<b>Site</b><br/>"  + str(self.sito), styNormal)
 		area = Paragraph("<b>Area</b><br/>"  + str(self.area), styNormal)
-		us = Paragraph("<b>US</b><br/>"  + str(self.us), styNormal)
+		us = Paragraph("<b>SU</b><br/>"  + str(self.us), styNormal)
 
 		#2 row
-		d_stratigrafica = Paragraph("<b>Definizione stratigrafica</b><br/>"  + self.d_stratigrafica, styNormal)
-		d_interpretativa = Paragraph("<b>Definizione Interpretativa</b><br/>"  + self.d_interpretativa, styNormal)
+		d_stratigrafica = Paragraph("<b>Startigraphic Definition</b><br/>"  + self.d_stratigrafica, styNormal)
+		d_interpretativa = Paragraph("<b>Startigraphic Interpretation</b><br/>"  + self.d_interpretativa, styNormal)
 
 		#3 row
-		stato_conservazione = Paragraph("<b>Stato di conservazione</b><br/>" + self.stato_di_conservazione, styNormal)
-		consistenza = Paragraph("<b>Consistenza</b><br/>"  + self.consistenza, styNormal)
-		colore = Paragraph("<b>Colore</b><br/>"  + self.colore, styNormal)
+		stato_conservazione = Paragraph("<b>Preservation</b><br/>" + self.stato_di_conservazione, styNormal)
+		consistenza = Paragraph("<b>Consistency</b><br/>"  + self.consistenza, styNormal)
+		colore = Paragraph("<b>Color</b><br/>"  + self.colore, styNormal)
 
 		#4 row
 		inclusi_list = eval(self.inclusi)
@@ -246,7 +246,7 @@ class single_US_pdf_sheet:
 					inclusi += ', ' + str(i[0])
 				except:
 					pass
-		inclusi = Paragraph("<b>Inclusi</b><br/>"  + inclusi, styNormal)
+		inclusi = Paragraph("<b>Inclusions</b><br/>"  + inclusi, styNormal)
 		campioni_list = eval(self.campioni)
 		campioni = ''
 		for i in eval(self.campioni):
@@ -260,73 +260,73 @@ class single_US_pdf_sheet:
 					campioni += ', ' + str(i[0])
 				except:
 					pass
-		campioni = Paragraph("<b>Campioni</b><br/>"  + campioni, styNormal)
-		formazione = Paragraph("<b>Formazione</b><br/>"  + self.formazione, styNormal)
+		campioni = Paragraph("<b>Samples</b><br/>"  + campioni, styNormal)
+		formazione = Paragraph("<b>Formation</b><br/>"  + self.formazione, styNormal)
 
 		#05 row
 		descrizione = ''
 		try:
-			descrizione = Paragraph("<b>Descrizione</b><br/>" + self.descrizione, styDescrizione)
+			descrizione = Paragraph("<b>Description</b><br/>" + self.descrizione, styDescrizione)
 		except:
 			pass
 
 		interpretazione = ''
 		try:
-			interpretazione = Paragraph("<b>Interpretazione</b><br/>" + self.interpretazione,styDescrizione)
+			interpretazione = Paragraph("<b>Interpretation</b><br/>" + self.interpretazione,styDescrizione)
 		except:
 			pass
 
 		#6 row
-		attivita = Paragraph("<b>Attivit&agrave;</b><br/>" + self.attivita,styNormal)
-		struttura = Paragraph("<b>Struttura</b><br/>" + self.struttura,styNormal)
-		quota_min = Paragraph("<b>Quota Min:</b><br/>"+ self.quota_min,styNormal)
-		quota_max = Paragraph("<b>Quota Max:</b><br/>"+ self.quota_max,styNormal)
+		attivita = Paragraph("<b>Activity</b><br/>" + self.attivita,styNormal)
+		struttura = Paragraph("<b>Features</b><br/>" + self.struttura,styNormal)
+		quota_min = Paragraph("<b>Level Min:</b><br/>"+ self.quota_min,styNormal)
+		quota_max = Paragraph("<b>Level Max:</b><br/>"+ self.quota_max,styNormal)
 		
 		#7 row
-		periodizzazione = Paragraph("<b>PERIODIZZAZIONE</b>",styNormal)
+		periodizzazione = Paragraph("<b>Chronology</b>",styNormal)
 
 		#8 row
-		iniziale = Paragraph("<b>INIZIALE</b>",styNormal)
-		periodo_iniziale = Paragraph("<b>Periodo</b><br/>" + self.periodo_iniziale,styNormal)
-		fase_iniziale = Paragraph("<b>Fase</b><br/>" + self.fase_iniziale,styNormal)
-		finale = Paragraph("<b>FINALE</b>",styNormal)
-		periodo_finale = Paragraph("<b>Periodo</b><br/>" + self.periodo_finale,styNormal)
-		fase_finale = Paragraph("<b>Fase</b><br/>" + self.fase_finale,styNormal)
+		iniziale = Paragraph("<b>STARTING</b>",styNormal)
+		periodo_iniziale = Paragraph("<b>Period</b><br/>" + self.periodo_iniziale,styNormal)
+		fase_iniziale = Paragraph("<b>Phase</b><br/>" + self.fase_iniziale,styNormal)
+		finale = Paragraph("<b>END</b>",styNormal)
+		periodo_finale = Paragraph("<b>Period</b><br/>" + self.periodo_finale,styNormal)
+		fase_finale = Paragraph("<b>Phase</b><br/>" + self.fase_finale,styNormal)
 
 		#9 row
-		rapporti_stratigrafici = Paragraph("<b>RAPPORTI STRATIGRAFICI</b>",styNormal)
-		piante = Paragraph("<b>Planimetrie</b><br/>" + self.piante,styNormal)
+		rapporti_stratigrafici = Paragraph("<b>Stratigraphic Relationship</b>",styNormal)
+		piante = Paragraph("<b>Planimetry</b><br/>" + self.piante,styNormal)
 
 		#10
-		si_lega_a = Paragraph("<b>Si lega a</b><br/>" + self.si_lega_a,styNormal)
-		uguale_a = Paragraph("<b>Uguale a</b><br/>" + self.uguale_a,styNormal)
+		si_lega_a = Paragraph("<b>Connected to</b><br/>" + self.si_lega_a,styNormal)
+		uguale_a = Paragraph("<b>Corresponde to</b><br/>" + self.uguale_a,styNormal)
 
 		#11
-		copre = Paragraph("<b>Copre</b><br/>" + self.copre,styNormal)
-		coperto_da = Paragraph("<b>Coperto da</b><br/>" + self.coperto_da,styNormal)
+		copre = Paragraph("<b>Cover</b><br/>" + self.copre,styNormal)
+		coperto_da = Paragraph("<b>Covered by</b><br/>" + self.coperto_da,styNormal)
 
 		#12
-		riempie = Paragraph("<b>Riempie</b><br/>" + self.riempie,styNormal)
-		riempito_da = Paragraph("<b>Riempito da</b><br/>" + self.riempito_da,styNormal)
+		riempie = Paragraph("<b>Filling</b><br/>" + self.riempie,styNormal)
+		riempito_da = Paragraph("<b>Filled by</b><br/>" + self.riempito_da,styNormal)
 
 		#13
-		taglia = Paragraph("<b>Taglia</b><br/>" + self.taglia,styNormal)
-		tagliato_da = Paragraph("<b>Tagliato da</b><br/>" + self.tagliato_da,styNormal)
+		taglia = Paragraph("<b>Cut</b><br/>" + self.taglia,styNormal)
+		tagliato_da = Paragraph("<b>Cut by</b><br/>" + self.tagliato_da,styNormal)
 
 		#14
-		si_appoggia_a = Paragraph("<b>Si appoggia a</b><br/>" + self.si_appoggia_a,styNormal)
-		gli_si_appoggia = Paragraph("<b>Gli si appoggia</b><br/>" + self.gli_si_appoggia,styNormal)
+		si_appoggia_a = Paragraph("<b>Leans against</b><br/>" + self.si_appoggia_a,styNormal)
+		gli_si_appoggia = Paragraph("<b>Leans against to </b><br/>" + self.gli_si_appoggia,styNormal)
 
-		#15
-		scavato = Paragraph("<b>Scavato</b><br/>" + self.scavato,styNormal)
-		anno_di_scavo = Paragraph("<b>Anno di scavo</b><br/>" + self.anno_scavo,styNormal)
-		metodo_di_scavo = Paragraph("<b>Metodo di scavo</b><br/>" + self.metodo_di_scavo,styNormal)
-		data_schedatura  = Paragraph("<b>Data schedatura</b><br/>" + self.data_schedatura,styNormal)
-		schedatore = Paragraph("<b>Schedatore</b><br/>" + self.schedatore,styNormal)
+		#15T
+		scavato = Paragraph("<b>Excavated</b><br/>" + self.scavato,styNormal)
+		anno_di_scavo = Paragraph("<b>Excavetion year</b><br/>" + self.anno_scavo,styNormal)
+		metodo_di_scavo = Paragraph("<b>Excavetion metodology</b><br/>" + self.metodo_di_scavo,styNormal)
+		data_schedatura  = Paragraph("<b>Date of filing</b><br/>" + self.data_schedatura,styNormal)
+		schedatore = Paragraph("<b>Cataloger</b><br/>" + self.schedatore,styNormal)
 		
 		#16
 		sing_doc = self.documentazione_print
-		self.documentazione_print = Paragraph("<b>Documentazione</b><br/>"  + sing_doc, styNormal) 
+		self.documentazione_print = Paragraph("<b>Documentation</b><br/>"  + sing_doc, styNormal) 
 		
 		
 		
@@ -538,23 +538,23 @@ class US_index_pdf_sheet:
 		styNormal.spaceBefore = 20
 		styNormal.spaceAfter = 20
 		styNormal.alignment = 0 #LEFT
-		styNormal.fontSize = 9
+		styNormal.fontSize = 6
 
 		self.unzip_rapporti_stratigrafici()
 
 		area = Paragraph("<b>Area</b><br/>" + str(self.area),styNormal)
-		us = Paragraph("<b>US</b><br/>" + str(self.us),styNormal)
-		d_stratigrafica = Paragraph("<b>Def. Stratigr.</b><br/>" + str(self.d_stratigrafica),styNormal)
-		copre = Paragraph("<b>Copre</b><br/>" + str(self.copre),styNormal)
-		coperto_da = Paragraph("<b>Coperto da</b><br/>" + str(self.coperto_da),styNormal)
-		taglia = Paragraph("<b>Taglia</b><br/>" + str(self.taglia),styNormal)
-		tagliato_da = Paragraph("<b>Tagliato da</b><br/>" + str(self.tagliato_da),styNormal)
-		riempie = Paragraph("<b>Riempie</b><br/>" + str(self.riempie),styNormal)
-		riempito_da = Paragraph("<b>Riempito da</b><br/>" + str(self.riempito_da),styNormal)
-		si_appoggia_a = Paragraph("<b>Si appoggia a</b><br/>" + str(self.si_appoggia_a),styNormal)
-		gli_si_appoggia = Paragraph("<b>Gli si appoggia</b><br/>" + str(self.gli_si_appoggia),styNormal)
-		uguale_a = Paragraph("<b>Uguale a</b><br/>" + str(self.uguale_a),styNormal)
-		si_lega_a = Paragraph("<b>Si lega a</b><br/>" + str(self.si_lega_a),styNormal)
+		us = Paragraph("<b>SU</b><br/>" + str(self.us),styNormal)
+		d_stratigrafica = Paragraph("<b>Strat. Defin.</b><br/>" + str(self.d_stratigrafica),styNormal)
+		copre = Paragraph("<b>Cover</b><br/>" + str(self.copre),styNormal)
+		coperto_da = Paragraph("<b>Covered by</b><br/>" + str(self.coperto_da),styNormal)
+		taglia = Paragraph("<b>Cut</b><br/>" + str(self.taglia),styNormal)
+		tagliato_da = Paragraph("<b>Cut by</b><br/>" + str(self.tagliato_da),styNormal)
+		riempie = Paragraph("<b>Filling</b><br/>" + str(self.riempie),styNormal)
+		riempito_da = Paragraph("<b>Filled by</b><br/>" + str(self.riempito_da),styNormal)
+		si_appoggia_a = Paragraph("<b>Leans against</b><br/>" + str(self.si_appoggia_a),styNormal)
+		gli_si_appoggia = Paragraph("<b>Leanse against to</b><br/>" + str(self.gli_si_appoggia),styNormal)
+		uguale_a = Paragraph("<b>Corrisponde to</b><br/>" + str(self.uguale_a),styNormal)
+		si_lega_a = Paragraph("<b>Connected to</b><br/>" + str(self.si_lega_a),styNormal)
 
 		data = [area,
 				us,
@@ -609,14 +609,14 @@ class generate_pdf:
 		today = now.strftime("%d-%m-%Y")
 		return today
 
-	def build_US_sheets(self, records):
+	def build_US_sheets_en(self, records):
 		import time
 		elements = []
 		for i in range(len(records)):
 			single_us_sheet = single_US_pdf_sheet(records[i])
 			elements.append(single_us_sheet.create_sheet())
 			elements.append(PageBreak())
-		filename = ('%s%s%s') % (self.PDF_path, os.sep,'Schede-US_'+time.strftime("%Y%m%d_%H_%M_%S_")+'.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep,'SU-Form_'+time.strftime("%Y%m%d_%H_%M_%S_")+'.pdf')
 		f = open(filename, "wb")
 		doc = SimpleDocTemplate(f, pagesize=A4)
 		doc.build(elements, canvasmaker=NumberedCanvas_USsheet)
@@ -624,7 +624,7 @@ class generate_pdf:
 		#QMessageBox.warning(self, "Messaggio", "Esportazione completata", QMessageBox.Ok)
 
 
-	def build_index_US(self, records, sito):
+	def build_index_US_en(self, records, sito):
 		import time
 		styleSheet = getSampleStyleSheet()
 		styNormal = styleSheet['Normal']
@@ -632,7 +632,7 @@ class generate_pdf:
 		styH1 = styleSheet['Heading2']
 		data = self.datestrfdate()
 		lst = []
-		lst.append(Paragraph("<b>ELENCO UNIT&Agrave; STRATIGRAFICHE</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta esecutrice: </b>" % (sito, data), styH1))
+		lst.append(Paragraph("<b>Stratigraphic List</b><br/><b>Excavetion: %s <br/>Date: %s <br/>Company Carrying:</b>" % (sito, data), styH1))
 
 		table_data = []
 		for i in range(len(records)):
@@ -646,7 +646,7 @@ class generate_pdf:
 		lst.append(table_data_formatted)
 		lst.append(Spacer(0,2))
 
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'indice_us_'+time.strftime("%Y%m%d_%H_%M_%S_")+'.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'SU-Index_'+time.strftime("%Y%m%d_%H_%M_%S_")+'.pdf')
 		f = open(filename, "wb")
 
 		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)

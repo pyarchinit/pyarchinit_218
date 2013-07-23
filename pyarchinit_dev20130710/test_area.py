@@ -75,18 +75,18 @@ class Test_area:
 ##				#layerUS.loadNamedStyle(style_path)
 ##				QgsMapLayerRegistry.instance().addMapLayers([layerSito], True)
 
-	def run_test(self):
-		pass
-		#Inserire qui la propria funzione
-##		qr = qrcode.QRCode(
-##			version=1,
-##			error_correction=qrcode.constants.ERROR_CORRECT_L,
-##			box_size=10,
-##			border=4,
-##		)
-##		qr.add_data(str(self.data))
-##		qr.make(fit=True)
-##
-##		img = qr.make_image()
-##		file_path = self.REPORT_PATH + '/pyarchinit_qrcode.png'
-##		img.save(file_path)
+#	def run_test(self):
+#		pass
+#		#Inserire qui la propria funzione
+#		qr = qrcode.QRCode(
+#			version=1,
+#			error_correction=qrcode.constants.ERROR_CORRECT_L,
+#			box_size=10,
+#			border=4,
+#		)
+#		qr.add_data(str(self.data))
+#		qr.make(fit=True)
+#
+#		img = qr.make_image()
+#		file_path = self.REPORT_PATH + '/pyarchinit_qrcode.png'
+#		img.save(file_path)

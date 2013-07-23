@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_inventario_reperti_ui.ui'
 #
-# Created: Tue Jul 23 01:42:56 2013
+# Created: Tue Jul 23 01:31:35 2013
 #      by: PyQt4 UI code generator 4.7.2
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PyQt4 import QtCore, QtGui
 class Ui_DialogInventarioMateriali(object):
     def setupUi(self, DialogInventarioMateriali):
         DialogInventarioMateriali.setObjectName("DialogInventarioMateriali")
-        DialogInventarioMateriali.resize(797, 638)
+        DialogInventarioMateriali.resize(697, 644)
         DialogInventarioMateriali.setMinimumSize(QtCore.QSize(540, 400))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/images/finds.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -40,7 +40,6 @@ class Ui_DialogInventarioMateriali(object):
         self.gridLayout = QtGui.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
         self.pushButton_first_rec = QtGui.QPushButton(DialogInventarioMateriali)
-        self.pushButton_first_rec.setStyleSheet("None")
         self.pushButton_first_rec.setText("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/images/5_leftArrows.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)

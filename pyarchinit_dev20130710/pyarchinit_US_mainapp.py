@@ -44,7 +44,8 @@ except:
 from  pyarchinit_pyqgis import Pyarchinit_pyqgis, Order_layers
 from  sortpanelmain import SortPanelMain
 from  pyarchinit_db_manager import *
-from  pyarchinit_exp_USsheet_pdf import *
+
+
 from  delegateComboBox import *
 from  imageViewer import ImageViewer
 
@@ -680,7 +681,9 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def on_pushButton_exp_tavole_pressed(self):
 		conn = Connection()
 		conn_str = conn.conn_str()
-		if conn_str.find("postgres") == 1:
+		#QMessageBox.warning(self, "Messaggio", str(conn_str), QMessageBox.Ok)
+
+		if conn_str.find("postgresql") == 0:
 			PU = Print_utility(self.iface, self.DATA_LIST)
 			PU.first_batch_try("postgres")
 		else :
@@ -689,14 +692,30 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 
 	def on_pushButton_pdf_exp_pressed(self):
+		from  pyarchinit_exp_USsheet_pdf import *
 		US_pdf_sheet = generate_pdf()
 		data_list = self.generate_list_pdf()
 		US_pdf_sheet.build_US_sheets(data_list)
 
 	def on_pushButton_exp_index_us_pressed(self):
+		from  pyarchinit_exp_USsheet_pdf import *
 		US_index_pdf = generate_pdf()
 		data_list = self.generate_list_pdf()
 		US_index_pdf.build_index_US(data_list, data_list[0][0])
+
+	
+	def on_esportazione_su_en_pressed(self):
+		from  pyarchinit_exp_USsheet_pdf_EN import *
+		US_pdf_sheet_en = generate_pdf()
+		data_list= self.generate_list_pdf()
+		US_pdf_sheet_en.build_US_sheets_en(data_list)
+
+	def on_esportazione_index_en_pressed(self):
+		from  pyarchinit_exp_USsheet_pdf_EN import *
+		US_index_pdf_en = generate_pdf()
+		data_list = self.generate_list_pdf()
+		US_index_pdf_en.build_index_US_en(data_list, data_list[0][0])
+	
 
 	def on_pushButton_export_matrix_pressed(self):
 		data = []

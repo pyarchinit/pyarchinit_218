@@ -24,12 +24,12 @@ from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 import PyQt4.QtGui
-
+from PyQt4 import QtXml
 from qgis.core import *
 from qgis.gui import *
 
 from settings import *
-
+#import utils, math, time, os
 #from ui_tester import Ui_tester
 # create the dialog for zoom to point
 
@@ -41,7 +41,7 @@ class Print_utility:
 	FILEPATH = os.path.dirname(__file__)
 	LAYER_STYLE_PATH = ('%s%s%s%s') % (FILEPATH, os.sep, 'styles', os.sep)
 	LAYER_STYLE_PATH_SPATIALITE = ('%s%s%s%s') % (FILEPATH, os.sep, 'styles_spatialite', os.sep)
-	SRS = 3004
+	SRS = 4326
 	
 	layerUS = ""
 	layerQuote = ""
@@ -68,17 +68,18 @@ class Print_utility:
 		#self.us = us
 		self.canvas = self.iface.mapCanvas()
 		# set host name, port, database name, username and password
-
+		
 	"""
 	def on_pushButton_runTest_pressed(self):
 		self.first_batch_try()
     """
 
 	def first_batch_try(self, server):
-		#f = open("/test_print_2.txt", "w")
-		#f.write(str(self.sito))
-		#f.close()
-		if server == 'postgres':
+		self.server = server
+		##		f = open("C:\Users\Windows\pyarchinit_Report_folder\test.txt", "w")
+		##		f.write(str(server))
+		##		f.close()
+		if self.server == 'postgres':
 			for i in range(len(self.data)):
 				test = self.charge_layer_postgis(self.data[i].sito, self.data[i].area, self.data[i].us)
 				self.us = self.data[i].us
@@ -89,9 +90,15 @@ class Print_utility:
 						self.print_map(tav_num)
 					else:
 						self.remove_layer()
-				else:
-					pass
-		elif server == 'sqlite':
+			if test == 0:
+				Report_path = ('%s%s%s') % (self.HOME, os.sep, "pyarchinit_Report_folder/report_errori.txt")
+				f = open(Report_path, "w")
+				f.write(str("Presenza di errori nel layer"))
+				f.close()
+
+
+
+		elif self.server == 'sqlite':
 			for i in range(len(self.data)):
 				test = self.charge_layer_sqlite(self.data[i].sito, self.data[i].area, self.data[i].us)
 				self.us = self.data[i].us
@@ -170,12 +177,12 @@ class Print_utility:
 
 	def print_map(self, tav_num):
 		self.tav_num = tav_num
-
-		mapRenderer = self.iface.mapCanvas().mapRenderer()
 		
+		mapRenderer = self.iface.mapCanvas().mapRenderer()
+
 		c = QgsComposition(mapRenderer)
 		c.setPlotStyle(QgsComposition.Print)
-
+		
 		#map - this item tells the libraries where to put the map itself. Here we create a map and stretch it over the whole paper size:
 		x, y = 0, 0 #angolo 0, o in alto a sx
 
@@ -196,23 +203,30 @@ class Print_utility:
 		else:
 			width, height = self.width*1.2, self.height*1.2  #self.width*10, self.height*10 da un valore alla larghezza e altezza del foglio aumentato di 5 per dare un margine
 
-		dpi = 100 #viene settata la risoluzione di stampa
+		dpi = 300 #viene settata la risoluzione di stampa
 
 		c.setPaperSize(width, height) #setta le dimensioni della pagina
 		composerMap = QgsComposerMap(c, x, y, width, height) #crea un mapComposer passandogli la classere Composition che a sua volta ha incapsulato con la classe mapRenderer il canvas corrente
 		rect = self.getMapExtentFromMapCanvas(c.paperWidth(), c.paperHeight(), 20.0) #ricava la mappa in scala da inserire nel compositore passando le dimensioni di pagina in mm e ricavandoli in punti
 		composerMap.setNewExtent(rect) #setta l'estensione della mappa
 		c.addItem(composerMap) #aggiunge la mappa alla composizione c
-
+		
+		# Creare la legenda
+                legend = QgsComposerLegend(c)
+		legend.model().setLayerSet(mapRenderer.layerSet())
+		legend.setItemPosition(1,1)#settare la posizione
+		legend.setFrame(True)#aggiungere il contorno
+		c.addItem(legend)
+		
 
 		intestazioneLabel = QgsComposerLabel(c)
-		txt = "Tavola %s - US:%d" % (self.tav_num+1, self.us)
+		txt = "[Tavola %s - US:%d]" % (self.tav_num+1, self.us)
 		intestazioneLabel.setText(txt)
 		intestazioneLabel.adjustSizeToText()
 		# set label 1cm from the top and 2cm from the left of the page
 		#intestazioneLabel.setItemPosition(1,0)
 		# set both label's position and size (width 10cm, height 3cm)
-		intestazioneLabel.setItemPosition(1,0)
+		intestazioneLabel.setItemPosition(28,3.5)
 		#A frame is drawn around each item by default. How to remove the frame:
 		intestazioneLabel.setFrame(False)
 		c.addItem(intestazioneLabel)
@@ -222,12 +236,12 @@ class Print_utility:
 		scaleLabel.setText(txt)
 		scaleLabel.adjustSizeToText()
 		# set label 1cm from the top and 2cm from the left of the page
-		scaleLabel.setItemPosition(1,5)
+		scaleLabel.setItemPosition(100,7)
 		# set both label's position and size (width 10cm, height 3cm)
 		#composerLabel.setItemPosition(20,10, 100, 30)
 		#A frame is drawn around each item by default. How to remove the frame:
 		scaleLabel.setFrame(False)
-		c.addItem(scaleLabel)
+		#c.addItem(scaleLabel)
 
 
 
@@ -236,15 +250,16 @@ class Print_utility:
 		scaleBarItem.setStyle('Numeric') # optionally modify the style
 		scaleBarItem.setComposerMap(composerMap)
 		scaleBarItem.applyDefaultSize()
-		scaleBarItem.setItemPosition(10,5)
+		scaleBarItem.setItemPosition(110,7)
 		scaleBarItem.setFrame(False)
-		c.addItem(scaleBarItem)
+		#c.addItem(scaleBarItem)
 		
 		#ff = open("/test_scaleBar.txt", "w")
 		#ff.write(str(dir(scaleBarItem)))
 		#ff.close()
 
-
+		
+                   
 		"""
 		#aggiunge la scale bar
 		scaleBarLine = QgsComposerScaleBar(c)
@@ -267,9 +282,17 @@ class Print_utility:
 
 		# create output image and initialize it
 		image = QImage(QSize(width_point, height_point), QImage.Format_ARGB32)
+		# set image's background color
 		image.setDotsPerMeterX(dpmm * 1000)
 		image.setDotsPerMeterY(dpmm * 1000)
 		image.fill(0)
+
+
+
+		
+
+
+		
 
 		# render the composition
 		imagePainter = QPainter(image)
@@ -278,10 +301,12 @@ class Print_utility:
 		c.render(imagePainter, targetArea, sourceArea)
 		imagePainter.end()
 		
+		
+		
 		MAPS_path = ('%s%s%s') % (self.HOME, os.sep, "pyarchinit_MAPS_folder")
-		tav_name = ("Tavola_%d_us_%d.png") % (self.tav_num+1, self.us)
+		tav_name = ("Tavola_%d_us_%d.jpg") % (self.tav_num+1, self.us)
 		filename_png = ('%s%s%s') % (MAPS_path, os.sep, tav_name)
-		image.save(str(filename_png), "png")
+		image.save(str(filename_png), "jpg")
 		
 		self.remove_layer()
 		
@@ -309,7 +334,7 @@ class Print_utility:
 		pdfPainter.end()
 		"""
 
-	def open_connection_postis(self):
+	def open_connection_postgis(self):
 		cfg_rel_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'config.cfg')
 		file_path = ('%s%s') % (self.HOME, cfg_rel_path)
 		conf = open(file_path, "r")
@@ -342,7 +367,7 @@ class Print_utility:
 
 		db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
 
-		srs = QgsCoordinateReferenceSystem(3004, QgsCoordinateReferenceSystem.PostgisCrsId)
+		srs = QgsCoordinateReferenceSystem(100000, QgsCoordinateReferenceSystem.PostgisCrsId)
 
 
 		gidstr = ("scavo_s = '%s' and area_s = '%s' and us_s = '%d'") % (sito, area, us)
@@ -393,9 +418,9 @@ class Print_utility:
 ##			QgsMapLayerRegistry.instance().addMapLayer( self.layerGriglia, True)
 
 	def charge_layer_postgis(self, sito, area, us):
-		self.open_connection()
+		self.open_connection_postgis()
 		
-		srs = QgsCoordinateReferenceSystem(3004, QgsCoordinateReferenceSystem.PostgisCrsId)
+		srs = QgsCoordinateReferenceSystem(4326, QgsCoordinateReferenceSystem.PostgisCrsId)
 
 		gidstr = ("scavo_s = '%s' and area_s = '%s' and us_s = '%d'") % (sito, area, us)
 
@@ -413,13 +438,6 @@ class Print_utility:
 			QgsMapLayerRegistry.instance().addMapLayer( self.layerUS, True)
 		else:
 			return 0
-
-		if self.layerCL.isValid() == True:
-			self.layerCL.setCrs(srs)
-			self.CLayerId = self.layerCL.getLayerID()
-			style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'caratterizzazioni_linee.qml')
-			self.layerCL.loadNamedStyle(style_path)
-			QgsMapLayerRegistry.instance().addMapLayer(self.layerCL, True)
 
 		gidstr = ("sito_q = '%s' and area_q = '%s' and us_q = '%d'") % (sito, area, us)
 
