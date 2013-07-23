@@ -47,7 +47,9 @@ except:
 
 from  sortpanelmain import SortPanelMain
 
-from pyarchinit_PDF_administrator_mainapp import pyarchinit_PDFAdministrator
+from pyarchinit_PDF_administrator_mainapp import pyarchinit_PDFAdministrator  #sistema sperimentale non attivo
+from  pyarchinit_exp_Periodizzazionesheet_pdf import *
+
 class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 	MSG_BOX_TITLE = "PyArchInit - Scheda Periodizzazione"
 	DATA_LIST = []
@@ -198,12 +200,17 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 		self.comboBox_sito.addItems(sito_vl)
 
 	def on_pushButton_pdf_exp_pressed(self):
+		Periodizzazione_pdf_sheet = generate_pdf() #deve essere importata la classe
+		data_list = self.generate_list_pdf() #deve essere aggiunta la funzione
+		Periodizzazione_pdf_sheet.build_Periodizzazione_sheets(data_list) #deve essere aggiunto il file per generare i pdf
+		#codice per l'esportazione sperimentale dei PDF #
+		"""
 		dlg = pyarchinit_PDFAdministrator()
 		dlg.set_table_name(self.TABLE_NAME)
 		dlg.connect()
 		msg = QMessageBox.warning(self,'ATTENZIONE',"Vuoi creare un nuovo layout PFD?", QMessageBox.Cancel,1)
 		dlg.connect()
-##		dlg.on_pushButton_connect_pressed()
+		##		dlg.on_pushButton_connect_pressed()
 		if msg == 1:
 			dlg.on_pushButton_new_rec_pressed()
 			dlg.charge_list()
@@ -215,6 +222,47 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 		dlg.add_id_list(id_list)
 
 		dlg.exec_()
+		"""
+	def generate_list_pdf(self):
+		periodo = ""
+		fase = ""
+		cron_iniz = ""
+		cron_fin = ""
+		
+		data_list = []
+		for i in range(len(self.DATA_LIST)):
+			
+			if self.DATA_LIST[i].periodo == None:
+				periodo = ""
+			else:
+				periodo = str(self.DATA_LIST[i].periodo)
+			
+			if self.DATA_LIST[i].fase == None:
+				fase = ""
+			else:
+				fase = str(self.DATA_LIST[i].fase)
+				
+			if self.DATA_LIST[i].cron_iniziale == None:
+				cron_iniz = ""
+			else:
+				cron_iniz = str(self.DATA_LIST[i].cron_iniziale)
+				
+			if self.DATA_LIST[i].cron_finale == None:
+				cron_fin = ""
+			else:
+				cron_fin = str(self.DATA_LIST[i].cron_finale)
+			
+			
+			data_list.append([
+			str(self.DATA_LIST[i].sito), 										#1 - Sito
+			str(periodo),															#2 - Area
+			str(fase),																#3 - US
+			str(cron_iniz),															#4 - definizione stratigrafica
+			str(cron_fin),															#5 - definizione intepretata
+			str(self.DATA_LIST[i].datazione_estesa),						#6 - descrizione
+			unicode(self.DATA_LIST[i].descrizione)						#7 - interpretazione
+		])
+		return data_list
 
 	#buttons functions
 	def on_pushButton_sort_pressed(self):
