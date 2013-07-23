@@ -55,6 +55,35 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
 			
 
 	
+<<<<<<< HEAD
+=======
+
+	def on_backupsqlite_pressed (self):
+		import time
+		import shutil
+
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+		conn_import = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder/pyarchinit_db.sqlite')
+		conn_export = ('%s%s%s') % (home, os.sep, 'pyarchinit_db_beckup/pyarchinit_db_'+time.strftime('%Y%m%d_%H_%M_%S_')+'.sqlite')
+		backupdir = conn_export
+		
+
+		shutil.copy(conn_import,conn_export)
+		
+		barra = QtGui.QProgressBar(self)
+		barra.show()
+		barra.setMinimum(0)
+		barra.setMaximum(9)
+		for a in range(10):
+			time.sleep(1)
+			barra.setValue(a)
+
+
+
+>>>>>>> 027393c70066aa9756ccf509c3f63dcd45fb5356
 	def on_beckup_pressed (self):
                 from pyarchinit_OS_utility import *
                 from time import gmtime, strftime
