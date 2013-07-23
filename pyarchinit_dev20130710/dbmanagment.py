@@ -55,8 +55,6 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
 			
 
 	
-<<<<<<< HEAD
-=======
 
 	def on_backupsqlite_pressed (self):
 		import time
@@ -80,10 +78,9 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
 		for a in range(10):
 			time.sleep(1)
 			barra.setValue(a)
+			
 
 
-
->>>>>>> 027393c70066aa9756ccf509c3f63dcd45fb5356
 	def on_beckup_pressed (self):
                 from pyarchinit_OS_utility import *
                 from time import gmtime, strftime
@@ -223,9 +220,6 @@ if __name__ == "__main__":
 	ui.show()
 	barra.show()
 	sys.exit(app.exec_())
-		
-
-	
 		
 
 	
