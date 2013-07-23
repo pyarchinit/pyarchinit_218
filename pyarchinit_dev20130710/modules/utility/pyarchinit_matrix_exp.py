@@ -48,13 +48,13 @@ class HARRIS_MATRIX_EXP:
 		#G.edge_attr['color'] = 'blue'
 
 		G.node_attr['shape']='box'
-		#G.node_attr['style']='strocked' 
+		G.node_attr['style']='strocked' 
 		G.node_attr['color']='red'
 
 		for i in self.periodi:
 			G.subgraph(nbunch=i[0], 
 			name=i[1],
-			#style='strocked',
+			style='strocked',
 			shape = 'square',
 			color='blue',
 			label=i[2],

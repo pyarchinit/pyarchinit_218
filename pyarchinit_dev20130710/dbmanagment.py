@@ -55,43 +55,6 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
 			
 
 	
-
-	def on_backupsqlite_pressed (self):
-		import sqlite3
-		import apsw
-		import time
-
-
-		if os.name == 'posix':
-			home = os.environ['HOME']
-		elif os.name == 'nt':
-			home = os.environ['HOMEPATH']
-		conn_import = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder/pyarchinit_db.sqlite')
-		conn_export = ('%s%s%s') % (home, os.sep, 'pyarchinit_db_beckup/pyarchinit_db')
-		backupdir = conn_export
-		
-		_connection = apsw.Connection(conn_import)
-		connection = sqlite3.connect(_connection)
-		destdb = apsw.Connection(conn_export+time.strftime('%Y%m%d_%H_%M_%S.sqlite'))
-		#try:
-		#app = QtGui.QApplication(sys.argv)
-		barra = QtGui.QProgressBar(self)
-		barra.show()
-		barra.setMinimum(0)
-		barra.setMaximum(9)
-		for a in range(10):
-			time.sleep(1)
-			barra.setValue(a)
-		with destdb.backup("main", _connection, "main") as backup:
-			while not backup.done:
-			    backup.step(100)
-				#QMessageBox.warning(self, "Messaggio", "Backup completato", QMessageBox.Ok)
-                #except Exception, e:
-			#QMessageBox.warning(self, "Messaggio", "Backup fallito!!" + str(e), QMessageBox.Ok)
-		    	#connection.close()
-
-
-
 	def on_beckup_pressed (self):
                 from pyarchinit_OS_utility import *
                 from time import gmtime, strftime

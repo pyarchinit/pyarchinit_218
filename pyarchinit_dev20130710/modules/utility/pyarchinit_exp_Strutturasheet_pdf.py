@@ -405,7 +405,63 @@ class US_index_pdf_sheet:
 						self.gli_si_appoggia += ', ' + str(rapporto[1])
 
 
-	
+	def getTable(self):
+		styleSheet = getSampleStyleSheet()
+		styNormal = styleSheet['Normal']
+		styNormal.spaceBefore = 20
+		styNormal.spaceAfter = 20
+		styNormal.alignment = 0 #LEFT
+		styNormal.fontSize = 9
+
+		self.unzip_rapporti_stratigrafici()
+
+		area = Paragraph("<b>Area</b><br/>" + str(self.area),styNormal)
+		us = Paragraph("<b>US</b><br/>" + str(self.us),styNormal)
+		d_stratigrafica = Paragraph("<b>Def. Stratigr.</b><br/>" + str(self.d_stratigrafica),styNormal)
+		copre = Paragraph("<b>Copre</b><br/>" + str(self.copre),styNormal)
+		coperto_da = Paragraph("<b>Coperto da</b><br/>" + str(self.coperto_da),styNormal)
+		taglia = Paragraph("<b>Taglia</b><br/>" + str(self.taglia),styNormal)
+		tagliato_da = Paragraph("<b>Tagliato da</b><br/>" + str(self.tagliato_da),styNormal)
+		riempie = Paragraph("<b>Riempie</b><br/>" + str(self.riempie),styNormal)
+		riempito_da = Paragraph("<b>Riempito da</b><br/>" + str(self.riempito_da),styNormal)
+		si_appoggia_a = Paragraph("<b>Si appoggia a</b><br/>" + str(self.si_appoggia_a),styNormal)
+		gli_si_appoggia = Paragraph("<b>Gli si appoggia</b><br/>" + str(self.gli_si_appoggia),styNormal)
+		uguale_a = Paragraph("<b>Uguale a</b><br/>" + str(self.uguale_a),styNormal)
+		si_lega_a = Paragraph("<b>Si lega a</b><br/>" + str(self.si_lega_a),styNormal)
+
+		data = [area,
+				us,
+				d_stratigrafica,
+				copre,
+				coperto_da,
+				taglia,
+				tagliato_da,
+				riempie,
+				riempito_da,
+				si_appoggia_a,
+				gli_si_appoggia,
+				uguale_a,
+				si_lega_a]
+
+		"""
+		for i in range(20):
+			data.append([area = Paragraph("<b>Area</b><br/>" + str(area),styNormal),
+						us = Paragraph("<b>US</b><br/>" + str(us),styNormal),
+						copre = Paragraph("<b>Copre</b><br/>" + str(copre),styNormal),
+						coperto_da = Paragraph("<b>Coperto da</b><br/>" + str(coperto_da),styNormal),
+						taglia = Paragraph("<b>Taglia</b><br/>" + str(taglia),styNormal),
+						tagliato_da = Paragraph("<b>Tagliato da</b><br/>" + str(tagliato_da),styNormal),
+						riempie = Paragraph("<b>Riempie</b><br/>" + str(riempie),styNormal),
+						riempito_da = Paragraph("<b>Riempito da</b><br/>" + str(riempito_da),styNormal),
+						si_appoggia_a = Paragraph("<b>Si appoggia a</b><br/>" + str(si_appoggia_a),styNormal),
+						gli_si_appoggia = Paragraph("<b>Gli si appoggia</b><br/>" + str(gli_si_appoggi),styNormal),
+						uguale_a = Paragraph("<b>Uguale a</b><br/>" + str(uguale_a),styNormal),
+						si_lega_a = Paragraph("<b>Si lega a</b><br/>" + str(si_lega_a),styNormal)])
+		"""
+		#t = Table(data,  colWidths=55.5)
+
+		return data
+
 	def makeStyles(self):
 		styles =TableStyle([('GRID',(0,0),(-1,-1),0.0,colors.black),('VALIGN', (0,0), (-1,-1), 'TOP')
 		])  #finale
@@ -414,7 +470,6 @@ class US_index_pdf_sheet:
 
 
 class generate_pdf:
-	
 	if os.name == 'posix':
 		HOME = os.environ['HOME']
 	elif os.name == 'nt':
@@ -428,16 +483,42 @@ class generate_pdf:
 		return today
 
 	def build_Struttura_sheets(self, records):
-		import time
 		elements = []
 		for i in range(len(records)):
 			single_struttura_sheet = single_Struttura_pdf_sheet(records[i])
 			elements.append(single_struttura_sheet.create_sheet())
 			elements.append(PageBreak())
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'scheda_Struttura_'+time.strftime("%Y%m%d_%H_%M_%S_")+'.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'scheda_Struttura.pdf')
 		f = open(filename, "wb")
 		doc = SimpleDocTemplate(f)
 		doc.build(elements, canvasmaker=NumberedCanvas_USsheet)
 		f.close()
 
-	
+	def build_index_US(self, records, sito):
+		styleSheet = getSampleStyleSheet()
+		styNormal = styleSheet['Normal']
+		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
+		styH1 = styleSheet['Heading2']
+		data = self.datestrfdate()
+		lst = []
+		lst.append(Paragraph("<b>ELENCO UNITA' STRATIGRAFICHE</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH1))
+
+		table_data = []
+		for i in range(len(records)):
+			exp_index = US_index_pdf_sheet(records[i])
+			table_data.append(exp_index.getTable())
+
+		styles = exp_index.makeStyles()
+		table_data_formatted = Table(table_data,  colWidths=60)
+		table_data_formatted.setStyle(styles)
+
+		lst.append(table_data_formatted)
+		lst.append(Spacer(0,2))
+
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'indice_us.pdf')
+		f = open(filename, "wb")
+
+		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
+		doc.build(lst, canvasmaker=NumberedCanvas_USindex)
+
+		f.close()

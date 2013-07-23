@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>666</width>
-    <height>285</height>
+    <width>652</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,21 +16,21 @@
   <widget class="QPushButton" name="beckup">
    <property name="geometry">
     <rect>
-     <x>350</x>
-     <y>70</y>
+     <x>420</x>
+     <y>60</y>
      <width>131</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>Backup postgres</string>
+    <string>Backup pyarchinit</string>
    </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>-10</y>
+     <x>50</x>
+     <y>0</y>
      <width>291</width>
      <height>51</height>
     </rect>
@@ -43,7 +43,7 @@
    <property name="geometry">
     <rect>
      <x>440</x>
-     <y>230</y>
+     <y>240</y>
      <width>93</width>
      <height>41</height>
     </rect>
@@ -57,7 +57,7 @@
     <rect>
      <x>0</x>
      <y>38</y>
-     <width>321</width>
+     <width>351</width>
      <height>181</height>
     </rect>
    </property>
@@ -74,8 +74,8 @@
   <widget class="QPushButton" name="upload">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>240</y>
+     <x>190</x>
+     <y>250</y>
      <width>221</width>
      <height>31</height>
     </rect>
@@ -87,9 +87,9 @@
   <widget class="QPushButton" name="beckup_total">
    <property name="geometry">
     <rect>
-     <x>420</x>
-     <y>140</y>
-     <width>131</width>
+     <x>440</x>
+     <y>160</y>
+     <width>101</width>
      <height>31</height>
     </rect>
    </property>
@@ -113,7 +113,7 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>360</x>
      <y>30</y>
      <width>251</width>
      <height>41</height>
@@ -126,40 +126,27 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>330</x>
-     <y>110</y>
-     <width>331</width>
+     <x>360</x>
+     <y>120</y>
+     <width>271</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>Beckup totale di tutti i db postgres (solo per linux)</string>
+    <string>Beckup totale di tutti i db (solo per linux)</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>200</y>
+     <x>360</x>
+     <y>220</y>
      <width>261</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
     <string>Scegli un file del beckup e ripristinalo</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="backupsqlite">
-   <property name="geometry">
-    <rect>
-     <x>500</x>
-     <y>70</y>
-     <width>121</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Backup sqlite</string>
    </property>
   </widget>
  </widget>

@@ -48,7 +48,7 @@ except:
 from  sortpanelmain import SortPanelMain
 from  quantpanelmain import QuantPanelMain
 
-
+from  pyarchinit_exp_Findssheet_pdf import *
 
 from  imageViewer import ImageViewer
 import numpy as np
@@ -664,21 +664,11 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		return data_list
 
 	def on_pushButton_exp_pdf_sheet_pressed(self):
-		from  pyarchinit_exp_Findssheet_pdf import *
 		if self.records_equal_check() == 1:
 			self.update_if(QMessageBox.warning(self,'Errore',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 		Finds_pdf_sheet = generate_pdf()
 		data_list = self.generate_list_pdf()
 		Finds_pdf_sheet.build_Finds_sheets(data_list)
-
-	def on_pushButton_exp_pdf_sheet_en_pressed(self):
-		from  pyarchinit_exp_Findssheet_pdf_EN import *
-		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-		Finds_pdf_sheet = generate_pdf()
-		data_list = self.generate_list_pdf()
-		Finds_pdf_sheet.build_Finds_sheets_en(data_list)
-
 
 	def data_error_check(self):
 		test = 0

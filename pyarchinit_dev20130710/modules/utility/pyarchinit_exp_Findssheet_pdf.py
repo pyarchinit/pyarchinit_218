@@ -376,16 +376,42 @@ class generate_pdf:
 		return today
 
 	def build_Finds_sheets(self, records):
-                import time
 		elements = []
 		for i in range(len(records)):
 			single_finds_sheet = single_Finds_pdf_sheet(records[i])
 			elements.append(single_finds_sheet.create_sheet())
 			elements.append(PageBreak())
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'scheda_Finds_'+time.strftime("%Y%m%d_%H_%M_%S_")+'.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'scheda_Finds.pdf')
 		f = open(filename, "wb")
 		doc = SimpleDocTemplate(f)
 		doc.build(elements, canvasmaker=NumberedCanvas_Findssheet)
 		f.close()
 
-	
+	def build_index_US(self, records, sito):
+		styleSheet = getSampleStyleSheet()
+		styNormal = styleSheet['Normal']
+		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
+		styH1 = styleSheet['Heading1']
+		data = self.datestrfdate()
+		lst = []
+		lst.append(Paragraph("<b>ELENCO UNITA' STRATIGRAFICHE</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH1))
+
+		table_data = []
+		for i in range(len(records)):
+			exp_index = US_index_pdf_sheet(records[i])
+			table_data.append(exp_index.getTable())
+		
+		styles = exp_index.makeStyles()
+		table_data_formatted = Table(table_data,  colWidths=55.5)
+		table_data_formatted.setStyle(styles)
+
+		lst.append(table_data_formatted)
+		lst.append(Spacer(0,12))
+
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'indice_us.pdf')
+		f = open(filename, "wb")
+
+		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
+		doc.build(lst, canvasmaker=NumberedCanvas_USindex)
+
+		f.close()

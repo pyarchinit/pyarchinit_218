@@ -910,7 +910,7 @@
         </font>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>4</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -943,8 +943,8 @@
               <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'Lucida Grande'; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Lucida Grande'; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -1884,15 +1884,15 @@ p, li { white-space: pre-wrap; }
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="page">
             <property name="geometry">
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>548</width>
-              <height>407</height>
+              <width>546</width>
+              <height>435</height>
              </rect>
             </property>
             <attribute name="label">
@@ -2111,8 +2111,8 @@ p, li { white-space: pre-wrap; }
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>373</width>
-              <height>259</height>
+              <width>546</width>
+              <height>435</height>
              </rect>
             </property>
             <attribute name="label">
@@ -2370,24 +2370,16 @@ p, li { white-space: pre-wrap; }
             </layout>
            </widget>
            <widget class="QWidget" name="page_3">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>0</y>
-              <width>548</width>
-              <height>404</height>
-             </rect>
-            </property>
             <attribute name="label">
              <string>Esportazioni</string>
             </attribute>
             <widget class="QPushButton" name="pushButton_exp_index_us">
              <property name="geometry">
               <rect>
-               <x>220</x>
-               <y>60</y>
+               <x>191</x>
+               <y>20</y>
                <width>150</width>
-               <height>31</height>
+               <height>24</height>
               </rect>
              </property>
              <property name="font">
@@ -2396,7 +2388,7 @@ p, li { white-space: pre-wrap; }
               </font>
              </property>
              <property name="text">
-              <string>Elenco US (Italiano)</string>
+              <string>Elenco US</string>
              </property>
              <property name="icon">
               <iconset>
@@ -2409,7 +2401,7 @@ p, li { white-space: pre-wrap; }
                <x>6</x>
                <y>-6</y>
                <width>179</width>
-               <height>31</height>
+               <height>20</height>
               </rect>
              </property>
              <property name="font">
@@ -2425,10 +2417,10 @@ p, li { white-space: pre-wrap; }
             <widget class="QPushButton" name="pushButton_pdf_exp">
              <property name="geometry">
               <rect>
-               <x>0</x>
-               <y>60</y>
-               <width>201</width>
-               <height>31</height>
+               <x>6</x>
+               <y>20</y>
+               <width>179</width>
+               <height>24</height>
               </rect>
              </property>
              <property name="font">
@@ -2440,7 +2432,7 @@ p, li { white-space: pre-wrap; }
               <string>Export PDF</string>
              </property>
              <property name="text">
-              <string>Singole schede US (Italiano)</string>
+              <string>Singole schede US</string>
              </property>
              <property name="icon">
               <iconset>
@@ -2450,40 +2442,14 @@ p, li { white-space: pre-wrap; }
             <widget class="QPushButton" name="pushButton_exp_tavole">
              <property name="geometry">
               <rect>
-               <x>0</x>
-               <y>210</y>
+               <x>10</x>
+               <y>60</y>
                <width>171</width>
                <height>24</height>
               </rect>
              </property>
              <property name="text">
               <string>Espotazione Tavole</string>
-             </property>
-            </widget>
-            <widget class="QPushButton" name="esportazione_su_en">
-             <property name="geometry">
-              <rect>
-               <x>30</x>
-               <y>110</y>
-               <width>141</width>
-               <height>27</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string>Form SU (English)</string>
-             </property>
-            </widget>
-            <widget class="QPushButton" name="esportazione_index_en">
-             <property name="geometry">
-              <rect>
-               <x>240</x>
-               <y>110</y>
-               <width>121</width>
-               <height>27</height>
-              </rect>
-             </property>
-             <property name="text">
-              <string>List SU (English)</string>
              </property>
             </widget>
            </widget>

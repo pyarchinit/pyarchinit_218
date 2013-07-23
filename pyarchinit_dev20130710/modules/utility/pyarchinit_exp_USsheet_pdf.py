@@ -14,11 +14,8 @@ from reportlab.platypus.paragraph import Paragraph
 from datetime import date, time
 
 from pyarchinit_OS_utility import *
-from PyQt4.QtGui import *
-import PyQt4.QtGui
-import sys
-from PyQt4 import QtCore, QtGui
-from PyQt4.QtCore import *
+
+
 class NumberedCanvas_USsheet(canvas.Canvas):
 	def __init__(self, *args, **kwargs):
 		canvas.Canvas.__init__(self, *args, **kwargs)
@@ -216,11 +213,7 @@ class single_US_pdf_sheet:
 
 		#0 row
 		intestazione = Paragraph("<b>SCHEDA DI UNIT&Agrave; STRATIGRAFICA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
-<<<<<<< HEAD
-		intestazione2 = Paragraph("<b>Ditta esecutrice: </b><br/>pyarchinit", styNormal)
-=======
 		intestazione2 = Paragraph("<b>Pyarchinit</b><br/>https://sites.google.com/site/pyarchinit/", styNormal)
->>>>>>> bc6e8be621aebfaad77e7493f71a301d7a9027e3
 
 		#1 row
 		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
@@ -399,11 +392,7 @@ class single_US_pdf_sheet:
 
 					#8 row
 					('SPAN', (0,9),(1,9)),  #iniziale
-<<<<<<< HEAD
-					('SPAN', (2,9),(3,9)),  #periodo inizlae
-=======
 					('SPAN', (2,9),(3,8)),  #periodo inizlae
->>>>>>> bc6e8be621aebfaad77e7493f71a301d7a9027e3
 					('SPAN', (5,9),(6,9)),  #fase iniziale
 					('SPAN', (7,9),(8,9)),  #finale
 					('VALIGN',(0,9),(0,9),'TOP'), 
@@ -436,11 +425,7 @@ class single_US_pdf_sheet:
 					('VALIGN',(0,0),(-1,-1),'TOP'),
 
 					#16 row
-<<<<<<< HEAD
-					('SPAN', (0,16),(9,16)),  #pie' di pagina
-=======
 					('SPAN', (0,16),(9,15)),  #pie' di pagina
->>>>>>> bc6e8be621aebfaad77e7493f71a301d7a9027e3
 					('ALIGN',(0,16),(9,16),'CENTER'),
 
 					#15 row
@@ -622,33 +607,25 @@ class generate_pdf:
 		return today
 
 	def build_US_sheets(self, records):
-		import time
 		elements = []
 		for i in range(len(records)):
 			single_us_sheet = single_US_pdf_sheet(records[i])
 			elements.append(single_us_sheet.create_sheet())
 			elements.append(PageBreak())
-		filename = ('%s%s%s') % (self.PDF_path, os.sep,'Schede-US_'+time.strftime("%Y%m%d_%H_%M_%S_")+'.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'scheda_US.pdf')
 		f = open(filename, "wb")
 		doc = SimpleDocTemplate(f, pagesize=A4)
 		doc.build(elements, canvasmaker=NumberedCanvas_USsheet)
 		f.close()
-		#QMessageBox.warning(self, "Messaggio", "Esportazione completata", QMessageBox.Ok)
-
 
 	def build_index_US(self, records, sito):
-		import time
 		styleSheet = getSampleStyleSheet()
 		styNormal = styleSheet['Normal']
 		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
 		styH1 = styleSheet['Heading2']
 		data = self.datestrfdate()
 		lst = []
-<<<<<<< HEAD
-		lst.append(Paragraph("<b>ELENCO UNIT&Agrave; STRATIGRAFICHE</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta esecutrice: </b>" % (sito, data), styH1))
-=======
 		lst.append(Paragraph("<b>ELENCO UNIT&Agrave; STRATIGRAFICHE</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta Esecutrice: Ad Arte srl</b>" % (sito, data), styH1))
->>>>>>> bc6e8be621aebfaad77e7493f71a301d7a9027e3
 
 		table_data = []
 		for i in range(len(records)):
@@ -662,7 +639,7 @@ class generate_pdf:
 		lst.append(table_data_formatted)
 		lst.append(Spacer(0,2))
 
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'indice_us_'+time.strftime("%Y%m%d_%H_%M_%S_")+'.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'indice_us.pdf')
 		f = open(filename, "wb")
 
 		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)

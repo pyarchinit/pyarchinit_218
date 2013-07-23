@@ -46,7 +46,7 @@ except:
 
 from  sortpanelmain import SortPanelMain
 from delegateComboBox import *
-
+from  pyarchinit_exp_Strutturasheet_pdf import *
 
 class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 	MSG_BOX_TITLE = "PyArchInit - Scheda Struttura"
@@ -747,19 +747,9 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 		self.enable_button_search(1)
 
 	def on_pushButton_pdf_exp_pressed(self):
-		from  pyarchinit_exp_Strutturasheet_pdf import *
 		Struttura_pdf_sheet = generate_pdf() #deve essere importata la classe
 		data_list = self.generate_list_pdf() #deve essere aggiunta la funzione
 		Struttura_pdf_sheet.build_Struttura_sheets(data_list) #deve essere aggiunto il file per generare i pdf
-
-
-
-	def on_pushButton_pdf_exp_en_pressed(self):
-		from  pyarchinit_exp_Strutturasheet_pdf_EN import *
-		Struttura_pdf_sheet = generate_pdf() #deve essere importata la classe
-		data_list = self.generate_list_pdf() #deve essere aggiunta la funzione
-		Struttura_pdf_sheet.build_Struttura_sheets(data_list) #deve essere aggiunto il file per generare i pdf
-
 
 
 	def generate_list_pdf(self):
