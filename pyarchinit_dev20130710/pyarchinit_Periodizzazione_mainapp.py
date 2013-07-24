@@ -200,7 +200,7 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 		self.comboBox_sito.addItems(sito_vl)
 
 	def on_pushButton_pdf_exp_pressed(self):
-		Periodizzazione_pdf_sheet = generate_pdf() #deve essere importata la classe
+		Periodizzazione_pdf_sheet = generate_Periodizzazione_pdf() #deve essere importata la classe
 		data_list = self.generate_list_pdf() #deve essere aggiunta la funzione
 		Periodizzazione_pdf_sheet.build_Periodizzazione_sheets(data_list) #deve essere aggiunto il file per generare i pdf
 		#codice per l'esportazione sperimentale dei PDF #

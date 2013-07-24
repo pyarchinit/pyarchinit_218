@@ -362,7 +362,7 @@ class single_Finds_pdf_sheet:
 
 		return t
 	
-class generate_pdf:
+class generate_reperti_pdf:
 	if os.name == 'posix':
 		HOME = os.environ['HOME']
 	elif os.name == 'nt':
