@@ -14,7 +14,7 @@ from datetime import date, time
 from pyarchinit_OS_utility import *
 
 
-class NumberedCanvas_USsheet(canvas.Canvas):
+class NumberedCanvas_STRUTTURAsheet(canvas.Canvas):
 	def __init__(self, *args, **kwargs):
 		canvas.Canvas.__init__(self, *args, **kwargs)
 		self._saved_page_states = []
@@ -40,43 +40,8 @@ class NumberedCanvas_USsheet(canvas.Canvas):
 		self.drawRightString(200*mm, 20*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
 
 
-class NumberedCanvas_USindex(canvas.Canvas):
-	def __init__(self, *args, **kwargs):
-		canvas.Canvas.__init__(self, *args, **kwargs)
-		self._saved_page_states = []
-
-	def define_position(self, pos):
-		self.page_position(pos)
-
-	def showPage(self):
-		self._saved_page_states.append(dict(self.__dict__))
-		self._startPage()
-
-	def save(self):
-		"""add page info to each page (page x of y)"""
-		num_pages = len(self._saved_page_states)
-		for state in self._saved_page_states:
-			self.__dict__.update(state)
-			self.draw_page_number(num_pages)
-			canvas.Canvas.showPage(self)
-		canvas.Canvas.save(self)
-
-	def draw_page_number(self, page_count):
-		self.setFont("Helvetica", 8)
-		self.drawRightString(270*mm, 10*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
-
 class single_Struttura_pdf_sheet:
 	#rapporti stratigrafici
-	si_lega_a = ''
-	uguale_a = ''
-	copre = ''
-	coperto_da = ''
-	riempie = ''
-	riempito_da = ''
-	taglia = ''
-	tagliato_da = ''
-	si_appoggia_a = ''
-	gli_si_appoggia = ''
 
 	materiali_print = ''
 	elementi_strutturali_print = ''
@@ -97,10 +62,10 @@ class single_Struttura_pdf_sheet:
 		self.periodo_finale = 				data[10]
 		self.fase_finale = 				data[11]
 		self.datazione_estesa = 		data[12]
-		self.materiali_impiegati = 			data[13]
-		self.elementi_strutturali = 			data[14]
-		self.rapporti_struttura = 				data[15]
-		self.misure_struttura = 				data[16]
+		self.materiali_impiegati = 		data[13]
+		self.elementi_strutturali = 		data[14]
+		self.rapporti_struttura = 		data[15]
+		self.misure_struttura = 			data[16]
 
 	def datestrfdate(self):
 		now = date.today()
@@ -108,7 +73,6 @@ class single_Struttura_pdf_sheet:
 		return today
 
 	def create_sheet(self):
-
 		styleSheet = getSampleStyleSheet()
 		styNormal = styleSheet['Normal']
 		styNormal.spaceBefore = 20
@@ -151,7 +115,7 @@ class single_Struttura_pdf_sheet:
 			pass
 		
 		#4 row
-		periodizzazione = Paragraph("<b>PERIODIZZAZIONE</b>",styNormal)
+		periodizzazione = Paragraph("<b>PERIODIZZAZIONE</b></b>",styNormal)
 
 		#5 row
 		iniziale = Paragraph("<b>INIZIALE</b>",styNormal)
@@ -316,159 +280,6 @@ class single_Struttura_pdf_sheet:
 
 		return t
 
-
-class US_index_pdf_sheet:
-	si_lega_a = ''
-	uguale_a = ''
-	copre = ''
-	coperto_da = ''
-	riempie = ''
-	riempito_da = ''
-	taglia = ''
-	tagliato_da = ''
-	si_appoggia_a = ''
-	gli_si_appoggia = ''
-
-
-	def __init__(self, data):
-		self.sito = 							data[0]
-		self.area = 							data[1]
-		self.us   = 							data[2]
-		self.d_stratigrafica =					data[3]
-		self.rapporti = 						data[17]
-
-	def unzip_rapporti_stratigrafici(self):
-		rapporti = eval(self.rapporti)
-
-		rapporti.sort()
-
-		for rapporto in rapporti:
-			if len(rapporto) == 2:
-				if rapporto[0] == 'Si lega a' or rapporto[0] == 'si lega a':
-					if self.si_lega_a == '':
-						self.si_lega_a += str(rapporto[1])
-					else:
-						self.si_lega_a += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Uguale a' or rapporto[0] == 'uguale a':
-					if self.uguale_a == '':
-						self.uguale_a += str(rapporto[1])
-					else:
-						self.uguale_a += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Copre' or rapporto[0] == 'copre':
-					if self.copre == '':
-						self.copre += str(rapporto[1])
-					else:
-						self.copre += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Coperto da' or rapporto[0] == 'coperto da':
-					if self.coperto_da == '':
-						self.coperto_da += str(rapporto[1])
-					else:
-						self.coperto_da += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Riempie' or rapporto[0] == 'riempie':
-					if self.riempie == '':
-						self.riempie += str(rapporto[1])
-					else:
-						self.riempie += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Riempito da' or rapporto[0] == 'riempito da':
-					if self.riempito_da == '':
-						self.riempito_da += str(rapporto[1])
-					else:
-						self.riempito_da += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Taglia' or rapporto[0] == 'taglia':
-					if self.taglia == '':
-						self.taglia += str(rapporto[1])
-					else:
-						self.taglia += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Tagliato da' or rapporto[0] == 'tagliato da':
-					if self.tagliato_da == '':
-						self.tagliato_da += str(rapporto[1])
-					else:
-						self.tagliato_da += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Si appoggia a' or rapporto[0] == 'si appoggia a':
-					if self.si_appoggia_a == '':
-						self.si_appoggia_a+= str(rapporto[1])
-					else:
-						self.si_appoggia_a += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Gli si appoggia' or rapporto[0] == 'gli si appoggia a':
-					if self.gli_si_appoggia == '':
-						self.gli_si_appoggia += str(rapporto[1])
-					else:
-						self.gli_si_appoggia += ', ' + str(rapporto[1])
-
-
-	def getTable(self):
-		styleSheet = getSampleStyleSheet()
-		styNormal = styleSheet['Normal']
-		styNormal.spaceBefore = 20
-		styNormal.spaceAfter = 20
-		styNormal.alignment = 0 #LEFT
-		styNormal.fontSize = 9
-
-		self.unzip_rapporti_stratigrafici()
-
-		area = Paragraph("<b>Area</b><br/>" + str(self.area),styNormal)
-		us = Paragraph("<b>US</b><br/>" + str(self.us),styNormal)
-		d_stratigrafica = Paragraph("<b>Def. Stratigr.</b><br/>" + str(self.d_stratigrafica),styNormal)
-		copre = Paragraph("<b>Copre</b><br/>" + str(self.copre),styNormal)
-		coperto_da = Paragraph("<b>Coperto da</b><br/>" + str(self.coperto_da),styNormal)
-		taglia = Paragraph("<b>Taglia</b><br/>" + str(self.taglia),styNormal)
-		tagliato_da = Paragraph("<b>Tagliato da</b><br/>" + str(self.tagliato_da),styNormal)
-		riempie = Paragraph("<b>Riempie</b><br/>" + str(self.riempie),styNormal)
-		riempito_da = Paragraph("<b>Riempito da</b><br/>" + str(self.riempito_da),styNormal)
-		si_appoggia_a = Paragraph("<b>Si appoggia a</b><br/>" + str(self.si_appoggia_a),styNormal)
-		gli_si_appoggia = Paragraph("<b>Gli si appoggia</b><br/>" + str(self.gli_si_appoggia),styNormal)
-		uguale_a = Paragraph("<b>Uguale a</b><br/>" + str(self.uguale_a),styNormal)
-		si_lega_a = Paragraph("<b>Si lega a</b><br/>" + str(self.si_lega_a),styNormal)
-
-		data = [area,
-				us,
-				d_stratigrafica,
-				copre,
-				coperto_da,
-				taglia,
-				tagliato_da,
-				riempie,
-				riempito_da,
-				si_appoggia_a,
-				gli_si_appoggia,
-				uguale_a,
-				si_lega_a]
-
-		"""
-		for i in range(20):
-			data.append([area = Paragraph("<b>Area</b><br/>" + str(area),styNormal),
-						us = Paragraph("<b>US</b><br/>" + str(us),styNormal),
-						copre = Paragraph("<b>Copre</b><br/>" + str(copre),styNormal),
-						coperto_da = Paragraph("<b>Coperto da</b><br/>" + str(coperto_da),styNormal),
-						taglia = Paragraph("<b>Taglia</b><br/>" + str(taglia),styNormal),
-						tagliato_da = Paragraph("<b>Tagliato da</b><br/>" + str(tagliato_da),styNormal),
-						riempie = Paragraph("<b>Riempie</b><br/>" + str(riempie),styNormal),
-						riempito_da = Paragraph("<b>Riempito da</b><br/>" + str(riempito_da),styNormal),
-						si_appoggia_a = Paragraph("<b>Si appoggia a</b><br/>" + str(si_appoggia_a),styNormal),
-						gli_si_appoggia = Paragraph("<b>Gli si appoggia</b><br/>" + str(gli_si_appoggi),styNormal),
-						uguale_a = Paragraph("<b>Uguale a</b><br/>" + str(uguale_a),styNormal),
-						si_lega_a = Paragraph("<b>Si lega a</b><br/>" + str(si_lega_a),styNormal)])
-		"""
-		#t = Table(data,  colWidths=55.5)
-
-		return data
-
-	def makeStyles(self):
-		styles =TableStyle([('GRID',(0,0),(-1,-1),0.0,colors.black),('VALIGN', (0,0), (-1,-1), 'TOP')
-		])  #finale
-
-		return styles
-
-
 class generate_pdf:
 	if os.name == 'posix':
 		HOME = os.environ['HOME']
@@ -491,34 +302,5 @@ class generate_pdf:
 		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'scheda_Struttura.pdf')
 		f = open(filename, "wb")
 		doc = SimpleDocTemplate(f)
-		doc.build(elements, canvasmaker=NumberedCanvas_USsheet)
-		f.close()
-
-	def build_index_US(self, records, sito):
-		styleSheet = getSampleStyleSheet()
-		styNormal = styleSheet['Normal']
-		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
-		styH1 = styleSheet['Heading2']
-		data = self.datestrfdate()
-		lst = []
-		lst.append(Paragraph("<b>ELENCO UNITA' STRATIGRAFICHE</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH1))
-
-		table_data = []
-		for i in range(len(records)):
-			exp_index = US_index_pdf_sheet(records[i])
-			table_data.append(exp_index.getTable())
-
-		styles = exp_index.makeStyles()
-		table_data_formatted = Table(table_data,  colWidths=60)
-		table_data_formatted.setStyle(styles)
-
-		lst.append(table_data_formatted)
-		lst.append(Spacer(0,2))
-
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'indice_us.pdf')
-		f = open(filename, "wb")
-
-		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
-		doc.build(lst, canvasmaker=NumberedCanvas_USindex)
-
+		doc.build(elements, canvasmaker=NumberedCanvas_STRUTTURAsheet)
 		f.close()
