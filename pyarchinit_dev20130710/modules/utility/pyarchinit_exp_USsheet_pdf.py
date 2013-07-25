@@ -593,7 +593,7 @@ class US_index_pdf_sheet:
 		return styles
 
 
-class generate_pdf:
+class generate_US_pdf:
 	if os.name == 'posix':
 		HOME = os.environ['HOME']
 	elif os.name == 'nt':

@@ -691,12 +691,12 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 
 	def on_pushButton_pdf_exp_pressed(self):
-		US_pdf_sheet = generate_pdf()
+		US_pdf_sheet = generate_US_pdf()
 		data_list = self.generate_list_pdf()
 		US_pdf_sheet.build_US_sheets(data_list)
 
 	def on_pushButton_exp_index_us_pressed(self):
-		US_index_pdf = generate_pdf()
+		US_index_pdf = generate_US_pdf()
 		data_list = self.generate_list_pdf()
 		US_index_pdf.build_index_US(data_list, data_list[0][0])
 

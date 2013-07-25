@@ -280,7 +280,7 @@ class single_Struttura_pdf_sheet:
 
 		return t
 
-class generate_pdf:
+class generate_struttura_pdf:
 	if os.name == 'posix':
 		HOME = os.environ['HOME']
 	elif os.name == 'nt':
