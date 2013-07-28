@@ -455,43 +455,41 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 				QMessageBox.warning(self, "ATTENZIONE", "Non e' stata impostata alcuna ricerca!!!",  QMessageBox.Ok)
 			else:
 				res = self.DB_MANAGER.query_bool(search_dict, "SITE")
-				if bool(search_dict) == False:
-					QMessageBox.warning(self, "ATTENZIONE", "Non e' stata impostata alcuna ricerca!!!",  QMessageBox.Ok)
+				if bool(res) == False:
+					QMessageBox.warning(self, "ATTENZIONE", "Non e' stato trovato alcun record!",  QMessageBox.Ok)
+
+					self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
+					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
+
+					self.fill_fields(self.REC_CORR)
+					self.BROWSE_STATUS = "b"
+					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+
+					self.setComboBoxEnable(["self.comboBox_sito"],"False")
+					self.setComboBoxEnable(["self.textEdit_descrizione_site"],"True")
+
 				else:
-					res = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS)
+					self.DATA_LIST = []
 
-					if bool(res) == False:
-						QMessageBox.warning(self, "ATTENZIONE", "Non e' stato trovato alcun record!",  QMessageBox.Ok)
+					for i in res:
+						self.DATA_LIST.append(i)
 
-						self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
-						self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
-						self.fill_fields(self.REC_CORR)
-						self.BROWSE_STATUS = "b"
-						self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
+					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
+					self.fill_fields()
+					self.BROWSE_STATUS = "b"
+					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+					self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 
-						self.setComboBoxEnable(["self.comboBox_sito"],"False")
-						self.setComboBoxEnable(["self.textEdit_descrizione_site"],"True")
-
+					if self.REC_TOT == 1:
+						strings = ("E' stato trovato", self.REC_TOT, "record")
 					else:
-						self.DATA_LIST = []
-						for i in res:
-							self.DATA_LIST.append(i)
-						self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
-						self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
-						self.fill_fields()
-						self.BROWSE_STATUS = "b"
-						self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-						self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
+						strings = ("Sono stati trovati", self.REC_TOT, "records")
 
-						if self.REC_TOT == 1:
-							strings = ("E' stato trovato", self.REC_TOT, "record")
-						else:
-							strings = ("Sono stati trovati", self.REC_TOT, "records")
+					self.setComboBoxEnable(["self.comboBox_sito"],"False")
+					self.setComboBoxEnable(["self.textEdit_descrizione_site"],"True")
 
-						self.setComboBoxEnable(["self.comboBox_sito"],"False")
-						self.setComboBoxEnable(["self.textEdit_descrizione_site"],"True")
-
-						QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
+					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings, QMessageBox.Ok)
 
 		self.enable_button_search(1)
 

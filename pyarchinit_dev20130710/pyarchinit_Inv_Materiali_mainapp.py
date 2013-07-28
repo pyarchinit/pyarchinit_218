@@ -165,6 +165,35 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					'eve_orlo'
 					]
 
+	TABLE_FIELDS_UPDATE = [
+					"tipo_reperto",
+					"criterio_schedatura",
+					"definizione",
+					"descrizione",
+					"area",
+					"us",
+					"lavato",
+					"nr_cassa",
+					"luogo_conservazione",
+					"stato_conservazione",
+					"datazione_reperto",
+					"elementi_reperto",
+					"misurazioni",
+					"rif_biblio",
+					"tecnologie",
+					"forme_minime",
+					"forme_massime",
+					"totale_frammenti",
+					"corpo_ceramico",
+					"rivestimento",
+					'diametro_orlo',
+					'peso',
+					'tipo',
+					'eve_orlo'
+					]
+
+	SEARCH_DICT_TEMP = ""
+
 	if os.name == 'posix':
 		HOME = os.environ['HOME']
 	elif os.name == 'nt':
@@ -966,6 +995,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				self.empty_fields()
 
 	def on_pushButton_search_go_pressed(self):
+		check_for_buttons = 0
 		if self.BROWSE_STATUS != "f":
 			QMessageBox.warning(self, "ATTENZIONE", "Per eseguire una nuova ricerca clicca sul pulsante 'new search' ",  QMessageBox.Ok)
 		else:
@@ -1041,7 +1071,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			self.TABLE_FIELDS[21] : "'" + str(self.lineEditRivestimento.text()) + "'",
 			self.TABLE_FIELDS[22] : diametro_orlo,
 			self.TABLE_FIELDS[23] : peso,
-			self.TABLE_FIELDS[24] : "'" + unicode(self.lineEdit_tipo.text()) + "'",		
+			self.TABLE_FIELDS[24] : "'" + unicode(self.lineEdit_tipo.text()) + "'",
 			self.TABLE_FIELDS[25] : eve_orlo
 			}
 
@@ -1050,15 +1080,17 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 			if bool(search_dict) == False:
 				QMessageBox.warning(self, "ATTENZIONE", "Non e' stata impostata alcuna ricerca!!!",  QMessageBox.Ok)
+				
 			else:
+				self.SEARCH_DICT_TEMP = search_dict
 				res = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS)
-				
-				
 				if bool(res) == False:
 					QMessageBox.warning(self, "ATTENZIONE", "Non e' stato trovato alcun record!",  QMessageBox.Ok)
 					
 					self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
+
+					self.fill_fields(self.REC_CORR)
 
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
@@ -1068,14 +1100,19 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
 					self.setComboBoxEnable(["self.lineEdit_num_inv"],"False")
 					
-					self.fill_fields(self.REC_CORR)
+					check_for_buttons = 1
 
 				else:
+
 					self.DATA_LIST = []
+
 					for i in res:
 						self.DATA_LIST.append(i)
+
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
 					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
+
+					self.fill_fields()
 
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
@@ -1086,16 +1123,18 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					else:
 						strings = ("Sono stati trovati", self.REC_TOT, "records")
 
-					self.setComboBoxEditable(["self.comboBox_sito"],0)
-					self.setComboBoxEditable(["self.comboBox_lavato"],0)
+					self.setComboBoxEditable(["self.comboBox_sito"],1)
+					self.setComboBoxEditable(["self.comboBox_lavato"],1)
+
 					self.setComboBoxEnable(['self.lineEdit_num_inv'], "False")
 					self.setComboBoxEnable(['self.comboBox_sito'], "False")
 					
-					self.fill_fields()
-					
-					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
+					check_for_buttons = 1
 
-		self.enable_button_search(1)
+					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings, QMessageBox.Ok)
+		
+		if check_for_buttons == 1:
+			self.enable_button_search(1)
 
 	def on_pushButton_tot_fram_pressed(self):
 		self.update_tot_frammenti(QMessageBox.warning(self,'ATTENZIONE',"Vuoi aggiornare tutti i frammenti (OK), oppure solo il record corrente (Cancel)?", QMessageBox.Cancel,1))
@@ -1141,7 +1180,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					id_list.append(eval("i."+ self.ID_TABLE))
 				self.DATA_LIST = []
 				if self.SORT_STATUS == "n":
-					temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+					temp_data_list = self.DB_MANAGER.query_bool(self.SEARCH_DICT_TEMP, self.MAPPER_TABLE_CLASS) #self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
 				else:
 					temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
 				for i in temp_data_list:
@@ -1155,6 +1194,24 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				return 1
 			elif test == 0:
 				return 0
+
+	def update_record(self):
+		try:
+			self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, 
+						self.ID_TABLE,
+						[eval("int(self.DATA_LIST[self.REC_CORR]." + self.ID_TABLE+")")],
+						self.TABLE_FIELDS,
+						self.rec_toupdate())
+
+			return 1
+		except Exception, e:
+			QMessageBox.warning(self, "Messaggio", "Problema di encoding: sono stati inseriti accenti o caratteri non accettati dal database. Se chiudete ora la scheda senza correggere gli errori perderete i dati. Fare una copia di tutto su un foglio word a parte. Errore :" + str(e), QMessageBox.Ok)
+			return 0
+
+	def rec_toupdate(self):
+		rec_to_update = self.UTILITY.pos_none_in_list(self.DATA_LIST_REC_TEMP)
+		#rec_to_update = rec_to_update[:2]
+		return rec_to_update
 
 	#custom functions
 	def charge_records(self):
@@ -1535,6 +1592,8 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.set_LIST_REC_TEMP()
 		self.set_LIST_REC_CORR()
 		
+		#test
+		
 		#QMessageBox.warning(self, "ATTENZIONE", str(self.DATA_LIST_REC_CORR) + " temp " + str(self.DATA_LIST_REC_TEMP), QMessageBox.Ok)
 
 		check_str = str(self.DATA_LIST_REC_CORR) + " " + str(self.DATA_LIST_REC_TEMP)
@@ -1544,21 +1603,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		else:
 			return 1
 
-	def update_record(self):
-		try:
-			self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, 
-						self.ID_TABLE,
-						[eval("int(self.DATA_LIST[self.REC_CORR]." + self.ID_TABLE+")")],
-						self.TABLE_FIELDS,
-						self.rec_toupdate())
-			return 1
-		except Exception, e:
-			QMessageBox.warning(self, "Messaggio", "Problema di encoding: sono stati inseriti accenti o caratteri non accettati dal database. Se chiudete ora la scheda senza correggere gli errori perderete i dati. Fare una copia di tutto su un foglio word a parte. Errore :" + str(e), QMessageBox.Ok)
-			return 0
 
-	def rec_toupdate(self):
-		rec_to_update = self.UTILITY.pos_none_in_list(self.DATA_LIST_REC_TEMP)
-		return rec_to_update
 
 
 	def testing(self, name_file, message):
