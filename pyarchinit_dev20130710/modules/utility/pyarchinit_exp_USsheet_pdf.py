@@ -392,7 +392,7 @@ class single_US_pdf_sheet:
 
 					#8 row
 					('SPAN', (0,9),(1,9)),  #iniziale
-					('SPAN', (2,9),(3,9)),  #periodo inizlae
+					('SPAN', (2,9),(3,8)),  #periodo inizlae
 					('SPAN', (5,9),(6,9)),  #fase iniziale
 					('SPAN', (7,9),(8,9)),  #finale
 					('VALIGN',(0,9),(0,9),'TOP'), 
@@ -419,13 +419,13 @@ class single_US_pdf_sheet:
 					('SPAN', (5,14),(9,14)),  #Rapporti stratigrafici - Taglia - Tagliato da
 
 					#14 row
-					('SPAN', (0,15),(4,15)),  #Rapporti stratigrafici - Si appoggia a - Gli si appoggia
+					('SPAN', (0,14),(4,15)),  #Rapporti stratigrafici - Si appoggia a - Gli si appoggia
 					('SPAN', (5,15),(9,15)),  #Rapporti stratigrafici - Si appoggia a - Gli si appoggia
 
 					('VALIGN',(0,0),(-1,-1),'TOP'),
 
 					#16 row
-					('SPAN', (0,16),(9,16)),  #pie' di pagina
+					('SPAN', (0,16),(9,15)),  #pie' di pagina
 					('ALIGN',(0,16),(9,16),'CENTER'),
 
 					#15 row

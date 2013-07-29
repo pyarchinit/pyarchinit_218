@@ -976,23 +976,23 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 	def on_pushButton_new_search_pressed(self):
 		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":
 			msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-		else:
-			self.enable_button_search(0)
+		#else:
+		self.enable_button_search(0)
 
-			#set the GUI for a new search
+		#set the GUI for a new search
 
-			if self.BROWSE_STATUS != "f":
-				self.BROWSE_STATUS = "f"
-				self.setComboBoxEditable(['self.comboBox_sito'], 1)
-				self.setComboBoxEnable(['self.comboBox_sito'], 'True')
-				self.setComboBoxEditable(['self.comboBox_lavato'], 1)
-				self.setComboBoxEnable(['self.comboBox_lavato'], 'True')
-				self.setComboBoxEnable(['self.lineEdit_num_inv'], 'True')
-				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-				self.set_rec_counter('','')
-				self.label_sort.setText(self.SORTED_ITEMS["n"])
-				self.charge_list()
-				self.empty_fields()
+		if self.BROWSE_STATUS != "f":
+			self.BROWSE_STATUS = "f"
+			self.setComboBoxEditable(['self.comboBox_sito'], 1)
+			self.setComboBoxEnable(['self.comboBox_sito'], 'True')
+			self.setComboBoxEditable(['self.comboBox_lavato'], 1)
+			self.setComboBoxEnable(['self.comboBox_lavato'], 'True')
+			self.setComboBoxEnable(['self.lineEdit_num_inv'], 'True')
+			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+			self.set_rec_counter('','')
+			self.label_sort.setText(self.SORTED_ITEMS["n"])
+			self.charge_list()
+			self.empty_fields()
 
 	def on_pushButton_search_go_pressed(self):
 		check_for_buttons = 0
@@ -1594,7 +1594,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		
 		#test
 		
-		#QMessageBox.warning(self, "ATTENZIONE", str(self.DATA_LIST_REC_CORR) + " temp " + str(self.DATA_LIST_REC_TEMP), QMessageBox.Ok)
+		QMessageBox.warning(self, "ATTENZIONE", str(self.DATA_LIST_REC_CORR) + " temp " + str(self.DATA_LIST_REC_TEMP), QMessageBox.Ok)
 
 		check_str = str(self.DATA_LIST_REC_CORR) + " " + str(self.DATA_LIST_REC_TEMP)
 
