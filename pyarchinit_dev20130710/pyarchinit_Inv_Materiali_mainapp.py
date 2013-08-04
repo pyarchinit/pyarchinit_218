@@ -557,7 +557,6 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 	def charge_list(self):
 		sito_vl = self.UTILITY.tup_2_list_III(self.DB_MANAGER.group_by('site_table', 'sito', 'SITE'))
-
 		try:
 			sito_vl.remove('')
 		except:
@@ -983,11 +982,13 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 		if self.BROWSE_STATUS != "f":
 			self.BROWSE_STATUS = "f"
+			###
 			self.setComboBoxEditable(['self.comboBox_sito'], 1)
 			self.setComboBoxEnable(['self.comboBox_sito'], 'True')
 			self.setComboBoxEditable(['self.comboBox_lavato'], 1)
 			self.setComboBoxEnable(['self.comboBox_lavato'], 'True')
 			self.setComboBoxEnable(['self.lineEdit_num_inv'], 'True')
+			###
 			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			self.set_rec_counter('','')
 			self.label_sort.setText(self.SORTED_ITEMS["n"])
@@ -1180,7 +1181,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					id_list.append(eval("i."+ self.ID_TABLE))
 				self.DATA_LIST = []
 				if self.SORT_STATUS == "n":
-					temp_data_list = self.DB_MANAGER.query_bool(self.SEARCH_DICT_TEMP, self.MAPPER_TABLE_CLASS) #self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+					temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE) #self.DB_MANAGER.query_bool(self.SEARCH_DICT_TEMP, self.MAPPER_TABLE_CLASS) #
 				else:
 					temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
 				for i in temp_data_list:
@@ -1594,7 +1595,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		
 		#test
 		
-		QMessageBox.warning(self, "ATTENZIONE", str(self.DATA_LIST_REC_CORR) + " temp " + str(self.DATA_LIST_REC_TEMP), QMessageBox.Ok)
+		#QMessageBox.warning(self, "ATTENZIONE", str(self.DATA_LIST_REC_CORR) + " temp " + str(self.DATA_LIST_REC_TEMP), QMessageBox.Ok)
 
 		check_str = str(self.DATA_LIST_REC_CORR) + " " + str(self.DATA_LIST_REC_TEMP)
 

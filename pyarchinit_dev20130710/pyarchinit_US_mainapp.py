@@ -369,11 +369,11 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.label_sort.setText(self.SORTED_ITEMS["n"])
 				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
-				self.charge_list_sito_def_strat()
+				self.charge_list()
 				self.fill_fields()
 			else:
 				QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + ". Il database e' vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
-				self.charge_list_sito_def_strat()
+				self.charge_list()
 				self.on_pushButton_new_rec_pressed()
 		except Exception, e:
 			e = str(e)
@@ -498,7 +498,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			dlg.show_image(unicode(file_path)) #item.data(QtCore.Qt.UserRole).toString()))
 			dlg.exec_()
 
-	def charge_list_sito_def_strat(self):
+	def charge_list(self):
 		#lista sito
 		sito_vl = self.UTILITY.tup_2_list_III(self.DB_MANAGER.group_by('site_table', 'sito', 'SITE'))
 		try:
@@ -982,7 +982,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					self.SORT_STATUS = "n"
 					self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 					self.charge_records()
-					self.charge_list_sito_def_strat()
+					self.charge_list()
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
@@ -1296,7 +1296,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				self.DB_MANAGER.delete_one_record(self.TABLE_NAME, self.ID_TABLE, id_to_delete)
 				self.charge_records() #charge records from DB
 				QMessageBox.warning(self,"Messaggio!!!","Record eliminato!")
-				self.charge_list_sito_def_strat()
+				self.charge_list()
 			except:
 					QMessageBox.warning(self, "Attenzione", u"Il database è vuoto!",  QMessageBox.Ok)
 			if bool(self.DATA_LIST) == False:
@@ -1320,31 +1320,37 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 
 	def on_pushButton_new_search_pressed(self):
-		#set the GUI for a new search
+		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":
+			msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+		#else:
 		self.enable_button_search(0)
+
+		#set the GUI for a new search
 
 		if self.BROWSE_STATUS != "f":
 			self.BROWSE_STATUS = "f"
-			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-			self.empty_fields()
+			###
 			self.lineEdit_data_schedatura.setText("")
 			self.lineEdit_anno.setText("")
 			self.comboBox_formazione.setEditText("")
 			self.comboBox_metodo.setEditText("")
-			self.set_rec_counter('','')
-			self.SORT_STATUS = "n"
-			self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 			self.setComboBoxEditable(["self.comboBox_sito"],1)
 			self.setComboBoxEditable(["self.comboBox_area"],1)
 			self.setComboBoxEnable(["self.comboBox_sito"],"True")
 			self.setComboBoxEnable(["self.comboBox_area"],"True")
 			self.setComboBoxEnable(["self.lineEdit_us"],"True")
-
 			self.setComboBoxEnable(["self.textEdit_descrizione"],"False")
 			self.setComboBoxEnable(["self.textEdit_interpretazione"],"False")
-
 			self.setTableEnable(["self.tableWidget_campioni", "self.tableWidget_rapporti","self.tableWidget_inclusi",
 			"self.tableWidget_documentazione"], "False")
+			###
+			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+			self.set_rec_counter('','')
+			self.label_sort.setText(self.SORTED_ITEMS["n"])
+			self.charge_list()
+			self.empty_fields()
+
+
 
 	def on_pushButton_showLayer_pressed(self):
 		"""
@@ -1461,19 +1467,17 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def update_if(self, msg):
 		rec_corr = self.REC_CORR
 		self.msg = msg
-
 		if self.msg == 1:
-			if self.data_error_check() == 0:
-				self.update_record()
+			test = self.update_record()
+			if test == 1:
 				id_list = []
 				for i in self.DATA_LIST:
 					id_list.append(eval("i."+ self.ID_TABLE))
 				self.DATA_LIST = []
 				if self.SORT_STATUS == "n":
-					temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+					temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE) #self.DB_MANAGER.query_bool(self.SEARCH_DICT_TEMP, self.MAPPER_TABLE_CLASS) #
 				else:
 					temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
-
 				for i in temp_data_list:
 					self.DATA_LIST.append(i)
 				self.BROWSE_STATUS = "b"
@@ -1481,7 +1485,10 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				if type(self.REC_CORR) == "<type 'str'>":
 					corr = 0
 				else:
-					corr = self.REC_CORR
+					corr = self.REC_CORR 
+				return 1
+			elif test == 0:
+				return 0
 
 	def update_record(self):
 		self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, 
@@ -1599,8 +1606,11 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.comboBox_fas_fin.setEditText("") 								#11 - fase finale
 		self.comboBox_scavato.setEditText("")							#12 - scavato
 		self.lineEdit_attivita.clear()												#13 - attivita
-		self.lineEdit_anno.setText(self.yearstrfdate())					#14 - anno scavo
-		self.comboBox_metodo.setEditText("Stratigrafico")				#15 - metodo
+		if self.BROWSE_STATUS == "n":
+			self.lineEdit_anno.setText(self.yearstrfdate())					#14 - anno scavo
+		else:
+			self.lineEdit_anno.clear()
+		self.comboBox_metodo.setEditText("")				#15 - metodo
 		for i in range(inclusi_row_count):
 			self.tableWidget_inclusi.removeRow(0) 					
 		self.insert_new_row("self.tableWidget_inclusi")					#16 - inclusi
@@ -1613,9 +1623,12 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		for i in range(documentazione_row_count):
 			self.tableWidget_documentazione.removeRow(0) 					
 		self.insert_new_row("self.tableWidget_documentazione")		#19 - documentazione
-		self.lineEdit_data_schedatura.setText(self.datestrfdate())	#20 - data schedatura
+		if self.BROWSE_STATUS == "n":
+			self.lineEdit_data_schedatura.setText(self.datestrfdate())	#20 - data schedatura
+		else:
+			self.lineEdit_data_schedatura.setText("")	#20 - data schedatura
 		self.comboBox_schedatore.setEditText("")						#21 - schedatore
-		self.comboBox_formazione.setEditText("Naturale")				#22 - formazione
+		self.comboBox_formazione.setEditText("")				#22 - formazione
 		self.comboBox_conservazione.setEditText("")					#23 - conservazione
 		self.comboBox_colore.setEditText("")								#24 - colore
 		self.comboBox_consistenza.setEditText("")						#25 - consistenza

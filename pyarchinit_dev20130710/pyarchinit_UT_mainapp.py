@@ -362,23 +362,27 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 		self.fill_fields()
 
 	def on_pushButton_new_rec_pressed(self):
-		#set the GUI for a new record
+		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":
+			msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+		#else:
+		self.enable_button_search(0)
 
-		if self.BROWSE_STATUS != "n":
-			self.BROWSE_STATUS = "n"
-			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-			self.empty_fields()
+		#set the GUI for a new search
 
+		if self.BROWSE_STATUS != "f":
+			self.BROWSE_STATUS = "f"
+			###
 			self.setComboBoxEditable(["self.comboBox_progetto"],1)
 			self.setComboBoxEditable(["self.comboBox_nr_ut"],0)
 			self.setComboBoxEnable(["self.comboBox_progetto"],"True")
 			self.setComboBoxEnable(["self.comboBox_nr_ut"],"True")
 			self.setComboBoxEnable(["self.lineEdit_ut_letterale"],"True")
-
-			self.SORT_STATUS = "n"
-			self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
-
-			self.enable_button(0)
+			###
+			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+			self.set_rec_counter('','')
+			self.label_sort.setText(self.SORTED_ITEMS["n"])
+			self.charge_list()
+			self.empty_fields()
 
 	def on_pushButton_save_pressed(self):
 		#save record

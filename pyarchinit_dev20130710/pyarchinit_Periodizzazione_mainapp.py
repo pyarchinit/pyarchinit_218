@@ -304,12 +304,17 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 
 
 	def on_pushButton_new_rec_pressed(self):
-		#set the GUI for a new record
-		if  self.BROWSE_STATUS != "n":
-			self.BROWSE_STATUS = "n"
-			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-			self.empty_fields()
-			self.label_sort.setText(self.SORTED_ITEMS["n"])
+		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":
+			msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+		#else:
+		self.enable_button_search(0)
+
+		#set the GUI for a new search
+
+		if self.BROWSE_STATUS != "f":
+			self.BROWSE_STATUS = "f"
+			
+			###
 
 			self.setComboBoxEditable(["self.comboBox_sito"],0)
 			self.setComboBoxEditable(["self.comboBox_periodo"],0)
@@ -318,9 +323,12 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 			self.setComboBoxEnable(["self.comboBox_periodo"],"True")
 			self.setComboBoxEnable(["self.comboBox_fase"],"True")
 
-			self.set_rec_counter('', '')
-
-			self.enable_button(0)
+			###
+			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+			self.set_rec_counter('','')
+			self.label_sort.setText(self.SORTED_ITEMS["n"])
+			self.charge_list()
+			self.empty_fields()
 
 
 	def on_pushButton_save_pressed(self):
@@ -638,24 +646,27 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 		rec_corr = self.REC_CORR
 		self.msg = msg
 		if self.msg == 1:
-			self.update_record()
-			id_list = []
-			for i in self.DATA_LIST:
-				id_list.append(eval("i."+ self.ID_TABLE))
-			self.DATA_LIST = []
-			if self.SORT_STATUS == "n":
-				temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
-			else:
-				temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
-			for i in temp_data_list:
-				self.DATA_LIST.append(i)
-			self.BROWSE_STATUS = "b"
-			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-			if type(self.REC_CORR) == "<type 'str'>":
-				corr = 0
-			else:
-				corr = self.REC_CORR
-					
+			test = self.update_record()
+			if test == 1:
+				id_list = []
+				for i in self.DATA_LIST:
+					id_list.append(eval("i."+ self.ID_TABLE))
+				self.DATA_LIST = []
+				if self.SORT_STATUS == "n":
+					temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE) #self.DB_MANAGER.query_bool(self.SEARCH_DICT_TEMP, self.MAPPER_TABLE_CLASS) #
+				else:
+					temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+				for i in temp_data_list:
+					self.DATA_LIST.append(i)
+				self.BROWSE_STATUS = "b"
+				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+				if type(self.REC_CORR) == "<type 'str'>":
+					corr = 0
+				else:
+					corr = self.REC_CORR 
+				return 1
+			elif test == 0:
+				return 0
 					
 	#custom functions
 	def charge_records(self):

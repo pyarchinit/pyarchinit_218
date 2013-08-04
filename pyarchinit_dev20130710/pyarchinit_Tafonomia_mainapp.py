@@ -965,15 +965,16 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 
 
 	def on_pushButton_new_search_pressed(self):
-		#set the GUI for a new search
+		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":
+			msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+		#else:
 		self.enable_button_search(0)
+
+		#set the GUI for a new search
+
 		if self.BROWSE_STATUS != "f":
 			self.BROWSE_STATUS = "f"
-			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-			self.empty_fields()
-			self.set_rec_counter('','')
-			self.SORT_STATUS = "n"
-			self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
+			###
 			self.setComboBoxEditable(["self.comboBox_sito"],1)
 			self.setComboBoxEditable(["self.comboBox_sigla_struttura"],1)
 			self.setComboBoxEditable(["self.comboBox_nr_struttura"],1)
@@ -983,6 +984,13 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			self.setComboBoxEnable(["self.comboBox_sigla_struttura"],"True")
 			self.setComboBoxEnable(["self.comboBox_nr_struttura"],"True")
 			self.setComboBoxEnable(["self.comboBox_nr_individuo"],"True")
+			###
+			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+			self.set_rec_counter('','')
+			self.label_sort.setText(self.SORTED_ITEMS["n"])
+			self.charge_list()
+			self.empty_fields()
+
 
 	def on_pushButton_showLayer_pressed(self):
 		sing_layer = [self.DATA_LIST[self.REC_CORR]]
@@ -1121,24 +1129,27 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		rec_corr = self.REC_CORR
 		self.msg = msg
 		if self.msg == 1:
-			self.update_record()
-			id_list = []
-			for i in self.DATA_LIST:
-				id_list.append(eval("i."+ self.ID_TABLE))
-			self.DATA_LIST = []
-			if self.SORT_STATUS == "n":
-				temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
-			else:
-				temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
-
-			for i in temp_data_list:
-				self.DATA_LIST.append(i)
-			self.BROWSE_STATUS = "b"
-			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-			if type(self.REC_CORR) == "<type 'str'>":
-				corr = 0
-			else:
-				corr = self.REC_CORR
+			test = self.update_record()
+			if test == 1:
+				id_list = []
+				for i in self.DATA_LIST:
+					id_list.append(eval("i."+ self.ID_TABLE))
+				self.DATA_LIST = []
+				if self.SORT_STATUS == "n":
+					temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE) #self.DB_MANAGER.query_bool(self.SEARCH_DICT_TEMP, self.MAPPER_TABLE_CLASS) #
+				else:
+					temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+				for i in temp_data_list:
+					self.DATA_LIST.append(i)
+				self.BROWSE_STATUS = "b"
+				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+				if type(self.REC_CORR) == "<type 'str'>":
+					corr = 0
+				else:
+					corr = self.REC_CORR 
+				return 1
+			elif test == 0:
+				return 0
 
 	def update_record(self):
 		self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, 
