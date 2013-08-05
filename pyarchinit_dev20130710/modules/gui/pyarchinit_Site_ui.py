@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_Site_ui.ui'
 #
-# Created: Fri Mar 22 12:25:20 2013
+# Created: Mon Aug 05 16:08:17 2013
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -291,7 +291,7 @@ class Ui_DialogSite(object):
         self.toolBox = QtGui.QToolBox(DialogSite)
         self.toolBox.setObjectName(_fromUtf8("toolBox"))
         self.page = QtGui.QWidget()
-        self.page.setGeometry(QtCore.QRect(0, 0, 567, 229))
+        self.page.setGeometry(QtCore.QRect(0, 0, 567, 202))
         self.page.setObjectName(_fromUtf8("page"))
         self.gridLayout_8 = QtGui.QGridLayout(self.page)
         self.gridLayout_8.setObjectName(_fromUtf8("gridLayout_8"))
@@ -381,8 +381,31 @@ class Ui_DialogSite(object):
         self.gridLayout_6.addWidget(self.label_5, 1, 1, 1, 1)
         self.gridLayout_8.addLayout(self.gridLayout_6, 1, 0, 1, 1)
         self.toolBox.addItem(self.page, _fromUtf8(""))
+        self.page_3 = QtGui.QWidget()
+        self.page_3.setObjectName(_fromUtf8("page_3"))
+        self.formLayout = QtGui.QFormLayout(self.page_3)
+        self.formLayout.setObjectName(_fromUtf8("formLayout"))
+        self.horizontalLayout_2 = QtGui.QHBoxLayout()
+        self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
+        self.label_3 = QtGui.QLabel(self.page_3)
+        self.label_3.setObjectName(_fromUtf8("label_3"))
+        self.horizontalLayout_2.addWidget(self.label_3)
+        self.pushButton_draw = QtGui.QPushButton(self.page_3)
+        self.pushButton_draw.setObjectName(_fromUtf8("pushButton_draw"))
+        self.horizontalLayout_2.addWidget(self.pushButton_draw)
+        self.formLayout.setLayout(0, QtGui.QFormLayout.LabelRole, self.horizontalLayout_2)
+        self.horizontalLayout_3 = QtGui.QHBoxLayout()
+        self.horizontalLayout_3.setObjectName(_fromUtf8("horizontalLayout_3"))
+        self.label_8 = QtGui.QLabel(self.page_3)
+        self.label_8.setObjectName(_fromUtf8("label_8"))
+        self.horizontalLayout_3.addWidget(self.label_8)
+        self.pushButton_sites_geometry = QtGui.QPushButton(self.page_3)
+        self.pushButton_sites_geometry.setObjectName(_fromUtf8("pushButton_sites_geometry"))
+        self.horizontalLayout_3.addWidget(self.pushButton_sites_geometry)
+        self.formLayout.setLayout(1, QtGui.QFormLayout.LabelRole, self.horizontalLayout_3)
+        self.toolBox.addItem(self.page_3, _fromUtf8(""))
         self.page_2 = QtGui.QWidget()
-        self.page_2.setGeometry(QtCore.QRect(0, 0, 567, 229))
+        self.page_2.setGeometry(QtCore.QRect(0, 0, 567, 202))
         self.page_2.setObjectName(_fromUtf8("page_2"))
         self.gridLayout_9 = QtGui.QGridLayout(self.page_2)
         self.gridLayout_9.setObjectName(_fromUtf8("gridLayout_9"))
@@ -434,6 +457,13 @@ class Ui_DialogSite(object):
         self.label_7.setText(QtGui.QApplication.translate("DialogSite", "Provincia", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("DialogSite", "Regione", None, QtGui.QApplication.UnicodeUTF8))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page), QtGui.QApplication.translate("DialogSite", "Dati descrittivi", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setToolTip(QtGui.QApplication.translate("DialogSite", "Carica tutti i layer per poter inserire nuove geometrie", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("DialogSite", "Carica layer per il disegno", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_draw.setText(QtGui.QApplication.translate("DialogSite", "Carica", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setToolTip(QtGui.QApplication.translate("DialogSite", "Carica tutti layer che contengono geometrie relative a questo sito", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_8.setText(QtGui.QApplication.translate("DialogSite", "Carica le geometrie relative a questo sito", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_sites_geometry.setText(QtGui.QApplication.translate("DialogSite", "Carica", None, QtGui.QApplication.UnicodeUTF8))
+        self.toolBox.setItemText(self.toolBox.indexOf(self.page_3), QtGui.QApplication.translate("DialogSite", "Tools", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_test.setText(QtGui.QApplication.translate("DialogSite", "Run test", None, QtGui.QApplication.UnicodeUTF8))
         self.plainTextEdit.setPlainText(QtGui.QApplication.translate("DialogSite", "Questa è una sezione di testing per sperimentare funzioni.\n"
 "\n"

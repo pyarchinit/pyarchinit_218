@@ -552,7 +552,7 @@
             <x>0</x>
             <y>0</y>
             <width>567</width>
-            <height>229</height>
+            <height>202</height>
            </rect>
           </property>
           <attribute name="label">
@@ -719,13 +719,62 @@
            </item>
           </layout>
          </widget>
+         <widget class="QWidget" name="page_3">
+          <attribute name="label">
+           <string>Tools</string>
+          </attribute>
+          <layout class="QFormLayout" name="formLayout">
+           <item row="0" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QLabel" name="label_3">
+               <property name="toolTip">
+                <string>Carica tutti i layer per poter inserire nuove geometrie</string>
+               </property>
+               <property name="text">
+                <string>Carica layer per il disegno</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_draw">
+               <property name="text">
+                <string>Carica</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="1" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QLabel" name="label_8">
+               <property name="toolTip">
+                <string>Carica tutti layer che contengono geometrie relative a questo sito</string>
+               </property>
+               <property name="text">
+                <string>Carica le geometrie relative a questo sito</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_sites_geometry">
+               <property name="text">
+                <string>Carica</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
          <widget class="QWidget" name="page_2">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
             <width>567</width>
-            <height>229</height>
+            <height>202</height>
            </rect>
           </property>
           <attribute name="label">

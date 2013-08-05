@@ -32,6 +32,7 @@ from qgis.gui import *
 from settings import *
 
 class Pyarchinit_pyqgis(QDialog, Settings):
+	
 	if os.name == 'posix':
 		HOME = os.environ['HOME']
 	elif os.name == 'nt':
@@ -42,6 +43,31 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 	SRS = 3004
 	
 	USLayerId = ""
+	LAYERS_DIZ = {"1" : "pyarchinit_campionature", 
+							"2" : "pyarchinit_individui", 
+							"3" : "pyarchinit_linee_rif",
+							"4" : "pyarchinit_punti_rif",
+							"5" : "pyarchinit_quote",
+							"6" : "pyarchinit_quote_view",
+							"7" : "pyarchinit_ripartizioni_spaziali",
+							"8" : "pyarchinit_sezioni",
+							"9" : "pyarchinit_siti",
+							"10" : "pyarchinit_strutture_ipotesi",
+							"11" : "pyarchinit_us_view",
+							"12" : "pyunitastratigrafiche"}
+
+	LAYERS_CONVERT_DIZ = {"pyarchinit_campionature": "Punti di campionatura", 
+						"pyarchinit_individui": "Individui", 
+						"pyarchinit_linee_rif": "Linee di riferimento",
+						"pyarchinit_punti_rif": "Punti di riferimento",
+						"pyarchinit_quote": "Quote US disegno",
+						"pyarchinit_quote_view" : "Quote US Vista",
+						"pyarchinit_ripartizioni_spaziali" : "Ripartizioni spaziali",
+						"pyarchinit_sezioni" : "Sezioni di scavo",
+						"pyarchinit_siti" : "Localizzazione siti" ,
+						"pyarchinit_strutture_ipotesi": "Ipotesi strutture da scavo",
+						"pyarchinit_us_view": "US Vista",
+						"pyunitastratigrafiche": "Unita Stratigrafiche disegno"}
 
 	def __init__(self, iface):
 		self.iface = iface
@@ -445,6 +471,180 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 		for item in self.iface.mapCanvas().currentLayer().selectedFeatures():
 			value_list.append(item.attributeMap().__getitem__(self.field_position).toString())
 		return value_list
+
+	def charge_layers_for_draw(self, options):
+		self.options = options
+
+		#Clean Qgis Map Later Registry
+		#QgsMapLayerRegistry.instance().removeAllMapLayers()
+		# Get the user input, starting with the table name
+		
+		#self.find_us_cutted(data)
+
+		cfg_rel_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'config.cfg')
+		file_path = ('%s%s') % (self.HOME, cfg_rel_path)
+		conf = open(file_path, "r")
+		con_sett = conf.read()
+		conf.close()
+
+		settings = Settings(con_sett)
+		settings.set_configuration()
+		
+		if settings.SERVER == 'sqlite':
+			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
+			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
+			uri = QgsDataSourceURI()
+			uri.setDatabase(db_file_path)
+			
+			for option in self.options:
+				layer_name = self.LAYERS_DIZ[option]
+				layer_name_conv = "'"+str(layer_name)+"'"
+				cmq_set_uri_data_source = "uri.setDataSource('',%s, %s)" % (layer_name_conv, "'the_geom'")
+				eval(cmq_set_uri_data_source)
+				layer_label = self.LAYERS_CONVERT_DIZ[layer_name]
+				layer_label_conv = "'"+layer_label+"'"
+				cmq_set_vector_layer = "QgsVectorLayer(uri.uri(), %s, 'spatialite')" % (layer_label_conv)
+				layer= eval(cmq_set_vector_layer)
+
+				if  layer.isValid() == True:
+					#self.USLayerId = layerUS.getLayerID()
+					##style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+					##ayerUS.loadNamedStyle(style_path)
+					QgsMapLayerRegistry.instance().addMapLayers([layer], True)
+				else:
+					QMessageBox.warning(self, "TESTER", "Layer non valido",QMessageBox.Ok)
+
+				###AGGIUNGERE IL SISTEMA PER POSTGRES#####
+
+	def charge_sites_geometry(self, options, col, val):
+		self.options = options
+		self.col = col
+		self.val = val
+
+		cfg_rel_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'config.cfg')
+		file_path = ('%s%s') % (self.HOME, cfg_rel_path)
+		conf = open(file_path, "r")
+		con_sett = conf.read()
+		conf.close()
+
+		settings = Settings(con_sett)
+		settings.set_configuration()
+
+		if settings.SERVER == 'sqlite':
+			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
+			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
+			uri = QgsDataSourceURI()
+			uri.setDatabase(db_file_path)
+			
+			for option in self.options:
+				layer_name = self.LAYERS_DIZ[option]
+				layer_name_conv = "'"+str(layer_name)+"'"
+				value_conv =  ('"%s = %s"') % (self.col, "'"+str(self.val)+"'")
+				cmq_set_uri_data_source = "uri.setDataSource('',%s, %s, %s)" % (layer_name_conv, "'the_geom'", value_conv)
+				eval(cmq_set_uri_data_source)
+				layer_label = self.LAYERS_CONVERT_DIZ[layer_name]
+				layer_label_conv = "'"+layer_label+"'"
+				cmq_set_vector_layer = "QgsVectorLayer(uri.uri(), %s, 'spatialite')" % (layer_label_conv)
+				layer= eval(cmq_set_vector_layer)
+
+				if  layer.isValid() == True:
+					#self.USLayerId = layerUS.getLayerID()
+					##style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+					##ayerUS.loadNamedStyle(style_path)
+					QgsMapLayerRegistry.instance().addMapLayers([layer], True)
+				else:
+					QMessageBox.warning(self, "TESTER", "Layer non valido",QMessageBox.Ok)
+				
+			#pyunitastratigrafiche e pyarchinit_quote nn possono essere aggiornate dinamicamente perche non hanno il campo sito. Da moficare?
+			layer_name = 'pyunitastratigrafiche'
+			layer_name_conv = "'"+str(layer_name)+"'"
+			value_conv =  ('"scavo_s = %s"') % ("'"+str(self.val)+"'")
+			cmq_set_uri_data_source = "uri.setDataSource('',%s, %s, %s)" % (layer_name_conv, "'the_geom'", value_conv)
+			eval(cmq_set_uri_data_source)
+			layer_label = self.LAYERS_CONVERT_DIZ[layer_name]
+			layer_label_conv = "'"+layer_label+"'"
+			cmq_set_vector_layer = "QgsVectorLayer(uri.uri(), %s, 'spatialite')" % (layer_label_conv)
+			layer= eval(cmq_set_vector_layer)
+
+			if  layer.isValid() == True:
+				#self.USLayerId = layerUS.getLayerID()
+				##style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+				##ayerUS.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layer], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "Layer non valido",QMessageBox.Ok)
+
+			layer_name = 'pyarchinit_quote'
+			layer_name_conv = "'"+str(layer_name)+"'"
+			value_conv =  ('"sito_q = %s"') % ("'"+str(self.val)+"'")
+			cmq_set_uri_data_source = "uri.setDataSource('',%s, %s, %s)" % (layer_name_conv, "'the_geom'", value_conv)
+			eval(cmq_set_uri_data_source)
+			layer_label = self.LAYERS_CONVERT_DIZ[layer_name]
+			layer_label_conv = "'"+layer_label+"'"
+			cmq_set_vector_layer = "QgsVectorLayer(uri.uri(), %s, 'spatialite')" % (layer_label_conv)
+			layer= eval(cmq_set_vector_layer)
+
+			if  layer.isValid() == True:
+				#self.USLayerId = layerUS.getLayerID()
+				##style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+				##ayerUS.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layer], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "Layer non valido",QMessageBox.Ok)
+
+			layer_name = 'pyarchinit_strutture_ipotesi'
+			layer_name_conv = "'"+str(layer_name)+"'"
+			value_conv =  ('"scavo = %s"') % ("'"+str(self.val)+"'")
+			cmq_set_uri_data_source = "uri.setDataSource('',%s, %s, %s)" % (layer_name_conv, "'the_geom'", value_conv)
+			eval(cmq_set_uri_data_source)
+			layer_label = self.LAYERS_CONVERT_DIZ[layer_name]
+			layer_label_conv = "'"+layer_label+"'"
+			cmq_set_vector_layer = "QgsVectorLayer(uri.uri(), %s, 'spatialite')" % (layer_label_conv)
+			layer= eval(cmq_set_vector_layer)
+
+			if  layer.isValid() == True:
+				#self.USLayerId = layerUS.getLayerID()
+				##style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+				##ayerUS.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layer], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "Layer non valido",QMessageBox.Ok)
+
+			layer_name = 'pyarchinit_siti'
+			layer_name_conv = "'"+str(layer_name)+"'"
+			value_conv =  ('"sito_nome = %s"') % ("'"+str(self.val)+"'")
+			cmq_set_uri_data_source = "uri.setDataSource('',%s, %s, %s)" % (layer_name_conv, "'the_geom'", value_conv)
+			eval(cmq_set_uri_data_source)
+			layer_label = self.LAYERS_CONVERT_DIZ[layer_name]
+			layer_label_conv = "'"+layer_label+"'"
+			cmq_set_vector_layer = "QgsVectorLayer(uri.uri(), %s, 'spatialite')" % (layer_label_conv)
+			layer= eval(cmq_set_vector_layer)
+
+			if  layer.isValid() == True:
+				#self.USLayerId = layerUS.getLayerID()
+				##style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+				##ayerUS.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layer], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "Layer non valido",QMessageBox.Ok)
+
+			layer_name = 'pyarchinit_ripartizioni_spaziali'
+			layer_name_conv = "'"+str(layer_name)+"'"
+			value_conv =  ('"sito_rs = %s"') % ("'"+str(self.val)+"'")
+			cmq_set_uri_data_source = "uri.setDataSource('',%s, %s, %s)" % (layer_name_conv, "'the_geom'", value_conv)
+			eval(cmq_set_uri_data_source)
+			layer_label = self.LAYERS_CONVERT_DIZ[layer_name]
+			layer_label_conv = "'"+layer_label+"'"
+			cmq_set_vector_layer = "QgsVectorLayer(uri.uri(), %s, 'spatialite')" % (layer_label_conv)
+			layer= eval(cmq_set_vector_layer)
+
+			if  layer.isValid() == True:
+				#self.USLayerId = layerUS.getLayerID()
+				##style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+				##ayerUS.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layer], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "Layer non valido",QMessageBox.Ok)
 
 class Order_layers:
 

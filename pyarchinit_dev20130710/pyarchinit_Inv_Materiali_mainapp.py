@@ -250,7 +250,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					csv_dataset.append(sing_list)
 
 				filename = ('%s%squant_forme_minime.csv') % (self.QUANT_PATH, os.sep)
-				QMessageBox.warning(self, "Attenzione", str(filename),  QMessageBox.Ok)
+				QMessageBox.warning(self, "Esportazione", str(filename), MessageBox.Ok)
 				f = open(filename, 'wb')
 				Uw = UnicodeWriter(f)
 				Uw.writerows(csv_dataset)
@@ -286,10 +286,13 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				Uw = UnicodeWriter(f)
 				Uw.writerows(csv_dataset)
 				f.close()
+				#QMessageBox.warning(self, "Esportazione", "Esportazione del file "+ str(filename) + "avvenuta con successo. I dati si trovano nella cartella pyarchinit_Quantificazioni_folder sotto al vostro Utente", MessageBox.Ok)
+
 
 				self.plot_chart(dataset_sum, 'Grafico per Frammenti', 'Nr. Frammenti')
 			else:
 				QMessageBox.warning(self, "Attenzione", "Non ci sono dati da rappresentare!!",  QMessageBox.Ok)
+		""" experimental disabled
 		wind = QMessageBox.warning(self, "Attenzione", "Vuoi esportare le medie ponderate?",  QMessageBox.Cancel, 1)
 		if wind == 1:
 			conversion_dict = {"I sec. a.C." : (-99, 0),
@@ -388,6 +391,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			Uw = UnicodeWriter(f)
 			Uw.writerows(csv_dataset)
 			f.close()
+			"""
 
 
 	def parameter_quant_creator(self, par_list, n_rec):
