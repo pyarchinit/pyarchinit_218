@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_Site_ui.ui'
 #
-# Created: Mon Aug 05 16:08:17 2013
+# Created: Wed Aug 07 00:35:15 2013
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -382,6 +382,7 @@ class Ui_DialogSite(object):
         self.gridLayout_8.addLayout(self.gridLayout_6, 1, 0, 1, 1)
         self.toolBox.addItem(self.page, _fromUtf8(""))
         self.page_3 = QtGui.QWidget()
+        self.page_3.setGeometry(QtCore.QRect(0, 0, 567, 202))
         self.page_3.setObjectName(_fromUtf8("page_3"))
         self.formLayout = QtGui.QFormLayout(self.page_3)
         self.formLayout.setObjectName(_fromUtf8("formLayout"))
@@ -403,6 +404,15 @@ class Ui_DialogSite(object):
         self.pushButton_sites_geometry.setObjectName(_fromUtf8("pushButton_sites_geometry"))
         self.horizontalLayout_3.addWidget(self.pushButton_sites_geometry)
         self.formLayout.setLayout(1, QtGui.QFormLayout.LabelRole, self.horizontalLayout_3)
+        self.horizontalLayout_4 = QtGui.QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(_fromUtf8("horizontalLayout_4"))
+        self.label_9 = QtGui.QLabel(self.page_3)
+        self.label_9.setObjectName(_fromUtf8("label_9"))
+        self.horizontalLayout_4.addWidget(self.label_9)
+        self.pushButton_rel_pdf = QtGui.QPushButton(self.page_3)
+        self.pushButton_rel_pdf.setObjectName(_fromUtf8("pushButton_rel_pdf"))
+        self.horizontalLayout_4.addWidget(self.pushButton_rel_pdf)
+        self.formLayout.setLayout(2, QtGui.QFormLayout.LabelRole, self.horizontalLayout_4)
         self.toolBox.addItem(self.page_3, _fromUtf8(""))
         self.page_2 = QtGui.QWidget()
         self.page_2.setGeometry(QtCore.QRect(0, 0, 567, 202))
@@ -463,6 +473,8 @@ class Ui_DialogSite(object):
         self.label_8.setToolTip(QtGui.QApplication.translate("DialogSite", "Carica tutti layer che contengono geometrie relative a questo sito", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setText(QtGui.QApplication.translate("DialogSite", "Carica le geometrie relative a questo sito", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_sites_geometry.setText(QtGui.QApplication.translate("DialogSite", "Carica", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_9.setText(QtGui.QApplication.translate("DialogSite", "Esporta relazione di scavo per questo sito", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_rel_pdf.setText(QtGui.QApplication.translate("DialogSite", "Esporta", None, QtGui.QApplication.UnicodeUTF8))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_3), QtGui.QApplication.translate("DialogSite", "Tools", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_test.setText(QtGui.QApplication.translate("DialogSite", "Run test", None, QtGui.QApplication.UnicodeUTF8))
         self.plainTextEdit.setPlainText(QtGui.QApplication.translate("DialogSite", "Questa è una sezione di testing per sperimentare funzioni.\n"

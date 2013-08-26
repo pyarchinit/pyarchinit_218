@@ -48,6 +48,8 @@ from  pyarchinit_exp_USsheet_pdf import *
 from delegateComboBox import *
 from imageViewer import ImageViewer
 
+from  pyarchinit_exp_Tafonomiasheet_pdf import *
+
 class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 	MSG_BOX_TITLE = "PyArchInit - Scheda Tafonomica"
 	DATA_LIST = []
@@ -389,11 +391,9 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			pass
 
 		self.comboBox_sito.clear()
-		self.comboBox_sito_rappcheck.clear()
 
 		sito_vl.sort()
 		self.comboBox_sito.addItems(sito_vl)
-		self.comboBox_sito_rappcheck.addItems(sito_vl)
 
 		"""
 		#lista definizione_stratigrafica
@@ -486,94 +486,8 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 	#buttons functions
 
 
-	def generate_list_pdf(self):
-		pass
-		"""
-		data_list = []
-
-		for i in range(len(self.DATA_LIST)):
-			#assegnazione valori di quota mn e max
-			sito =  str(self.DATA_LIST[i].sito)
-			area = str(self.DATA_LIST[i].area)
-			us = int(self.DATA_LIST[i].us)
-
-			res = self.DB_MANAGER.select_quote_from_db_sql(sito, area, us)
-			quote = []
-			for sing_us in res:
-				sing_quota_value = str(sing_us[5])
-				if sing_quota_value[0] == '-':
-					sing_quota_value = sing_quota_value[:7]
-				else:
-					sing_quota_value = sing_quota_value[:6]
-
-				sing_quota = [sing_quota_value, sing_us[4]]
-				quote.append(sing_quota)
-			quote.sort()
-			if bool(quote) == True:
-				quota_min = '%s %s' % (quote[0][0], quote[0][1])
-				quota_max = '%s %s' % (quote[-1][0], quote[-1][1])
-			else:
-				quota_min = "Non rilevata"
-				quota_max = "Non rilevata"
-			#assegnazione numero di pianta
-			resus = self.DB_MANAGER.select_us_from_db_sql(sito, area, us, "2")
-			elenco_record = []
-			for us in resus:
-				elenco_record.append(us)
-			if bool(elenco_record) == True:
-				sing_rec = elenco_record[0]
-				f = open("test_elenco.txt", "w")
-				f.write(str(sing_rec))
-				f.close()
-				elenco_piante = sing_rec[7]
-				if elenco_piante != None:
-					piante = elenco_piante
-				else:
-					piante = "US disegnata su base GIS"
-			else:
-				piante = "US non disegnata"
-
-			data_list.append([
-			str(self.DATA_LIST[i].sito), 									#1 - Sito
-			str(self.DATA_LIST[i].area),									#2 - Area
-			int(self.DATA_LIST[i].us),										#3 - US
-			str(self.DATA_LIST[i].d_stratigrafica),							#4 - Definizione stratigrafica
-			str(self.DATA_LIST[i].d_interpretativa),						#5 - Definizione intepretata
-			self.DATA_LIST[i].descrizione,									#6 - descrizione
-			self.DATA_LIST[i].interpretazione,								#7 - interpretazione
-			str(self.DATA_LIST[i].periodo_iniziale),						#8 - periodo iniziale
-			str(self.DATA_LIST[i].fase_iniziale),							#9 - fase iniziale
-			str(self.DATA_LIST[i].periodo_finale),							#10 - periodo finale iniziale
-			str(self.DATA_LIST[i].fase_finale), 							#11 - fase finale
-			str(self.DATA_LIST[i].scavato),									#12 - scavato
-			str(self.DATA_LIST[i].attivita),								#13 - attivita
-			str(self.DATA_LIST[i].anno_scavo),								#14 - anno scavo
-			str(self.DATA_LIST[i].metodo_di_scavo),							#15 - metodo
-			str(self.DATA_LIST[i].inclusi),									#16 - inclusi
-			str(self.DATA_LIST[i].campioni),								#17 - campioni
-			str(self.DATA_LIST[i].rapporti),								#18 - rapporti
-			str(self.DATA_LIST[i].data_schedatura),							#19 - data schedatura
-			str(self.DATA_LIST[i].schedatore),								#20 - schedatore
-			str(self.DATA_LIST[i].formazione),								#21 - formazione
-			str(self.DATA_LIST[i].stato_di_conservazione),					#22 - conservazione
-			str(self.DATA_LIST[i].colore),									#23 - colore
-			str(self.DATA_LIST[i].consistenza),								#24 - consistenza
-			str(self.DATA_LIST[i].struttura),								#25 - struttura
-			str(quota_min),													#26 - quota_min
-			str(quota_max),													#27 - quota_max
-			str(piante)														#27 - piante
-		])
-		return data_list
-		"""
-
-	def on_pushButton_pdf_exp_pressed(self):
-		US_pdf_sheet = generate_pdf()
-		data_list = self.generate_list_pdf()
-		US_pdf_sheet.build_US_sheets(data_list)
-
-
 	def on_pushButton_exp_index_us_pressed(self):
-		US_index_pdf = generate_pdf()
+		US_index_pdf = generate_tafonomia_pdf()
 		data_list = self.generate_list_pdf()
 		US_index_pdf.build_index_US(data_list, data_list[0][0])
 
@@ -736,44 +650,6 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 					self.fill_fields(self.REC_CORR)
 					self.enable_button(1)
 
-	def on_pushButton_rapp_check_pressed(self):
-		sito_check = self.comboBox_sito_rappcheck.currentText()
-		self.rapporti_stratigrafici_check(sito_check)
-		QMessageBox.warning(self, "Messaggio", "Controllo Rapporti Stratografici. \n Controllo eseguito con successo",  QMessageBox.Ok)
-
-	def data_error_check(self):
-		test = 0
-		EC = Error_check()
-
-		if EC.data_is_empty(str(self.comboBox_sito.currentText())) == 0:
-			QMessageBox.warning(self, "ATTENZIONE", "Campo Sito. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
-			test = 1
-
-		if EC.data_is_empty(str(self.comboBox_sigla_struttura.currentText())) == 0:
-			QMessageBox.warning(self, "ATTENZIONE", "Campo Tipo Struttura. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
-			test = 1
-
-		if EC.data_is_empty(str(self.comboBox_nr_struttura.currentText())) == 0:
-			QMessageBox.warning(self, "ATTENZIONE", "Campo Nr Struttura. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
-			test = 1
-
-		if EC.data_is_empty(str(self.lineEdit_nr_scheda.text())) == 0:
-			QMessageBox.warning(self, "ATTENZIONE", "Campo nr_scheda. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
-			test = 1
-
-		nr_scheda_tafonomia = self.lineEdit_nr_scheda.text()
-		nr_struttura = self.comboBox_nr_struttura.currentText()
-
-		if nr_scheda_tafonomia != "":
-			if EC.data_is_int(nr_scheda_tafonomia) == 0:
-				QMessageBox.warning(self, "ATTENZIONE", "Campo nr_scheda. \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
-				test = 1
-
-		if nr_struttura != "":
-			if EC.data_is_int(nr_struttura) == 0:
-				QMessageBox.warning(self, "ATTENZIONE", "Campo Nr Struttura. \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
-				test = 1
-		return test
 
 	def insert_new_rec(self):
 		##Caratteristiche
@@ -1124,6 +1000,48 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
 		self.enable_button_search(1)
+
+	def on_pushButton_pdf_exp_pressed(self):
+		Tafonomia_pdf_sheet = generate_tafonomia_pdf() #deve essere importata la classe
+		data_list = self.generate_list_pdf() #deve essere aggiunta la funzione
+		Tafonomia_pdf_sheet.build_Tafonomia_sheets(data_list) #deve essere aggiunto il file per generare i pdf
+
+	def generate_list_pdf(self):
+		data_list = []
+		for i in range(len(self.DATA_LIST)):
+			data_list.append([
+			unicode(self.DATA_LIST[i].sito), 									#0 - Sito
+			unicode(self.DATA_LIST[i].nr_scheda_taf),						#1 - numero scheda taf
+			unicode(self.DATA_LIST[i].sigla_struttura),						#2 - sigla struttura
+			unicode(self.DATA_LIST[i].nr_struttura),							#3 - nr struttura
+			unicode(self.DATA_LIST[i].nr_individuo),							#4 - nr individuo
+			unicode(self.DATA_LIST[i].rito),										#5 - rito
+			unicode(self.DATA_LIST[i].descrizione_taf),						#6 - descrizione
+			unicode(self.DATA_LIST[i].interpretazione_taf),					#7 - interpretazione
+			unicode(self.DATA_LIST[i].segnacoli),								#8 - segnacoli
+			unicode(self.DATA_LIST[i].canale_libatorio_si_no),				#9- canale libatorio l
+			unicode(self.DATA_LIST[i].oggetti_rinvenuti_esterno),			#10- oggetti rinvenuti esterno
+			unicode(self.DATA_LIST[i].stato_di_conservazione),			#11 - stato_di_conservazione
+			unicode(self.DATA_LIST[i].copertura_tipo), 						#12 - copertura tipo
+			unicode(self.DATA_LIST[i].tipo_contenitore_resti),				#13 - tipo contenitore resti
+			unicode(self.DATA_LIST[i].orientamento_asse),					#14 - orientamento asse
+			unicode(self.DATA_LIST[i].orientamento_azimut),				#15 orientamento azimut
+			unicode(self.DATA_LIST[i].corredo_presenza),					#16-  corredo presenza
+			unicode(self.DATA_LIST[i].corredo_tipo),							#17 - corredo tipo
+			unicode(self.DATA_LIST[i].corredo_descrizione),				#18 - corredo descrizione
+			unicode(self.DATA_LIST[i].lunghezza_scheletro),				#19 - lunghezza scheletro
+			unicode(self.DATA_LIST[i].posizione_cranio),						#20 - posizione cranio
+			unicode(self.DATA_LIST[i].posizione_scheletro),					#21 - posizione cranio
+			unicode(self.DATA_LIST[i].posizione_arti_superiori),			#22 - posizione arti superiori
+			unicode(self.DATA_LIST[i].posizione_arti_inferiori),				#23 - posizione arti inferiori
+			unicode(self.DATA_LIST[i].completo_si_no),						#24 - completo
+			unicode(self.DATA_LIST[i].disturbato_si_no),					#25- disturbato
+			unicode(self.DATA_LIST[i].in_connessione_si_no),				#26 - in connessione
+			unicode(self.DATA_LIST[i].caratteristiche)						#27 - caratteristiche
+		])
+		data_txt = str(data_list)
+		self.testing('test_tafo.txt', data_txt)
+		return data_list
 
 	def update_if(self, msg):
 		rec_corr = self.REC_CORR

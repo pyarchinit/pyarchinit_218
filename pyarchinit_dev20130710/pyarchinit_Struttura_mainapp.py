@@ -46,6 +46,7 @@ except:
 
 from  sortpanelmain import SortPanelMain
 from delegateComboBox import *
+
 from  pyarchinit_exp_Strutturasheet_pdf import *
 
 class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
@@ -755,7 +756,6 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 		data_list = self.generate_list_pdf() #deve essere aggiunta la funzione
 		Struttura_pdf_sheet.build_Struttura_sheets(data_list) #deve essere aggiunto il file per generare i pdf
 
-
 	def generate_list_pdf(self):
 		data_list = []
 		for i in range(len(self.DATA_LIST)):
@@ -779,6 +779,7 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 			unicode(self.DATA_LIST[i].misure_struttura)									#16 - inclusi
 		])
 		return data_list
+
 
 
 	def update_if(self, msg):

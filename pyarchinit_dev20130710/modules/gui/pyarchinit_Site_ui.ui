@@ -720,6 +720,14 @@
           </layout>
          </widget>
          <widget class="QWidget" name="page_3">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>567</width>
+            <height>202</height>
+           </rect>
+          </property>
           <attribute name="label">
            <string>Tools</string>
           </attribute>
@@ -766,6 +774,24 @@
              </item>
             </layout>
            </item>
+           <item row="2" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QLabel" name="label_9">
+               <property name="text">
+                <string>Esporta relazione di scavo per questo sito</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_rel_pdf">
+               <property name="text">
+                <string>Esporta</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
           </layout>
          </widget>
          <widget class="QWidget" name="page_2">
@@ -773,8 +799,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>567</width>
-            <height>202</height>
+            <width>98</width>
+            <height>118</height>
            </rect>
           </property>
           <attribute name="label">

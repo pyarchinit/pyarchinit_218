@@ -623,11 +623,11 @@ class pyarchinit_Detsesso(QDialog, Ui_DialogDetsesso):
 			self.loadMapPreview()
 		else:
 			self.loadMapPreview(1)
-	"""
+
 	def on_pushButton_addRaster_pressed(self):
 		if self.toolButtonGis.isChecked() == True:
 			self.pyQGIS.addRasterLayer()
-	"""
+
 	def on_pushButton_new_rec_pressed(self):
 		#set the GUI for a new record
 		if  self.BROWSE_STATUS != "n":

@@ -43,7 +43,7 @@ from  pyarchinit_error_check import *
 
 from  pyarchinit_pyqgis import Pyarchinit_pyqgis
 from  sortpanelmain import SortPanelMain
-
+from print_relazione_pdf import exp_rel_pdf
 from test_area import Test_area
 
 ##from 
@@ -431,11 +431,9 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		if self.BROWSE_STATUS != "f":
 			self.BROWSE_STATUS = "f"
 			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-			
 			###
 			self.setComboBoxEnable(["self.comboBox_sito"],"True")
 			self.setComboBoxEnable(["self.textEdit_descrizione_site"],"False")
-			
 			###
 			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			self.set_rec_counter('','')
@@ -448,12 +446,12 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 			QMessageBox.warning(self, "ATTENZIONE", "Per eseguire una nuova ricerca clicca sul pulsante 'new search' ",  QMessageBox.Ok)
 		else:
 			search_dict = {
-			'sito' : "'"+unicode(self.comboBox_sito.currentText())+"'",                     #1 - Sito
+			'sito' : "'"+unicode(self.comboBox_sito.currentText())+"'",					#1 - Sito
 			'nazione': "'"+unicode(self.comboBox_nazione.currentText())+"'",			#2 - Nazione
-			'regione': "'" + unicode(self.comboBox_regione.currentText())+"'",			#3 - Regione
+			'regione': "'" + unicode(self.comboBox_regione.currentText())+"'",		#3 - Regione
 			'comune': "'" + unicode(self.comboBox_comune.currentText())+"'",		#4 - Comune
-			'descrizione': unicode(self.textEdit_descrizione_site.toPlainText()),				#5 - Descrizione
-			'provincia': "'" + unicode(self.comboBox_provincia.currentText())+"'"		#4 - Provincia
+			'descrizione': unicode(self.textEdit_descrizione_site.toPlainText()),			#5 - Descrizione
+			'provincia': "'" + unicode(self.comboBox_provincia.currentText())+"'"		#6 - Provincia
 			}
 
 			u = Utility()
@@ -536,6 +534,10 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 ##							"10" : "pyarchinit_strutture_ipotesi",
 ##							"11" : "pyarchinit_us_view",
 ##							"12" : "pyunitastratigrafiche"
+
+	def on_pushButton_rel_pdf_pressed(self):
+		erp = exp_rel_pdf(unicode(self.comboBox_sito.currentText()))
+		erp.export_rel_pdf()
 
 	def update_if(self, msg):
 		rec_corr = self.REC_CORR

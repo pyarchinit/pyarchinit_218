@@ -831,11 +831,15 @@ class Pyarchinit_db_management:
 		res = self.engine.execute(sql_query_string)
 		return res
 
-def main():
-	db = Pyarchinit_db_management("postgres://postgres:alajolla39@127.0.0.1/pyarchinit")
-	db.connection()
-	data = db.query(INVENTARIO_MATERIALI)
 
+def main():
+	db = Pyarchinit_db_management("sqlite://:'C:\Users\Windows\pyarchinit_DB_folder'")
+	db.connection()
+	data = db.query_bool({'sigla':"ED"}, 'PYARCHINIT_THESAURUS_SIGLE')
+	print data[0].sigla_estesa
+
+##main()
+"""
 	for rec in data:
 
 		id_invmat = rec.id_invmat
@@ -995,5 +999,5 @@ if __name__ == '__main__':
 	#f.close()
 
 	#db.update_for()
-
+"""
 
