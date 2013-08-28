@@ -272,6 +272,11 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		
 		self.comboBox_schedatore.clear()
 		self.comboBox_schedatore.addItems(['Tommaso Gallo', 'Luca Mandolesi', 'Simona Gugnali'])
+		
+		"""soluzione provvisoria"""
+		self.setComboBoxEditable(["self.comboBox_in_connessione"],1)
+		self.setComboBoxEditable(["self.comboBox_disturbato"],1)
+		self.setComboBoxEditable(["self.comboBox_completo"],1)
 
 		#map prevew system
 		#self.mapPreview = QgsMapCanvas(self)
@@ -614,13 +619,14 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 
 			self.enable_button(0)
 
+
+
 	def on_pushButton_save_pressed(self):
 		#save record
 		if self.BROWSE_STATUS == "b":
 			if self.records_equal_check() == 1:
 				self.update_if(QMessageBox.warning(self,'ATTENZIONE',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-				self.SORT_STATUS = "n"
-				self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
+				self.label_sort.setText(self.SORTED_ITEMS["n"])
 				self.enable_button(1)
 			else:
 				QMessageBox.warning(self, "ATTENZIONE", "Non è stata realizzata alcuna modifica.",  QMessageBox.Ok)
@@ -629,14 +635,15 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 				test_insert = self.insert_new_rec()
 				if test_insert == 1:
 					self.empty_fields()
-					self.SORT_STATUS = "n"
-					self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
-					self.charge_records()
+					self.label_sort.setText(self.SORTED_ITEMS["n"])
 					self.charge_list()
+					self.charge_records()
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
 					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+					self.fill_fields(self.REC_CORR)
+					
 					self.setComboBoxEditable(["self.comboBox_sito"],1)
 					self.setComboBoxEditable(["self.comboBox_sigla_struttura"],1)
 					self.setComboBoxEditable(["self.comboBox_nr_struttura"],1)
@@ -646,9 +653,21 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 					self.setComboBoxEnable(["self.comboBox_sigla_struttura"],"False")
 					self.setComboBoxEnable(["self.comboBox_nr_struttura"],"False")
 					self.setComboBoxEnable(["self.comboBox_nr_individuo"],"False")
-
-					self.fill_fields(self.REC_CORR)
+					
 					self.enable_button(1)
+				else:
+					QMessageBox.warning(self, "ATTENZIONE", "Problema nell'inserimento dati",  QMessageBox.Ok)
+
+
+	def data_error_check(self):
+		test = 0
+		EC = Error_check()
+
+		if EC.data_is_empty(unicode(self.comboBox_sito.currentText())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo Sito. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			test = 1
+
+		return test
 
 
 	def insert_new_rec(self):
@@ -760,7 +779,6 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		except Exception, e:
 			QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
-
 	def on_pushButton_last_rec_pressed(self):
 		if self.records_equal_check() == 1:
 			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
@@ -771,7 +789,6 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
 		except Exception, e:
 			QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
-
 
 	def on_pushButton_prev_rec_pressed(self):
 		if self.records_equal_check() == 1:
@@ -788,7 +805,6 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
 			except Exception, e:
 				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
-
 
 	def on_pushButton_next_rec_pressed(self):
 		if self.records_equal_check() == 1:
@@ -916,31 +932,31 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 				lunghezza_scheletro = None
 
 			search_dict = {
-			self.TABLE_FIELDS[0]  : "'"+str(self.comboBox_sito.currentText())+"'", 									#1 - Sito
-			self.TABLE_FIELDS[1]  : nr_scheda,																		#2 - Nr schede
-			self.TABLE_FIELDS[2]  : "'"+str(self.comboBox_sigla_struttura.currentText())+"'",						#3 - Tipo struttura
-			self.TABLE_FIELDS[3]  : nr_struttura,																	#4 - Nr struttura
-			self.TABLE_FIELDS[4]  : nr_individuo,																	#5 - Nr struttura
-			self.TABLE_FIELDS[5]  : "'"+str(self.comboBox_rito.currentText())+"'",									#6 - Rito
-			self.TABLE_FIELDS[6]  : "'"+unicode(self.textEdit_descrizione_taf.toPlainText())+"'",					#7 - Descrizione tafonimia
-			self.TABLE_FIELDS[7]  : "'"+unicode(self.textEdit_interpretazione_taf.toPlainText())+"'",				#8 - Interpretazione tafonimia
-			self.TABLE_FIELDS[8]  : "'"+str(self.comboBox_segnacoli.currentText())+"'",								#9 - Segnacoli
-			self.TABLE_FIELDS[9]  : "'"+str(self.comboBox_canale_libatorio.currentText())+"'",						#10 - Canale libatorio
-			self.TABLE_FIELDS[10]  : "'"+str(self.comboBox_oggetti_esterno.currentText())+"'",	 					#11 - Oggetti esterno
-			self.TABLE_FIELDS[11] : "'"+str(self.comboBox_conservazione_taf.currentText())+"'", 					#12 - Conservazione tafonomia
-			self.TABLE_FIELDS[12] : "'"+str(self.comboBox_copertura_tipo.currentText())+"'",						#13 - Copertura tipo
-			self.TABLE_FIELDS[13] : "'"+str(self.comboBox_tipo_contenitore_resti.currentText())+"'",				#14 - Tipo contenitore resti  
-			self.TABLE_FIELDS[14] : "'"+str(self.lineEdit_orientamento_asse.text())+"'",							#15 - orientamento asse
-			self.TABLE_FIELDS[15] : orientamento_azimut,															#16 - orientamento azimut
-			self.TABLE_FIELDS[17] : "'"+str(self.comboBox_corredo_presenza.currentText())+"'",						#17 - corredo
-			self.TABLE_FIELDS[20] : lunghezza_scheletro,															#18 - lunghezza scheletro
-			self.TABLE_FIELDS[21] : "'"+str(self.comboBox_posizione_scheletro.currentText())+"'",					#19 - posizione scheletro
-			self.TABLE_FIELDS[22] : "'"+str(self.comboBox_posizione_cranio.currentText())+"'",						#20 - posizione cranio
-			self.TABLE_FIELDS[23] : "'"+str(self.comboBox_arti_superiori.currentText())+"'",						#21 - arti superiori
-			self.TABLE_FIELDS[24] : "'"+str(self.comboBox_arti_inferiori.currentText())+"'",						#24 - arti inferiori
-			self.TABLE_FIELDS[25] : "'"+str(self.comboBox_completo.currentText())+"'",								#25 - completo
-			self.TABLE_FIELDS[26] : "'"+str(self.comboBox_disturbato.currentText())+"'",							#26 - disturbato
-			self.TABLE_FIELDS[27] : "'"+str(self.comboBox_in_connessione.currentText())+"'"							#27 - in connessione
+			self.TABLE_FIELDS[0]  : "'"+unicode(self.comboBox_sito.currentText())+"'", 									#1 - Sito
+			self.TABLE_FIELDS[1]  : nr_scheda,																			#2 - Nr schede
+			self.TABLE_FIELDS[2]  : "'"+unicode(self.comboBox_sigla_struttura.currentText())+"'",						#3 - Tipo struttura
+			self.TABLE_FIELDS[3]  : nr_struttura,																		#4 - Nr struttura
+			self.TABLE_FIELDS[4]  : nr_individuo,																		#5 - Nr struttura
+			self.TABLE_FIELDS[5]  : "'"+unicode(self.comboBox_rito.currentText())+"'",									#6 - Rito
+			self.TABLE_FIELDS[6]  : "'"+unicode(self.textEdit_descrizione_taf.toPlainText())+"'",						#7 - Descrizione tafonimia
+			self.TABLE_FIELDS[7]  : "'"+unicode(self.textEdit_interpretazione_taf.toPlainText())+"'",					#8 - Interpretazione tafonimia
+			self.TABLE_FIELDS[8]  : "'"+unicode(self.comboBox_segnacoli.currentText())+"'",								#9 - Segnacoli
+			self.TABLE_FIELDS[9]  : "'"+unicode(self.comboBox_canale_libatorio.currentText())+"'",						#10 - Canale libatorio
+			self.TABLE_FIELDS[10]  : "'"+unicode(self.comboBox_oggetti_esterno.currentText())+"'",	 					#11 - Oggetti esterno
+			self.TABLE_FIELDS[11] : "'"+unicode(self.comboBox_conservazione_taf.currentText())+"'", 					#12 - Conservazione tafonomia
+			self.TABLE_FIELDS[12] : "'"+unicode(self.comboBox_copertura_tipo.currentText())+"'",						#13 - Copertura tipo
+			self.TABLE_FIELDS[13] : "'"+unicode(self.comboBox_tipo_contenitore_resti.currentText())+"'",				#14 - Tipo contenitore resti  
+			self.TABLE_FIELDS[14] : "'"+unicode(self.lineEdit_orientamento_asse.text())+"'",							#15 - orientamento asse
+			self.TABLE_FIELDS[15] : orientamento_azimut,																#16 - orientamento azimut
+			self.TABLE_FIELDS[17] : "'"+unicode(self.comboBox_corredo_presenza.currentText())+"'",						#17 - corredo
+			self.TABLE_FIELDS[20] : lunghezza_scheletro,																#18 - lunghezza scheletro
+			self.TABLE_FIELDS[21] : "'"+unicode(self.comboBox_posizione_scheletro.currentText())+"'",					#19 - posizione scheletro
+			self.TABLE_FIELDS[22] : "'"+unicode(self.comboBox_posizione_cranio.currentText())+"'",						#20 - posizione cranio
+			self.TABLE_FIELDS[23] : "'"+unicode(self.comboBox_arti_superiori.currentText())+"'",						#21 - arti superiori
+			self.TABLE_FIELDS[24] : "'"+unicode(self.comboBox_arti_inferiori.currentText())+"'",						#24 - arti inferiori
+			self.TABLE_FIELDS[25] : "'"+unicode(self.comboBox_completo.currentText())+"'",								#25 - completo
+			self.TABLE_FIELDS[26] : "'"+unicode(self.comboBox_disturbato.currentText())+"'",							#26 - disturbato
+			self.TABLE_FIELDS[27] : "'"+unicode(self.comboBox_in_connessione.currentText())+"'"							#27 - in connessione
 			}
 
 			u = Utility()
@@ -1069,6 +1085,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			elif test == 0:
 				return 0
 
+
 	def update_record(self):
 		self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, 
 						self.ID_TABLE,
@@ -1079,7 +1096,6 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 
 	def rec_toupdate(self):
 		rec_to_update = self.UTILITY.pos_none_in_list(self.DATA_LIST_REC_TEMP)
-		#self.testing('/testtaafo.txt', str(rec_to_update))
 		return rec_to_update
 
 
@@ -1202,6 +1218,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		self.comboBox_disturbato.setEditText("")				#27 - disturbato
 		self.comboBox_in_connessione.setEditText("") 			#28 - in connessione
 
+
 	def fill_fields(self, n=0):
 		self.rec_num = n
 		try:
@@ -1214,6 +1231,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 				self.lineEdit_lunghezza_scheletro.setText("")
 			else:
 				self.lineEdit_lunghezza_scheletro.setText(str(self.DATA_LIST[self.rec_num].lunghezza_scheletro))		#14 - orientamento azimut
+
 			self.comboBox_sito.setEditText(str(self.DATA_LIST[self.rec_num].sito))															#1 - Sito
 			self.lineEdit_nr_scheda.setText(str(self.DATA_LIST[self.rec_num].nr_scheda_taf))												#2 - nr_scheda_taf
 			self.comboBox_sigla_struttura.setEditText(self.DATA_LIST[self.rec_num].sigla_struttura) 										#3 - sigla_struttura

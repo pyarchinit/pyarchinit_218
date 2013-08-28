@@ -836,7 +836,7 @@ class TAFONOMIA(object):
 
 		#def __repr__"
 	def __repr__(self):
-		return "<TAFONOMIA('%d', '%s', '%d', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%f', '%s', '%s', '%s', '%r', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')>" % (
+		return "<TAFONOMIA('%d', '%s', '%d', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%f', '%s', '%s', '%s', '%f', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')>" % (
 		self.id_tafonomia,
 		self.sito,
 		self.nr_scheda_taf,
@@ -865,8 +865,7 @@ class TAFONOMIA(object):
 		self.completo_si_no,
 		self.disturbato_si_no,
 		self.in_connessione_si_no,
-		self.caratteristiche,
-		self.nr_individuo
+		self.caratteristiche
 		)
 
 #mapper

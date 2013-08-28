@@ -19,7 +19,7 @@ Copyright (c) 2010 __MyCompanyName__. All rights reserved.
 # the GNU General Public License for more details.
 
 
-import Image
+import PIL as Image
 import sys
 import os
 import numpy as np

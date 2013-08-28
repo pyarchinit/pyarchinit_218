@@ -522,18 +522,6 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 	def on_pushButton_sites_geometry_pressed(self):
 		sito = unicode(self.comboBox_sito.currentText())
 		self.pyQGIS.charge_sites_geometry(["1", "2", "3", "4", "8"], "sito", sito)
-##								"1" : "pyarchinit_campionature",
-##							"2" : "pyarchinit_individui",
-##							"3" : "pyarchinit_linee_rif",
-##							"4" : "pyarchinit_punti_rif"
-##							"5" : "pyarchinit_quote",
-##							"6" : "pyarchinit_quote_view",
-##							"7" : "pyarchinit_ripartizioni_spaziali",
-##							"8" : "pyarchinit_sezioni",
-##							"9" : "pyarchinit_siti",
-##							"10" : "pyarchinit_strutture_ipotesi",
-##							"11" : "pyarchinit_us_view",
-##							"12" : "pyunitastratigrafiche"
 
 	def on_pushButton_rel_pdf_pressed(self):
 		erp = exp_rel_pdf(unicode(self.comboBox_sito.currentText()))
