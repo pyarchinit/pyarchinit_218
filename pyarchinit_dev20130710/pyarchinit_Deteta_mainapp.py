@@ -872,37 +872,27 @@ class pyarchinit_Deteta(QDialog, Ui_Dialog_eta):
 		if self.BROWSE_STATUS == "b":
 			if self.records_equal_check() == 1:
 				self.update_if(QMessageBox.warning(self,'ATTENZIONE',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-				self.label_sort.setText(self.SORTED_ITEMS["n"])
+				self.SORT_STATUS = "n"
+				self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 				self.enable_button(1)
 			else:
-				QMessageBox.warning(self, "ATTENZIONE", "Non è stata realizzata alcuna modifica.",  QMessageBox.Ok)
+				QMessageBox.warning(self, "ATTENZIONE", u"Non è stata realizzata alcuna modifica.",  QMessageBox.Ok)
 		else:
 			if self.data_error_check() == 0:
 				test_insert = self.insert_new_rec()
 				if test_insert == 1:
 					self.empty_fields()
-					self.label_sort.setText(self.SORTED_ITEMS["n"])
-					self.charge_list()
+					self.SORT_STATUS = "n"
+					self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 					self.charge_records()
+					self.charge_list()
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
 					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-					self.fill_fields(self.REC_CORR)
-					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-					
-					"""
-					self.setComboBoxEditable(["self.comboBox_sito"],1)
-					self.setComboBoxEnable(["self.comboBox_sito"],"False")
-					self.setComboBoxEnable(["self.lineEdit_us"],"False")
-					self.setComboBoxEnable(["self.lineEdit_individuo"],"False")
-					"""
 
-					self.enable_button(1)
-					self.customize_GUI()
-
-			else:
-				pass
+				self.fill_fields(self.REC_CORR)
+				self.enable_button(1)
 
 	def data_error_check(self):
 		test = 0
@@ -1546,23 +1536,27 @@ class pyarchinit_Deteta(QDialog, Ui_Dialog_eta):
 		rec_corr = self.REC_CORR
 		self.msg = msg
 		if self.msg == 1:
-			self.update_record()
-			id_list = []
-			for i in self.DATA_LIST:
-				id_list.append(eval("i."+ self.ID_TABLE))
-			self.DATA_LIST = []
-			if self.SORT_STATUS == "n":
-				temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
-			else:
-				temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
-			for i in temp_data_list:
-				self.DATA_LIST.append(i)
-			self.BROWSE_STATUS = "b"
-			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-			if type(self.REC_CORR) == "<type 'str'>":
-				corr = 0
-			else:
-				corr = self.REC_CORR
+			test = self.update_record()
+			if test == 1:
+				id_list = []
+				for i in self.DATA_LIST:
+					id_list.append(eval("i."+ self.ID_TABLE))
+				self.DATA_LIST = []
+				if self.SORT_STATUS == "n":
+					temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE) #self.DB_MANAGER.query_bool(self.SEARCH_DICT_TEMP, self.MAPPER_TABLE_CLASS) #
+				else:
+					temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+				for i in temp_data_list:
+					self.DATA_LIST.append(i)
+				self.BROWSE_STATUS = "b"
+				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+				if type(self.REC_CORR) == "<type 'str'>":
+					corr = 0
+				else:
+					corr = self.REC_CORR 
+				return 1
+			elif test == 0:
+				return 0
 
 	#custom functions
 	def charge_records(self):
@@ -2359,11 +2353,16 @@ class pyarchinit_Deteta(QDialog, Ui_Dialog_eta):
 			eval(cmd)
 
 	def update_record(self):
-		self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, 
+		try:
+			self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, 
 						self.ID_TABLE,
 						[eval("int(self.DATA_LIST[self.REC_CORR]." + self.ID_TABLE+")")],
 						self.TABLE_FIELDS,
 						self.rec_toupdate())
+			return 1
+		except Exception, e:
+			QMessageBox.warning(self, "Messaggio", "Problema di encoding: sono stati inseriti accenti o caratteri non accettati dal database. Se chiudete ora la scheda senza correggere gli errori perderete i dati. Fare una copia di tutto su un foglio word a parte. Errore :" + str(e), QMessageBox.Ok)
+			return 0
 
 	def rec_toupdate(self):
 		rec_to_update = self.UTILITY.pos_none_in_list(self.DATA_LIST_REC_TEMP)

@@ -1207,7 +1207,6 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 						[eval("int(self.DATA_LIST[self.REC_CORR]." + self.ID_TABLE+")")],
 						self.TABLE_FIELDS,
 						self.rec_toupdate())
-
 			return 1
 		except Exception, e:
 			QMessageBox.warning(self, "Messaggio", "Problema di encoding: sono stati inseriti accenti o caratteri non accettati dal database. Se chiudete ora la scheda senza correggere gli errori perderete i dati. Fare una copia di tutto su un foglio word a parte. Errore :" + str(e), QMessageBox.Ok)

@@ -656,11 +656,16 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 			return 1
 
 	def update_record(self):
-		self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, 
+		try:
+			self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, 
 						self.ID_TABLE,
 						[eval("int(self.DATA_LIST[self.REC_CORR]." + self.ID_TABLE+")")],
 						self.TABLE_FIELDS,
 						self.rec_toupdate())
+			return 1
+		except Exception, e:
+			QMessageBox.warning(self, "Messaggio", "Problema di encoding: sono stati inseriti accenti o caratteri non accettati dal database. Se chiudete ora la scheda senza correggere gli errori perderete i dati. Fare una copia di tutto su un foglio word a parte. Errore :" + str(e), QMessageBox.Ok)
+			return 0
 
 	def testing(self, name_file, message):
 		f = open(str(name_file), 'w')

@@ -1055,8 +1055,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			unicode(self.DATA_LIST[i].in_connessione_si_no),				#26 - in connessione
 			unicode(self.DATA_LIST[i].caratteristiche)						#27 - caratteristiche
 		])
-		data_txt = str(data_list)
-		self.testing('test_tafo.txt', data_txt)
+
 		return data_list
 
 	def update_if(self, msg):
@@ -1087,11 +1086,16 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 
 
 	def update_record(self):
-		self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, 
+		try:
+			self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, 
 						self.ID_TABLE,
 						[eval("int(self.DATA_LIST[self.REC_CORR]." + self.ID_TABLE+")")],
 						self.TABLE_FIELDS,
 						self.rec_toupdate())
+			return 1
+		except Exception, e:
+			QMessageBox.warning(self, "Messaggio", "Problema di encoding: sono stati inseriti accenti o caratteri non accettati dal database. Se chiudete ora la scheda senza correggere gli errori perderete i dati. Fare una copia di tutto su un foglio word a parte. Errore :" + str(e), QMessageBox.Ok)
+			return 0
 
 
 	def rec_toupdate(self):
@@ -1347,13 +1351,16 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		for i in self.TABLE_FIELDS:
 			self.DATA_LIST_REC_CORR.append(eval("str(self.DATA_LIST[self.REC_CORR]." + i + ")"))
 
+		data_txt = str(self.DATA_LIST_REC_CORR)
+		self.testing('test_reccorr.txt', data_txt)
+
 	def records_equal_check(self):
 		self.set_LIST_REC_TEMP()
 		self.set_LIST_REC_CORR()
-		#f = open('/test_rec_corr_TAFONOMIA.txt', 'w')
-		#test = str(self.DATA_LIST_REC_CORR) + " " + str(self.DATA_LIST_REC_TEMP)
-		#f.write(test)
-		#f.close()
+		f = open('/test_rec_corr_TAFONOMIA.txt', 'w')
+		test = str(self.DATA_LIST_REC_CORR) + " " + str(self.DATA_LIST_REC_TEMP)
+		f.write(test)
+		f.close()
 
 		if self.DATA_LIST_REC_CORR == self.DATA_LIST_REC_TEMP:
 			return 0

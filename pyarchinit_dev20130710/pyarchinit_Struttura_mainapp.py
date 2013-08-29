@@ -416,34 +416,35 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 		if self.BROWSE_STATUS == "b":
 			if self.records_equal_check() == 1:
 				self.update_if(QMessageBox.warning(self,'ATTENZIONE',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-				self.label_sort.setText(self.SORTED_ITEMS["n"])
+				self.SORT_STATUS = "n"
+				self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 				self.enable_button(1)
 			else:
-				QMessageBox.warning(self, "ATTENZIONE", "Non è stata realizzata alcuna modifica.",  QMessageBox.Ok)
+				QMessageBox.warning(self, "ATTENZIONE", u"Non è stata realizzata alcuna modifica.",  QMessageBox.Ok)
 		else:
-			#if self.data_error_check() == 0:
+			if self.data_error_check() == 0:
+				test_insert = self.insert_new_rec()
+				if test_insert == 1:
+					self.empty_fields()
+					self.SORT_STATUS = "n"
+					self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
+					self.charge_records()
+					self.charge_list()
+					self.BROWSE_STATUS = "b"
+					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
+					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
 
-			self.insert_new_rec()
-
-			self.empty_fields()
-			self.label_sort.setText(self.SORTED_ITEMS["n"])
-			self.charge_list()
-			self.charge_records()
-			self.BROWSE_STATUS = "b"
-			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-			self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
-			self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-			self.fill_fields(self.REC_CORR)
-
-			self.setComboBoxEditable(["self.comboBox_sito"],1)
-			self.setComboBoxEditable(["self.comboBox_sigla_struttura"],1)
-			self.setComboBoxEnable(["self.comboBox_sito"],"False")
-			self.setComboBoxEnable(["self.comboBox_sigla_struttura"],"False")
-			self.setComboBoxEnable(["self.numero_struttura"],"False")
-			self.enable_button(1)
-		
+				self.setComboBoxEditable(["self.comboBox_sito"],1)
+				self.setComboBoxEditable(["self.comboBox_sigla_struttura"],1)
+				self.setComboBoxEnable(["self.comboBox_sito"],"False")
+				self.setComboBoxEnable(["self.comboBox_sigla_struttura"],"False")
+				self.setComboBoxEnable(["self.numero_struttura"],"False")
+	
+				self.fill_fields(self.REC_CORR)
+				self.enable_button(1)
 				
-	"""
+
 	def data_error_check(self):
 		test = 0
 		EC = Error_check()
@@ -460,9 +461,7 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 				QMessageBox.warning(self, "ATTENZIONE", "Campo Cronologia Finale. \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
 				test = 1
 
-
 		return test
-	"""
 
 	def insert_new_rec(self):
 
@@ -1067,11 +1066,16 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 		eval(cmd)
 
 	def update_record(self):
-		self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, 
+		try:
+			self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, 
 						self.ID_TABLE,
 						[eval("int(self.DATA_LIST[self.REC_CORR]." + self.ID_TABLE+")")],
 						self.TABLE_FIELDS,
 						self.rec_toupdate())
+			return 1
+		except Exception, e:
+			QMessageBox.warning(self, "Messaggio", "Problema di encoding: sono stati inseriti accenti o caratteri non accettati dal database. Se chiudete ora la scheda senza correggere gli errori perderete i dati. Fare una copia di tutto su un foglio word a parte. Errore :" + str(e), QMessageBox.Ok)
+			return 0
 
 	def testing(self, name_file, message):
 		f = open(str(name_file), 'w')
