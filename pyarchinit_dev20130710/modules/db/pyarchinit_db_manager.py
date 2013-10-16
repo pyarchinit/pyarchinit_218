@@ -25,6 +25,7 @@ from sqlalchemy.orm import sessionmaker
 
 import pyarchinit_db_mapper
 from pyarchinit_db_mapper import *
+from pyarchinit_db_structure import *
 
 from pyarchinit_utility import *
 from pyarchinit_OS_utility import *
@@ -52,7 +53,9 @@ class Pyarchinit_db_management:
 		test = ""
 
 		try:
-			if self.conn_str.find("sqlite") == 0:
+			test_conn = self.conn_str.find("sqlite")
+
+			if test_conn == 0:
 				self.engine = create_engine(self.conn_str, echo=eval(self.boolean))
 			else:
 				self.engine = create_engine(self.conn_str, max_overflow=-1, echo=eval(self.boolean))
@@ -791,7 +794,7 @@ class Pyarchinit_db_management:
 		session = Session()
 
 		string = ('%s%s%s%s%s') %  ('session.query(US).filter_by(', 'sito', "='", str(self.sito), "')")
-
+		print string
 		lista_us = eval(string)
 
 		for i in lista_us:
@@ -831,13 +834,182 @@ class Pyarchinit_db_management:
 		res = self.engine.execute(sql_query_string)
 		return res
 
+	def query_in_contains(self, value_list):
+		self.value_list = value_list
 
-def main():
-	db = Pyarchinit_db_management("sqlite://:'C:\Users\Windows\pyarchinit_DB_folder'")
+		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
+		session = Session()
+
+		res_list = []
+		n = len(self.value_list)-1
+		while self.value_list:
+			chunk = self.value_list[0:n]
+			self.value_list = self.value_list[n:]
+			res_list.extend(session.query(US).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
+			#res_list.extend(us for us, in session.query(US.us).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
+
+		return res_list
+
+
+	def select_like_from_db_sql(self, rapp_list, us_rapp_list):
+		self.us_rapp_list = us_rapp_list
+		rapp_type = rapp_list
+		query_string_base = """session.query(US).filter(or_("""
+		query_list = []
+
+		#costruisce la stringa che trova i like
+		for sing_us_rapp in self.us_rapp_list:
+			for sing_rapp in rapp_type:
+				sql_query_string = """US.rapporti.contains("[u'%s', u'%s']")""" % (sing_rapp,sing_us_rapp) #funziona!!!
+				query_list.append(sql_query_string)
+
+		string_contains = ""
+		for sing_contains in range(len(query_list)):
+			if sing_contains == 0:
+				string_contains = query_list[sing_contains]
+			else:
+				string_contains = string_contains + "," + query_list[sing_contains]
+
+		query_string_execute = query_string_base + string_contains + '))'
+
+		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
+		session = Session()
+		res = eval(query_string_execute)
+
+		return res
+
+	def select_not_like_from_db_sql(self):
+		#NB per funzionare con postgres è necessario che al posto di " ci sia '
+		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
+		session = Session()
+		res = session.query(US).filter(and_(~US.rapporti.like("%'Taglia'%"), ~US.rapporti.like("%'Si appoggia a'%"), ~US.rapporti.like("%'Copre'%"), ~US.rapporti.like("%'Riempie'%")))
+		#MyModel.query.filter(sqlalchemy.not_(Mymodel.name.contains('a_string')))
+		return res
+
+##	def query_in_idusb(self):
+##		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
+##		session = Session()
+##		value_list = ["[u'Coperto da', u'1']", "[u'Coperto da', u'2']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']"]
+##		res_list = []
+##		n = len(value_list)-1
+##		while value_list:
+##			chunk = value_list[0:n]
+##			value_list = value_list[n:]
+##			res_list.extend(session.query(US).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
+##			#res_list.extend(us for us, in session.query(US.us).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
+
+		return res_list
+
+class Order_layer_v2test:
+	order_dict = {}
+	order_count = 0
+	db = Pyarchinit_db_management('postgresql://postgres:alajolla39@localhost:5432/pyarchinit')
 	db.connection()
-	data = db.query_bool({'sigla':"ED"}, 'PYARCHINIT_THESAURUS_SIGLE')
-	print data[0].sigla_estesa
 
+	def main_order_layer(self):
+		#ricava la base delle us del matrix a cui non succedono altre US
+		matrix_us_level = self.find_base_matrix()
+
+		self.insert_into_dict(matrix_us_level)
+		#il test per il ciclo while viene settato a 0(zero)
+		test = 0
+		while test == 0:
+			rec_list_str = []
+			for i in matrix_us_level:
+				rec_list_str.append(str(i))
+			#cerca prima di tutto se ci sono us uguali o che si legano alle US sottostanti
+			value_list_equal = self.create_list_values(['Uguale a', 'Si lega a'],rec_list_str)
+			res = self.db.query_in_contains(value_list_equal)
+			
+			matrix_us_equal_level = []
+			for r in res:
+				matrix_us_equal_level.append(str(r.us))
+			if bool(matrix_us_equal_level) == True:
+				self.insert_into_dict(matrix_us_equal_level,1)
+			#se res bool == True 
+			
+			#aggiunge le us al dizionario nel livello in xui trova l'us uguale a cui è uguale
+			#se l'US è già presente non la aggiunge
+			#le us che derivano dall'uguaglianza vanno aggiunte al rec_list_str
+			rec_list_str = rec_list_str + matrix_us_equal_level
+			value_list_post = value_list_equal = self.create_list_values(['Copre', 'Riempie', 'Taglia', 'Si appoggia a'],rec_list_str)
+			res = self.db.query_in_contains(value_list_post)
+			
+			matrix_us_level = []
+			for r in res:
+				matrix_us_level.append(str(r.us))
+			if bool(matrix_us_level) == False:
+				test = 1
+				return self.order_dict
+			else:
+				self.insert_into_dict(matrix_us_level,1)
+
+	#print bool()
+	def find_base_matrix(self):
+		res = self.db.select_not_like_from_db_sql()
+		rec_list = []
+		for rec in res:
+			rec_list.append(str(rec.us))
+		return rec_list
+
+	def create_list_values(self, rapp_type_list, value_list):
+		self.rapp_type_list = rapp_type_list
+		self.value_list = value_list
+		
+		value_list_to_find = []
+		for sing_value in self.value_list:
+			for sing_rapp in self.rapp_type_list:
+				sql_query_string = "[u'%s', u'%s']" % (sing_rapp,sing_value) #funziona!!!
+				value_list_to_find.append(sql_query_string)
+		return value_list_to_find
+
+	def us_extractor(self, res):
+		self.res = res
+		rec_list = []
+		for rec in self.res:
+			rec_list.append(rec.us)
+		return rec_list
+
+	def insert_into_dict(self, base_matrix, v=0):
+		self.base_matrix = base_matrix
+		if v == 1:
+			self.remove_from_list_in_dict(self.base_matrix)
+		self.order_dict[self.order_count] = self.base_matrix
+		self.order_count +=1 #aggiunge un nuovo livello di ordinamento ad ogni passaggio
+
+	def insert_into_dict_equal(self, base_matrix, v=0):
+		self.base_matrix = base_matrix
+		if v == 1:
+			self.remove_from_list_in_dict(self.base_matrix)
+		self.order_dict[self.order_count] = self.base_matrix
+		self.order_count +=1 #aggiunge un nuovo livello di ordinamento ad ogni passaggio
+
+	def remove_from_list_in_dict(self, curr_base_matrix):
+		self.curr_base_matrix = curr_base_matrix
+
+		for k,v in self.order_dict.items():
+			l = v
+			#print self.curr_base_matrix
+			for i in self.curr_base_matrix:
+				try:
+					l.remove(str(i))
+				except:
+					pass
+			self.order_dict[k]=l
+		return
+
+
+
+##def main():
+##	order_layer = Order_layer_v2test()
+##	print order_layer.main_order_layer()
+######	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
+######	db.connection()
+######	res = db.query_in_idusb()
+######	print "gigi"
+######	print len(res)
+######	for i in res:
+######		print str(i.us)
 ##main()
 """
 	for rec in data:

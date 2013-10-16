@@ -16,7 +16,6 @@ class MplCanvas(FigureCanvas):
         
         self.fig = Figure()
         self.ax = self.fig.add_subplot(111)
-
         FigureCanvas.__init__(self, self.fig)
         FigureCanvas.setSizePolicy(self, QSizePolicy.Expanding,QSizePolicy.Expanding)
         FigureCanvas.updateGeometry(self)

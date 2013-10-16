@@ -1,0 +1,38 @@
+# This file contains metadata for your plugin. Beginning
+# with version 1.8 this is the preferred way to supply information about a
+# plugin. The current method of embedding metadata in __init__.py will
+# be supported until version 2.0
+
+# This file should be included when you package your plugin.
+
+# Mandatory items:
+
+
+[general]
+name=pyArchInit
+qgisMinimumVersion=1.8
+description=pyarchinit tools for archaeological data management - under testing - use for testing only
+version=0.1
+author=Luca Mandolesi
+email=pyarchinit@gmail.com
+
+# end of mandatory metadata
+
+# Optional items:
+
+# Uncomment the following line and add your changelog entries:
+# changelog=
+
+# tags are comma separated with spaces allowed
+tags=archaeological archaeology database postgres spatialite
+
+homepage=https://sites.google.com/site/pyarchinit/
+tracker=https://github.com/pyarchinit/pyarchinit_beta_test_dev/issues?milestone=1&state=open
+repository=https://github.com/pyarchinit/pyarchinit_beta_test_dev
+icon=icon.png
+# experimental flag
+experimental=True
+
+# deprecated flag (applies to the whole plugin, not just a single version
+deprecated=False
+

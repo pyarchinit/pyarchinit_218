@@ -98,7 +98,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
 			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
 
-			gidstr =  id_us = "id_us = '" + str(data[0]) +"'"
+			gidstr =  "id_us = '" + str(data[0]) +"'"
 			if len(data) > 1:
 				for i in range(len(data)):
 					gidstr += " OR id_us = '" + str(data[i]) +"'"
@@ -129,7 +129,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 		
 			uri.setConnection(settings.HOST, settings.PORT, settings.DATABASE, settings.USER, settings.PASSWORD)
 
-			gidstr =  id_us = "id_us = " + str(data[0])
+			gidstr = "id_us = " + str(data[0])
 			if len(data) > 1:
 				for i in range(len(data)):
 					gidstr += " OR id_us = " + str(data[i])
@@ -160,6 +160,97 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 					#f = open('/test_ok.txt','w')
 					#f.write(str(e))
 					#f.close()
+
+	def charge_vector_layers_from_matrix(self, idus):
+		#Clean Qgis Map Later Registry
+		#QgsMapLayerRegistry.instance().removeAllMapLayers()
+		# Get the user input, starting with the table name
+		
+		#self.find_us_cutted(data)
+		self.idus = idus
+
+		cfg_rel_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'config.cfg')
+		file_path = ('%s%s') % (self.HOME, cfg_rel_path)
+		conf = open(file_path, "r")
+		con_sett = conf.read()
+		conf.close()
+
+		settings = Settings(con_sett)
+		settings.set_configuration()
+		
+		if settings.SERVER == 'sqlite':
+			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
+			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
+
+			gidstr =  "id_us = '" + str(self.idus) +"'"
+
+			uri = QgsDataSourceURI()
+			uri.setDatabase(db_file_path)
+
+			uri.setDataSource('','pyarchinit_us_view', 'the_geom', gidstr, "ROWID")
+			layerUS=QgsVectorLayer(uri.uri(), 'pyarchinit_us_view', 'spatialite')
+
+			if  layerUS.isValid() == True:
+				QMessageBox.warning(self, "TESTER", "OK Layer US valido",QMessageBox.Ok)
+
+				#self.USLayerId = layerUS.getLayerID()
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+				layerUS.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "Layer US non valido",QMessageBox.Ok)
+
+			uri.setDataSource('','pyarchinit_quote_view', 'the_geom', gidstr, "ROWID")
+			layerQUOTE=QgsVectorLayer(uri.uri(), 'pyarchinit_quote_view', 'spatialite')
+			
+			if  layerQUOTE.isValid() == True:
+				#self.USLayerId = layerUS.getLayerID()
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'quote_us_view.qml')
+				layerQUOTE.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layerQUOTE], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "OK Layer Quote non valido",QMessageBox.Ok)
+
+		elif settings.SERVER == 'postgres':
+
+			uri = QgsDataSourceURI()
+			# set host name, port, database name, username and password
+		
+			uri.setConnection(settings.HOST, settings.PORT, settings.DATABASE, settings.USER, settings.PASSWORD)
+
+			gidstr = "id_us = " + str(self.idus)
+
+
+			srs = QgsCoordinateReferenceSystem(self.SRS, QgsCoordinateReferenceSystem.PostgisCrsId)
+
+			uri.setDataSource("public", "pyarchinit_us_view", "the_geom", gidstr, "gid")
+			layerUS = QgsVectorLayer(uri.uri(), "Unita' Stratigrafiche", "postgres")
+		
+			if  layerUS.isValid() == True:
+				layerUS.setCrs(srs)
+				#self.USLayerId = layerUS.getLayersID()
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
+				layerUS.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "OK Layer US non valido",QMessageBox.Ok)
+
+			uri.setDataSource("public", "pyarchinit_quote_view", "the_geom", gidstr, "gid")
+			layerQUOTE = QgsVectorLayer(uri.uri(), "Quote Unita' Stratigrafiche", "postgres")
+
+			if layerQUOTE.isValid() == True:
+				layerQUOTE.setCrs(srs)
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'stile_quote.qml')
+				layerQUOTE.loadNamedStyle(style_path)
+				try:
+					QgsMapLayerRegistry.instance().addMapLayers([layerQUOTE], True)
+				except Exception, e:
+					pass
+					#f = open('/test_ok.txt','w')
+					#f.write(str(e))
+					#f.close()
+			else:
+				QMessageBox.warning(self, "TESTER", "OK Layer Quote non valido",QMessageBox.Ok)
 
 	def charge_vector_layers(self, data):
 		#Clean Qgis Map Later Registry
@@ -781,6 +872,112 @@ class Order_layers:
 		self.num_us_value = n #numero di US da inserire nel dizionario
 		self.MAX_VALUE_KEYS += 1 #il valore globale del numero di chiave aumenta di 1
 		self.DIZ_ORDER_LAYERS[self.MAX_VALUE_KEYS] = self.num_us_value #viene assegnata una nuova coppia di chiavi-valori
+
+
+class Order_layer_v2:
+	order_dict = {}
+	order_count = 0
+	db = ''#Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
+	#db.connection()
+	
+	def __init__(self, dbconn):
+		self.db = dbconn
+
+	def main_order_layer(self):
+		#ricava la base delle us del matrix a cui non succedono altre US
+		matrix_us_level = self.find_base_matrix()
+
+		self.insert_into_dict(matrix_us_level)
+		#il test per il ciclo while viene settato a 0(zero)
+		test = 0
+		while test == 0:
+			rec_list_str = []
+			for i in matrix_us_level:
+				rec_list_str.append(str(i))
+			#cerca prima di tutto se ci sono us uguali o che si legano alle US sottostanti
+			value_list_equal = self.create_list_values(['Uguale a', 'Si lega a'],rec_list_str)
+			res = self.db.query_in_contains(value_list_equal)
+			
+			matrix_us_equal_level = []
+			for r in res:
+				matrix_us_equal_level.append(str(r.us))
+			if bool(matrix_us_equal_level) == True:
+				self.insert_into_dict(matrix_us_equal_level,1)
+			#se res bool == True 
+			
+			#aggiunge le us al dizionario nel livello in xui trova l'us uguale a cui è uguale
+			#se l'US è già presente non la aggiunge
+			#le us che derivano dall'uguaglianza vanno aggiunte al rec_list_str
+			rec_list_str = rec_list_str + matrix_us_equal_level
+			value_list_post = value_list_equal = self.create_list_values(['Copre', 'Riempie', 'Taglia', 'Si appoggia a'],rec_list_str)
+			res = self.db.query_in_contains(value_list_post)
+
+			matrix_us_level = []
+			for r in res:
+				matrix_us_level.append(str(r.us))
+			if bool(matrix_us_level) == False:
+				test = 1
+				return self.order_dict
+			elif self.order_count >= 30:
+				test = 1
+				return "error"
+			else:
+				self.insert_into_dict(matrix_us_level,1)
+
+	#print bool()
+	def find_base_matrix(self):
+		res = self.db.select_not_like_from_db_sql()
+		rec_list = []
+		for rec in res:
+			rec_list.append(str(rec.us))
+		return rec_list
+
+	def create_list_values(self, rapp_type_list, value_list):
+		self.rapp_type_list = rapp_type_list
+		self.value_list = value_list
+		
+		value_list_to_find = []
+		for sing_value in self.value_list:
+			for sing_rapp in self.rapp_type_list:
+				sql_query_string = "[u'%s', u'%s']" % (sing_rapp,sing_value) #funziona!!!
+				value_list_to_find.append(sql_query_string)
+		return value_list_to_find
+
+	def us_extractor(self, res):
+		self.res = res
+		rec_list = []
+		for rec in self.res:
+			rec_list.append(rec.us)
+		return rec_list
+
+	def insert_into_dict(self, base_matrix, v=0):
+		self.base_matrix = base_matrix
+		if v == 1:
+			self.remove_from_list_in_dict(self.base_matrix)
+		self.order_dict[self.order_count] = self.base_matrix
+		self.order_count +=1 #aggiunge un nuovo livello di ordinamento ad ogni passaggio
+
+	def insert_into_dict_equal(self, base_matrix, v=0):
+		self.base_matrix = base_matrix
+		if v == 1:
+			self.remove_from_list_in_dict(self.base_matrix)
+		self.order_dict[self.order_count] = self.base_matrix
+		self.order_count +=1 #aggiunge un nuovo livello di ordinamento ad ogni passaggio
+
+	def remove_from_list_in_dict(self, curr_base_matrix):
+		self.curr_base_matrix = curr_base_matrix
+
+		for k,v in self.order_dict.items():
+			l = v
+			#print self.curr_base_matrix
+			for i in self.curr_base_matrix:
+				try:
+					l.remove(str(i))
+				except:
+					pass
+			self.order_dict[k]=l
+		return
+
 
 """
 	def print_values(self):

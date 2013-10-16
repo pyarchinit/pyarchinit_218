@@ -118,7 +118,7 @@ class Utility:
 		tuples wich contain the keys and the values"""
 
 		self.dict = d
-		##print "self.dict", self.dict
+
 		res_list = []
 		ret= []
 		for key,value in self.dict.items():
@@ -137,12 +137,13 @@ class Utility:
 					except:
 						pass
 					cont +=1
+
 		return self.dict, ret
 
 	def add_item_to_dict(self,d,i):
 		"""receive a dict and a list containt tuple with key,value
 		and add them to dict"""
-		
+
 		self.dict = d
 		self.item = i
 		for i in self.item:
@@ -291,8 +292,8 @@ class Utility:
 
 #print dir(Utility())
 #Samples - uncomment and run the module to view the functions
-u = Utility()
-print u.sum_list_of_tuples_for_value([("a", 1), ("b", 2), ("a", 3)])
+##u = Utility()
+##print u.sum_list_of_tuples_for_value([("a", 1), ("b", 2), ("a", 3)])
 #print u.remove_dup_from_list([1,1, 2, 2, 2, 3, 4, 5, 5, 6, 6, 7])
 #print u.findFieldFrDict((2))
 #print "----------tup_to_list--------------"

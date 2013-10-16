@@ -183,7 +183,7 @@ class Site_table:
 
 	# create engine and metadata
 
-	engine = create_engine(internal_connection.conn_str(), echo=False, convert_unicode = True)
+	engine = create_engine(internal_connection.conn_str(), echo=True, convert_unicode = True)
 	metadata = MetaData(engine)
 
 	# define tables
@@ -713,7 +713,7 @@ class Archeozoology_table:
 	Column('megacero', Integer),
 
 	# explicit/composite unique constraint.  'name' is optional.
-    UniqueConstraint('sito', 'quadrato', name='ID_archzoo_unico')
+	UniqueConstraint('sito', 'quadrato', name='ID_archzoo_unico')
 	)
 
 	metadata.create_all(engine)

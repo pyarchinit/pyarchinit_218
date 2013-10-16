@@ -1374,6 +1374,10 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			self.lineEdit_num_inv.setText(str(self.DATA_LIST[self.rec_num].numero_inventario))							#2 - num_inv
 			unicode(self.comboBox_tipo_reperto.setEditText(self.DATA_LIST[self.rec_num].tipo_reperto))						#3 - Tipo reperto
 			unicode(self.comboBox_criterio_schedatura.setEditText(self.DATA_LIST[self.rec_num].criterio_schedatura))		#4 - Criterio schedatura
+			#self.testing('/testunicodenull.txt', str(self.DATA_LIST[self.rec_num].definizione))
+##			if unicode(self.DATA_LIST[self.rec_num].definizione) == 'None':
+##				unicode(self.comboBox_definizione.setEditText(''))
+##			else:
 			unicode(self.comboBox_definizione.setEditText(self.DATA_LIST[self.rec_num].definizione))						#5 - definizione
 			unicode(self.textEdit_descrizione_reperto.setText(self.DATA_LIST[self.rec_num].descrizione))				#6 - descrizione
 			if self.DATA_LIST[self.rec_num].area == None:																#7 - Area

@@ -19,9 +19,22 @@
  *                                                                         *
  ***************************************************************************/
 """
+from PyQt4 import QtCore, QtGui
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+import PyQt4.QtGui
 
+from qgis.core import *
+from qgis.gui import *
 import pygraphviz as p
 import os
+import pygraphviz as pgv
+from networkx import *
+import matplotlib
+
+import matplotlib.pyplot as plt
+
+import pylab
 
 class HARRIS_MATRIX_EXP:
 	if os.name == 'posix':
@@ -45,8 +58,6 @@ class HARRIS_MATRIX_EXP:
 
 		G.add_edges_from(elist)
 
-		#G.edge_attr['color'] = 'blue'
-
 		G.node_attr['shape']='box'
 		G.node_attr['style']='strocked' 
 		G.node_attr['color']='red'
@@ -60,14 +71,9 @@ class HARRIS_MATRIX_EXP:
 			label=i[2],
 			font_color = 'Blue')
 
-		G.tred()
-
+		data_to_plot =  G.tred()
 
 		Matrix_path = ('%s%s%s') % (self.HOME, os.sep, "pyarchinit_Matrix_folder")
-
-##		f = open('C:\\test.txt', 'w')
-##		f.write(str(os.name))
-##		f.close()
 
 		if os.name == 'posix':
 			filename_svg = ('%s%s%s') % (Matrix_path, os.sep, 'Harris_matrix.svg')
@@ -81,8 +87,8 @@ class HARRIS_MATRIX_EXP:
 			filename_svg = ('%s%s%s') % (Matrix_path, os.sep, 'Harris_matrix_win.svg')
 			G.draw(filename_svg, prog='dot')
 			G.draw(filename_png, prog='dot')
-
-
+		
+		return data_to_plot
 
 if __name__ == "__main__":
 	data = [(1, 2), (2, 4), ]

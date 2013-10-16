@@ -41,12 +41,17 @@ try:
 	from  pyarchinit_matrix_exp import *
 except:
 	pass
-from  pyarchinit_pyqgis import Pyarchinit_pyqgis, Order_layers
+from  pyarchinit_pyqgis import Pyarchinit_pyqgis, Order_layers,Order_layer_v2
 from  sortpanelmain import SortPanelMain
 from  pyarchinit_db_manager import *
 from  pyarchinit_exp_USsheet_pdf import *
 from  delegateComboBox import *
 from  imageViewer import ImageViewer
+
+from pyarchinit_interactive_matrix_main import pyarchinit_Interactive_Matrix
+
+##from interactivematrix import *
+##import interactivematrix
 
 class pyarchinit_US(QDialog, Ui_DialogUS):
 	MSG_BOX_TITLE = "PyArchInit - Scheda US"
@@ -701,62 +706,15 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		US_index_pdf.build_index_US(data_list, data_list[0][0])
 
 	def on_pushButton_export_matrix_pressed(self):
-		data = []
-		for sing_rec in self.DATA_LIST:
-			us = unicode(sing_rec.us)
-			rapporti_stratigrafici = eval(sing_rec.rapporti)
-			for sing_rapp in rapporti_stratigrafici:
-				try:
-					if sing_rapp[0] == 'Taglia' or  sing_rapp[0] == 'Copre' or  sing_rapp[0] == 'Si appoggia a' or  sing_rapp[0] == 'Riempie' or sing_rapp[0] == 'Si lega a' or  sing_rapp[0] == 'Uguale a':
-						if sing_rapp[1] != '':
-							harris_rapp = (us, str(sing_rapp[1]))
-							data.append(harris_rapp)
-				except Exception, e:
-					QMessageBox.warning(self, "Messaggio", "Problema nel sistema di esportazione del Matrix:" + str(e), QMessageBox.Ok)
+		id_us_dict = {}
+		for i in range(len(self.DATA_LIST)):
+			id_us_dict[self.DATA_LIST[i].us] = self.DATA_LIST[i].id_us
 
-		sito = self.DATA_LIST[0].sito
+		dlg = pyarchinit_Interactive_Matrix(self, self.DATA_LIST, id_us_dict)
+		data_plot = dlg.generate_matrix()
+		dlg.plot_matrix(data_plot)
+		dlg.exec_()
 
-		search_dict = {
-		'sito'  : "'"+unicode(sito)+"'"
-		}
-
-		periodizz_data_list = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')
-
-		periodi_data_values = []
-		for i in periodizz_data_list:
-			periodi_data_values.append([i.periodo,i.fase])
-
-		periodi_us_list = []
-
-		clust_number = 0
-		for i in periodi_data_values:
-			search_dict = {
-			'sito'  : "'"+unicode(sito)+"'",
-			'periodo_iniziale'  : "'"+unicode(i[0])+"'",
-			'fase_iniziale' : "'"+unicode(i[1])+"'"
-			}
-
-			us_group = self.DB_MANAGER.query_bool(search_dict, 'US')
-
-			cluster_label = "cluster%d" % (clust_number)
-
-			periodo_label = "Periodo %s - Fase %s" % (str(i[0]), str(i[1]))
-
-			sing_per = [cluster_label, periodo_label]
-
-			sing_us = []
-			for rec in us_group:
-				sing_us.append(rec.us)
-			
-			sing_per.insert(0,sing_us)
-			
-			periodi_us_list.append(sing_per)
-			
-			clust_number += 1
-
-		matrix_exp = HARRIS_MATRIX_EXP(data, periodi_us_list)
-		matrix_exp.export_matrix()
-		QMessageBox.warning(self, "Messaggio", "Esportazione del Matrix terminata", QMessageBox.Ok)
 
 	def launch_matrix_exp_if(self, msg):
 		if msg == 1:
@@ -808,13 +766,16 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					msg_paradx_rapp = msg_paradx_rapp + '\n'+str(i) + '\n' + str(temp_tup)
 					data.remove(i)
 			#OK
-			QMessageBox.warning(self, "Messaggio", "DATA LIST" + str(data), QMessageBox.Ok)
+##			QMessageBox.warning(self, "Messaggio", "DATA LIST" + str(data), QMessageBox.Ok)
 
 			#script order layer from pyqgis
-			OL = Order_layers(data)
-			order_layer_dict = OL.main()
+			OL = Order_layer_v2(self.DB_MANAGER)
+			order_layer_dict = OL.main_order_layer()
 			#script order layer from pyqgis
-
+			
+##			if order_layer_dict == "error":
+##				QMessageBox.warning(self, "Messaggio", "Errore nei rapporti stratigrafici", QMessageBox.Ok)
+##			else:
 			sito = self.DATA_LIST[0].sito #self.comboBox_sito_rappcheck.currentText()
 			area = self.DATA_LIST[0].area #self.comboBox_area.currentText()
 			order_number = ""
@@ -822,14 +783,15 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			for k,v in order_layer_dict.items():
 				order_number = str(k)
 				us = v
-				search_dict = {'sito' : "'"+unicode(sito)+"'", 'area':"'"+unicode(area)+"'", 'us' : us}
-				try:
-					records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS) #carica tutti i dati di uno scavo ordinati per numero di US
+				for sing_us in v:
+					search_dict = {'sito' : "'"+unicode(sito)+"'", 'area':"'"+unicode(area)+"'", 'us' : int(sing_us)}
+					try:
+						records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS) #carica tutti i dati di uno scavo ordinati per numero di US
 
-					self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, self.ID_TABLE, [int(records[0].id_us)], ['order_layer'], [order_number])
-					self.lineEditOrderLayer.setText(unicode(order_number))
-				except Exception, e:
-					msg_us_mancanti = msg_us_mancanti + "\n"+str(sito) + "area: " + str(area) + " us: " + str(us)
+						self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, self.ID_TABLE, [int(records[0].id_us)], ['order_layer'], [order_number])
+						self.lineEditOrderLayer.setText(unicode(order_number))
+					except Exception, e:
+						msg_us_mancanti = msg_us_mancanti + "\n"+str(sito) + "area: " + str(area) + " us: " + (us)
 			
 			#blocco output errori
 			filename_tipo_rapporti_mancanti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'tipo_rapporti_mancanti.txt')
