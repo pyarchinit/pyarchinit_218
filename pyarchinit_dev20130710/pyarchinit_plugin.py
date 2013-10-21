@@ -77,22 +77,22 @@ class PyArchInitPlugin:
 		userPluginPath = QFileInfo( QgsApplication.qgisUserDbFilePath() ).path() + "/python/plugins/pyarchinit"
 		systemPluginPath = QgsApplication.prefixPath() + "/python/plugins/pyarchinit"
 
-		overrideLocale = QSettings().value( "locale/overrideFlag", QVariant( False ) ).toBool()
-		if not overrideLocale:
-			localeFullName = QLocale.system().name()
-		else:
-			localeFullName = QSettings().value( "locale/userLocale", QVariant( "" ) ).toString()
-
-		if QFileInfo( userPluginPath ).exists():
-			translationPath = userPluginPath + "/i18n/pyarchinit_plugin_" + localeFullName + ".qm"
-		else:
-			translationPath = systemPluginPath + "/i18n/pyarchinit_plugin_" + localeFullName + ".qm"
-
-		self.localePath = translationPath
-		if QFileInfo( self.localePath ).exists():
-			self.translator = QTranslator()
-			self.translator.load( self.localePath )
-			QCoreApplication.installTranslator( self.translator )
+##		overrideLocale = QSettings().value( "locale/overrideFlag", QVariant( False ) ).toBool()
+##		if not overrideLocale:
+##			localeFullName = QLocale.system().name()
+##		else:
+##			localeFullName = QSettings().value( "locale/userLocale", QVariant( "" ) ).toString()
+##
+##		if QFileInfo( userPluginPath ).exists():
+##			translationPath = userPluginPath + "/i18n/pyarchinit_plugin_" + localeFullName + ".qm"
+##		else:
+##			translationPath = systemPluginPath + "/i18n/pyarchinit_plugin_" + localeFullName + ".qm"
+##
+##		self.localePath = translationPath
+##		if QFileInfo( self.localePath ).exists():
+##			self.translator = QTranslator()
+##			self.translator.load( self.localePath )
+##			QCoreApplication.installTranslator( self.translator )
 
 
 	def initGui(self):

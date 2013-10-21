@@ -39,7 +39,7 @@ class NumberedCanvas_Findssheet(canvas.Canvas):
 		self.setFont("Helvetica", 8)
 		self.drawRightString(200*mm, 20*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
 
-class NumberedCanvas_USindex(canvas.Canvas):
+class NumberedCanvas_FINDSindex(canvas.Canvas):
 	def __init__(self, *args, **kwargs):
 		canvas.Canvas.__init__(self, *args, **kwargs)
 		self._saved_page_states = []
@@ -361,7 +361,85 @@ class single_Finds_pdf_sheet:
 		t=Table(cell_schema, colWidths=50, rowHeights=None,style= table_style)
 
 		return t
+
+class FINDS_index_pdf_sheet:
+
+	def __init__(self, data):
+		self.sito = data[1] #1 - sito
+		self.num_inventario = data[2] #2- numero_inventario
+		self.tipo_reperto = data[3] #3 - tipo_reperto
+		self.criterio_schedatura = data[4 ]#4 - criterio_schedatura
+		self.definizione = data[5 ]#5 - definizione
+		self.area = data[7] # 7 - area
+		self.us = data[8] #8- us
+		self.lavato = data[9] #9 - lavato
+		self.numero_cassa = data[10] #10 - numero cassa
+
+	def getTable(self):
+		styleSheet = getSampleStyleSheet()
+		styNormal = styleSheet['Normal']
+		styNormal.spaceBefore = 20
+		styNormal.spaceAfter = 20
+		styNormal.alignment = 0 #LEFT
+		styNormal.fontSize = 9
+
+		#self.unzip_rapporti_stratigrafici()
+
+		num_inventario = Paragraph("<b>N. Inv.</b><br/>" + str(self.num_inventario),styNormal)
+
+		if self.tipo_reperto == None:
+			tipo_reperto = Paragraph("<b>Tipo reperto</b><br/>",styNormal)
+		else:
+			tipo_reperto = Paragraph("<b>Tipo reperto</b><br/>" + str(self.tipo_reperto),styNormal)
 	
+		if self.criterio_schedatura == None:
+			classe_materiale = Paragraph("<b>Classe materiale</b><br/>" + str(self.criterio_schedatura),styNormal)
+		else:
+			classe_materiale = Paragraph("<b>Classe materiale</b><br/>" + str(self.criterio_schedatura),styNormal)
+
+		if self.definizione == None:
+			definizione = Paragraph("<b>Definizione</b><br/>" ,styNormal)
+		else:
+			definizione = Paragraph("<b>Definizione</b><br/>" + str(self.definizione),styNormal)
+
+		if str(self.area) == "None":
+			area = Paragraph("<b>Area</b><br/>",styNormal)
+		else:
+			area = Paragraph("<b>Area</b><br/>" + str(self.area),styNormal)
+
+		if str(self.us) == "None":
+			us = Paragraph("<b>US</b><br/>",styNormal)
+		else:
+			us = Paragraph("<b>US</b><br/>" + str(self.us),styNormal)
+
+		if self.lavato == None:
+			lavato = Paragraph("<b>Lavato</b><br/>",styNormal)
+		else:
+			lavato = Paragraph("<b>Lavato</b><br/>" + str(self.lavato),styNormal)
+
+		if str(self.numero_cassa) == "None":
+			nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>",styNormal)
+		else:
+			nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>" + str(self.numero_cassa),styNormal)
+
+
+		data = [num_inventario,
+				tipo_reperto,
+				classe_materiale,
+				definizione,
+				area,
+				us,
+				lavato,
+				nr_cassa]
+
+		return data
+
+	def makeStyles(self):
+		styles =TableStyle([('GRID',(0,0),(-1,-1),0.0,colors.black),('VALIGN', (0,0), (-1,-1), 'TOP')
+		])  #finale
+
+		return styles
+
 class generate_reperti_pdf:
 	if os.name == 'posix':
 		HOME = os.environ['HOME']
@@ -387,31 +465,31 @@ class generate_reperti_pdf:
 		doc.build(elements, canvasmaker=NumberedCanvas_Findssheet)
 		f.close()
 
-	def build_index_US(self, records, sito):
+	def build_index_Finds(self, records, sito):
 		styleSheet = getSampleStyleSheet()
 		styNormal = styleSheet['Normal']
 		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
 		styH1 = styleSheet['Heading1']
 		data = self.datestrfdate()
 		lst = []
-		lst.append(Paragraph("<b>ELENCO UNITA' STRATIGRAFICHE</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH1))
+		lst.append(Paragraph("<b>ELENCO MATERIALI</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH1))
 
 		table_data = []
 		for i in range(len(records)):
-			exp_index = US_index_pdf_sheet(records[i])
+			exp_index = FINDS_index_pdf_sheet(records[i])
 			table_data.append(exp_index.getTable())
 		
 		styles = exp_index.makeStyles()
-		table_data_formatted = Table(table_data,  colWidths=55.5)
+		table_data_formatted = Table(table_data,  colWidths=89)
 		table_data_formatted.setStyle(styles)
 
 		lst.append(table_data_formatted)
-		lst.append(Spacer(0,12))
+		lst.append(Spacer(0,2))
 
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'indice_us.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'indice_materiali.pdf')
 		f = open(filename, "wb")
 
 		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
-		doc.build(lst, canvasmaker=NumberedCanvas_USindex)
+		doc.build(lst, canvasmaker=NumberedCanvas_FINDSindex)
 
 		f.close()

@@ -11,7 +11,8 @@
 [general]
 name=pyArchInit
 qgisMinimumVersion=1.8
-description=pyarchinit tools for archaeological data management - under testing - use for testing only
+qgisMaximumVersion=2.0.1
+description=pyarchinit archaeological tools
 version=0.1
 author=Luca Mandolesi
 email=pyarchinit@gmail.com
@@ -24,11 +25,11 @@ email=pyarchinit@gmail.com
 # changelog=
 
 # tags are comma separated with spaces allowed
-tags=archaeological archaeology database postgres spatialite
+tags=
 
-homepage=https://sites.google.com/site/pyarchinit/
-tracker=https://github.com/pyarchinit/pyarchinit_beta_test_dev/issues?milestone=1&state=open
-repository=https://github.com/pyarchinit/pyarchinit_beta_test_dev
+homepage=
+tracker=
+repository=
 icon=icon.png
 # experimental flag
 experimental=True

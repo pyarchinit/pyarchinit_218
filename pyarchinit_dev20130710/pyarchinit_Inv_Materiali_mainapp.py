@@ -702,6 +702,11 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		data_list = self.generate_list_pdf()
 		Finds_pdf_sheet.build_Finds_sheets(data_list)
 
+	def on_pushButton_exp_index_mat_pressed(self):
+		Mat_index_pdf = generate_reperti_pdf()
+		data_list = self.generate_list_pdf()
+		Mat_index_pdf.build_index_Finds(data_list, data_list[0][1])
+
 	def data_error_check(self):
 		test = 0
 		EC = Error_check()

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_inventario_reperti_ui.ui'
 #
-# Created: Sun Dec 16 17:15:35 2012
+# Created: Mon Oct 21 16:07:37 2013
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -894,15 +894,18 @@ class Ui_DialogInventarioMateriali(object):
         self.pushButton_exp_pdf_sheet = QtGui.QPushButton(self.tab_5)
         self.pushButton_exp_pdf_sheet.setMaximumSize(QtCore.QSize(200, 16777215))
         self.pushButton_exp_pdf_sheet.setObjectName(_fromUtf8("pushButton_exp_pdf_sheet"))
-        self.formLayout.setWidget(1, QtGui.QFormLayout.LabelRole, self.pushButton_exp_pdf_sheet)
+        self.formLayout.setWidget(3, QtGui.QFormLayout.LabelRole, self.pushButton_exp_pdf_sheet)
         spacerItem13 = QtGui.QSpacerItem(590, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.formLayout.setItem(1, QtGui.QFormLayout.FieldRole, spacerItem13)
+        self.formLayout.setItem(3, QtGui.QFormLayout.FieldRole, spacerItem13)
+        self.pushButton_exp_index_mat = QtGui.QPushButton(self.tab_5)
+        self.pushButton_exp_index_mat.setObjectName(_fromUtf8("pushButton_exp_index_mat"))
+        self.formLayout.setWidget(4, QtGui.QFormLayout.LabelRole, self.pushButton_exp_index_mat)
         self.tabWidget.addTab(self.tab_5, _fromUtf8(""))
         self.verticalLayout_3.addWidget(self.tabWidget)
         self.gridLayout_18.addLayout(self.verticalLayout_3, 0, 0, 1, 1)
 
         self.retranslateUi(DialogInventarioMateriali)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(DialogInventarioMateriali)
 
     def retranslateUi(self, DialogInventarioMateriali):
@@ -1021,6 +1024,7 @@ class Ui_DialogInventarioMateriali(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_6), QtGui.QApplication.translate("DialogInventarioMateriali", "Quantificazioni", None, QtGui.QApplication.UnicodeUTF8))
         self.toolButtonPreviewMedia.setText(QtGui.QApplication.translate("DialogInventarioMateriali", "Media Preview", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_exp_pdf_sheet.setText(QtGui.QApplication.translate("DialogInventarioMateriali", "Exp schede Pdf ", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_exp_index_mat.setText(QtGui.QApplication.translate("DialogInventarioMateriali", "Exp indice  Pdf ", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), QtGui.QApplication.translate("DialogInventarioMateriali", "Tools", None, QtGui.QApplication.UnicodeUTF8))
 
 from mplwidget import Mplwidget

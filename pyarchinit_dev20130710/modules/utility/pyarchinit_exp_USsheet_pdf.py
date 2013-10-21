@@ -455,9 +455,9 @@ class US_index_pdf_sheet:
 
 
 	def __init__(self, data):
-		self.sito = 							data[0]
+		self.sito = 								data[0]
 		self.area = 							data[1]
-		self.us   = 							data[2]
+		self.us   = 								data[2]
 		self.d_stratigrafica =					data[3]
 		self.rapporti = 						data[17]
 

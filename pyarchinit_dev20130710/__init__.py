@@ -40,7 +40,10 @@ def author_name():
   return "Luca Mandolesi - pyarchinit@gmail.com"
 
 def qgisMinimumVersion():
- return "1.8"
+ return "1.0"
+
+def qgisMaximumVersion():
+	return "2.99"
 
 def classFactory(iface):
   from pyarchinit_plugin import PyArchInitPlugin 
