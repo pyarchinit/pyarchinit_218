@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- QgisCloudPluginDialog
+Code from QgisCloudPluginDialog
                                  A QGIS plugin
  Publish maps on qgiscloud.com
                              -------------------

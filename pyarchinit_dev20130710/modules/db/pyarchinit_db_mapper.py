@@ -458,7 +458,9 @@ class INVENTARIO_MATERIALI(object):
 	diametro_orlo,
 	peso,
 	tipo,
-	eve_orlo
+	eve_orlo,
+	repertato,
+	diagnostico
 	):
 		self.id_invmat = id_invmat 								#0
 		self.sito = sito 												#1
@@ -487,10 +489,12 @@ class INVENTARIO_MATERIALI(object):
 		self.peso = peso												#24
 		self.tipo = tipo													#25
 		self.eve_orlo = eve_orlo									#26
+		self.repertato = repertato									#27
+		self.diagnostico = diagnostico								#28
 
 	#def __repr__"
 	def __repr__(self):
-		return "<INVENTARIO_MATERIALI(%d, '%s', '%d', '%s', '%s', '%s', '%s', %d, %d, '%s', %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, %d, '%s', '%s', '%r', '%r','%s', '%r' )>" % (
+		return "<INVENTARIO_MATERIALI(%d, '%s', '%d', '%s', '%s', '%s', '%s', %d, %d, '%s', %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, %d, '%s', '%s', '%r', '%r','%s', '%r', '%s', '%s' )>" % (
 		self.id_invmat,
 		self.sito,
 		self.numero_inventario,
@@ -517,7 +521,9 @@ class INVENTARIO_MATERIALI(object):
 		self.diametro_orlo,
 		self.peso,
 		self.tipo,
-		self.eve_orlo
+		self.eve_orlo,
+		self.repertato,
+		self.diagnostico
 		)
 #mapper
 

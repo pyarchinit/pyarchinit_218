@@ -892,6 +892,64 @@
            <item>
             <layout class="QVBoxLayout" name="verticalLayout_2">
              <item>
+              <widget class="QComboBox" name="comboBox_repertato">
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+               <item>
+                <property name="text">
+                 <string>No</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Si</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_30">
+               <property name="text">
+                <string>Repertato</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="comboBox_diagnostico">
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+               <item>
+                <property name="text">
+                 <string>No</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Si</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string/>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_31">
+               <property name="text">
+                <string>Diagnostico</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QComboBox" name="comboBox_conservazione">
                <property name="font">
                 <font>
@@ -1991,6 +2049,62 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>lineEdit_num_inv</tabstop>
+  <tabstop>comboBox_tipo_reperto</tabstop>
+  <tabstop>comboBox_criterio_schedatura</tabstop>
+  <tabstop>comboBox_definizione</tabstop>
+  <tabstop>textEdit_descrizione_reperto</tabstop>
+  <tabstop>comboBox_repertato</tabstop>
+  <tabstop>comboBox_diagnostico</tabstop>
+  <tabstop>comboBox_conservazione</tabstop>
+  <tabstop>lineEdit_tipo</tabstop>
+  <tabstop>lineEdit_datazione_rep</tabstop>
+  <tabstop>tableWidget_elementi_reperto</tabstop>
+  <tabstop>tableWidget_misurazioni</tabstop>
+  <tabstop>lineEditFormeMin</tabstop>
+  <tabstop>lineEditFormeMax</tabstop>
+  <tabstop>lineEditTotFram</tabstop>
+  <tabstop>lineEdit_peso</tabstop>
+  <tabstop>lineEdit_diametro_orlo</tabstop>
+  <tabstop>lineEdit_eve_orlo</tabstop>
+  <tabstop>lineEditCorpoCeramico</tabstop>
+  <tabstop>lineEditRivestimento</tabstop>
+  <tabstop>tableWidget_tecnologie</tabstop>
+  <tabstop>tableWidget_rif_biblio</tabstop>
+  <tabstop>lineEdit_area</tabstop>
+  <tabstop>lineEdit_us</tabstop>
+  <tabstop>comboBox_lavato</tabstop>
+  <tabstop>lineEdit_nr_cassa</tabstop>
+  <tabstop>lineEdit_luogo_conservazione</tabstop>
+  <tabstop>pushButton_save</tabstop>
+  <tabstop>pushButton_first_rec</tabstop>
+  <tabstop>pushButton_connect</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>pushButton_tot_fram</tabstop>
+  <tabstop>pushButton_insert_row_misure</tabstop>
+  <tabstop>pushButton_remove_row_misure</tabstop>
+  <tabstop>pushButton_view_all</tabstop>
+  <tabstop>pushButton_remove_row_tecnologie</tabstop>
+  <tabstop>pushButton_insert_row_tecnologie</tabstop>
+  <tabstop>pushButton_new_rec</tabstop>
+  <tabstop>pushButton_search_go</tabstop>
+  <tabstop>pushButton_new_search</tabstop>
+  <tabstop>pushButton_insert_row_rif_biblio</tabstop>
+  <tabstop>pushButton_remove_row_rif_biblio</tabstop>
+  <tabstop>pushButton_sort</tabstop>
+  <tabstop>pushButton_insert_row_elementi</tabstop>
+  <tabstop>pushButton_remove_row_elementi</tabstop>
+  <tabstop>pushButton_last_rec</tabstop>
+  <tabstop>pushButton_prev_rec</tabstop>
+  <tabstop>comboBox_sito</tabstop>
+  <tabstop>pushButtonQuant</tabstop>
+  <tabstop>toolButtonPreviewMedia</tabstop>
+  <tabstop>pushButton_exp_pdf_sheet</tabstop>
+  <tabstop>pushButton_exp_index_mat</tabstop>
+  <tabstop>pushButton_delete</tabstop>
+  <tabstop>pushButton_next_rec</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

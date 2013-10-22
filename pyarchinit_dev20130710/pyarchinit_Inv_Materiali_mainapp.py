@@ -100,7 +100,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 	"Diametro orlo": 'diametro_orlo',
 	"Peso" : 'peso',
 	"Tipo" : 'tipo',
-	"Valore E.v.e. orlo" : 'eve_orlo'
+	"Valore E.v.e. orlo" : 'eve_orlo',
+	"Repertato" : 'repertato',
+	"Diagnostico" : 'diagnostico'
 	}
 	QUANT_ITEMS = ['Tipo reperto',
 							'Classe materiale',
@@ -133,7 +135,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				"Diametro orlo",
 				"Peso",
 				"Tipo",
-				"Valore E.v.e. orlo"
+				"Valore E.v.e. orlo",
+				"Repertato",
+				"Diagnostico"
 				]
 
 	TABLE_FIELDS = [
@@ -162,7 +166,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					'diametro_orlo',
 					'peso',
 					'tipo',
-					'eve_orlo'
+					'eve_orlo',
+					'repertato',
+					'diagnostico'
 					]
 
 	TABLE_FIELDS_UPDATE = [
@@ -189,7 +195,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					'diametro_orlo',
 					'peso',
 					'tipo',
-					'eve_orlo'
+					'eve_orlo',
+					'repertato',
+					'diagnostico'
 					]
 
 	SEARCH_DICT_TEMP = ""
@@ -816,7 +824,10 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 						diametro_orlo,					    																#22 - diametro orlo
 						peso,					    																			#23- peso
 						unicode(self.lineEdit_tipo.text()),					    											#24 - tipo
-						eve_orlo					    																		#25 - eve_orlo
+						eve_orlo,																								#25 - eve_orlo,
+						unicode(self.comboBox_repertato.currentText()),					    							#9 - lavato
+						unicode(self.comboBox_diagnostico.currentText()),					    							#9 - lavato
+
 						)
 
 
@@ -1082,7 +1093,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			self.TABLE_FIELDS[22] : diametro_orlo,
 			self.TABLE_FIELDS[23] : peso,
 			self.TABLE_FIELDS[24] : "'" + unicode(self.lineEdit_tipo.text()) + "'",
-			self.TABLE_FIELDS[25] : eve_orlo
+			self.TABLE_FIELDS[25] : eve_orlo,
+			self.TABLE_FIELDS[26] : "'" + str(self.comboBox_repertato.currentText()) + "'",
+			self.TABLE_FIELDS[27] : "'" + str(self.comboBox_diagnostico.currentText()) + "'",
 			}
 
 			u = Utility()
@@ -1353,7 +1366,10 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.lineEdit_peso.clear()
 		self.lineEdit_tipo.clear()
 		self.lineEdit_eve_orlo.clear()
-		
+
+		self.comboBox_repertato.setEditText("")							#9 - repertato
+		self.comboBox_diagnostico.setEditText("")							#9 - diagnostico
+
 		for i in range(elementi_reperto_row_count):
 			self.tableWidget_elementi_reperto.removeRow(0) 					
 		self.insert_new_row("self.tableWidget_elementi_reperto")		#14 - elementi reperto
@@ -1434,6 +1450,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			self.lineEditRivestimento.setText(str(self.DATA_LIST[self.rec_num].rivestimento))
 
 			self.lineEditCorpoCeramico.setText(str(self.DATA_LIST[self.rec_num].corpo_ceramico))
+
+			self.comboBox_repertato.setEditText(str(self.DATA_LIST[self.rec_num].repertato))
+			self.comboBox_diagnostico.setEditText(str(self.DATA_LIST[self.rec_num].diagnostico))
 
 			if self.DATA_LIST[self.rec_num].diametro_orlo == None:															#10 - nr_cassa
 				self.lineEdit_diametro_orlo.setText("")
@@ -1547,7 +1566,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		unicode(diametro_orlo),
 		unicode(peso),																#17 - tecnologie
 		unicode(self.lineEdit_tipo.text()),
-		unicode(eve_orlo)														#17 - tecnologie
+		unicode(eve_orlo),														#17 - tecnologie
+		unicode(self.comboBox_repertato.currentText()),							#9 - lavato
+		unicode(self.comboBox_diagnostico.currentText()),							#9 - lavato
 		]
 
 

@@ -139,6 +139,18 @@ class DB_update:
 			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('eve_orlo') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN eve_orlo Numeric(7,3) DEFAULT 0")
+			
+		for i in table.columns:
+			table_column_names_list.append(str(i.name))
+		if table_column_names_list.__contains__('repertato') == False:
+			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN repertato varchar(2)")
+			self.engine.execute("update inventario_materiali_table set repertato = ''No")
+
+		for i in table.columns:
+			table_column_names_list.append(str(i.name))
+		if table_column_names_list.__contains__('diagnostico') == False:
+			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN diagnostico varchar(2)")
+			self.engine.execute("update inventario_materiali_table set diagnostico = ''No")
 
 if __name__ == '__main__':
 	dbup=DB_update()
