@@ -11,12 +11,12 @@
  ***************************************************************************/
 
 /***************************************************************************
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
+ *                                                                                                                      *
+ *   This program is free software; you can redistribute it and/or modify                           *
+ *   it under the terms of the GNU General Public License as published by                          *
+ *   the Free Software Foundation; either version 2 of the License, or                               *
+ *   (at your option) any later version.                                                                       *
+ *                                                                                                                      *
  ***************************************************************************/
 """
 import sys, os
@@ -901,7 +901,7 @@ class Pyarchinit_db_management:
 ##			#res_list.extend(us for us, in session.query(US.us).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
 
 		return res_list
-
+"""
 class Order_layer_v2test:
 	order_dict = {}
 	order_count = 0
@@ -999,7 +999,7 @@ class Order_layer_v2test:
 					pass
 			self.order_dict[k]=l
 		return
-
+"""
 
 
 ##def main():

@@ -37,16 +37,16 @@ from  pyarchinit_US_ui import *
 from  pyarchinit_utility import *
 from pyarchinit_print_utility import Print_utility
 from  pyarchinit_error_check import *
-try:
-	from  pyarchinit_matrix_exp import *
-except:
-	pass
+
+from  pyarchinit_matrix_exp import *
+
 from  pyarchinit_pyqgis import Pyarchinit_pyqgis, Order_layers,Order_layer_v2
 from  sortpanelmain import SortPanelMain
 from  pyarchinit_db_manager import *
 from  pyarchinit_exp_USsheet_pdf import *
 from  delegateComboBox import *
 from  imageViewer import ImageViewer
+
 
 from pyarchinit_interactive_matrix_main import pyarchinit_Interactive_Matrix
 
@@ -255,8 +255,6 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 						'area' : "'"+unicode(area)+"'",
 						'us' : us}
 
-		records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS) #carica tutti i dati di uno scavo ordinati per numero di US
-
 		u = Utility()
 		search_dict = u.remove_empty_items_fr_dict(search_dict)
 
@@ -348,13 +346,13 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.pushButton_insert_row_rapporti.setEnabled(n)
 		self.pushButton_remove_row_rapporti.setEnabled(n) 
 
-		self.pushButton_insert_row_inclusi.setEnabled(n)		
+		self.pushButton_insert_row_inclusi.setEnabled(n)
 		self.pushButton_remove_row_inclusi.setEnabled(n)
 
-		self.pushButton_insert_row_campioni.setEnabled(n)		
+		self.pushButton_insert_row_campioni.setEnabled(n)
 		self.pushButton_remove_row_campioni.setEnabled(n)
 
-		self.pushButton_insert_row_documentazione.setEnabled(n)		
+		self.pushButton_insert_row_documentazione.setEnabled(n)
 		self.pushButton_remove_row_documentazione.setEnabled(n)
 
 	def on_pushButton_connect_pressed(self):
@@ -390,7 +388,6 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def customize_GUI(self):
 		self.tableWidget_rapporti.setColumnWidth(0,380)
 		self.tableWidget_rapporti.setColumnWidth(1,110)
-		
 		self.tableWidget_documentazione.setColumnWidth(0,150)
 		self.tableWidget_documentazione.setColumnWidth(1,300)
 

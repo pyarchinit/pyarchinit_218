@@ -495,10 +495,6 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
 		self.charge_list()
 
-
-
-
-		
 	def customize_gui(self):
 		#media prevew system
 		self.iconListWidget = QtGui.QListWidget(self)
@@ -711,9 +707,104 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		Finds_pdf_sheet.build_Finds_sheets(data_list)
 
 	def on_pushButton_exp_index_mat_pressed(self):
+		self.exp_pdf_elenco_casse_main()
+
 		Mat_index_pdf = generate_reperti_pdf()
 		data_list = self.generate_list_pdf()
 		Mat_index_pdf.build_index_Finds(data_list, data_list[0][1])
+		
+#********************************************************************************
+	def exp_pdf_elenco_casse_main(self):
+		elenco_casse = self.index_elenco_casse()
+		QMessageBox.warning(self,'elenco casse',str(elenco_casse), QMessageBox.Ok)
+		sito = unicode(self.comboBox_sito.currentText())
+		elenco_casse.sort()
+		elenco_us = []
+
+		#crea il dizionario cassa/us che contiene i valori {'cassa':[('area','us'), (area','us')]}
+		diz_us_x_cassa = {}
+		for cassa in elenco_casse:
+			rec_us = self.us_list_from_casse(sito, cassa)
+			diz_us_x_cassa[cassa] = rec_us
+
+		QMessageBox.warning(self,'us x cassa',str(diz_us_x_cassa), QMessageBox.Ok)
+		
+		#elenco us delle casse
+		for us_list in diz_us_x_cassa.values():
+			for v in us_list:
+				QMessageBox.warning(self,'v',str(v), QMessageBox.Ok)
+				elenco_us.append((sito, v[0], v[1]))
+
+		#crea il dizionario us/strutture che contiene i valori {'us':[('sito','struttura'), ('sito','struttura')]}
+		diz_strutture_x_us = {}
+		
+		for sing_us in elenco_us:
+			rec_strutture = self.strutture_list_from_us(sing_us[0], sing_us[1], sing_us[2])
+			diz_strutture_x_us[sing_us] = rec_strutture
+		
+		QMessageBox.warning(self,'strutture x us',str(diz_strutture_x_us), QMessageBox.Ok)
+
+		#crea il dizionario reperto/us/struttura che contiene i valori {'reperto':[('sito','area'us','struttura'), ('sito','area','us','struttura')]}
+		diz_usstrutture_x_reperto = {}
+		for rec in range(len(self.DATA_LIST)):
+			diz_usstrutture_x_reperto[self.DATA_LIST[rec].numero_inventario] = [self.DATA_LIST[rec].sito,
+												self.DATA_LIST[rec].area, 
+												self.DATA_LIST[rec].us, 
+												diz_strutture_x_us[(self.DATA_LIST[rec].sito, self.DATA_LIST[rec].area, self.DATA_LIST[rec].us)]
+												]
+		QMessageBox.warning(self,'rep,us_str',str(diz_usstrutture_x_reperto), QMessageBox.Ok)
+
+
+	def index_elenco_casse(self):
+		elenco_casse = []
+		for rec in range(len(self.DATA_LIST)):
+			elenco_casse.append(self.DATA_LIST[rec].nr_cassa)
+
+		elenco_casse = self.UTILITY.remove_dup_from_list(elenco_casse)
+
+		return elenco_casse
+
+	def us_list_from_casse(self, sito, cassa):
+		self.sito = sito
+		self.cassa = cassa
+
+		elenco_us_per_cassa = []
+
+		search_dict = {'sito' : "'"+unicode(self.sito)+"'",
+						'nr_cassa' : "'"+unicode(self.cassa)+"'"
+						}
+
+		search_dict = self.UTILITY.remove_empty_items_fr_dict(search_dict)
+
+		res = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS)
+
+		for rec in range(len(res)):
+			if bool(res[rec].us) == True:
+				elenco_us_per_cassa.append((res[rec].area, res[rec].us))
+		return elenco_us_per_cassa
+
+	def strutture_list_from_us(self, sito, area, us):
+		self.sito = sito
+		self.area = area
+		self.us = us
+
+		elenco_strutture_per_us = []
+
+		search_dict = {'sito' : "'"+unicode(self.sito)+"'",
+						'area' : "'"+unicode(self.area)+"'",
+						'us' : "'"+unicode(self.us)+"'"
+						}
+
+		search_dict = self.UTILITY.remove_empty_items_fr_dict(search_dict)
+
+		res = self.DB_MANAGER.query_bool(search_dict,"US")
+
+		for rec in range(len(res)):
+			if bool(res[rec].struttura) == True:
+				elenco_strutture_per_us.append((res[rec].sito, res[rec].struttura))
+		return elenco_strutture_per_us
+
+#********************************************************************************
 
 	def data_error_check(self):
 		test = 0
@@ -738,7 +829,6 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				test = 1
 
 		return test
-
 
 
 	def insert_new_rec(self):
@@ -1391,6 +1481,19 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.rec_num = n
 		#QMessageBox.warning(self, "check fill fields", str(self.rec_num),  QMessageBox.Ok)
 		try:
+			try:
+				repertato = str(self.DATA_LIST[self.rec_num].repertato)
+			
+				self.comboBox_repertato.setEditText(repertato)
+			except Exception, e:
+				QMessageBox.warning(self, "Errore Fill repertato", str(e),  QMessageBox.Ok)
+			
+			try:
+				diagnostico = str(self.DATA_LIST[self.rec_num].diagnostico)
+			
+				self.comboBox_diagnostico.setEditText(diagnostico)
+			except Exception, e:
+				QMessageBox.warning(self, "Errore Fill diagnostico", str(e),  QMessageBox.Ok)
 			unicode(self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito))  											#1 - Sito
 			self.lineEdit_num_inv.setText(str(self.DATA_LIST[self.rec_num].numero_inventario))							#2 - num_inv
 			unicode(self.comboBox_tipo_reperto.setEditText(self.DATA_LIST[self.rec_num].tipo_reperto))						#3 - Tipo reperto
@@ -1451,9 +1554,6 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 			self.lineEditCorpoCeramico.setText(str(self.DATA_LIST[self.rec_num].corpo_ceramico))
 
-			self.comboBox_repertato.setEditText(str(self.DATA_LIST[self.rec_num].repertato))
-			self.comboBox_diagnostico.setEditText(str(self.DATA_LIST[self.rec_num].diagnostico))
-
 			if self.DATA_LIST[self.rec_num].diametro_orlo == None:															#10 - nr_cassa
 				self.lineEdit_diametro_orlo.setText("")
 			else:
@@ -1470,6 +1570,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				self.lineEdit_eve_orlo.setText("")
 			else:
 				self.lineEdit_eve_orlo.setText(str(self.DATA_LIST[self.rec_num].eve_orlo))
+
 
 ##########
 		except Exception, e:

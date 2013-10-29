@@ -70,8 +70,11 @@ class HARRIS_MATRIX_EXP:
 			color='blue',
 			label=i[2],
 			font_color = 'Blue')
-
-		data_to_plot =  G.tred()
+	
+		try:
+			data_to_plot =  G.tred()
+		except:
+			data_to_plot = G
 
 		Matrix_path = ('%s%s%s') % (self.HOME, os.sep, "pyarchinit_Matrix_folder")
 

@@ -51,10 +51,9 @@ import numpy as np
 from matplotlib.pyplot import *
 from matplotlib import *
 
-try:
-	from  pyarchinit_matrix_exp import *
-except:
-	pass
+
+from  pyarchinit_matrix_exp import *
+
 
 try:
 	from  pyarchinit_db_manager import *
