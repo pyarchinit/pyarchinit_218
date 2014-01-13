@@ -1,3 +1,4 @@
+
 import sys
 from PyQt4 import QtCore, QtGui
 
@@ -20,11 +21,15 @@ class ComboBoxDelegate(QtGui.QItemDelegate):
 		return editor
 	
 	def setEditorData(self, editor, index):
-		text = index.model().data(index, QtCore.Qt.DisplayRole).toString()
+		text = index.model().data(index, QtCore.Qt.DisplayRole)#.String()
+		f = open("/test_srt.txt","w")
+		f.write(str(dir(text)))
+		f.close()
 		i = editor.findText(text)
 		if i == -1:
 			i = 0
 		editor.setCurrentIndex(i)
 	
 	def setModelData(self, editor, model, index):
-		model.setData(index, QtCore.QVariant(editor.currentText() ))
+		#model.setData(index, QtCore.QVariant(editor.currentText() ))
+		model.setData(index, editor.currentText())

@@ -108,7 +108,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 
 			uri.setDataSource('','pyarchinit_us_view', 'Geometry', gidstr, "gid")
 			layerUS=QgsVectorLayer(uri.uri(), 'pyarchinit_us_view', 'spatialite')
-###################################################################à
+###################################################################
 			if  layerUS.isValid() == True:
 				#self.USLayerId = layerUS.getLayerID()
 				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_caratterizzazioni.qml')
@@ -563,6 +563,8 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			value_list.append(item.attributeMap().__getitem__(self.field_position).toString())
 		return value_list
 
+
+###################### - Site Section - ########################
 	def charge_layers_for_draw(self, options):
 		self.options = options
 
@@ -642,6 +644,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 					#self.USLayerId = layerUS.getLayerID()
 					##style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
 					##ayerUS.loadNamedStyle(style_path)
+					self.iface.mapCanvas().setExtent(layer.extent())
 					QgsMapLayerRegistry.instance().addMapLayers([layer], True)
 				else:
 					QMessageBox.warning(self, "TESTER", "Layer non valido",QMessageBox.Ok)
@@ -736,6 +739,48 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				QgsMapLayerRegistry.instance().addMapLayers([layer], True)
 			else:
 				QMessageBox.warning(self, "TESTER", "Layer non valido",QMessageBox.Ok)
+
+	def charge_sites_from_research(self, data):
+		#Clean Qgis Map Later Registry
+		#QgsMapLayerRegistry.instance().removeAllMapLayers()
+		# Get the user input, starting with the table name
+		
+		#self.find_us_cutted(data)
+
+		cfg_rel_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'config.cfg')
+		file_path = ('%s%s') % (self.HOME, cfg_rel_path)
+		conf = open(file_path, "r")
+		con_sett = conf.read()
+		conf.close()
+
+		settings = Settings(con_sett)
+		settings.set_configuration()
+		
+		if settings.SERVER == 'sqlite':
+			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
+			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
+
+			gidstr =  "sito_nome= '" + str(data[0].sito) +"'"
+			if len(data) > 1:
+				for i in range(len(data)):
+					gidstr += " OR sito_nome = '" + str(data[i].sito) +"'"
+
+			uri = QgsDataSourceURI()
+			uri.setDatabase(db_file_path)
+
+			uri.setDataSource('','pyarchinit_site_view', 'the_geom', gidstr, "ROWID")
+			layerSITE=QgsVectorLayer(uri.uri(), 'pyarchinit_site_view', 'spatialite')
+
+			if layerSITE.isValid() == True:
+				QMessageBox.warning(self, "TESTER", "OK Layer Sito valido",QMessageBox.Ok)
+
+				#self.USLayerId = layerUS.getLayerID()
+##				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+##				layerUS.loadNamedStyle(style_path)
+				self.iface.mapCanvas().setExtent(layerSITE.extent())
+				QgsMapLayerRegistry.instance().addMapLayers([layerSITE], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "Layer US non valido",QMessageBox.Ok)
 
 class Order_layers:
 

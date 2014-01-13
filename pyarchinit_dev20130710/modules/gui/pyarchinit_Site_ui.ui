@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>589</width>
+    <width>540</width>
     <height>495</height>
    </rect>
   </property>
@@ -551,7 +551,7 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>567</width>
+            <width>518</width>
             <height>202</height>
            </rect>
           </property>
@@ -722,16 +722,16 @@
          <widget class="QWidget" name="page_3">
           <property name="geometry">
            <rect>
-            <x>0</x>
+            <x>-2</x>
             <y>0</y>
-            <width>567</width>
-            <height>202</height>
+            <width>559</width>
+            <height>193</height>
            </rect>
           </property>
           <attribute name="label">
            <string>Tools</string>
           </attribute>
-          <layout class="QFormLayout" name="formLayout">
+          <layout class="QGridLayout" name="gridLayout_10">
            <item row="0" column="0">
             <layout class="QHBoxLayout" name="horizontalLayout_2">
              <item>
@@ -753,7 +753,7 @@
              </item>
             </layout>
            </item>
-           <item row="1" column="0">
+           <item row="1" column="0" colspan="2">
             <layout class="QHBoxLayout" name="horizontalLayout_3">
              <item>
               <widget class="QLabel" name="label_8">
@@ -774,12 +774,12 @@
              </item>
             </layout>
            </item>
-           <item row="2" column="0">
+           <item row="2" column="0" colspan="3">
             <layout class="QHBoxLayout" name="horizontalLayout_4">
              <item>
               <widget class="QLabel" name="label_9">
                <property name="text">
-                <string>Esporta relazione di scavo per questo sito</string>
+                <string>Esporta relazione di scavo per questo sito (Versione di sviluppo)</string>
                </property>
               </widget>
              </item>
@@ -792,6 +792,101 @@
              </item>
             </layout>
            </item>
+           <item row="3" column="0" colspan="3">
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="Line" name="line">
+               <property name="minimumSize">
+                <size>
+                 <width>539</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_10">
+               <property name="text">
+                <string>GIS Tools</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="4" column="0" colspan="2">
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="QLabel" name="label_11">
+               <property name="toolTip">
+                <string>Carica tutti i layer per poter inserire nuove geometrie</string>
+               </property>
+               <property name="text">
+                <string>Carica il puntuale del sito</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_draw_sito">
+               <property name="text">
+                <string>Carica</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="4" column="2">
+            <spacer name="horizontalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>261</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="5" column="0">
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QLabel" name="label_12">
+               <property name="toolTip">
+                <string>Carica tutti i layer per poter inserire nuove geometrie</string>
+               </property>
+               <property name="text">
+                <string>Gis viewer</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="toolButton_draw_siti">
+               <property name="text">
+                <string>Abilita il caricamento delle ricerche</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="5" column="1" colspan="2">
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>307</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
           </layout>
          </widget>
          <widget class="QWidget" name="page_2">
@@ -799,8 +894,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>98</width>
-            <height>118</height>
+            <width>518</width>
+            <height>202</height>
            </rect>
           </property>
           <attribute name="label">

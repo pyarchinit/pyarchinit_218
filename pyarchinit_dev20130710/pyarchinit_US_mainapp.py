@@ -904,6 +904,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			self.pyQGIS.addRasterLayer()
 
 	def on_pushButton_new_rec_pressed(self):
+		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":
+			msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 		#set the GUI for a new record
 
 		if self.BROWSE_STATUS != "n":
@@ -920,6 +922,11 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			self.SORT_STATUS = "n"
 			self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 
+			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+			self.set_rec_counter('','')
+			self.label_sort.setText(self.SORTED_ITEMS["n"])
+			self.empty_fields()
+
 			self.enable_button(0)
 
 
@@ -927,12 +934,12 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		#save record
 		if self.BROWSE_STATUS == "b":
 			if self.records_equal_check() == 1:
-				self.update_if(QMessageBox.warning(self,u'ATTENZIONE',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+				self.update_if(QMessageBox.warning(self,u'ATTENZIONE',u"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 				self.SORT_STATUS = "n"
 				self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 				self.enable_button(1)
 			else:
-				QMessageBox.warning(self, "ATTENZIONE", u"Non è stata realizzata alcuna modifica.",  QMessageBox.Ok)
+				QMessageBox.warning(self, "ATTENZIONE", u"Non e' stata realizzata alcuna modifica.",  QMessageBox.Ok)
 		else:
 			if self.data_error_check() == 0:
 				test_insert = self.insert_new_rec()
@@ -1096,7 +1103,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		documentazione = self.table2dict("self.tableWidget_documentazione")
 		
 		if self.lineEditOrderLayer.text() == "":
-			order_layer = None
+			order_layer = 0
 		else:
 			order_layer = int(self.lineEditOrderLayer.text())
 
@@ -1137,11 +1144,12 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				return 1
 			except Exception, e:
 				e_str = str(e)
-				if e_str.__contains__("Integrity"):
-					msg = self.ID_TABLE + u" già presente nel database"
+				if e_str.__contains__("IntegrityError"):
+					msg = self.ID_TABLE + u" gia' presente nel database"
+					QMessageBox.warning(self, "Errore", "Errore"+ str(msg),  QMessageBox.Ok)
 				else:
 					msg = e
-				QMessageBox.warning(self, "Errore", "Errore di immisione 1 \n"+ str(msg),  QMessageBox.Ok)
+					QMessageBox.warning(self, "Errore", "Errore di immisione 1 \n"+ str(msg),  QMessageBox.Ok)
 				return 0
 
 		except Exception, e:
@@ -1381,6 +1389,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 					self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
+
 					self.fill_fields(self.REC_CORR)
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
@@ -1391,10 +1400,13 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					
 					self.setTableEnable(["self.tableWidget_campioni", "self.tableWidget_rapporti","self.tableWidget_inclusi",
 												"self.tableWidget_documentazione"], "True")
+
 				else:
 					self.DATA_LIST = []
+
 					for i in res:
 						self.DATA_LIST.append(i)
+
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
 					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
 					self.fill_fields()

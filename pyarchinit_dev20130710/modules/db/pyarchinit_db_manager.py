@@ -488,7 +488,20 @@ class Pyarchinit_db_management:
 
 		return pdf_administrator
 
+	def insert_campioni_values(self, *arg):
+		"""Istanzia la classe CAMPIONI da pyarchinit_db_mapper"""
+		campioni = CAMPIONI(arg[0],
+										arg[1],
+										arg[2],
+										arg[3],
+										arg[4],
+										arg[5],
+										arg[6],
+										arg[7],
+										arg[8],
+										arg[9])
 
+		return campioni
 
 
 	def execute_sql_create_db(self):

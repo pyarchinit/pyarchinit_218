@@ -215,17 +215,17 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
 
 	def customize_GUI(self):
-		self.tableWidget_rapporti.setColumnWidth(0,120)
-		self.tableWidget_rapporti.setColumnWidth(1,280)
-		self.tableWidget_rapporti.setColumnWidth(2,75)
-		self.tableWidget_rapporti.setColumnWidth(3,75)
+		self.tableWidget_rapporti.setColumnWidth(0,110)
+		self.tableWidget_rapporti.setColumnWidth(1,220)
+		self.tableWidget_rapporti.setColumnWidth(2,60)
+		self.tableWidget_rapporti.setColumnWidth(3,60)
 
-		self.tableWidget_materiali_impiegati.setColumnWidth(0,535)
+		self.tableWidget_materiali_impiegati.setColumnWidth(0,120)
 
-		self.tableWidget_elementi_strutturali.setColumnWidth(0,480)
+		self.tableWidget_elementi_strutturali.setColumnWidth(0,130)
 		self.tableWidget_elementi_strutturali.setColumnWidth(1,60)
 
-		self.tableWidget_misurazioni.setColumnWidth(0,360)
+		self.tableWidget_misurazioni.setColumnWidth(0,280)
 		self.tableWidget_misurazioni.setColumnWidth(1,100)
 		self.tableWidget_misurazioni.setColumnWidth(2,60)
 
@@ -234,7 +234,7 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 		self.setComboBoxEditable(["self.comboBox_per_fin"],1)
 		self.setComboBoxEditable(["self.comboBox_fas_fin"],1)
 
-		valuesRapporti = ['Si appoggia a', 'Gli si appoggia' 'Connesso con', 'Si sovrappone a', 'Gli si sovrappone', 'Ampliato da', 'Amplia']
+		valuesRapporti = ['Si appoggia a', 'Gli si appoggia', 'Connesso con', 'Si sovrappone a', 'Gli si sovrappone', 'Ampliato da', 'Amplia', 'Uguale a']
 		self.delegateRapporti = ComboBoxDelegate()
 		self.delegateRapporti.def_values(valuesRapporti)
 		self.delegateRapporti.def_editable('True')
@@ -1051,18 +1051,43 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 	def on_pushButton_insert_row_rapporti_pressed(self):
 		self.insert_new_row('self.tableWidget_rapporti')
 
+	def on_pushButton_remove_row_rapporti_pressed(self):
+		self.remove_row('self.tableWidget_rapporti')
+##
+
 	def on_pushButton_insert_row_materiali_pressed(self):
 		self.insert_new_row('self.tableWidget_materiali_impiegati')
+
+	def on_pushButton_remove_row_materiali_pressed(self):
+		self.remove_row('self.tableWidget_materiali_impiegati')
+##
 
 	def on_pushButton_insert_row_elementi_pressed(self):
 		self.insert_new_row('self.tableWidget_elementi_strutturali')
 
+	def on_pushButton_remove_row_elementi_pressed(self):
+		self.remove_row('self.tableWidget_elementi_strutturali')
+
+
 	def on_pushButton_insert_row_misurazioni_pressed(self):
 		self.insert_new_row('self.tableWidget_misurazioni')
+		
+	def on_pushButton_remove_row_misurazioni_pressed(self):
+		self.remove_row('self.tableWidget_misurazioni')
 
 	def insert_new_row(self, table_name):
 		"""insert new row into a table based on table_name"""
 		cmd = table_name+".insertRow(0)"
+		eval(cmd)
+
+	def remove_row(self, table_name):
+		"""insert new row into a table based on table_name"""
+		table_row_count_cmd = ("%s.rowCount()") % (table_name)
+		table_row_count = eval(table_row_count_cmd)
+		rowSelected_cmd = ("%s.selectedIndexes()") % (table_name)
+		rowSelected = eval(rowSelected_cmd)
+		rowIndex = (rowSelected[0].row())
+		cmd = ("%s.removeRow(%d)") % (table_name, rowIndex)
 		eval(cmd)
 
 	def update_record(self):

@@ -53,6 +53,14 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 		self.load_dict()
 		self.charge_data()
 
+		self.connect(self.comboBox_Database, SIGNAL("editTextChanged (const QString&)"), self.set_db_name)
+
+
+	def set_db_name(self):
+		if str(self.comboBox_Database.currentText()) == 'postgres':
+			self.lineEdit_DBname.setText("pyarchinit")
+		if str(self.comboBox_Database.currentText()) == 'sqlite':
+			self.lineEdit_DBname.setText("pyarchinit_db.sqlite")
 
 	def load_dict(self):
 		path_rel = os.path.join(os.sep, str(self.HOME), 'pyarchinit_DB_folder', 'config.cfg')

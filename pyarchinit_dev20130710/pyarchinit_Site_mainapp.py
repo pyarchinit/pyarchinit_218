@@ -460,7 +460,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 			if bool(search_dict) == False:
 				QMessageBox.warning(self, "ATTENZIONE", "Non e' stata impostata alcuna ricerca!!!",  QMessageBox.Ok)
 			else:
-				res = self.DB_MANAGER.query_bool(search_dict, "SITE")
+				res = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS)
 				if bool(res) == False:
 					QMessageBox.warning(self, "ATTENZIONE", "Non e' stato trovato alcun record!",  QMessageBox.Ok)
 
@@ -489,8 +489,12 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 
 					if self.REC_TOT == 1:
 						strings = ("E' stato trovato", self.REC_TOT, "record")
+						if self.toolButton_draw_siti.isChecked() == True:
+							sing_layer = [self.DATA_LIST[self.REC_CORR]]
+							self.pyQGIS.charge_sites_from_research(sing_layer)
 					else:
 						strings = ("Sono stati trovati", self.REC_TOT, "records")
+						self.pyQGIS.charge_sites_from_research(self.DATA_LIST)
 
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
 					self.setComboBoxEnable(["self.textEdit_descrizione_site"],"True")
@@ -517,17 +521,29 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 
 	def on_pushButton_draw_pressed(self):
 		self.pyQGIS.charge_layers_for_draw(["1", "2", "3", "4", "5", "7", "8", "9", "10", "12"])
-		
 
 	def on_pushButton_sites_geometry_pressed(self):
 		sito = unicode(self.comboBox_sito.currentText())
 		self.pyQGIS.charge_sites_geometry(["1", "2", "3", "4", "8"], "sito", sito)
+
+	def on_pushButton_draw_sito_pressed(self):
+		sing_layer = [self.DATA_LIST[self.REC_CORR]]
+		self.pyQGIS.charge_sites_from_research(sing_layer)
 
 	def on_pushButton_rel_pdf_pressed(self):
 		check=QMessageBox.warning(self, "Attention", "Under testing: this method can contains some bugs. Do you want proceed?",QMessageBox.Cancel,1)
 		if check == 1:
 			erp = exp_rel_pdf(unicode(self.comboBox_sito.currentText()))
 			erp.export_rel_pdf()
+			
+
+	def on_toolButton_draw_siti_toggled(self):
+		if self.toolButton_draw_siti.isChecked() == True:
+			QMessageBox.warning(self, "Messaggio", "Modalita' GIS attiva. Da ora le tue ricerche verranno visualizzate sul GIS", QMessageBox.Ok)
+		else:
+			QMessageBox.warning(self, "Messaggio", "Modalita' GIS disattivata. Da ora le tue ricerche non verranno piu' visualizzate sul GIS", QMessageBox.Ok)
+
+
 
 	def update_if(self, msg):
 		rec_corr = self.REC_CORR

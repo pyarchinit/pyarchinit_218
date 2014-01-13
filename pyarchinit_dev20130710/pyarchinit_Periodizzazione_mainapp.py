@@ -307,7 +307,7 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":
 			msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 		#else:
-		self.enable_button_search(0)
+
 
 		#set the GUI for a new search
 
@@ -327,8 +327,9 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			self.set_rec_counter('','')
 			self.label_sort.setText(self.SORTED_ITEMS["n"])
-			self.charge_list()
+			self.charge_list_sito()
 			self.empty_fields()
+			self.enable_button(0)
 
 
 	def on_pushButton_save_pressed(self):
