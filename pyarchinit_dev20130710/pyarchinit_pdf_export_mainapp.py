@@ -86,7 +86,7 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 			if e.find("no such table"):
 				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br><br> %s. E' NECESSARIO RIAVVIARE QGIS" % (str(e)),  QMessageBox.Ok)
 			else:
-				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
+				QMessageBox.warning(self, "Alert", "Attenzione rilevato bug! Segnalarlo allo sviluppatore<br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
 
 	def charge_list(self):
 		#lista sito

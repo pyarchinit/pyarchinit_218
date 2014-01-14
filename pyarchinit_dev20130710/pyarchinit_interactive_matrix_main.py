@@ -111,7 +111,7 @@ class pyarchinit_Interactive_Matrix(QDialog, Ui_DialogInteractiveMatrix):
 			self.DB_MANAGER.connection()
 		except Exception, e:
 			e = str(e)
-			QMessageBox.warning(self, "Alert", "La connessione e' fallita <br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
+			QMessageBox.warning(self, "Alert", "Attenzione rilevato bug! Segnalarlo allo sviluppatore <br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
 
 
 	def generate_matrix(self):

@@ -492,7 +492,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			if e.find("no such table"):
 				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br><br> E' NECESSARIO RIAVVIARE QGIS" + e ,  QMessageBox.Ok)
 			else:
-				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
+				QMessageBox.warning(self, "Alert", "Attenzione rilevato bug! Segnalarlo allo sviluppatore<br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
 		self.charge_list()
 
 	def customize_gui(self):

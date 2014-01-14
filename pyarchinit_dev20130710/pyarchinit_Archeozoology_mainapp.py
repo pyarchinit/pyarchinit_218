@@ -212,9 +212,9 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		except Exception, e:
 			e = str(e)
 			if e.find("no such table"):
-				QMessageBox.warning(self, "Alert 1", "La connessione e' fallita <br><br> Tabella non presente. E' NECESSARIO RIAVVIARE QGIS" + str(e) ,  QMessageBox.Ok)
+				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br><br> Tabella non presente. E' NECESSARIO RIAVVIARE QGIS" + str(e) ,  QMessageBox.Ok)
 			else:
-				QMessageBox.warning(self, "Alert 2", "La connessione e' fallita <br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
+				QMessageBox.warning(self, "Alert", "Attenzione rilevato bug! Segnalarlo allo sviluppatore<br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
 
 
 	def charge_list(self):

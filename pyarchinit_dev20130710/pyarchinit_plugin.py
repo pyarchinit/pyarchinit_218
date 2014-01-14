@@ -69,6 +69,7 @@ from pyarchinit_images_comparision_main import Comparision
 from dbmanagment import pyarchinit_dbmanagment
 from pyarchinitplugindialog import PyarchinitPluginDialog
 from pyarchinit_pdf_export_mainapp import pyarchinit_pdf_export
+from pyarchinit_Campioni_mainapp import pyarchinit_Campioni
 
 class PyArchInitPlugin:
 	def __init__(self, iface):
@@ -186,12 +187,12 @@ class PyArchInitPlugin:
 		self.actionImages_Directory_export = QAction(QIcon(icon_Directory_export), "pyArchInit Images Directories Export", self.iface.mainWindow())
 		self.actionImages_Directory_export.setWhatsThis("pyArchInit Images Directories Export")
 		QObject.connect(self.actionImages_Directory_export, SIGNAL("triggered()"),self.runImages_directory_export)
-		
+
 		icon_Comparision = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','comparision.png'))
 		self.actionComparision = QAction(QIcon(icon_Comparision), "pyArchInit Images Comparision", self.iface.mainWindow())
 		self.actionComparision.setWhatsThis("pyArchInit Images Comparision")
 		QObject.connect(self.actionComparision, SIGNAL("triggered()"),self.runComparision)
-		
+
 		icon_Dbmanagment = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','beckup.jpg'))
 		self.actionDbmanagment = QAction(QIcon(icon_Dbmanagment), "pyArchInit Scheda gestione db", self.iface.mainWindow())
 		self.actionDbmanagment.setWhatsThis("pyArchInit Scheda gestione db")
@@ -201,12 +202,18 @@ class PyArchInitPlugin:
 		self.actionpdfExp = QAction(QIcon(icon_pdf_exp), "pyArchInit Sistema di esportazione PDF", self.iface.mainWindow())
 		self.actionpdfExp.setWhatsThis("pyArchInit Sistema di esportazione PDF")
 		QObject.connect(self.actionpdfExp, SIGNAL("triggered()"), self.runPdfexp)
+
+		icon_camp_exp = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','champion.png'))
+		self.actionCampioni = QAction(QIcon(icon_camp_exp), "pyArchInit Scheda campioni", self.iface.mainWindow())
+		self.actionCampioni.setWhatsThis("pyArchInit Scheda campioni")
+		QObject.connect(self.actionCampioni, SIGNAL("triggered()"), self.runCampioni)
+
 		#MENU
 		self.menu=QMenu("pyArchInit")
 
 		#self.pyarchinitSite = pyarchinit_Site(self.iface)
 
-		self.menu.addActions([self.actionSite, self.actionUS, self.actionInr])
+		self.menu.addActions([self.actionSite, self.actionUS, self.actionInr, self.actionCampioni])
 		self.menu.addSeparator()
 		self.menu.addActions([self.actionPer, self.actionStruttura])
 		self.menu.addSeparator()
@@ -237,6 +244,7 @@ class PyArchInitPlugin:
 		self.toolBar.addAction(self.actionStruttura)
 		self.toolBar.addAction(self.actionUS)
 		self.toolBar.addAction(self.actionInr)
+		self.toolBar.addAction(self.actionCampioni)
 		self.toolBar.addSeparator()
 		self.toolBar.addAction(self.actionTafonomia)
 		self.toolBar.addAction(self.actionSchedaind)
@@ -260,14 +268,13 @@ class PyArchInitPlugin:
 		self.toolBar.addAction(self.actionInfo)
 		self.toolBar.addSeparator()
 		self.toolBar.addAction(self.actionDbmanagment)
-		
-		
 
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionSite)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionPer)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionStruttura)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionUS)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionInr)
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionCampioni)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionTafonomia)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionSchedaind)
 		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionDetsesso)
@@ -289,7 +296,7 @@ class PyArchInitPlugin:
 		pluginGui = pyarchinit_Site(self.iface)
 		pluginGui.show()
 		self.pluginGui = pluginGui # save
-		
+
 	def runPer(self):
 		pluginGui = pyarchinit_Periodizzazione(self.iface)
 		pluginGui.show()
@@ -307,6 +314,11 @@ class PyArchInitPlugin:
 
 	def runInr(self):
 		pluginGui = pyarchinit_Inventario_reperti(self.iface)
+		pluginGui.show()
+		self.pluginGui = pluginGui # save
+
+	def runCampioni(self):
+		pluginGui = pyarchinit_Campioni(self.iface)
 		pluginGui.show()
 		self.pluginGui = pluginGui # save
 
@@ -392,6 +404,7 @@ class PyArchInitPlugin:
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionStruttura)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionUS)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionInr)
+		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionInrCampioni)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionSchedaind)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionDetsesso)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionDeteta)
@@ -413,6 +426,7 @@ class PyArchInitPlugin:
 		self.iface.removeToolBarIcon(self.actionStruttura)
 		self.iface.removeToolBarIcon(self.actionUS)
 		self.iface.removeToolBarIcon(self.actionInr)
+		self.iface.removeToolBarIcon(self.actionInrCampioni)
 		self.iface.removeToolBarIcon(self.actionTafonomia)
 		self.iface.removeToolBarIcon(self.actionSchedaind)
 		self.iface.removeToolBarIcon(self.actionDetsesso)

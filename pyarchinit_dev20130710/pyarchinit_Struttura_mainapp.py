@@ -212,7 +212,7 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 			if e.find("no such table"):
 				QMessageBox.warning(self, "Alert", "La connessione e' fallita" + str(e) + "<br>Tabella non presente. E' NECESSARIO RIAVVIARE QGIS" ,  QMessageBox.Ok)
 			else:
-				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
+				QMessageBox.warning(self, "Alert", "Attenzione rilevato bug! Segnalarlo allo sviluppatore<br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
 
 	def customize_GUI(self):
 		self.tableWidget_rapporti.setColumnWidth(0,110)
