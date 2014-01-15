@@ -953,12 +953,14 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
 					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+					self.fill_fields(self.REC_CORR)
+
 					self.setComboBoxEditable(["self.comboBox_sito"],1)
 					self.setComboBoxEditable(["self.comboBox_area"],1)
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
 					self.setComboBoxEnable(["self.comboBox_area"],"False")
 					self.setComboBoxEnable(["self.lineEdit_us"],"False")
-					self.fill_fields(self.REC_CORR)
+
 					self.enable_button(1)
 
 	def on_pushButton_rapp_check_pressed(self):

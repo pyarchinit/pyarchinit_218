@@ -296,10 +296,10 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 			data = self.DB_MANAGER.insert_site_values(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
 			unicode(self.comboBox_sito.currentText()), 					#1 - Sito
-			unicode(self.comboBox_nazione.currentText()), 				#2 - nazione
-			unicode(self.comboBox_regione.currentText()), 				#3 - regione
-			unicode(self.comboBox_comune.currentText()), 				#4 - comune
-			unicode(self.textEdit_descrizione_site.toPlainText()),   #5 - descrizione
+			unicode(self.comboBox_nazione.currentText()), 			#2 - nazione
+			unicode(self.comboBox_regione.currentText()), 			#3 - regione
+			unicode(self.comboBox_comune.currentText()), 			#4 - comune
+			unicode(self.textEdit_descrizione_site.toPlainText()),		#5 - descrizione
 			unicode(self.comboBox_provincia.currentText())) 			#6 - comune
 			try:
 				self.DB_MANAGER.insert_data_session(data)

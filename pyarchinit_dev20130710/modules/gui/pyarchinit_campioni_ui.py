@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_campioni_ui.ui'
 #
-# Created: Wed Oct 30 16:33:17 2013
+# Created: Wed Jan 15 17:46:13 2014
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -285,6 +285,7 @@ class Ui_DialogCampioni(object):
         self.comboBox_sito.addItem(_fromUtf8(""))
         self.gridLayout_7.addWidget(self.comboBox_sito, 0, 0, 1, 1)
         self.lineEdit_nr_campione = QtGui.QLineEdit(DialogCampioni)
+        self.lineEdit_nr_campione.setEnabled(False)
         self.lineEdit_nr_campione.setMinimumSize(QtCore.QSize(100, 0))
         self.lineEdit_nr_campione.setMaximumSize(QtCore.QSize(100, 16777215))
         self.lineEdit_nr_campione.setObjectName(_fromUtf8("lineEdit_nr_campione"))
@@ -341,14 +342,14 @@ class Ui_DialogCampioni(object):
         self.label_13.setFont(font)
         self.label_13.setObjectName(_fromUtf8("label_13"))
         self.verticalLayout_3.addWidget(self.label_13)
-        self.textEdit_descrizione_site = QtGui.QTextEdit(self.page)
-        self.textEdit_descrizione_site.setMinimumSize(QtCore.QSize(0, 20))
-        self.textEdit_descrizione_site.setMaximumSize(QtCore.QSize(16777215, 16000000))
+        self.textEdit_descrizione_camp = QtGui.QTextEdit(self.page)
+        self.textEdit_descrizione_camp.setMinimumSize(QtCore.QSize(0, 20))
+        self.textEdit_descrizione_camp.setMaximumSize(QtCore.QSize(16777215, 16000000))
         font = QtGui.QFont()
         font.setPointSize(10)
-        self.textEdit_descrizione_site.setFont(font)
-        self.textEdit_descrizione_site.setObjectName(_fromUtf8("textEdit_descrizione_site"))
-        self.verticalLayout_3.addWidget(self.textEdit_descrizione_site)
+        self.textEdit_descrizione_camp.setFont(font)
+        self.textEdit_descrizione_camp.setObjectName(_fromUtf8("textEdit_descrizione_camp"))
+        self.verticalLayout_3.addWidget(self.textEdit_descrizione_camp)
         self.gridLayout_9.addLayout(self.verticalLayout_3, 1, 0, 1, 1)
         self.label_6 = QtGui.QLabel(self.page)
         self.label_6.setObjectName(_fromUtf8("label_6"))
@@ -418,7 +419,7 @@ class Ui_DialogCampioni(object):
         self.gridLayout_6.addWidget(self.lineEdit_us, 6, 2, 1, 1)
         self.toolBox.addItem(self.page_4, _fromUtf8(""))
         self.page_3 = QtGui.QWidget()
-        self.page_3.setGeometry(QtCore.QRect(0, 0, 571, 229))
+        self.page_3.setGeometry(QtCore.QRect(0, 0, 571, 182))
         self.page_3.setObjectName(_fromUtf8("page_3"))
         self.formLayout = QtGui.QFormLayout(self.page_3)
         self.formLayout.setObjectName(_fromUtf8("formLayout"))
@@ -456,7 +457,7 @@ class Ui_DialogCampioni(object):
         self.verticalLayout_2.addWidget(self.toolBox)
 
         self.retranslateUi(DialogCampioni)
-        self.toolBox.setCurrentIndex(1)
+        self.toolBox.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(DialogCampioni)
 
     def retranslateUi(self, DialogCampioni):

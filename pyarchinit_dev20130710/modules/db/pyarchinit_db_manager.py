@@ -449,6 +449,22 @@ class Pyarchinit_db_management:
 
 		return tafonomia
 
+	def insert_values_campioni(self, *arg):
+		"""Istanzia la classe CAMPIONI da pyarchinit_db_mapper"""
+
+		campioni = CAMPIONI(arg[0],
+								arg[1],
+								arg[2],
+								arg[3],
+								arg[4],
+								arg[5],
+								arg[6],
+								arg[7],
+								arg[8],
+								arg[9])
+
+		return campioni
+
 
 	def insert_values_archeozoology(self, *arg):
 		"""Istanzia la classe ARCHEOZOOLOGY da pyarchinit_db_mapper"""

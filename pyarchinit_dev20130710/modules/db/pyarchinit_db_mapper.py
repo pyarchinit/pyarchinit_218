@@ -90,7 +90,7 @@ class US(object):
 
 	#def __repr__"
 	def __repr__(self):
-		return "<US(%d, '%s', '%s', %d,'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s')>" % (
+		return "<US('%d', '%s', '%s', '%d','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%s')>" % (
 		self.id_us,
 		self.sito,
 		self.area,
@@ -215,7 +215,7 @@ class UT(object):
 		self.indagini_preliminari = indagini_preliminari #41
 	#def __repr__"
 	def __repr__(self):
-		return "<UT(%d, '%s', %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%f', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s','%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')>" % (
+		return "<UT('%d', '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%f', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s','%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')>" % (
 		
 		self.id_ut,
 		self.progetto,
@@ -324,7 +324,7 @@ class US_TOIMP(object):
 
 	#def __repr__"
 	def __repr__(self):
-		return "<US_TOIMP('%d', '%s', '%s', %d,'%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')>" % (
+		return "<US_TOIMP('%d', '%s', '%s', '%d','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')>" % (
 		self.id_us,
 		self.sito,
 		self.area,
@@ -494,7 +494,7 @@ class INVENTARIO_MATERIALI(object):
 
 	#def __repr__"
 	def __repr__(self):
-		return "<INVENTARIO_MATERIALI(%d, '%s', '%d', '%s', '%s', '%s', '%s', %d, %d, '%s', %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, %d, '%s', '%s', '%r', '%r','%s', '%r', '%s', '%s' )>" % (
+		return "<INVENTARIO_MATERIALI('%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%d', '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%s', '%r', '%r','%s', '%r', '%s', '%s' )>" % (
 		self.id_invmat,
 		self.sito,
 		self.numero_inventario,
@@ -581,7 +581,7 @@ class INVENTARIO_MATERIALI_TOIMP(object):
 		self.rivestimento = rivestimento #22
 	#def __repr__"
 	def __repr__(self):
-		return "<INVENTARIO_MATERIALI_TOIMP(%d, '%s', '%d', '%s', '%s', '%s', '%s', %d, %d, '%s', %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d, %d,'%s', '%s')>" % (
+		return "<INVENTARIO_MATERIALI_TOIMP('%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%d', '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d','%s', '%s')>" % (
 		self.id_invmat,
 		self.sito,
 		self.numero_inventario,
@@ -1072,7 +1072,7 @@ class DETSESSO(object):
 
 	#def __repr__"
 	def __repr__(self):
-		return "<DETSESSO('%d','%s','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d', '%d', '%d', '%d', '%d', %d,'%d','%d','%d','%d','%r','%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')>" % (
+		return "<DETSESSO('%d','%s','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d','%d', '%d', '%d', '%d', '%d', '%d','%d','%d','%d','%d','%r','%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')>" % (
 		self.id_det_sesso,
 		self.sito,
 		self.num_individuo,
@@ -1458,7 +1458,7 @@ class CAMPIONI(object):
 		self.us,#6
 		self.numero_inventario_materiale, #7
 		self.nr_cassa, #8
-		self.luogo_conservazione, #9
+		self.luogo_conservazione #9
 		)
 #mapper
 mapper(CAMPIONI, Campioni_table.campioni_table)

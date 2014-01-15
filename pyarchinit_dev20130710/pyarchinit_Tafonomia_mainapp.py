@@ -1316,40 +1316,40 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		corredo_tipo = self.table2dict("self.tableWidget_corredo_tipo")
 
 		self.DATA_LIST_REC_TEMP = [
-		str(self.comboBox_sito.currentText()), 									#1 - Sito
-		str(nr_scheda),															#2 - Nr schede
-		str(self.comboBox_sigla_struttura.currentText()),						#3 - Tipo struttura
-		str(nr_struttura),														#4 - Nr struttura
-		str(nr_individuo),														#5 - Nr individuo
-		str(self.comboBox_rito.currentText()),									#6 - Rito
-		str(self.textEdit_descrizione_taf.toPlainText().toLatin1()),			#7 - Descrizione tafonimia
-		str(self.textEdit_interpretazione_taf.toPlainText().toLatin1()),		#8 - Interpretazione tafonimia
-		str(self.comboBox_segnacoli.currentText()),								#9 - Segnacoli
-		str(self.comboBox_canale_libatorio.currentText()),						#10 - Canale libatorio
-		str(self.comboBox_oggetti_esterno.currentText()),	 					#11 - Oggetti esterno
-		str(self.comboBox_conservazione_taf.currentText()), 					#12 - Conservazione tafonomia
-		str(self.comboBox_copertura_tipo.currentText()),						#13 - Copertura tipo
-		str(self.comboBox_tipo_contenitore_resti.currentText()),				#14 - Tipo contenitore resti  
-		str(self.lineEdit_orientamento_asse.text()),							#15 - orientamento asse
-		str(orientamento_azimut),												#16 - orientamento azimut
-		str(self.comboBox_corredo_presenza.currentText()),						#17 - corredo
-		str(corredo_tipo),														#18 - corredo tipo
-		str(self.textEdit_descrizione_corredo.toPlainText().toLatin1()),		#19 - descrizione corredo
-		str(lunghezza_scheletro),												#20 - lunghezza scheletro
-		str(self.comboBox_posizione_scheletro.currentText()),					#21 - posizione scheletro
-		str(self.comboBox_posizione_cranio.currentText()),						#22 - posizione cranio
-		str(self.comboBox_arti_superiori.currentText()),						#23 - arti superiori
-		str(self.comboBox_arti_inferiori.currentText()),						#24 - arti inferiori
-		str(self.comboBox_completo.currentText()),								#25 - completo
-		str(self.comboBox_disturbato.currentText()),							#26 - disturbato
-		str(self.comboBox_in_connessione.currentText()), 						#27 - in connessione
-		str(caratteristiche)													#28 - caratteristiche
+		unicode(self.comboBox_sito.currentText()), 									#1 - Sito
+		unicode(nr_scheda),															#2 - Nr schede
+		unicode(self.comboBox_sigla_struttura.currentText()),						#3 - Tipo struttura
+		unicode(nr_struttura),														#4 - Nr struttura
+		unicode(nr_individuo),														#5 - Nr individuo
+		unicode(self.comboBox_rito.currentText()),									#6 - Rito
+		unicode(self.textEdit_descrizione_taf.toPlainText()),			#7 - Descrizione tafonimia
+		unicode(self.textEdit_interpretazione_taf.toPlainText()),		#8 - Interpretazione tafonimia
+		unicode(self.comboBox_segnacoli.currentText()),								#9 - Segnacoli
+		unicode(self.comboBox_canale_libatorio.toPlainText()),						#10 - Canale libatorio
+		unicode(self.comboBox_oggetti_esterno.toPlainText()),	 					#11 - Oggetti esterno
+		unicode(self.comboBox_conservazione_taf.currentText()), 					#12 - Conservazione tafonomia
+		unicode(self.comboBox_copertura_tipo.currentText()),						#13 - Copertura tipo
+		unicode(self.comboBox_tipo_contenitore_resti.currentText()),				#14 - Tipo contenitore resti  
+		unicode(self.lineEdit_orientamento_asse.text()),							#15 - orientamento asse
+		unicode(orientamento_azimut),												#16 - orientamento azimut
+		unicode(self.comboBox_corredo_presenza.currentText()),						#17 - corredo
+		unicode(corredo_tipo),														#18 - corredo tipo
+		unicode(self.textEdit_descrizione_corredo.toPlainText()),		#19 - descrizione corredo
+		unicode(lunghezza_scheletro),												#20 - lunghezza scheletro
+		unicode(self.comboBox_posizione_scheletro.currentText()),					#21 - posizione scheletro
+		unicode(self.comboBox_posizione_cranio.currentText()),						#22 - posizione cranio
+		unicode(self.comboBox_arti_superiori.currentText()),						#23 - arti superiori
+		unicode(self.comboBox_arti_inferiori.currentText()),						#24 - arti inferiori
+		unicode(self.comboBox_completo.currentText()),								#25 - completo
+		unicode(self.comboBox_disturbato.currentText()),							#26 - disturbato
+		unicode(self.comboBox_in_connessione.currentText()), 						#27 - in connessione
+		unicode(caratteristiche)													#28 - caratteristiche
 		]
 
 	def set_LIST_REC_CORR(self):
 		self.DATA_LIST_REC_CORR = []
 		for i in self.TABLE_FIELDS:
-			self.DATA_LIST_REC_CORR.append(eval("str(self.DATA_LIST[self.REC_CORR]." + i + ")"))
+			self.DATA_LIST_REC_CORR.append(eval("unicode(self.DATA_LIST[self.REC_CORR]." + i + ")"))
 
 		data_txt = str(self.DATA_LIST_REC_CORR)
 		self.testing('test_reccorr.txt', data_txt)
@@ -1357,9 +1357,6 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 	def records_equal_check(self):
 		self.set_LIST_REC_TEMP()
 		self.set_LIST_REC_CORR()
-		f = open('/test_rec_corr_TAFONOMIA.txt', 'w')
-		test = str(self.DATA_LIST_REC_CORR) + " " + str(self.DATA_LIST_REC_TEMP)
-		f.write(test)
 		f.close()
 
 		if self.DATA_LIST_REC_CORR == self.DATA_LIST_REC_TEMP:

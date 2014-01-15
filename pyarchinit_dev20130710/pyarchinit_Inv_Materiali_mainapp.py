@@ -813,6 +813,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		area = self.lineEdit_area.text()
 		us = self.lineEdit_us.text()
 		nr_cassa = self.lineEdit_nr_cassa.text()
+
 		if area != "":
 			if EC.data_is_int(area) == 0:
 				QMessageBox.warning(self, "ATTENZIONE", "Campo Area.\nIl valore deve essere di tipo numerico",  QMessageBox.Ok)
@@ -832,7 +833,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 
 	def insert_new_rec(self):
-		#elementi reperto
+		##elementi reperto
 		elementi_reperto = self.table2dict("self.tableWidget_elementi_reperto")
 		##misurazioni
 		misurazioni = self.table2dict("self.tableWidget_misurazioni")
@@ -919,7 +920,6 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 						unicode(self.comboBox_diagnostico.currentText()),					    							#9 - lavato
 
 						)
-
 
 			try:
 				self.DB_MANAGER.insert_data_session(data)

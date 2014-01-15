@@ -435,30 +435,37 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
 					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
 
-				self.setComboBoxEditable(["self.comboBox_sito"],1)
-				self.setComboBoxEditable(["self.comboBox_sigla_struttura"],1)
-				self.setComboBoxEnable(["self.comboBox_sito"],"False")
-				self.setComboBoxEnable(["self.comboBox_sigla_struttura"],"False")
-				self.setComboBoxEnable(["self.numero_struttura"],"False")
-	
-				self.fill_fields(self.REC_CORR)
-				self.enable_button(1)
+					self.setComboBoxEditable(["self.comboBox_sito"],1)
+					self.setComboBoxEditable(["self.comboBox_sigla_struttura"],1)
+					self.setComboBoxEnable(["self.comboBox_sito"],"False")
+					self.setComboBoxEnable(["self.comboBox_sigla_struttura"],"False")
+					self.setComboBoxEnable(["self.numero_struttura"],"False")
+		
+					self.fill_fields(self.REC_CORR)
+					self.enable_button(1)
 				
 
 	def data_error_check(self):
 		test = 0
 		EC = Error_check()
 
-		cron_iniz = self.lineEdit_cron_iniz.text()
-		cron_fin = self.lineEdit_cron_fin.text()
-		if cron_iniz != "":
-			if EC.data_is_int(cron_iniz) == 0:
-				QMessageBox.warning(self, "ATTENZIONE", "Campo Cronologia Iniziale. \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
-				test = 1
+		nr_struttura = self.numero_struttura.text()
 
-		if cron_fin != "":
-			if EC.data_is_int(cron_fin) == 0:
-				QMessageBox.warning(self, "ATTENZIONE", "Campo Cronologia Finale. \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
+		if EC.data_is_empty(unicode(self.comboBox_sito.currentText())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo Sito. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			test = 1
+
+		if EC.data_is_empty(unicode(self.comboBox_sigla_struttura.currentText())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo Sigla Struttura. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			test = 1
+
+		if EC.data_is_empty(unicode(self.numero_struttura.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo Nr Struttura \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			test = 1
+
+		if nr_struttura != "":
+			if EC.data_is_int(nr_struttura) == 0:
+				QMessageBox.warning(self, "ATTENZIONE", "Campo Nr Struttura. \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
 				test = 1
 
 		return test
@@ -519,7 +526,7 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 
 			try:
 				self.DB_MANAGER.insert_data_session(data)
-
+				return 1
 			except Exception, e:
 				e_str = str(e)
 				if e_str.__contains__("Integrity"):
@@ -527,8 +534,10 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 				else:
 					msg = e
 				QMessageBox.warning(self, "Errore", "immisione 1 \n"+ str(msg),  QMessageBox.Ok)
+				return 0
 		except Exception, e:
 			QMessageBox.warning(self, "Errore", "Errore di immissione 2 \n"+str(e),  QMessageBox.Ok)
+			return 0
 
 	def on_pushButton_view_all_pressed(self):
 		self.empty_fields()
@@ -981,23 +990,23 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 		misurazioni = self.table2dict("self.tableWidget_misurazioni")
 
 		self.DATA_LIST_REC_TEMP = [
-		str(self.comboBox_sito.currentText()), 												#1 - Sito
-		str(self.comboBox_sigla_struttura.currentText()), 									#2 - sigla
-		str(numero_struttura), 																		#3 - numero_struttura
-		str(self.comboBox_categoria_struttura.currentText()),							#3 - numero_struttura
-		str(self.comboBox_tipologia_struttura.currentText()), 								#3 - numero_struttura
-		str(self.comboBox_definizione_struttura.currentText()),							#4 - cron iniziale
-		str(self.textEdit_descrizione_struttura.toPlainText().toLatin1()),					#6 - descrizioene
-		str(self.textEdit_interpretazione_struttura.toPlainText().toLatin1()),			#6 - descrizioene
-		str(periodo_iniziale),																			#6 - descrizioene
-		str(fase_iniziale),																				#6 - descrizioene
-		str(periodo_finale),																			#6 - descrizioene
-		str(fase_finale),																				#6 - descrizioene
-		str(self.lineEdit_datazione_estesa.text()),												#7- cron estesa
-		str(materiali_impiegati),
-		str(elementi_strutturali),
-		str(rapporti_struttura),
-		str(misurazioni)
+		unicode(self.comboBox_sito.currentText()), 												#1 - Sito
+		unicode(self.comboBox_sigla_struttura.currentText()), 									#2 - sigla
+		unicode(numero_struttura), 																		#3 - numero_struttura
+		unicode(self.comboBox_categoria_struttura.currentText()),							#3 - numero_struttura
+		unicode(self.comboBox_tipologia_struttura.currentText()), 								#3 - numero_struttura
+		unicode(self.comboBox_definizione_struttura.currentText()),							#4 - cron iniziale
+		unicode(self.textEdit_descrizione_struttura.toPlainText()),					#6 - descrizioene
+		unicode(self.textEdit_interpretazione_struttura.toPlainText()),			#6 - descrizioene
+		unicode(periodo_iniziale),																			#6 - descrizioene
+		unicode(fase_iniziale),																				#6 - descrizioene
+		unicode(periodo_finale),																			#6 - descrizioene
+		unicode(fase_finale),																				#6 - descrizioene
+		unicode(self.lineEdit_datazione_estesa.text()),												#7- cron estesa
+		unicode(materiali_impiegati),
+		unicode(elementi_strutturali),
+		unicode(rapporti_struttura),
+		unicode(misurazioni)
 		]
 
 	def rec_toupdate(self):
@@ -1007,7 +1016,7 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 	def set_LIST_REC_CORR(self):
 		self.DATA_LIST_REC_CORR = []
 		for i in self.TABLE_FIELDS:
-			self.DATA_LIST_REC_CORR.append(eval("str(self.DATA_LIST[self.REC_CORR]." + i + ")"))
+			self.DATA_LIST_REC_CORR.append(eval("unicode(self.DATA_LIST[self.REC_CORR]." + i + ")"))
 
 	def records_equal_check(self):
 		self.set_LIST_REC_TEMP()

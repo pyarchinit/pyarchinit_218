@@ -849,22 +849,22 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 
 		#data
 		self.DATA_LIST_REC_TEMP = [
-		str(self.comboBox_sito.currentText()),							#1 - Sito
-		str(self.lineEdit_area.text()),											#2 - Area
-		str(self.lineEdit_us.text()),												#3 - US
-		str(self.lineEdit_individuo.text()),										#4 - individuo
-		str(self.lineEdit_data_schedatura.text()),							#5 - data schedatura
-		str(self.lineEdit_schedatore.text()),			    		    		#6 - schedatore
-		str(self.comboBox_sesso.currentText()),			    		    #7 - sesso
-		str(eta_min),																#8- eta minima
-		str(eta_max),																#9 - eta massima
-		str(self.comboBox_classi_eta.currentText()),					#10 - classi eta
-		str(self.textEdit_osservazioni.toPlainText().toLatin1())]		#11 - osservazioni
+		unicode(self.comboBox_sito.currentText()),							#1 - Sito
+		unicode(self.lineEdit_area.text()),											#2 - Area
+		unicode(self.lineEdit_us.text()),												#3 - US
+		unicode(self.lineEdit_individuo.text()),										#4 - individuo
+		unicode(self.lineEdit_data_schedatura.text()),							#5 - data schedatura
+		unicode(self.lineEdit_schedatore.text()),			    		    		#6 - schedatore
+		unicode(self.comboBox_sesso.currentText()),			    		    #7 - sesso
+		unicode(eta_min),																#8- eta minima
+		unicode(eta_max),																#9 - eta massima
+		unicode(self.comboBox_classi_eta.currentText()),					#10 - classi eta
+		unicode(self.textEdit_osservazioni.toPlainText())]		#11 - osservazioni
 
 	def set_LIST_REC_CORR(self):
 		self.DATA_LIST_REC_CORR = []
 		for i in self.TABLE_FIELDS:
-			self.DATA_LIST_REC_CORR.append(eval("str(self.DATA_LIST[self.REC_CORR]." + i + ")"))
+			self.DATA_LIST_REC_CORR.append(eval("unicode(self.DATA_LIST[self.REC_CORR]." + i + ")"))
 
 	def records_equal_check(self):
 		self.set_LIST_REC_TEMP()

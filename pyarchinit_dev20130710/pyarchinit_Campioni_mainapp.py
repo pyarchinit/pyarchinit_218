@@ -247,9 +247,11 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			self.empty_fields()
 			self.label_sort.setText(self.SORTED_ITEMS["n"])
+
+			self.setComboBoxEditable(["self.comboBox_sito"],1)
 			
 			self.setComboBoxEnable(["self.comboBox_sito"],"True")
-			self.setComboBoxEditable(["self.comboBox_sito"],1)
+			self.setComboBoxEnable(["self.lineEdit_nr_campione"],"True")
 			
 			self.set_rec_counter('', '')
 			self.enable_button(0)
@@ -275,8 +277,12 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
 					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-					self.fill_fields(self.REC_CORR)
+
+
+					self.setComboBoxEditable(["self.comboBox_sito"],1)
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
+					self.setComboBoxEnable(["self.lineEdit_nr_campione"],"False")
+					self.fill_fields(self.REC_CORR)
 					self.enable_button(1)
 				else:
 					pass
@@ -289,18 +295,53 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 			QMessageBox.warning(self, "ATTENZIONE", "Campo Sito. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
 			test = 1
 
+		if EC.data_is_empty(unicode(self.lineEdit_nr_campione.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo nr_campione \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			test = 1
+
+		nr_campione = self.lineEdit_nr_campione.text()
+
+		if nr_campione != "":
+			if EC.data_is_int(nr_campione) == 0:
+				QMessageBox.warning(self, "ATTENZIONE", "Campo Nr Campione \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
+				test = 1
+
 		return test
 
 	def insert_new_rec(self):
 		try:
-			data = self.DB_MANAGER.insert_site_values(
+			if self.lineEdit_nr_campione.text() == "":
+				nr_campione = None
+			else:
+				nr_campione = int(self.lineEdit_nr_campione.text())
+
+			if self.lineEdit_us.text() == "":
+				us = None
+			else:
+				us = int(self.lineEdit_us.text())
+
+			if self.lineEdit_cassa.text() == "":
+				nr_cassa = None
+			else:
+				nr_cassa = int(self.lineEdit_cassa.text())
+
+			if self.lineEdit_n_inv_mat.text() == "":
+				numero_inventario_materiale = None
+			else:
+				numero_inventario_materiale = int(self.lineEdit_n_inv_mat.text())
+
+			data = self.DB_MANAGER.insert_campioni_values(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
-			unicode(self.comboBox_sito.currentText()), 					#1 - Sito
-			unicode(self.comboBox_tipo_campione.currentText()), 				#2 - tipo campione
-			unicode(self.comboBox_regione.currentText()), 				#3 - regione
-			unicode(self.comboBox_comune.currentText()), 				#4 - comune
-			unicode(self.textEdit_descrizione_site.toPlainText()),   #5 - descrizione
-			unicode(self.comboBox_provincia.currentText())) 			#6 - comune
+			unicode(self.comboBox_sito.currentText()), 								#1 - Sito
+			nr_campione,																		#2 - nr campione
+			unicode(self.comboBox_tipo_campione.currentText()), 				#3 - tipo_campione
+			unicode(self.textEdit_descrizione_camp.toPlainText()),					#4 - descrizione
+			unicode(self.lineEdit_area.text()),											#5 - area
+			us,																					#6 - us
+			numero_inventario_materiale,													#7 - inv materiale
+			nr_cassa,																			#8 - nr_cassa
+			unicode(self.lineEdit_luogo_conservazione.text()))						#9 - luogo conservazione
+
 			try:
 				self.DB_MANAGER.insert_data_session(data)
 				return 1
@@ -371,7 +412,6 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 	def on_pushButton_next_rec_pressed(self):
-
 		if self.records_equal_check() == 1:
 			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 
@@ -433,7 +473,7 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			###
 			self.setComboBoxEnable(["self.comboBox_sito"],"True")
-			self.setComboBoxEnable(["self.textEdit_descrizione_site"],"False")
+			self.setComboBoxEnable(["self.textEdit_descrizione_camp"],"False")
 			###
 			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			self.set_rec_counter('','')
@@ -445,13 +485,36 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 		if self.BROWSE_STATUS != "f":
 			QMessageBox.warning(self, "ATTENZIONE", "Per eseguire una nuova ricerca clicca sul pulsante 'new search' ",  QMessageBox.Ok)
 		else:
+
+			if self.lineEdit_nr_campione.text() == "":
+				nr_campione = None
+			else:
+				nr_campione = int(self.lineEdit_nr_campione.text())
+
+			if self.lineEdit_us.text() == "":
+				us = None
+			else:
+				us = int(self.lineEdit_us.text())
+
+			if self.lineEdit_cassa.text() == "":
+				nr_cassa = None
+			else:
+				nr_cassa = int(self.lineEdit_cassa.text())
+
+			if self.lineEdit_n_inv_mat.text() == "":
+				numero_inventario_materiale = None
+			else:
+				numero_inventario_materiale = int(self.lineEdit_n_inv_mat.text())
+
 			search_dict = {
-			'sito' : "'"+unicode(self.comboBox_sito.currentText())+"'",					#1 - Sito
-			'nazione': "'"+unicode(self.comboBox_nazione.currentText())+"'",			#2 - Nazione
-			'regione': "'" + unicode(self.comboBox_regione.currentText())+"'",		#3 - Regione
-			'comune': "'" + unicode(self.comboBox_comune.currentText())+"'",		#4 - Comune
-			'descrizione': unicode(self.textEdit_descrizione_site.toPlainText()),			#5 - Descrizione
-			'provincia': "'" + unicode(self.comboBox_provincia.currentText())+"'"		#6 - Provincia
+			self.TABLE_FIELDS[0] : "'"+str(self.comboBox_sito.currentText())+"'",							#1 - Sito
+			self.TABLE_FIELDS[1] : nr_campione, 																		#2 - numero_campione
+			self.TABLE_FIELDS[2] : "'"+str(self.comboBox_tipo_campione.currentText())+"'",			#3 - tipo campione
+			self.TABLE_FIELDS[4] : "'"+str(self.lineEdit_area.text()) +"'", 										#4- area
+			self.TABLE_FIELDS[5] : us, 																					#5 - us
+			self.TABLE_FIELDS[6] : numero_inventario_materiale,													#6 - numero inventario materiale
+			self.TABLE_FIELDS[7] : nr_cassa,																			#7- nr cassa
+			self.TABLE_FIELDS[8] : "'"+str(self.lineEdit_luogo_conservazione.text())+"'"					#8 - periodo finale
 			}
 
 			u = Utility()
@@ -460,7 +523,7 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 			if bool(search_dict) == False:
 				QMessageBox.warning(self, "ATTENZIONE", "Non e' stata impostata alcuna ricerca!!!",  QMessageBox.Ok)
 			else:
-				res = self.DB_MANAGER.query_bool(search_dict, "SITE")
+				res = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS)
 				if bool(res) == False:
 					QMessageBox.warning(self, "ATTENZIONE", "Non e' stato trovato alcun record!",  QMessageBox.Ok)
 
@@ -472,7 +535,7 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
-					self.setComboBoxEnable(["self.textEdit_descrizione_site"],"True")
+					self.setComboBoxEnable(["self.textEdit_descrizione_camp"],"True")
 
 				else:
 					self.DATA_LIST = []
@@ -493,7 +556,7 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 						strings = ("Sono stati trovati", self.REC_TOT, "records")
 
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
-					self.setComboBoxEnable(["self.textEdit_descrizione_site"],"True")
+					self.setComboBoxEnable(["self.textEdit_descrizione_camp"],"True")
 
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings, QMessageBox.Ok)
 
@@ -501,23 +564,15 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 
 
 	def on_pushButton_test_pressed(self):
-
-		data = "Sito: " + str(self.comboBox_sito.currentText())
-
-##		data = [
-##		unicode(self.comboBox_sito.currentText()), 								#1 - Sito
-##		unicode(self.comboBox_nazione.currentText()), 						#2 - Nazione
-##		unicode(self.comboBox_regione.currentText()), 						#3 - Regione
-##		unicode(self.comboBox_comune.currentText()), 						#4 - Comune
-##		unicode(self.textEdit_descrizione_site.toPlainText()),    				#5 - Descrizione
-##		unicode(self.comboBox_provincia.currentText())]                     	#6 - Provincia
-
-		test = Test_area(data)
-		test.run_test()
+		pass
+##		data = "Sito: " + str(self.comboBox_sito.currentText())
+##
+##		test = Test_area(data)
+##		test.run_test()
 
 	def on_pushButton_draw_pressed(self):
 		self.pyQGIS.charge_layers_for_draw(["1", "2", "3", "4", "5", "7", "8", "9", "10", "12"])
-		
+
 
 	def on_pushButton_sites_geometry_pressed(self):
 		sito = unicode(self.comboBox_sito.currentText())
@@ -587,22 +642,48 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 		return lista
 
 	def empty_fields(self):
-		self.comboBox_sito.setEditText("")  						#1 - Sito
-		self.comboBox_nazione.setEditText("") 					#2 - Nazione
-		self.comboBox_regione.setEditText("") 					#3 - Regione
-		self.comboBox_comune.setEditText("") 					#4 - Comune
-		self.textEdit_descrizione_site.clear()							#5 - Descrizione
-		self.comboBox_provincia.setEditText("") 					#6 - Provincia
+		self.comboBox_sito.setEditText("")						#1 - Sito
+		self.lineEdit_nr_campione.clear()							#2 - Nr campione
+		self.comboBox_tipo_campione.setEditText("")		#3 - Sito
+		self.textEdit_descrizione_camp.clear()					#4 - descrizione
+		self.lineEdit_nr_campione.clear()							#5 - Nr campione
+		self.lineEdit_area.clear()										#6 - area
+		self.lineEdit_us.clear()										#7 - us
+		self.lineEdit_n_inv_mat.clear()								#8 - numero inventario_materiale
+		self.lineEdit_luogo_conservazione.clear()				#9 - luogo di conservazione
+		self.lineEdit_cassa.clear()									#10 - cassa
 
 	def fill_fields(self, n=0):
 		self.rec_num = n
+		if str(self.DATA_LIST[self.rec_num].nr_campione) == 'None':
+			numero_campione = ''
+		else:
+			numero_campione = str(self.DATA_LIST[self.rec_num].nr_campione)
 
-		unicode(self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito))								#1 - Sito
-		unicode(self.comboBox_nazione.setEditText(self.DATA_LIST[self.rec_num].nazione))					#2 - Nazione
-		unicode(self.comboBox_regione.setEditText(self.DATA_LIST[self.rec_num].regione))					#3 - Regione
-		unicode(self.comboBox_comune.setEditText(self.DATA_LIST[self.rec_num].comune))					#4 - Comune
-		unicode(self.textEdit_descrizione_site.setText(self.DATA_LIST[self.rec_num].descrizione))				#5 - Descrizione
-		unicode(self.comboBox_provincia.setEditText(self.DATA_LIST[self.rec_num].provincia))				#6 - Provincia
+		if str(self.DATA_LIST[self.rec_num].us) == 'None':
+			us = ''
+		else:
+			us = str(self.DATA_LIST[self.rec_num].us)
+
+		if str(self.DATA_LIST[self.rec_num].numero_inventario_materiale) == 'None':
+			numero_inventario_materiale = ''
+		else:
+			numero_inventario_materiale = str(self.DATA_LIST[self.rec_num].numero_inventario_materiale)
+
+		if str(self.DATA_LIST[self.rec_num].nr_cassa) == 'None':
+			nr_cassa = ''
+		else:
+			nr_cassa = str(self.DATA_LIST[self.rec_num].nr_cassa)
+
+		unicode(self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito))											#1 - Sito
+		unicode(self.lineEdit_nr_campione.setText(numero_campione))																#2 - Numero campione
+		unicode(self.comboBox_tipo_campione.setEditText(self.DATA_LIST[self.rec_num].tipo_campione))				#3 - Tipo campione
+		unicode(self.textEdit_descrizione_camp.setText(self.DATA_LIST[self.rec_num].descrizione))						#4 - Descrizione
+		unicode(self.lineEdit_area.setText(self.DATA_LIST[self.rec_num].area))													#5 - Area
+		unicode(self.lineEdit_us.setText(us))																								#6 - us
+		unicode(self.lineEdit_n_inv_mat.setText(numero_inventario_materiale))													#7 - numero inventario materiale
+		unicode(self.lineEdit_luogo_conservazione.setText(self.DATA_LIST[self.rec_num].luogo_conservazione))		#8 - luogo_conservazione
+		unicode(self.lineEdit_cassa.setText(nr_cassa))																					#9 - nr cassa
 
 
 	def set_rec_counter(self, t, c):
@@ -612,15 +693,39 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 		self.label_rec_corrente.setText(str(self.rec_corr))
 
 	def set_LIST_REC_TEMP(self):
+
+		if self.lineEdit_nr_campione.text() == "":
+			nr_campione = None
+		else:
+			nr_campione = int(self.lineEdit_nr_campione.text())
+
+		if self.lineEdit_us.text() == "":
+			us = None
+		else:
+			us = int(self.lineEdit_us.text())
+
+		if self.lineEdit_cassa.text() == "":
+			nr_cassa = None
+		else:
+			nr_cassa = int(self.lineEdit_cassa.text())
+
+		if self.lineEdit_n_inv_mat.text() == "":
+			numero_inventario_materiale = None
+		else:
+			numero_inventario_materiale = int(self.lineEdit_n_inv_mat.text())
+
 		#data
 		self.DATA_LIST_REC_TEMP = [
 		unicode(self.comboBox_sito.currentText()), 								#1 - Sito
-		unicode(self.comboBox_nazione.currentText()), 						#2 - Nazione
-		unicode(self.comboBox_regione.currentText()), 						#3 - Regione
-		unicode(self.comboBox_comune.currentText()), 						#4 - Comune
-		unicode(self.textEdit_descrizione_site.toPlainText()),    				#5 - Descrizione
-		unicode(self.comboBox_provincia.currentText())]                     	#6 - Provincia
-
+		unicode(nr_campione), 															#2 - nr campione
+		unicode(self.comboBox_tipo_campione.currentText()), 				#3 - tipo campione
+		unicode(self.textEdit_descrizione_camp.toPlainText()), 				#4 - descrizione
+		unicode(self.lineEdit_area.text()),											#5 - area
+		unicode(us),																		#6 - us
+		unicode(numero_inventario_materiale),										#7 - numero_inventario_materiale
+		unicode(nr_cassa),																#8 - numero cassa
+		unicode(self.lineEdit_luogo_conservazione.text())						#9 - luogo conservazione
+		]
 
 	def set_LIST_REC_CORR(self):
 		self.DATA_LIST_REC_CORR = []
