@@ -190,7 +190,8 @@ class pyarchinit_PDFAdministrator(QDialog, Ui_DialogPDFManager):
 		eval(exec_str)
 
 	def cell_click_ed(self):
-		QMessageBox.warning(self, "Test table click" , QMessageBox.Ok)
+		pass
+		#QMessageBox.warning(self, "Test table click" , QMessageBox.Ok)
 
 	def set_table_name(self, tname):
 		self.TABLE_NAME = tname

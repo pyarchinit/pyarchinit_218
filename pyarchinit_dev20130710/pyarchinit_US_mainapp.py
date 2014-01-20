@@ -809,16 +809,22 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.mapPreview.setMapTool(self.toolPan)
 
 	def on_pushButton_showSelectedFeatures_pressed(self):
-		field_position = self.pyQGIS.findFieldFrDict(self.ID_TABLE)
+		#field_position = self.pyQGIS.findFieldFrDict(self.ID_TABLE) #ricava la posizione del campo
+		
+		layer = self.iface.mapCanvas().currentLayer()
+		fieldname = self.ID_TABLE
+		features_list = self.iface.mapCanvas().currentLayer().selectedFeatures()
 
-		field_list = self.pyQGIS.selectedFeatures()
+		field_position = ""
+		for single in layer.getFeatures():
+			field_position  =  single.fieldNameIndex(fieldname)
 
-		id_list_sf = self.pyQGIS.findItemInAttributeMap(field_position, field_list)
 		id_list = []
-		for idl in id_list_sf:
-			sid = idl.toInt()
-			id_list.append(sid[0])
+		for feat in features_list:
+			attr_list = feat.attributes()
+			id_list.append(attr_list[field_position])
 
+		#viene impostata la query per il database
 		items,order_type = [self.ID_TABLE], "asc"
 		self.empty_fields()
 
@@ -828,7 +834,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 		for us in temp_data_list:
 			self.DATA_LIST.append(us)
-
+		
+		#vengono riempiti i campi con i dati trovati
 		self.fill_fields()
 		self.BROWSE_STATUS = 'b'
 		self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])

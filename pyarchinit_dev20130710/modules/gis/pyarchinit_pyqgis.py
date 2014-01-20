@@ -540,14 +540,18 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 
 	#iface custom methods
 	def dataProviderFields(self):
+		###FUNZIONE DA RIPRISTINARE PER le selectedFeatures
 		fields = self.iface.mapCanvas().currentLayer().dataProvider().fields()
 		return fields
 		
 	def selectedFeatures(self):
+		###FUNZIONE DA RIPRISTINARE PER le selectedFeatures
 		selected_features = self.iface.mapCanvas().currentLayer().selectedFeatures()
 		return selected_features
 
 	def findFieldFrDict(self, fn):
+		###FUNZIONE DA RIPRISTINARE PER le selectedFeatures
+		##non funziona piu dopo changelog
 		self.field_name = fn
 		fields_dict = self.dataProviderFields()
 		for k in fields_dict:
@@ -556,6 +560,8 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 		return res
 
 	def findItemInAttributeMap(self, fp, fl):
+		###FUNZIONE DA RIPRISTINARE PER le selectedFeatures
+		##non funziona piu dopo changelog
 		self.field_position = fp
 		self.features_list = fl
 		value_list = []

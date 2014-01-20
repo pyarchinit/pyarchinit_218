@@ -707,6 +707,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		Finds_pdf_sheet.build_Finds_sheets(data_list)
 
 	def on_pushButton_exp_index_mat_pressed(self):
+
 		self.exp_pdf_elenco_casse_main()
 
 		Mat_index_pdf = generate_reperti_pdf()
@@ -714,46 +715,71 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		Mat_index_pdf.build_index_Finds(data_list, data_list[0][1])
 		
 #********************************************************************************
+
 	def exp_pdf_elenco_casse_main(self):
-		elenco_casse = self.index_elenco_casse()
-		QMessageBox.warning(self,'elenco casse',str(elenco_casse), QMessageBox.Ok)
+		##campi per generare la lista da passare al pdf
+		
+		elenco_casse = self.index_elenco_casse() #lista
+		elenco_us = [] #lista
+		diz_strutture_x_us = {}
+		diz_us_x_cassa = {}
+		diz_usstrutture_x_reperto = {}
+		
+		##
+		
+		#QMessageBox.warning(self,'elenco casse',str(elenco_casse), QMessageBox.Ok)
 		sito = unicode(self.comboBox_sito.currentText())
 		elenco_casse.sort()
-		elenco_us = []
 
 		#crea il dizionario cassa/us che contiene i valori {'cassa':[('area','us'), (area','us')]}
-		diz_us_x_cassa = {}
+		
 		for cassa in elenco_casse:
 			rec_us = self.us_list_from_casse(sito, cassa)
 			diz_us_x_cassa[cassa] = rec_us
 
-		QMessageBox.warning(self,'us x cassa',str(diz_us_x_cassa), QMessageBox.Ok)
+		##QMessageBox.warning(self,'us x cassa',str(diz_us_x_cassa), QMessageBox.Ok)
 		
 		#elenco us delle casse
 		for us_list in diz_us_x_cassa.values():
 			for v in us_list:
-				QMessageBox.warning(self,'v',str(v), QMessageBox.Ok)
-				elenco_us.append((sito, v[0], v[1]))
+				elenco_us.append((sito, v[1], v[2]))
 
 		#crea il dizionario us/strutture che contiene i valori {'us':[('sito','struttura'), ('sito','struttura')]}
-		diz_strutture_x_us = {}
-		
+
 		for sing_us in elenco_us:
 			rec_strutture = self.strutture_list_from_us(sing_us[0], sing_us[1], sing_us[2])
 			diz_strutture_x_us[sing_us] = rec_strutture
 		
-		QMessageBox.warning(self,'strutture x us',str(diz_strutture_x_us), QMessageBox.Ok)
+		#QMessageBox.warning(self,'strutture x us',str(diz_strutture_x_us), QMessageBox.Ok)
 
 		#crea il dizionario reperto/us/struttura che contiene i valori {'reperto':[('sito','area'us','struttura'), ('sito','area','us','struttura')]}
-		diz_usstrutture_x_reperto = {}
+		
 		for rec in range(len(self.DATA_LIST)):
+			tup_key = (self.DATA_LIST[rec].sito, self.DATA_LIST[rec].area, self.DATA_LIST[rec].us)
+
+			QMessageBox.warning(self,'tk',str(tup_key), QMessageBox.Ok)
+			QMessageBox.warning(self,'tk',str(diz_strutture_x_us), QMessageBox.Ok)
 			diz_usstrutture_x_reperto[self.DATA_LIST[rec].numero_inventario] = [self.DATA_LIST[rec].sito,
 												self.DATA_LIST[rec].area, 
 												self.DATA_LIST[rec].us, 
-												diz_strutture_x_us[(self.DATA_LIST[rec].sito, self.DATA_LIST[rec].area, self.DATA_LIST[rec].us)]
+												diz_strutture_x_us[tup_key]
 												]
-		QMessageBox.warning(self,'rep,us_str',str(diz_usstrutture_x_reperto), QMessageBox.Ok)
+		##QMessageBox.warning(self,'rep,us_str',str(diz_usstrutture_x_reperto), QMessageBox.Ok)
+		
+		#loop per la creazione dei data da passare al sistema di creazione pdf
+		
+		us_field = ""
+		for cassa in elenco_casse:
+			for us in diz_us_x_cassa[cassa]:
+				QMessageBox.warning(self,'Tus',str(us), QMessageBox.Ok)
+				strutt_list = diz_strutture_x_us[us]
+				strutt_text ="("
+				for sing_str in strutt_list:
+					 strutt_text += "," + str(sing_str[1])
+				strutt_text =")"
+				us_field += "US"+str(us[1]) + strutt_text + "<br/>"
 
+		QMessageBox.warning(self,'us_field',str(us_field), QMessageBox.Ok)
 
 	def index_elenco_casse(self):
 		elenco_casse = []
@@ -780,7 +806,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 		for rec in range(len(res)):
 			if bool(res[rec].us) == True:
-				elenco_us_per_cassa.append((res[rec].area, res[rec].us))
+				elenco_us_per_cassa.append((res[rec].sito,res[rec].area, res[rec].us))
 		return elenco_us_per_cassa
 
 	def strutture_list_from_us(self, sito, area, us):

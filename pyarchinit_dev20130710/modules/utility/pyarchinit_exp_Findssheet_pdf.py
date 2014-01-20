@@ -393,7 +393,7 @@ class FINDS_index_pdf_sheet:
 			tipo_reperto = Paragraph("<b>Tipo reperto</b><br/>" + str(self.tipo_reperto),styNormal)
 	
 		if self.criterio_schedatura == None:
-			classe_materiale = Paragraph("<b>Classe materiale</b><br/>" + str(self.criterio_schedatura),styNormal)
+			classe_materiale = Paragraph("<b>Classe materiale</b><br/>",styNormal)
 		else:
 			classe_materiale = Paragraph("<b>Classe materiale</b><br/>" + str(self.criterio_schedatura),styNormal)
 
