@@ -13,23 +13,20 @@ class ComboBoxDelegate(QtGui.QItemDelegate):
 
 	def def_editable(self, editable):
 		self.editable = editable
-		
+
 	def createEditor(self, parent, option, index):
 		editor = QtGui.QComboBox(parent)
-		editor.addItems(self.values)		  
-		editor.setEditable(eval(self.editable))	  
+		editor.addItems(self.values)
+		editor.setEditable(eval(self.editable))
 		return editor
-	
+
 	def setEditorData(self, editor, index):
 		text = index.model().data(index, QtCore.Qt.DisplayRole)#.String()
-		f = open("/test_srt.txt","w")
-		f.write(str(dir(text)))
-		f.close()
 		i = editor.findText(text)
 		if i == -1:
 			i = 0
 		editor.setCurrentIndex(i)
-	
+
 	def setModelData(self, editor, model, index):
 		#model.setData(index, QtCore.QVariant(editor.currentText() ))
 		model.setData(index, editor.currentText())

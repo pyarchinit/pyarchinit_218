@@ -58,6 +58,9 @@ from numpy import *
 from media_ponderata_sperimentale import *
 import media_ponderata_sperimentale
 
+from  delegateComboBox import *
+
+
 class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 	MSG_BOX_TITLE = "PyArchInit - Scheda Inventario Materiali"
 	DATA_LIST = []
@@ -516,6 +519,15 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.iconListWidget.setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
 		self.connect(self.iconListWidget, SIGNAL("itemDoubleClicked(QListWidgetItem *)"),self.openWide_image)
 		self.tabWidget.addTab(self.iconListWidget, "Media")
+		
+		#delegate combobox
+
+		valuesTE = ["frammento", "frammenti", "intero", "integro"]
+		self.delegateTE = ComboBoxDelegate()
+		self.delegateTE.def_values(valuesTE)
+		self.delegateTE.def_editable('False')
+		self.tableWidget_elementi_reperto.setItemDelegateForColumn(1,self.delegateTE)
+
 
 	def loadMediaPreview(self, mode = 0):
 		self.iconListWidget.clear()
@@ -1288,7 +1300,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				if bool(elementi_reperto) == True:
 					tot_framm = 0
 					for elrep in elementi_reperto:
-						if elrep[1] == 'frammenti':
+						if elrep[1] == 'frammenti' or elrep[1] == 'frammento':
 							try:
 								tot_framm += int(elrep[2])
 							except:

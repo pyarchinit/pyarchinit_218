@@ -498,7 +498,7 @@ class Pyarchinit_thesaurus_sigle:
 	Column('tipologia_sigla', Text),
 
 	# explicit/composite unique constraint.  'name' is optional.
-    UniqueConstraint('id_thesaurus_sigle', name='id_thesaurus_sigle_pk')
+	UniqueConstraint('id_thesaurus_sigle', name='id_thesaurus_sigle_pk')
 	)
 
 	metadata.create_all(engine)
