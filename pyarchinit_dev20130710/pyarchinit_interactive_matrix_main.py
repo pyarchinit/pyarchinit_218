@@ -42,8 +42,10 @@ from psycopg2 import *
 from  pyarchinit_interactive_matrix_gui import *
 from  pyarchinit_utility import *
 from  pyarchinit_error_check import *
-
-import pygraphviz as pgv
+try:
+	import pygraphviz as pgv
+except:
+	pass
 from networkx import *
 import matplotlib
 import matplotlib.pyplot as plt

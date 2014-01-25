@@ -10,8 +10,7 @@
 
 [general]
 name=pyArchInit
-qgisMinimumVersion=1.8
-qgisMaximumVersion=2.0.1
+qgisMinimumVersion=2.0
 description=pyarchinit archaeological tools
 version=0.1
 author=Luca Mandolesi

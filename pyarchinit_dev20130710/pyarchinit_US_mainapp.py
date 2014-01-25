@@ -38,7 +38,7 @@ from  pyarchinit_utility import *
 from pyarchinit_print_utility import Print_utility
 from  pyarchinit_error_check import *
 
-from  pyarchinit_matrix_exp import *
+
 
 from  pyarchinit_pyqgis import Pyarchinit_pyqgis, Order_layers,Order_layer_v2
 from  sortpanelmain import SortPanelMain
@@ -47,9 +47,11 @@ from  pyarchinit_exp_USsheet_pdf import *
 from  delegateComboBox import *
 from  imageViewer import ImageViewer
 
-
-from pyarchinit_interactive_matrix_main import pyarchinit_Interactive_Matrix
-
+try:
+	from pyarchinit_interactive_matrix_main import pyarchinit_Interactive_Matrix
+	from  pyarchinit_matrix_exp import *
+except:
+	pass
 ##from interactivematrix import *
 ##import interactivematrix
 

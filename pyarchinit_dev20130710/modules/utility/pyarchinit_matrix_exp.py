@@ -28,7 +28,10 @@ from qgis.core import *
 from qgis.gui import *
 import pygraphviz as p
 import os
-import pygraphviz as pgv
+try:
+	import pygraphviz as pgv
+except:
+	pass
 from networkx import *
 import matplotlib
 

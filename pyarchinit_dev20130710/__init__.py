@@ -24,27 +24,27 @@
 
 import sys
 
-def name():
-  return "pyArchinit Dev - Archeological GIS Tools"
-
-def description():
-  return "Under Testing - Use for testing only - PyArchInit it's tool to manage archaeological dataset - Only Windows 7 Tested"
-
-def version():
-  return "Version 1.0001 dev"
-
-def plugin_type():
-  return QgisPlugin.UI # UI plugin
-
-def author_name():
-  return "Luca Mandolesi - pyarchinit@gmail.com"
-
-def qgisMinimumVersion():
- return "1.0"
-
-def qgisMaximumVersion():
-	return "2.99"
-
+##def name():
+##  return "pyArchinit Dev - Archeological GIS Tools"
+##
+##def description():
+##  return "Under Testing - Use for testing only - PyArchInit it's tool to manage archaeological dataset - Only Windows 7 Tested"
+##
+##def version():
+##  return "Version 1.0001 dev"
+##
+##def plugin_type():
+##  return QgisPlugin.UI # UI plugin
+##
+##def author_name():
+##  return "Luca Mandolesi - pyarchinit@gmail.com"
+##"""
+##def qgisMinimumVersion():
+## return "1.0"
+##
+##def qgisMaximumVersion():
+##	return "2.99"
+##"""
 def classFactory(iface):
   from pyarchinit_plugin import PyArchInitPlugin 
   return PyArchInitPlugin(iface)
