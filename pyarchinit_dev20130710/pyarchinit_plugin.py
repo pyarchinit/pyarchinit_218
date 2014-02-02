@@ -401,7 +401,7 @@ class PyArchInitPlugin:
 		self.pluginGui = pluginDbmanagment # save
 
 	def runPdfexp(self):
-		pluginPdfexp = pyarchinit_pdf_export(self)
+		pluginPdfexp = pyarchinit_pdf_export()
 		pluginPdfexp.show()
 		self.pluginGui =pluginPdfexp # save
 

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
+    <width>660</width>
     <height>533</height>
    </rect>
   </property>
@@ -1269,13 +1269,89 @@ p, li { white-space: pre-wrap; }
       <attribute name="title">
        <string>Tools</string>
       </attribute>
-      <layout class="QFormLayout" name="formLayout_2">
-       <item row="0" column="0">
+      <layout class="QGridLayout" name="gridLayout_13">
+       <item row="0" column="0" colspan="2">
         <widget class="QPushButton" name="pushButton_pdf_exp">
          <property name="text">
           <string>PDF exp</string>
          </property>
         </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QLabel" name="label_18">
+         <property name="toolTip">
+          <string>Carica tutti i layer per poter inserire nuove geometrie</string>
+         </property>
+         <property name="text">
+          <string>Carica i poligoni di struttura</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2" colspan="2">
+        <widget class="QPushButton" name="pushButton_draw_struttura">
+         <property name="text">
+          <string>Carica</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>272</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_20">
+         <property name="toolTip">
+          <string>Carica tutti i layer per poter inserire nuove geometrie</string>
+         </property>
+         <property name="text">
+          <string>Gis viewer</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1" colspan="2">
+        <widget class="QToolButton" name="toolButton_draw_strutture">
+         <property name="text">
+          <string>Abilita il caricamento delle ricerche</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3" colspan="2">
+        <spacer name="horizontalSpacer_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>312</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="3" column="2">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>136</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </widget>

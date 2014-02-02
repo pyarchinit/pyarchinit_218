@@ -223,7 +223,6 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			self.on_pushButton_connect_pressed()
 		except:
 			pass
-		self.fill_fields()
 
 	def on_pushButtonQuant_pressed(self):
 		dlg = QuantPanelMain(self)
@@ -489,6 +488,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			else:
 				QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + ". Il database e' vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
 				self.charge_list()
+				self.BROWSE_STATUS = 'x'
 				self.on_pushButton_new_rec_pressed()
 		except Exception, e:
 			e = str(e)
@@ -631,9 +631,10 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			self.loadMediaPreview(1)
 
 	def on_pushButton_new_rec_pressed(self):
-		if len(self.DATA_LIST) > 0:
-			if self.records_equal_check() == 1 :
-				self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+		if self.BROWSE_STATUS == "b":
+			if self.records_equal_check() == 1:
+				msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+
 		#set the GUI for a new record
 
 		if self.BROWSE_STATUS != "n":
@@ -851,6 +852,22 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		area = self.lineEdit_area.text()
 		us = self.lineEdit_us.text()
 		nr_cassa = self.lineEdit_nr_cassa.text()
+
+
+		if EC.data_is_empty(unicode(self.comboBox_sito.currentText())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo Sito. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			test = 1
+
+		if EC.data_is_empty(unicode(self.lineEdit_num_inv.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo Numero inventario \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			test = 1
+
+		nr_inv = self.lineEdit_num_inv.text()
+
+		if nr_inv != "":
+			if EC.data_is_int(nr_inv) == 0:
+				QMessageBox.warning(self, "ATTENZIONE", "Campo Numero inventario\nIl valore deve essere di tipo numerico",  QMessageBox.Ok)
+				test = 1
 
 		if area != "":
 			if EC.data_is_int(area) == 0:
@@ -1087,9 +1104,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 	def on_pushButton_delete_pressed(self):
-		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-		msg = QMessageBox.warning(self,"Attenzione!!!","Vuoi veramente eliminare il record? \n L'azione e' irreversibile", QMessageBox.Cancel,1)
+		msg = QMessageBox.warning(self,"Attenzione!!!",u"Vuoi veramente eliminare il record? \n L'azione è irreversibile", QMessageBox.Cancel,1)
 		if msg != 1:
 			QMessageBox.warning(self,"Messagio!!!","Azione Annullata!")
 		else:
@@ -1098,10 +1113,10 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				self.DB_MANAGER.delete_one_record(self.TABLE_NAME, self.ID_TABLE, id_to_delete)
 				self.charge_records() #charge records from DB
 				QMessageBox.warning(self,"Messaggio!!!","Record eliminato!")
-				self.charge_list()
-			except:
-					QMessageBox.warning(self, "Attenzione", "Il database e' vuoto!",  QMessageBox.Ok)
+			except Exception, e:
+				QMessageBox.warning(self,"Messaggio!!!","Tipo di errore: "+str(e))
 			if bool(self.DATA_LIST) == False:
+				QMessageBox.warning(self, "Attenzione", u"Il database è vuoto!",  QMessageBox.Ok)
 				self.DATA_LIST = []
 				self.DATA_LIST_REC_CORR = []
 				self.DATA_LIST_REC_TEMP = []
@@ -1117,6 +1132,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				self.BROWSE_STATUS = "b"
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
+				self.charge_list()
 		self.SORT_STATUS = "n"
 		self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 
@@ -1519,27 +1535,12 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.rec_num = n
 		#QMessageBox.warning(self, "check fill fields", str(self.rec_num),  QMessageBox.Ok)
 		try:
-			try:
-				repertato = str(self.DATA_LIST[self.rec_num].repertato)
-			
-				self.comboBox_repertato.setEditText(repertato)
-			except Exception, e:
-				QMessageBox.warning(self, "Errore Fill repertato", str(e),  QMessageBox.Ok)
-			
-			try:
-				diagnostico = str(self.DATA_LIST[self.rec_num].diagnostico)
-			
-				self.comboBox_diagnostico.setEditText(diagnostico)
-			except Exception, e:
-				QMessageBox.warning(self, "Errore Fill diagnostico", str(e),  QMessageBox.Ok)
+			self.comboBox_repertato.setEditText(unicode(self.DATA_LIST[self.rec_num].repertato))
+			self.comboBox_diagnostico.setEditText(unicode(self.DATA_LIST[self.rec_num].diagnostico))
 			unicode(self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito))  											#1 - Sito
 			self.lineEdit_num_inv.setText(str(self.DATA_LIST[self.rec_num].numero_inventario))							#2 - num_inv
 			unicode(self.comboBox_tipo_reperto.setEditText(self.DATA_LIST[self.rec_num].tipo_reperto))						#3 - Tipo reperto
 			unicode(self.comboBox_criterio_schedatura.setEditText(self.DATA_LIST[self.rec_num].criterio_schedatura))		#4 - Criterio schedatura
-			#self.testing('/testunicodenull.txt', str(self.DATA_LIST[self.rec_num].definizione))
-##			if unicode(self.DATA_LIST[self.rec_num].definizione) == 'None':
-##				unicode(self.comboBox_definizione.setEditText(''))
-##			else:
 			unicode(self.comboBox_definizione.setEditText(self.DATA_LIST[self.rec_num].definizione))						#5 - definizione
 			unicode(self.textEdit_descrizione_reperto.setText(self.DATA_LIST[self.rec_num].descrizione))				#6 - descrizione
 			if self.DATA_LIST[self.rec_num].area == None:																#7 - Area

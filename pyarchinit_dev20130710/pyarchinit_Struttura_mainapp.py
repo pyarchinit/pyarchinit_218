@@ -48,6 +48,8 @@ from  sortpanelmain import SortPanelMain
 from delegateComboBox import *
 
 from  pyarchinit_exp_Strutturasheet_pdf import *
+from  pyarchinit_pyqgis import Pyarchinit_pyqgis
+
 
 class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 	MSG_BOX_TITLE = "PyArchInit - Scheda Struttura"
@@ -122,6 +124,7 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 
 	def __init__(self, iface):
 		self.iface = iface
+		self.pyQGIS = Pyarchinit_pyqgis(self.iface)
 
 		QDialog.__init__(self)
 		self.setupUi(self)
@@ -206,6 +209,7 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 			else:
 				QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + ". Il database e' vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
 				self.charge_list()
+				self.BROWSE_STATUS = 'x'
 				self.on_pushButton_new_rec_pressed()
 		except Exception, e:
 			e = str(e)
@@ -392,7 +396,10 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 
 
 	def on_pushButton_new_rec_pressed(self):
-		
+		if self.BROWSE_STATUS == "b":
+			if self.records_equal_check() == 1:
+				msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+
 		#set the GUI for a new record
 		if self.BROWSE_STATUS != "n":
 			self.BROWSE_STATUS = "n"
@@ -610,7 +617,7 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 	def on_pushButton_delete_pressed(self):
-		msg = QMessageBox.warning(self,"Attenzione!!!","Vuoi veramente eliminare il record? \n L'azione e' irreversibile", QMessageBox.Cancel,1)
+		msg = QMessageBox.warning(self,"Attenzione!!!",u"Vuoi veramente eliminare il record? \n L'azione è irreversibile", QMessageBox.Cancel,1)
 		if msg != 1:
 			QMessageBox.warning(self,"Messagio!!!","Azione Annullata!")
 		else:
@@ -619,12 +626,10 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 				self.DB_MANAGER.delete_one_record(self.TABLE_NAME, self.ID_TABLE, id_to_delete)
 				self.charge_records() #charge records from DB
 				QMessageBox.warning(self,"Messaggio!!!","Record eliminato!")
-				self.charge_list()
-			except:
-				QMessageBox.warning(self, "Attenzione", "Il database e' vuoto!",  QMessageBox.Ok)
-
+			except Exception, e:
+				QMessageBox.warning(self,"Messaggio!!!","Tipo di errore: "+str(e))
 			if bool(self.DATA_LIST) == False:
-
+				QMessageBox.warning(self, "Attenzione", u"Il database è vuoto!",  QMessageBox.Ok)
 				self.DATA_LIST = []
 				self.DATA_LIST_REC_CORR = []
 				self.DATA_LIST_REC_TEMP = []
@@ -640,7 +645,9 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 				self.BROWSE_STATUS = "b"
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
-		self.label_sort.setText(self.SORTED_ITEMS["n"])
+				self.charge_list()
+		self.SORT_STATUS = "n"
+		self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 
 	def on_pushButton_new_search_pressed(self):
 		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":
@@ -747,8 +754,14 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 
 					if self.REC_TOT == 1:
 						strings = ("E' stato trovato", self.REC_TOT, "record")
+						if self.toolButton_draw_strutture.isChecked() == True:
+							sing_layer = [self.DATA_LIST[self.REC_CORR]]
+							self.pyQGIS.charge_structure_from_research(sing_layer)
 					else:
 						strings = ("Sono stati trovati", self.REC_TOT, "records")
+						if self.toolButton_draw_strutture.isChecked() == True:
+							sing_layer = [self.DATA_LIST[self.REC_CORR]]
+							self.pyQGIS.charge_structure_from_research(sing_layer)
 
 					self.setComboBoxEditable(["self.comboBox_sito"],1)
 					self.setComboBoxEditable(["self.comboBox_sigla_struttura"],1)
@@ -787,6 +800,19 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 			unicode(self.DATA_LIST[i].misure_struttura)									#16 - inclusi
 		])
 		return data_list
+
+
+	def on_toolButton_draw_strutture_toggled(self):
+		if self.toolButton_draw_strutture.isChecked() == True:
+			QMessageBox.warning(self, "Messaggio", "DA DEBUGGARE Modalita' GIS attiva. Da ora le tue ricerche verranno visualizzate sul GIS", QMessageBox.Ok)
+		else:
+			QMessageBox.warning(self, "Messaggio", " DA DEBUGGARE Modalita' GIS disattivata. Da ora le tue ricerche non verranno piu' visualizzate sul GIS", QMessageBox.Ok)
+
+	def on_pushButton_draw_struttura_pressed(self):
+		QMessageBox.warning(self, "Messaggio", " DA DEBUGGARE", QMessageBox.Ok)
+
+		sing_layer = self.DATA_LIST[self.REC_CORR]
+		self.pyQGIS.charge_structure_from_research(sing_layer)
 
 
 

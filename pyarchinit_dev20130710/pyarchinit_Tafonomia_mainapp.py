@@ -251,6 +251,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			else:
 				QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + ". Il database e' vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
 				self.charge_list()
+				self.BROWSE_STATUS = 'x'
 				self.on_pushButton_new_rec_pressed()
 		except Exception, e:
 			e = str(e)
@@ -597,6 +598,9 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 
 	def on_pushButton_new_rec_pressed(self):
 		#set the GUI for a new record
+		if self.BROWSE_STATUS == "b":
+			if self.records_equal_check() == 1:
+				msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 
 		if self.BROWSE_STATUS != "n":
 			self.BROWSE_STATUS = "n"

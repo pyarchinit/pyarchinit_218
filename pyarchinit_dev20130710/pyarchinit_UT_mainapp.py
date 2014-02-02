@@ -68,135 +68,135 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 	ID_TABLE = "id_ut"
 	CONVERSION_DICT = {
 	ID_TABLE:ID_TABLE, 
-	'Progetto' : 'progetto',
-	'numero UT' : 'nr_ut',
-	'UT letterale' : 'ut_letterale',
-	'Definizione UT' : 'def_ut',
-	'Descrizione UT' : 'descrizione_ut',
-	'Interpretazione UT' : 'interpretazione_ut',
-	'Nazione' : 'nazione',
-	'Regione' : 'regione',
-	'Provincia' : 'provincia',
-	'Comune' : 'comune',
-	'Frazione' : 'frazione',
-	'Localita' : 'localita',
-	'Indirizzo' : 'indirizzo',
-	'Nr civico' : 'nr_civico',
-	'Carta topografica IGM' : 'carta_topo_igm',
-	'CaCTR' : 'carta_ctr',
-	'Coord geografiche' : 'coord_geografiche',
-	'Coord piane' : 'coord_piane',
-	'Quota' : 'quota',
-	'Andamento terreno pendenza' : 'andamento_terreno_pendenza',
-	'Utilizzo suolo vegetazione' : 'utilizzo_suolo_vegetazione',
-	'Descrizione empirica suolo' : 'descrizione_empirica_suolo',
-	'Descrizione luogo' : 'descrizione_luogo',
-	'Metodo rilievo e ricognizione' : 'metodo_rilievo_e_ricognizione',
-	'Geometria' : 'geometria',
-	'Bibliografia' : 'bibliografia',
-	'Data' : 'data',
-	'Ora meteo' : 'ora_meteo',
-	'Responsabile' : 'responsabile',
-	'Dimensioni UT' : 'dimensioni_ut',
-	'Reperti per mq' : 'rep_per_mq',
-	'Reperti datanti' : 'rep_datanti',
-	'Periodo I' : 'periodo_I',
-	'Datazione_I' : 'datazione_I',
-	'Interpretazione I' : 'interpretazione_I',
-	'Periodo II' : 'periodo_II',
-	'Datazione II' : 'datazione_II',
-	'Interpretazione II' : 'interpretazione_II',
-	'Documentazione' : 'documentazione',
-	'Enti tutela_vincoli' : 'enti_tutela_vincoli',
-	'Indagini preliminari' : 'indagini_preliminari'
+	'Progetto' : 'progetto', #1
+	'numero UT' : 'nr_ut', #2
+	'UT letterale' : 'ut_letterale', #3
+	'Definizione UT' : 'def_ut', #4
+	'Descrizione UT' : 'descrizione_ut', #5
+	'Interpretazione UT' : 'interpretazione_ut', #6
+	'Nazione' : 'nazione', #7
+	'Regione' : 'regione', #8
+	'Provincia' : 'provincia', #9
+	'Comune' : 'comune', #10
+	'Frazione' : 'frazione', #11
+	'Localita' : 'localita', #12
+	'Indirizzo' : 'indirizzo', #13
+	'Nr civico' : 'nr_civico', #14
+	'Carta topografica IGM' : 'carta_topo_igm', #15
+	'CaCTR' : 'carta_ctr', #16
+	'Coord geografiche' : 'coord_geografiche', #17
+	'Coord piane' : 'coord_piane', #18
+	'Quota' : 'quota', #19
+	'Andamento terreno pendenza' : 'andamento_terreno_pendenza', #20
+	'Utilizzo suolo vegetazione' : 'utilizzo_suolo_vegetazione', #21
+	'Descrizione empirica suolo' : 'descrizione_empirica_suolo', #22
+	'Descrizione luogo' : 'descrizione_luogo', #23
+	'Metodo rilievo e ricognizione' : 'metodo_rilievo_e_ricognizione', #24
+	'Geometria' : 'geometria', #25
+	'Bibliografia' : 'bibliografia', #26
+	'Data' : 'data', #27
+	'Ora meteo' : 'ora_meteo', #28
+	'Responsabile' : 'responsabile', #29
+	'Dimensioni UT' : 'dimensioni_ut', #30
+	'Reperti per mq' : 'rep_per_mq', #31
+	'Reperti datanti' : 'rep_datanti', #32
+	'Periodo I' : 'periodo_I', #33
+	'Datazione_I' : 'datazione_I', #34
+	'Interpretazione I' : 'interpretazione_I', #35
+	'Periodo II' : 'periodo_II', #36
+	'Datazione II' : 'datazione_II', #37
+	'Interpretazione II' : 'interpretazione_II', #38
+	'Documentazione' : 'documentazione', #39
+	'Enti tutela_vincoli' : 'enti_tutela_vincoli', #40
+	'Indagini preliminari' : 'indagini_preliminari' #41
 	}
 	SORT_ITEMS = [
-				ID_TABLE,
-				'Progetto',
-				'numero UT',
-				'UT letterale',
-				'Definizione UT',
-				'Descrizione UT',
-				'Interpretazione UT',
-				'Nazione',
-				'Regione',
-				'Provincia',
-				'Comune',
-				'Frazione',
-				'Localita',
-				'Indirizzo',
-				'Nr civico',
-				'Carta topografica IGM',
-				'CaCTR',
-				'Coord geografiche',
-				'Coord piane',
-				'Quota',
-				'Andamento terreno pendenza',
-				'Utilizzo suolo vegetazione',
-				'Descrizione empirica suolo',
-				'Descrizione luogo',
-				'Metodo rilievo e ricognizione',
-				'Geometria',
-				'Bibliografia',
-				'Data',
-				'Ora meteo',
-				'Responsabile',
-				'Dimensioni UT',
-				'Reperti per mq',
-				'Reperti datanti',
-				'Periodo I',
-				'Datazione_I',
-				'Interpretazione I',
-				'Periodo II',
-				'Datazione II',
-				'Interpretazione II',
-				'Documentazione',
-				'Enti tutela_vincoli',
-				'Indagini preliminari'
+				ID_TABLE, #0
+				'Progetto', #1
+				'numero UT', #2
+				'UT letterale', #3
+				'Definizione UT', #4
+				'Descrizione UT', #5
+				'Interpretazione UT', #6
+				'Nazione', #7
+				'Regione', #8
+				'Provincia', #9
+				'Comune', #10
+				'Frazione', #11
+				'Localita', #12
+				'Indirizzo', #13
+				'Nr civico', #14
+				'Carta topografica IGM', #15
+				'CaCTR', #16
+				'Coord geografiche', #17
+				'Coord piane', #18
+				'Quota', #19
+				'Andamento terreno pendenza', #20
+				'Utilizzo suolo vegetazione', #21
+				'Descrizione empirica suolo', #22
+				'Descrizione luogo', #23
+				'Metodo rilievo e ricognizione', #24
+				'Geometria', #25
+				'Bibliografia', #26
+				'Data', #27
+				'Ora meteo', #28
+				'Responsabile', #29
+				'Dimensioni UT', #30
+				'Reperti per mq', #31
+				'Reperti datanti', #32
+				'Periodo I', #33
+				'Datazione_I', #34
+				'Interpretazione I', #35
+				'Periodo II', #36
+				'Datazione II', #37
+				'Interpretazione II', #38
+				'Documentazione', #39
+				'Enti tutela_vincoli', #40
+				'Indagini preliminari' #41
 				]
 
 	TABLE_FIELDS = [
-				'progetto',
-				'nr_ut',
-				'ut_letterale',
-				'def_ut',
-				'descrizione_ut',
-				'interpretazione_ut',
-				'nazione',
-				'regione',
-				'provincia',
-				'comune',
-				'frazione',
-				'localita',
-				'indirizzo',
-				'nr_civico',
-				'carta_topo_igm',
-				'carta_ctr',
-				'coord_geografiche',
-				'coord_piane',
-				'quota',
-				'andamento_terreno_pendenza',
-				'utilizzo_suolo_vegetazione',
-				'descrizione_empirica_suolo',
-				'descrizione_luogo',
-				'metodo_rilievo_e_ricognizione',
-				'geometria',
-				'bibliografia',
-				'data',
-				'ora_meteo',
-				'responsabile',
-				'dimensioni_ut',
-				'rep_per_mq',
-				'rep_datanti',
-				'periodo_I',
-				'datazione_I',
-				'interpretazione_I',
-				'periodo_II',
-				'datazione_II',
-				'interpretazione_II',
-				'documentazione',
-				'enti_tutela_vincoli',
-				'indagini_preliminari'
+				'progetto', #1
+				'nr_ut', #2
+				'ut_letterale', #3
+				'def_ut', #4
+				'descrizione_ut', #5
+				'interpretazione_ut', #6
+				'nazione', #7
+				'regione', #8
+				'provincia', #9
+				'comune', #10
+				'frazione', #11
+				'localita', #12
+				'indirizzo', #13
+				'nr_civico', #14
+				'carta_topo_igm', #15
+				'carta_ctr', #16
+				'coord_geografiche', #17
+				'coord_piane', #18
+				'quota', #19
+				'andamento_terreno_pendenza', #20
+				'utilizzo_suolo_vegetazione', #21
+				'descrizione_empirica_suolo', #22
+				'descrizione_luogo', #23
+				'metodo_rilievo_e_ricognizione', #24
+				'geometria', #25
+				'bibliografia', #26
+				'data', #27
+				'ora_meteo', #28
+				'responsabile', #29
+				'dimensioni_ut', #30
+				'rep_per_mq', #31
+				'rep_datanti', #32
+				'periodo_I', #33
+				'datazione_I', #34
+				'interpretazione_I', #35 
+				'periodo_II', #36
+				'datazione_II', #37
+				'interpretazione_II', #38
+				'documentazione', #39
+				'enti_tutela_vincoli', #4'
+				'indagini_preliminari' #41
 				]
 
 	def __init__(self, iface):
@@ -257,6 +257,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 
 	def on_pushButton_connect_pressed(self):
 		from pyarchinit_conn_strings import *
+
 		conn = Connection()
 		conn_str = conn.conn_str()
 		try:
@@ -276,11 +277,13 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 			else:
 				QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + ". Il database e' vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
 				self.charge_list()
+				self.BROWSE_STATUS = 'x'
 				self.on_pushButton_new_rec_pressed()
+
 		except Exception, e:
 			e = str(e)
 			if e.find("no such table"):
-				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br><br> Tabella non presente. E' NECESSARIO RIAVVIARE QGIS" + str(e) ,  QMessageBox.Ok)
+				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br><br> %s. E' NECESSARIO RIAVVIARE QGIS" % (str(e)),  QMessageBox.Ok)
 			else:
 				QMessageBox.warning(self, "Alert", "Attenzione rilevato bug! Segnalarlo allo sviluppatore<br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
 
@@ -301,7 +304,6 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 
 
 	def charge_list(self):
-		
 		"""
 		sito_vl = self.UTILITY.tup_2_list_III(self.DB_MANAGER.group_by('site_table', 'sito', 'SITE'))
 
@@ -362,27 +364,30 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 		self.fill_fields()
 
 	def on_pushButton_new_rec_pressed(self):
-		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":
-			msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-		#else:
-		self.enable_button_search(0)
+		if self.BROWSE_STATUS == "b":
+			if self.records_equal_check() == 1:
+				msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+		#set the GUI for a new record
 
-		#set the GUI for a new search
-
-		if self.BROWSE_STATUS != "f":
-			self.BROWSE_STATUS = "f"
-			###
+		if self.BROWSE_STATUS != "n":
+			self.BROWSE_STATUS = "n"
+			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+			self.empty_fields()
+			
 			self.setComboBoxEditable(["self.comboBox_progetto"],1)
 			self.setComboBoxEditable(["self.comboBox_nr_ut"],0)
 			self.setComboBoxEnable(["self.comboBox_progetto"],"True")
 			self.setComboBoxEnable(["self.comboBox_nr_ut"],"True")
 			self.setComboBoxEnable(["self.lineEdit_ut_letterale"],"True")
 			###
+			self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
+
 			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			self.set_rec_counter('','')
 			self.label_sort.setText(self.SORTED_ITEMS["n"])
-			self.charge_list()
 			self.empty_fields()
+
+			self.enable_button(0)
 
 	def on_pushButton_save_pressed(self):
 		#save record
@@ -449,47 +454,47 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 		try:
 			data = self.DB_MANAGER.insert_ut_values(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
-			str(self.comboBox_progetto.currentText()),
+			unicode(self.comboBox_progetto.currentText()),
 			int(self.comboBox_nr_ut.currentText()),
-			str(self.lineEdit_ut_letterale.text()),
-			str(self.lineEdit_def_ut.text()),
+			unicode(self.lineEdit_ut_letterale.text()),
+			unicode(self.lineEdit_def_ut.text()),
 			unicode(self.textEdit_descrizione_ut.toPlainText()),
 			unicode(self.textEdit_interpretazione_ut.toPlainText()),
-			str(self.comboBox_nazione.currentText()),
-			str(self.comboBox_regione.currentText()),
-			str(self.comboBox_provincia.currentText()),
-			str(self.comboBox_comune.currentText()),
-			str(self.comboBox_frazione.currentText()),
-			str(self.comboBox_localita.currentText()),
-			str(self.lineEdit_indirizzo.text()),
-			str(self.lineEdit_nr_civico.text()),
-			str(self.lineEdit_carta_topo_igm.text()),
-			str(self.lineEdit_carta_ctr.text()),
-			str(self.lineEdit_coord_geografiche.text()),
-			str(self.lineEdit_coord_piane.text()),
+			unicode(self.comboBox_nazione.currentText()),
+			unicode(self.comboBox_regione.currentText()),
+			unicode(self.comboBox_provincia.currentText()),
+			unicode(self.comboBox_comune.currentText()),
+			unicode(self.comboBox_frazione.currentText()),
+			unicode(self.comboBox_localita.currentText()),
+			unicode(self.lineEdit_indirizzo.text()),
+			unicode(self.lineEdit_nr_civico.text()),
+			unicode(self.lineEdit_carta_topo_igm.text()),
+			unicode(self.lineEdit_carta_ctr.text()),
+			unicode(self.lineEdit_coord_geografiche.text()),
+			unicode(self.lineEdit_coord_piane.text()),
 			quota,
-			str(self.lineEdit_andamento_terreno_pendenza.text()),
-			str(self.lineEdit_utilizzo_suolo_vegetazione.text()),
-			str(self.textEdit_descrizione_empirica_suolo.toPlainText()),
-			str(self.textEdit_descrizione_luogo.toPlainText()),
-			str(self.lineEdit_metodo_rilievo_e_ricognizione.text()),
-			str(self.lineEdit_geometria.text()),
-			str(bibliografia),
-			str(self.lineEdit_data.text()),
-			str(self.lineEdit_ora_meteo.text()),
-			str(self.lineEdit_responsabile.text()),
-			str(self.lineEdit_dimensioni_ut.text()),
-			str(self.lineEdit_rep_per_mq.text()),
-			str(self.lineEdit_rep_datanti.text()),
-			str(self.lineEdit_periodo_I.text()),
-			str(self.lineEdit_datazione_I.text()),
-			str(self.lineEdit_interpretazione_I.text()),
-			str(self.lineEdit_periodo_II.text()),
-			str(self.lineEdit_datazione_II.text()),
-			str(self.lineEdit_interpretazione_II.text()),
-			str(documentazione),
-			str(self.lineEdit_enti_tutela_vincoli.text()),
-			str(self.lineEdit_indagini_preliminari.text()))
+			unicode(self.lineEdit_andamento_terreno_pendenza.text()),
+			unicode(self.lineEdit_utilizzo_suolo_vegetazione.text()),
+			unicode(self.textEdit_descrizione_empirica_suolo.toPlainText()),
+			unicode(self.textEdit_descrizione_luogo.toPlainText()),
+			unicode(self.lineEdit_metodo_rilievo_e_ricognizione.text()),
+			unicode(self.lineEdit_geometria.text()),
+			unicode(bibliografia),
+			unicode(self.lineEdit_data.text()),
+			unicode(self.lineEdit_ora_meteo.text()),
+			unicode(self.lineEdit_responsabile.text()),
+			unicode(self.lineEdit_dimensioni_ut.text()),
+			unicode(self.lineEdit_rep_per_mq.text()),
+			unicode(self.lineEdit_rep_datanti.text()),
+			unicode(self.lineEdit_periodo_I.text()),
+			unicode(self.lineEdit_datazione_I.text()),
+			unicode(self.lineEdit_interpretazione_I.text()),
+			unicode(self.lineEdit_periodo_II.text()),
+			unicode(self.lineEdit_datazione_II.text()),
+			unicode(self.lineEdit_interpretazione_II.text()),
+			unicode(documentazione),
+			unicode(self.lineEdit_enti_tutela_vincoli.text()),
+			unicode(self.lineEdit_indagini_preliminari.text()))
 			try:
 				self.DB_MANAGER.insert_data_session(data)
 				return 1
@@ -577,7 +582,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 	def on_pushButton_delete_pressed(self):
-		msg = QMessageBox.warning(self,"Attenzione!!!","Vuoi veramente eliminare il record? \n L'azione e' irreversibile", QMessageBox.Cancel,1)
+		msg = QMessageBox.warning(self,"Attenzione!!!",u"Vuoi veramente eliminare il record? \n L'azione è irreversibile", QMessageBox.Cancel,1)
 		if msg != 1:
 			QMessageBox.warning(self,"Messagio!!!","Azione Annullata!")
 		else:
@@ -586,12 +591,10 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 				self.DB_MANAGER.delete_one_record(self.TABLE_NAME, self.ID_TABLE, id_to_delete)
 				self.charge_records() #charge records from DB
 				QMessageBox.warning(self,"Messaggio!!!","Record eliminato!")
-				self.charge_list()
-			except:
-				QMessageBox.warning(self, "Attenzione", "Il database e' vuoto!",  QMessageBox.Ok)
-
+			except Exception, e:
+				QMessageBox.warning(self,"Messaggio!!!","Tipo di errore: "+str(e))
 			if bool(self.DATA_LIST) == False:
-
+				QMessageBox.warning(self, "Attenzione", u"Il database è vuoto!",  QMessageBox.Ok)
 				self.DATA_LIST = []
 				self.DATA_LIST_REC_CORR = []
 				self.DATA_LIST_REC_TEMP = []
@@ -607,11 +610,16 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 				self.BROWSE_STATUS = "b"
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
-		self.label_sort.setText(self.SORTED_ITEMS["n"])
+				self.charge_list()
+		self.SORT_STATUS = "n"
+		self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 
 	def on_pushButton_new_search_pressed(self):
-		#self.setComboBoxEditable()
+		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":
+			msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+		#else:
 		self.enable_button_search(0)
+
 
 		#set the GUI for a new search
 		if self.BROWSE_STATUS != "f":
@@ -942,8 +950,8 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 		unicode(self.comboBox_nr_ut.currentText()),
 		unicode(self.lineEdit_ut_letterale.text()),
 		unicode(self.lineEdit_def_ut.text()),
-		unicode(self.textEdit_descrizione_ut.toPlainText().toPlainText()),
-		unicode(self.textEdit_interpretazione_ut.toPlainText().toPlainText()),
+		unicode(self.textEdit_descrizione_ut.toPlainText()),
+		unicode(self.textEdit_interpretazione_ut.toPlainText()),
 		unicode(self.comboBox_nazione.currentText()),
 		unicode(self.comboBox_regione.currentText()),
 		unicode(self.comboBox_provincia.currentText()),
@@ -984,9 +992,10 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 	def set_LIST_REC_CORR(self):
 		self.DATA_LIST_REC_CORR = []
 		for i in self.TABLE_FIELDS:
+			f = open('/test_rec_corr.txt', "w")
+			f.write(str(i))
+			f.close()
 			self.DATA_LIST_REC_CORR.append(eval("unicode(self.DATA_LIST[self.REC_CORR]." + i + ")"))
-		##self.testing('/testrecorr.txt',str(self.DATA_LIST_REC_CORR))
-	
 
 	def setComboBoxEnable(self, f, v):
 		field_names = f

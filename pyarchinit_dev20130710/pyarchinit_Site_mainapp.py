@@ -171,6 +171,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 			else:
 				QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + ". Il database e' vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
 				self.charge_list()
+				self.BROWSE_STATUS = 'x'
 				self.on_pushButton_new_rec_pressed()
 		except Exception, e:
 			e = str(e)
@@ -241,6 +242,10 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		self.fill_fields()
 
 	def on_pushButton_new_rec_pressed(self):
+		if self.BROWSE_STATUS == "b":
+			if self.records_equal_check() == 1:
+				msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+
 		#set the GUI for a new record
 		if self.BROWSE_STATUS != "n":
 			self.BROWSE_STATUS = "n"
@@ -388,7 +393,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 	def on_pushButton_delete_pressed(self):
-		msg = QMessageBox.warning(self,"Attenzione!!!","Vuoi veramente eliminare il record? \n L'azione e' irreversibile", QMessageBox.Cancel,1)
+		msg = QMessageBox.warning(self,"Attenzione!!!",u"Vuoi veramente eliminare il record? \n L'azione è irreversibile", QMessageBox.Cancel,1)
 		if msg != 1:
 			QMessageBox.warning(self,"Messagio!!!","Azione Annullata!")
 		else:
@@ -397,12 +402,10 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 				self.DB_MANAGER.delete_one_record(self.TABLE_NAME, self.ID_TABLE, id_to_delete)
 				self.charge_records() #charge records from DB
 				QMessageBox.warning(self,"Messaggio!!!","Record eliminato!")
-				self.charge_list()
-			except:
-				QMessageBox.warning(self, "Attenzione", "Il database e' vuoto!",  QMessageBox.Ok)
-
+			except Exception, e:
+				QMessageBox.warning(self,"Messaggio!!!","Tipo di errore: "+str(e))
 			if bool(self.DATA_LIST) == False:
-
+				QMessageBox.warning(self, "Attenzione", u"Il database è vuoto!",  QMessageBox.Ok)
 				self.DATA_LIST = []
 				self.DATA_LIST_REC_CORR = []
 				self.DATA_LIST_REC_TEMP = []
@@ -418,7 +421,9 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 				self.BROWSE_STATUS = "b"
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
-		self.label_sort.setText(self.SORTED_ITEMS["n"])
+				self.charge_list()
+		self.SORT_STATUS = "n"
+		self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 
 	def on_pushButton_new_search_pressed(self):
 		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":

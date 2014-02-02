@@ -154,23 +154,24 @@ class pyarchinit_PDFAdministrator(QDialog, Ui_DialogPDFManager):
 		conn = Connection()
 		conn_str = conn.conn_str()
 		try:
-				self.DB_MANAGER = Pyarchinit_db_management(conn_str)
-				self.DB_MANAGER.connection()
-				self.charge_records() #charge records from DB
-				#check if DB is empty
-				if bool(self.DATA_LIST) == True:
-					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
-					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
-					self.BROWSE_STATUS = 'b'
-					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-					self.label_sort.setText(self.SORTED_ITEMS["n"])
-					self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
-					self.fill_fields()
-				else:
-					QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + ". Il database e' vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
-					#QMessageBox.warning(self, "BENVENUTO", "lanciato da connect prima di charge list",  QMessageBox.Ok)				
-					self.charge_list()
-					self.on_pushButton_new_rec_pressed()
+			self.DB_MANAGER = Pyarchinit_db_management(conn_str)
+			self.DB_MANAGER.connection()
+			self.charge_records() #charge records from DB
+			#check if DB is empty
+			if bool(self.DATA_LIST) == True:
+				self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
+				self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
+				self.BROWSE_STATUS = 'b'
+				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+				self.label_sort.setText(self.SORTED_ITEMS["n"])
+				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
+				self.fill_fields()
+			else:
+				QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + ". Il database e' vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
+				#QMessageBox.warning(self, "BENVENUTO", "lanciato da connect prima di charge list",  QMessageBox.Ok)				
+				self.BROWSE_STATUS = 'x'
+				self.charge_list()
+				self.on_pushButton_new_rec_pressed()
 		except Exception, e:
 			e = str(e)
 			if e.find("no such table"):
@@ -262,6 +263,10 @@ class pyarchinit_PDFAdministrator(QDialog, Ui_DialogPDFManager):
 		self.fill_fields()
 
 	def on_pushButton_new_rec_pressed(self):
+		if self.BROWSE_STATUS == "b":
+			if self.records_equal_check() == 1:
+				msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+
 		#set the GUI for a new record
 		if self.BROWSE_STATUS != "n":
 			self.BROWSE_STATUS = "n"
@@ -447,7 +452,11 @@ class pyarchinit_PDFAdministrator(QDialog, Ui_DialogPDFManager):
 
 	def on_pushButton_new_search_pressed(self):
 		#self.setComboBoxEditable()
+		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":
+			msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+		#else:
 		self.enable_button_search(0)
+
 
 		#set the GUI for a new search
 		if self.BROWSE_STATUS != "f":

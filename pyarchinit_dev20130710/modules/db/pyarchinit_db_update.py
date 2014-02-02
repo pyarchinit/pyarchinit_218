@@ -25,14 +25,15 @@ from pyarchinit_conn_strings import *
 class DB_update:
 
 	# connection string postgres"
-	internal_connection = Connection()
+
 
 	# create engine and metadata
-
-	engine = create_engine(internal_connection.conn_str(), echo=False)
-	metadata = MetaData(engine)
 	
 	def update_table(self):
+		internal_connection = Connection()
+		engine = create_engine(internal_connection.conn_str(), echo=False)
+		metadata = MetaData(engine)
+
 		table = Table("site_table", self.metadata, autoload=True)
 		table_column_names_list = []
 		for i in table.columns:
@@ -63,46 +64,31 @@ class DB_update:
 		table_column_names_list = []
 		for i in table.columns:
 			table_column_names_list.append(str(i.name))
+			
 		if table_column_names_list.__contains__('stato_conservazione') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN stato_conservazione varchar DEFAULT ''")
 
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('datazione_reperto') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN datazione_reperto varchar(30) DEFAULT 'inserisci un valore'")
 
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('elementi_reperto') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN elementi_reperto text")
 
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('misurazioni') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN misurazioni text")
 
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('rif_biblio') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN rif_biblio text")
 
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('tecnologie') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN tecnologie text")
 		
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('forme_minime') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN forme_minime integer DEFAULT 0")
 		
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('forme_massime') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN forme_massime integer DEFAULT 0")
 		
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('totale_frammenti') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN totale_frammenti integer DEFAULT 0")
 		
@@ -112,45 +98,37 @@ class DB_update:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN corpo_ceramico varchar(20)")
 			self.engine.execute("update inventario_materiali_table set corpo_ceramico = ''")
 		
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('rivestimento') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN rivestimento varchar(20)")
 			self.engine.execute("update inventario_materiali_table set rivestimento = ''")
 		
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('diametro_orlo') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN diametro_orlo Numeric(7,3) DEFAULT 0")
 
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('peso') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN peso Numeric(9,3) DEFAULT 0")
 
-
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('tipo') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN tipo varchar(20)")
 			self.engine.execute("update inventario_materiali_table set tipo = ''")
 
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('eve_orlo') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN eve_orlo Numeric(7,3) DEFAULT 0")
 			
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('repertato') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN repertato varchar(2)")
 			self.engine.execute("update inventario_materiali_table set repertato = ''No")
 
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 		if table_column_names_list.__contains__('diagnostico') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN diagnostico varchar(2)")
 			self.engine.execute("update inventario_materiali_table set diagnostico = ''No")
+		
+		#aggiornamento tabelle geografiche
+
+		self.engine.execute("ALTER TABLE pyarchinit_strutture_ipotesi ADD COLUMN nr_strut integer DEFAULT 0 ")
+		self.engine.execute("ALTER TABLE pyarchinit_strutture_ipotesi ADD COLUMN sigla_strut varchar(3) DEFAULT 'NoD'")
+
+
 
 if __name__ == '__main__':
 	dbup=DB_update()
