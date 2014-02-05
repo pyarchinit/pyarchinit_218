@@ -43,14 +43,7 @@
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QPushButton" name="pushButton_connect">
-           <property name="text">
-            <string>Reload DB</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0" colspan="2">
+         <item row="2" column="0" colspan="2">
           <layout class="QGridLayout" name="gridLayout">
            <item row="0" column="5">
             <widget class="QPushButton" name="pushButton_first_rec">
@@ -66,7 +59,7 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="6">
+           <item row="0" column="7">
             <widget class="QPushButton" name="pushButton_next_rec">
              <property name="toolTip">
               <string>Next rec</string>
@@ -80,7 +73,7 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="7">
+           <item row="0" column="8">
             <widget class="QPushButton" name="pushButton_last_rec">
              <property name="toolTip">
               <string>Last rec</string>
@@ -94,7 +87,7 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="8">
+           <item row="0" column="9">
             <widget class="QPushButton" name="pushButton_new_rec">
              <property name="font">
               <font>
@@ -113,7 +106,7 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="9">
+           <item row="0" column="10">
             <widget class="QPushButton" name="pushButton_save">
              <property name="font">
               <font>
@@ -135,7 +128,7 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="6">
+           <item row="1" column="7">
             <widget class="QPushButton" name="pushButton_new_search">
              <property name="font">
               <font>
@@ -154,7 +147,7 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="7">
+           <item row="1" column="8">
             <widget class="QPushButton" name="pushButton_search_go">
              <property name="font">
               <font>
@@ -173,7 +166,7 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="8">
+           <item row="1" column="9">
             <widget class="QPushButton" name="pushButton_sort">
              <property name="font">
               <font>
@@ -192,7 +185,7 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="9">
+           <item row="1" column="10">
             <widget class="QPushButton" name="pushButton_view_all">
              <property name="font">
               <font>
@@ -208,20 +201,6 @@
              <property name="icon">
               <iconset resource="resources.qrc">
                <normaloff>:/images/view_all.png</normaloff>:/images/view_all.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="4">
-            <widget class="QPushButton" name="pushButton_prev_rec">
-             <property name="toolTip">
-              <string>Prev rec</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="resources.qrc">
-               <normaloff>:/images/4_leftArrow.png</normaloff>:/images/4_leftArrow.png</iconset>
              </property>
             </widget>
            </item>
@@ -247,7 +226,28 @@
              </property>
             </widget>
            </item>
+           <item row="0" column="6">
+            <widget class="QPushButton" name="pushButton_prev_rec">
+             <property name="toolTip">
+              <string>Prev rec</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="resources.qrc">
+               <normaloff>:/images/4_leftArrow.png</normaloff>:/images/4_leftArrow.png</iconset>
+             </property>
+            </widget>
+           </item>
           </layout>
+         </item>
+         <item row="1" column="0">
+          <widget class="QPushButton" name="pushButton_connect">
+           <property name="text">
+            <string>Connection test</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
@@ -722,7 +722,7 @@
          <widget class="QWidget" name="page_3">
           <property name="geometry">
            <rect>
-            <x>-2</x>
+            <x>0</x>
             <y>0</y>
             <width>559</width>
             <height>193</height>
@@ -894,8 +894,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>518</width>
-            <height>202</height>
+            <width>98</width>
+            <height>118</height>
            </rect>
           </property>
           <attribute name="label">

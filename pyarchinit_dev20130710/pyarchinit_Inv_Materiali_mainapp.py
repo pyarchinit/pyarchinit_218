@@ -642,7 +642,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			self.empty_fields()
 
-			self.setComboBoxEditable(['self.comboBox_sito'], 1)
+			self.setComboBoxEditable(['self.comboBox_sito'], 0)
 			#self.setComboBoxEditable(['self.comboBox_sito'], 1)
 			self.setComboBoxEnable(['self.comboBox_sito'], 'True')
 			self.setComboBoxEnable(['self.lineEdit_num_inv'], 'True')

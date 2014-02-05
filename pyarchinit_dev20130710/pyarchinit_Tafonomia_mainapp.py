@@ -243,8 +243,8 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 				self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
 				self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
 				self.BROWSE_STATUS = 'b'
-				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-				self.label_sort.setText(self.SORTED_ITEMS["n"])
+				self.label_status_2.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+				self.label_sort_2.setText(self.SORTED_ITEMS["n"])
 				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 				self.charge_list()
 				self.fill_fields()
@@ -270,9 +270,6 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		self.setComboBoxEditable(["self.comboBox_nr_struttura"],1)
 		self.setComboBoxEditable(["self.comboBox_nr_individuo"],1)
 		self.setComboBoxEnable(["self.lineEdit_nr_scheda"],"False")
-		
-		self.comboBox_schedatore.clear()
-		self.comboBox_schedatore.addItems(['Tommaso Gallo', 'Luca Mandolesi', 'Simona Gugnali'])
 		
 		"""soluzione provvisoria"""
 		self.setComboBoxEditable(["self.comboBox_in_connessione"],1)
@@ -525,7 +522,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 
 		self.fill_fields()
 		self.BROWSE_STATUS = 'b'
-		self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+		self.label_status_2.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 		if type(self.REC_CORR) == "<type 'str'>":
 			corr = 0
 		else:
@@ -559,7 +556,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		for i in temp_data_list:
 			self.DATA_LIST.append(i)
 		self.BROWSE_STATUS = 'b'
-		self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+		self.label_status_2.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 		if type(self.REC_CORR) == "<type 'str'>":
 			corr = 0
 		else:
@@ -568,7 +565,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
 		self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
 		self.SORT_STATUS = "o"
-		self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
+		self.label_sort_2.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 		self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 		self.fill_fields()
 
@@ -604,7 +601,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 
 		if self.BROWSE_STATUS != "n":
 			self.BROWSE_STATUS = "n"
-			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+			self.label_status_2.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			self.empty_fields()
 
 			self.setComboBoxEditable(["self.comboBox_sito"],0)
@@ -619,7 +616,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			self.setComboBoxEnable(["self.comboBox_nr_individuo"],"True")
 
 			self.SORT_STATUS = "n"
-			self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
+			self.label_sort_2.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 
 			self.enable_button(0)
 
@@ -630,7 +627,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		if self.BROWSE_STATUS == "b":
 			if self.records_equal_check() == 1:
 				self.update_if(QMessageBox.warning(self,'ATTENZIONE',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-				self.label_sort.setText(self.SORTED_ITEMS["n"])
+				self.label_sort_2.setText(self.SORTED_ITEMS["n"])
 				self.enable_button(1)
 			else:
 				QMessageBox.warning(self, "ATTENZIONE", "Non è stata realizzata alcuna modifica.",  QMessageBox.Ok)
@@ -639,11 +636,11 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 				test_insert = self.insert_new_rec()
 				if test_insert == 1:
 					self.empty_fields()
-					self.label_sort.setText(self.SORTED_ITEMS["n"])
+					self.label_sort_2.setText(self.SORTED_ITEMS["n"])
 					self.charge_list()
 					self.charge_records()
 					self.BROWSE_STATUS = "b"
-					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+					self.label_status_2.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
 					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
 					self.fill_fields(self.REC_CORR)
@@ -760,7 +757,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		self.charge_records()
 		self.fill_fields()
 		self.BROWSE_STATUS = "b"
-		self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+		self.label_status_2.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 		if type(self.REC_CORR) == "<type 'str'>":
 			corr = 0
 		else:
@@ -769,7 +766,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
 		self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
 		self.SORT_STATUS = "n"
-		self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
+		self.label_sort_2.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 
 
 	def on_pushButton_first_rec_pressed(self):
@@ -854,10 +851,10 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 				self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
 				self.fill_fields()
 				self.BROWSE_STATUS = "b"
-				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+				self.label_status_2.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 		self.SORT_STATUS = "n"
-		self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
+		self.label_sort_2.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 
 
 	def on_pushButton_new_search_pressed(self):
@@ -881,9 +878,9 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			self.setComboBoxEnable(["self.comboBox_nr_struttura"],"True")
 			self.setComboBoxEnable(["self.comboBox_nr_individuo"],"True")
 			###
-			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+			self.label_status_2.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			self.set_rec_counter('','')
-			self.label_sort.setText(self.SORTED_ITEMS["n"])
+			self.label_sort_2.setText(self.SORTED_ITEMS["n"])
 			self.charge_list()
 			self.empty_fields()
 
@@ -977,7 +974,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
 					self.fill_fields(self.REC_CORR)
 					self.BROWSE_STATUS = "b"
-					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+					self.label_status_2.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 
 					self.setComboBoxEditable(["self.comboBox_sito"],1)
 					self.setComboBoxEditable(["self.comboBox_sigla_struttura"],1)
@@ -996,7 +993,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
 					self.fill_fields()
 					self.BROWSE_STATUS = "b"
-					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+					self.label_status_2.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 					self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 
 					if self.REC_TOT == 1:
@@ -1079,7 +1076,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 				for i in temp_data_list:
 					self.DATA_LIST.append(i)
 				self.BROWSE_STATUS = "b"
-				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+				self.label_status_2.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				if type(self.REC_CORR) == "<type 'str'>":
 					corr = 0
 				else:
@@ -1278,8 +1275,8 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 	def set_rec_counter(self, t, c):
 		self.rec_tot = t
 		self.rec_corr = c
-		self.label_rec_tot.setText(str(self.rec_tot))
-		self.label_rec_corrente.setText(str(self.rec_corr))
+		self.label_rec_tot_2.setText(str(self.rec_tot))
+		self.label_rec_corrente_2.setText(str(self.rec_corr))
 
 	def set_LIST_REC_TEMP(self):
 		## nr scheda
@@ -1329,8 +1326,8 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		unicode(self.textEdit_descrizione_taf.toPlainText()),			#7 - Descrizione tafonimia
 		unicode(self.textEdit_interpretazione_taf.toPlainText()),		#8 - Interpretazione tafonimia
 		unicode(self.comboBox_segnacoli.currentText()),								#9 - Segnacoli
-		unicode(self.comboBox_canale_libatorio.toPlainText()),						#10 - Canale libatorio
-		unicode(self.comboBox_oggetti_esterno.toPlainText()),	 					#11 - Oggetti esterno
+		unicode(self.comboBox_canale_libatorio.currentText()),						#10 - Canale libatorio
+		unicode(self.comboBox_oggetti_esterno.currentText()),	 					#11 - Oggetti esterno
 		unicode(self.comboBox_conservazione_taf.currentText()), 					#12 - Conservazione tafonomia
 		unicode(self.comboBox_copertura_tipo.currentText()),						#13 - Copertura tipo
 		unicode(self.comboBox_tipo_contenitore_resti.currentText()),				#14 - Tipo contenitore resti  
@@ -1355,13 +1352,9 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		for i in self.TABLE_FIELDS:
 			self.DATA_LIST_REC_CORR.append(eval("unicode(self.DATA_LIST[self.REC_CORR]." + i + ")"))
 
-		data_txt = str(self.DATA_LIST_REC_CORR)
-		self.testing('test_reccorr.txt', data_txt)
-
 	def records_equal_check(self):
 		self.set_LIST_REC_TEMP()
 		self.set_LIST_REC_CORR()
-		f.close()
 
 		if self.DATA_LIST_REC_CORR == self.DATA_LIST_REC_TEMP:
 			return 0

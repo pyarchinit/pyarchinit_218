@@ -255,7 +255,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 
 		self.pushButton_sort.setEnabled(n)
 
-	def on_pushButton_connect_pressed(self):
+	def on_pushButton_connect_2_pressed(self):
 		from pyarchinit_conn_strings import *
 
 		conn = Connection()
@@ -326,7 +326,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 
 
 	#buttons functions
-	def on_pushButton_sort_pressed(self):
+	def on_pushButton_sort_2_pressed(self):
 		dlg = SortPanelMain(self)
 		dlg.insertItems(self.SORT_ITEMS)
 		dlg.exec_()
@@ -363,7 +363,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 		self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 		self.fill_fields()
 
-	def on_pushButton_new_rec_pressed(self):
+	def on_pushButton_new_rec_2_pressed(self):
 		if self.BROWSE_STATUS == "b":
 			if self.records_equal_check() == 1:
 				msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
@@ -389,7 +389,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 
 			self.enable_button(0)
 
-	def on_pushButton_save_pressed(self):
+	def on_pushButton_save_2_pressed(self):
 		#save record
 		if self.BROWSE_STATUS == "b":
 			if self.records_equal_check() == 1:
@@ -510,7 +510,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 			QMessageBox.warning(self, "Errore", "Attenzione 2 ! \n"+str(e),  QMessageBox.Ok)
 			return 0
 
-	def on_pushButton_view_all_pressed(self):
+	def on_pushButton_view_all_2_pressed(self):
 		self.empty_fields()
 		self.charge_records()
 		self.fill_fields()
@@ -526,7 +526,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 		self.label_sort.setText(self.SORTED_ITEMS["n"])
 
 	#records surf functions
-	def on_pushButton_first_rec_pressed(self):
+	def on_pushButton_first_rec_2_pressed(self):
 		if self.records_equal_check() == 1:
 			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 		try:
@@ -537,7 +537,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 		except Exception, e:
 			QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
-	def on_pushButton_last_rec_pressed(self):
+	def on_pushButton_last_rec_2_pressed(self):
 		if self.records_equal_check() == 1:
 			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 		try:
@@ -548,7 +548,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 		except Exception, e:
 			QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
-	def on_pushButton_prev_rec_pressed(self):
+	def on_pushButton_prev_rec_2_pressed(self):
 		if self.records_equal_check() == 1:
 			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 
@@ -564,7 +564,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 			except Exception, e:
 				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
-	def on_pushButton_next_rec_pressed(self):
+	def on_pushButton_next_rec_2_pressed(self):
 
 		if self.records_equal_check() == 1:
 			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
@@ -581,7 +581,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 			except Exception, e:
 				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
-	def on_pushButton_delete_pressed(self):
+	def on_pushButton_delete_2_pressed(self):
 		msg = QMessageBox.warning(self,"Attenzione!!!",u"Vuoi veramente eliminare il record? \n L'azione è irreversibile", QMessageBox.Cancel,1)
 		if msg != 1:
 			QMessageBox.warning(self,"Messagio!!!","Azione Annullata!")
@@ -614,7 +614,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 		self.SORT_STATUS = "n"
 		self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 
-	def on_pushButton_new_search_pressed(self):
+	def on_pushButton_new_search_2_pressed(self):
 		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":
 			msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 		#else:
@@ -634,7 +634,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 			self.setComboBoxEnable(["self.comboBox_nr_ut"],"True")
 			self.setComboBoxEnable(["self.lineEdit_ut_letterale"],"True")
 
-	def on_pushButton_search_go_pressed(self):
+	def on_pushButton_search_go_2_pressed(self):
 		if self.BROWSE_STATUS != "f":
 			QMessageBox.warning(self, "ATTENZIONE", "Per eseguire una nuova ricerca clicca sul pulsante 'new search' ",  QMessageBox.Ok)
 		else:
