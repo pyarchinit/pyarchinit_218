@@ -242,61 +242,65 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 
 	def on_pushButton_go_to_us_pressed(self):
-		table_name = "self.tableWidget_rapporti"
-		rowSelected_cmd = ("%s.selectedIndexes()") % (table_name)
-		rowSelected = eval(rowSelected_cmd)
-		rowIndex = (rowSelected[0].row())
+		try:
+			table_name = "self.tableWidget_rapporti"
+			rowSelected_cmd = ("%s.selectedIndexes()") % (table_name)
+			rowSelected = eval(rowSelected_cmd)
+			rowIndex = (rowSelected[0].row())
 
-		sito = unicode(self.comboBox_sito.currentText())
-		area = unicode(self.comboBox_area.currentText())
-		us_item = self.tableWidget_rapporti.item(rowIndex,1)
+			sito = unicode(self.comboBox_sito.currentText())
+			area = unicode(self.comboBox_area.currentText())
+			us_item = self.tableWidget_rapporti.item(rowIndex,1)
 
-		us = unicode(us_item.text())
+			us = unicode(us_item.text())
 
-		search_dict = {'sito' : "'"+unicode(sito)+"'",
-						'area' : "'"+unicode(area)+"'",
-						'us' : us}
+			search_dict = {'sito' : "'"+unicode(sito)+"'",
+							'area' : "'"+unicode(area)+"'",
+							'us' : us}
 
-		u = Utility()
-		search_dict = u.remove_empty_items_fr_dict(search_dict)
+			u = Utility()
+			search_dict = u.remove_empty_items_fr_dict(search_dict)
 
-		res = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS)
-		if bool(res) == False:
-			QMessageBox.warning(self, "ATTENZIONE", "Non e' stato trovato alcun record!",  QMessageBox.Ok)
+			res = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS)
+			if bool(res) == False:
+				QMessageBox.warning(self, "ATTENZIONE", "Non e' stato trovato alcun record!",  QMessageBox.Ok)
 
-			self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
-			self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
-			self.fill_fields(self.REC_CORR)
-			self.BROWSE_STATUS = "b"
-			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
+				self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
+				self.fill_fields(self.REC_CORR)
+				self.BROWSE_STATUS = "b"
+				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 
-			self.setComboBoxEnable(["self.comboBox_sito"],"False")
-			self.setComboBoxEnable(["self.comboBox_area"],"False")
-			self.setComboBoxEnable(["self.lineEdit_us"],"False")
-		else:
-			self.empty_fields()
-			self.DATA_LIST = []
-			for i in res:
-				self.DATA_LIST.append(i)
-			self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
-			self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
-			self.fill_fields()
-			self.BROWSE_STATUS = "b"
-			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-			self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
-
-			if self.REC_TOT == 1:
-				strings = ("E' stato trovato", self.REC_TOT, "record")
-				if self.toolButtonGis.isChecked() == True:
-					self.pyQGIS.charge_vector_layers(self.DATA_LIST)
+				self.setComboBoxEnable(["self.comboBox_sito"],"False")
+				self.setComboBoxEnable(["self.comboBox_area"],"False")
+				self.setComboBoxEnable(["self.lineEdit_us"],"False")
 			else:
-				strings = ("Sono stati trovati", self.REC_TOT, "records")
-				if self.toolButtonGis.isChecked() == True:
-					self.pyQGIS.charge_vector_layers(self.DATA_LIST)
+				self.empty_fields()
+				self.DATA_LIST = []
+				for i in res:
+					self.DATA_LIST.append(i)
+				self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
+				self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
+				self.fill_fields()
+				self.BROWSE_STATUS = "b"
+				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 
-			self.setComboBoxEnable(["self.comboBox_sito"],"False")
-			self.setComboBoxEnable(["self.comboBox_area"],"False")
-			self.setComboBoxEnable(["self.lineEdit_us"],"False")
+				if self.REC_TOT == 1:
+					strings = ("E' stato trovato", self.REC_TOT, "record")
+					if self.toolButtonGis.isChecked() == True:
+						self.pyQGIS.charge_vector_layers(self.DATA_LIST)
+				else:
+					strings = ("Sono stati trovati", self.REC_TOT, "records")
+					if self.toolButtonGis.isChecked() == True:
+						self.pyQGIS.charge_vector_layers(self.DATA_LIST)
+
+				self.setComboBoxEnable(["self.comboBox_sito"],"False")
+				self.setComboBoxEnable(["self.comboBox_area"],"False")
+				self.setComboBoxEnable(["self.lineEdit_us"],"False")
+		except Exception, e:
+			e = str(e)
+			QMessageBox.warning(self, "Alert", "Non hai selezionato nessuna riga. Errore python: %s " % (str(e)),  QMessageBox.Ok)
 
 
 	def enable_button(self, n):

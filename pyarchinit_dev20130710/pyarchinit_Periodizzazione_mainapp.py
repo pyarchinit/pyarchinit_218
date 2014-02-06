@@ -600,14 +600,15 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 				QMessageBox.warning(self, "ATTENZIONE", "Non e' stata impostata alcuna ricerca!!!",  QMessageBox.Ok)
 			else:
 				res = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS)
-				
-				
 				if bool(res) == False:
 					QMessageBox.warning(self, "ATTENZIONE", "Non e' stato trovato alcun record!",  QMessageBox.Ok)
 
 					self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
+
 					self.fill_fields(self.REC_CORR)
+					self.BROWSE_STATUS = "b"
+					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 
 					self.setComboBoxEditable(["self.comboBox_sito"],1)
 					self.setComboBoxEditable(["self.comboBox_periodo"],1)
