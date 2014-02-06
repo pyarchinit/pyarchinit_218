@@ -640,7 +640,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 			if bool(elenco_record) == True:
 				sing_rec = elenco_record[0]
-				elenco_piante = sing_rec[7]
+				elenco_piante = sing_rec[6]
 				if elenco_piante != None:
 					piante = elenco_piante
 				else:
@@ -915,8 +915,9 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 	def on_pushButton_new_rec_pressed(self):
 		if self.BROWSE_STATUS == "b":
-			if self.records_equal_check() == 1:
-				msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+			if bool(self.DATA_LIST) == True:
+				if self.records_equal_check() == 1:
+					msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 
 		if self.BROWSE_STATUS != "n":
 			self.BROWSE_STATUS = "n"

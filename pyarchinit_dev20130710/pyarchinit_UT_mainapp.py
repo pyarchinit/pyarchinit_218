@@ -206,54 +206,54 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 		self.setupUi(self)
 		self.currentLayerId = None
 		try:
-			self.on_pushButton_connect_pressed()
+			self.on_pushButton_connect_2_pressed()
 		except:
 			pass
 			
 
 	def enable_button(self, n):
-		self.pushButton_connect.setEnabled(n)
+		self.pushButton_connect_2.setEnabled(n)
 
-		self.pushButton_new_rec.setEnabled(n)
+		self.pushButton_new_rec_2.setEnabled(n)
 
-		self.pushButton_view_all.setEnabled(n)
+		self.pushButton_view_all_2.setEnabled(n)
 
-		self.pushButton_first_rec.setEnabled(n)
+		self.pushButton_first_rec_2.setEnabled(n)
 
-		self.pushButton_last_rec.setEnabled(n)
+		self.pushButton_last_rec_2.setEnabled(n)
 
-		self.pushButton_prev_rec.setEnabled(n)
+		self.pushButton_prev_rec_2.setEnabled(n)
 
-		self.pushButton_next_rec.setEnabled(n)
+		self.pushButton_next_rec_2.setEnabled(n)
 
-		self.pushButton_delete.setEnabled(n)
+		self.pushButton_delete_2.setEnabled(n)
 
-		self.pushButton_new_search.setEnabled(n)
+		self.pushButton_new_search_2.setEnabled(n)
 
-		self.pushButton_search_go.setEnabled(n)
+		self.pushButton_search_go_2.setEnabled(n)
 		
-		self.pushButton_sort.setEnabled(n)
+		self.pushButton_sort_2.setEnabled(n)
 
 	def enable_button_search(self, n):
-		self.pushButton_connect.setEnabled(n)
+		self.pushButton_connect_2.setEnabled(n)
 
-		self.pushButton_new_rec.setEnabled(n)
+		self.pushButton_new_rec_2.setEnabled(n)
 
-		self.pushButton_view_all.setEnabled(n)
+		self.pushButton_view_all_2.setEnabled(n)
 
-		self.pushButton_first_rec.setEnabled(n)
+		self.pushButton_first_rec_2.setEnabled(n)
 
-		self.pushButton_last_rec.setEnabled(n)
+		self.pushButton_last_rec_2.setEnabled(n)
 
-		self.pushButton_prev_rec.setEnabled(n)
+		self.pushButton_prev_rec_2.setEnabled(n)
 
-		self.pushButton_next_rec.setEnabled(n)
+		self.pushButton_next_rec_2.setEnabled(n)
 
-		self.pushButton_delete.setEnabled(n)
+		self.pushButton_delete_2.setEnabled(n)
 
-		self.pushButton_save.setEnabled(n)
+		self.pushButton_save_2.setEnabled(n)
 
-		self.pushButton_sort.setEnabled(n)
+		self.pushButton_sort_2.setEnabled(n)
 
 	def on_pushButton_connect_2_pressed(self):
 		from pyarchinit_conn_strings import *
@@ -278,7 +278,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 				QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + ". Il database e' vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
 				self.charge_list()
 				self.BROWSE_STATUS = 'x'
-				self.on_pushButton_new_rec_pressed()
+				self.on_pushButton_new_rec_2_pressed()
 
 		except Exception, e:
 			e = str(e)
@@ -365,16 +365,16 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 
 	def on_pushButton_new_rec_2_pressed(self):
 		if self.BROWSE_STATUS == "b":
-			if self.records_equal_check() == 1:
-				msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-		#set the GUI for a new record
+			if bool(self.DATA_LIST) == True:
+				if self.records_equal_check() == 1:
+					msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 
 		if self.BROWSE_STATUS != "n":
 			self.BROWSE_STATUS = "n"
 			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			self.empty_fields()
 			
-			self.setComboBoxEditable(["self.comboBox_progetto"],1)
+			self.setComboBoxEditable(["self.comboBox_progetto"],0)
 			self.setComboBoxEditable(["self.comboBox_nr_ut"],0)
 			self.setComboBoxEnable(["self.comboBox_progetto"],"True")
 			self.setComboBoxEnable(["self.comboBox_nr_ut"],"True")
@@ -643,14 +643,14 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 			else:
 				nr_ut = None
 
-			if self.comboBox_nr_ut.currentText() != "":
-				nr_ut = float(self.comboBox_nr_ut.currentText())
+			if self.lineEdit_quota.text() != "":
+				quota = float(self.lineEdit_quota.text())
 			else:
-				nr_ut = None
+				quota = None
 
 			search_dict = {
 			self.TABLE_FIELDS[0]  : "'"+str(self.comboBox_progetto.currentText())+"'", 									#1 - Sito
-			self.TABLE_FIELDS[1]  : nr_us,									#2 - Area
+			self.TABLE_FIELDS[1]  : nr_ut,									#2 - Area
 			self.TABLE_FIELDS[2]  : "'"+str(self.lineEdit_ut_letterale.text())+"'",																				#3 - US
 			self.TABLE_FIELDS[3]  : "'"+str(self.lineEdit_def_ut.text())+"'",											#6 - descrizione
 			self.TABLE_FIELDS[6]  : "'"+str(self.comboBox_nazione.currentText())+"'",
@@ -992,9 +992,6 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 	def set_LIST_REC_CORR(self):
 		self.DATA_LIST_REC_CORR = []
 		for i in self.TABLE_FIELDS:
-			f = open('/test_rec_corr.txt', "w")
-			f.write(str(i))
-			f.close()
 			self.DATA_LIST_REC_CORR.append(eval("unicode(self.DATA_LIST[self.REC_CORR]." + i + ")"))
 
 	def setComboBoxEnable(self, f, v):

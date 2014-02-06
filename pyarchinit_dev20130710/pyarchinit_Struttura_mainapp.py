@@ -397,8 +397,9 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 
 	def on_pushButton_new_rec_pressed(self):
 		if self.BROWSE_STATUS == "b":
-			if self.records_equal_check() == 1:
-				msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+			if bool(self.DATA_LIST) == True:
+				if self.records_equal_check() == 1:
+					msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 
 		#set the GUI for a new record
 		if self.BROWSE_STATUS != "n":
@@ -660,8 +661,8 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 		if self.BROWSE_STATUS != "f":
 			self.BROWSE_STATUS = "f"
 			###
-			self.setComboBoxEditable(["self.comboBox_sito"],1)
-			self.setComboBoxEditable(["self.comboBox_sigla_struttura"],1)
+			self.setComboBoxEditable(["self.comboBox_sito"],0)
+			self.setComboBoxEditable(["self.comboBox_sigla_struttura"],0)
 			self.setComboBoxEnable(["self.comboBox_sito"],True)
 			self.setComboBoxEnable(["self.comboBox_sigla_struttura"],True)
 			self.setComboBoxEnable(["self.numero_struttura"],True)
@@ -731,15 +732,16 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 
 					self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
-					self.fill_fields(self.REC_CORR)
+
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 
+					self.setComboBoxEnable(["self.comboBox_sito"],"False")
+					self.setComboBoxEnable(["self.comboBox_sigla_struttura"],"False")
+					self.setComboBoxEnable(["self.numero_struttura"],"False")
+					self.fill_fields(self.REC_CORR)
 					self.setComboBoxEditable(["self.comboBox_sito"],0)
 					self.setComboBoxEditable(["self.comboBox_sigla_struttura"],0)
-					self.setComboBoxEnable(["self.comboBox_sito"],"True")
-					self.setComboBoxEnable(["self.comboBox_sigla_struttura"],"True")
-					self.setComboBoxEnable(["self.numero_struttura"],"True")
 
 				else:
 					self.DATA_LIST = []

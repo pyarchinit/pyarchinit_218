@@ -264,8 +264,9 @@ class pyarchinit_PDFAdministrator(QDialog, Ui_DialogPDFManager):
 
 	def on_pushButton_new_rec_pressed(self):
 		if self.BROWSE_STATUS == "b":
-			if self.records_equal_check() == 1:
-				msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+			if bool(self.DATA_LIST) == True:
+				if self.records_equal_check() == 1:
+					msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 
 		#set the GUI for a new record
 		if self.BROWSE_STATUS != "n":

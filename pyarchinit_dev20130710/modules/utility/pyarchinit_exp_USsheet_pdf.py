@@ -171,7 +171,7 @@ class single_US_pdf_sheet:
 					else:
 						self.si_appoggia_a += ', ' + str(rapporto[1])
 
-				if rapporto[0] == 'Gli si appoggia' or rapporto[0] == 'gli si appoggia a':
+				if rapporto[0] == 'Gli si appoggia' or rapporto[0] == 'gli si appoggia':
 					if self.gli_si_appoggia == '':
 						self.gli_si_appoggia += str(rapporto[1])
 					else:
@@ -336,18 +336,18 @@ class single_US_pdf_sheet:
 						[stato_conservazione, '01', '02', consistenza,'04', '05', colore, '07', '08', '09'], #3 row ok
 						[inclusi, '01', '02', '03', campioni, '05', '06', '07', formazione, '09'], #4 row ok
 						[descrizione, '01','02', '03', '04','05', '06', '07', '08', '09'], #5 row ok
-						[interpretazione, '01','02', '03', '04','05', '06', '07', '08', '09'], #5 row ok
-						[attivita, '01', '02', struttura,'04', '05', quota_min, '07', quota_max, '09'], #6 row
-						[periodizzazione, '02', '03', '04', '05', '06', '06', '07', '08', '09'], #7 row
-						[iniziale, '01', periodo_iniziale, '03', fase_iniziale, finale, '06',periodo_finale, '08', fase_finale], #8 row
-						[rapporti_stratigrafici, '01', '02', '03', '04', piante, '06', '07', '08', '09'], #9 row
-						[si_lega_a, '01', '02', '03', '04', uguale_a, '06', '07', '08', '09'], #10 row
-						[copre, '01', '02', '03', '04', coperto_da, '06', '07', '08', '09'], #11 row
-						[riempie, '01', '02', '03', '04', riempito_da, '06', '07', '08', '09'], #12 row
-						[taglia, '01', '02', '03', '04', tagliato_da, '06', '07', '08', '09'], #13 row
-						[si_appoggia_a, '01', '02', '03', '04', gli_si_appoggia, '06', '07', '08', '09'], #14 row
-						[self.documentazione_print, '01', '02', '03', '04','05', '06', '07','08', '09'], #15 row
-						[scavato, anno_di_scavo, '02', metodo_di_scavo, '04', data_schedatura, '06', schedatore, '08', '09'] #16 row
+						[interpretazione, '01','02', '03', '04','05', '06', '07', '08', '09'], #6 row ok
+						[attivita, '01', '02', struttura,'04', '05', quota_min, '07', quota_max, '09'], #7 row
+						[periodizzazione, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #8row
+						[iniziale, '01', periodo_iniziale, '03', fase_iniziale, finale, '06',periodo_finale, '08', fase_finale], #9 row
+						[rapporti_stratigrafici, '01', '02', '03', '04', piante, '06', '07', '08', '09'], #10 row
+						[si_lega_a, '01', '02', '03', '04', uguale_a, '06', '07', '08', '09'], #11 row
+						[copre, '01', '02', '03', '04', coperto_da, '06', '07', '08', '09'], #12 row
+						[riempie, '01', '02', '03', '04', riempito_da, '06', '07', '08', '09'], #13 row
+						[taglia, '01', '02', '03', '04', tagliato_da, '06', '07', '08', '09'], #14 row
+						[si_appoggia_a, '01', '02', '03', '04', gli_si_appoggia, '06', '07', '08', '09'], #15row
+						[self.documentazione_print, '01', '02', '03', '04','05', '06', '07','08', '09'], #16 row
+						[scavato, anno_di_scavo, '02', metodo_di_scavo, '04', data_schedatura, '06', schedatore, '08', '09'] #17 row
 						]
 
 		#table style
@@ -378,21 +378,21 @@ class single_US_pdf_sheet:
 
 					#5 row
 					('SPAN', (0,5),(9,5)),  #descrizione
-					('SPAN', (0,6),(9,6)),  #interpretazione
+					('SPAN', (0,6),(9,6)),  #interpretazione #6 row
 					('VALIGN',(0,5),(9,5),'TOP'), 
 
-					#6 row
+					#7 row
 					('SPAN', (0,7),(2,7)),  #Attivita - Struttura - Quota min - Quota max
 					('SPAN', (3,7),(5,7)),  #Attivita - Struttura - Quota min - Quota max
 					('SPAN', (6,7),(7,7)),  #Attivita - Struttura - Quota min - Quota max
 					('SPAN', (8,7),(9,7)),  #Attivita - Struttura - Quota min - Quota max
 
-					#7 row
+					#8 row
 					('SPAN', (0,8),(9,8)),  #Periodizzazione - Titolo
 
 					#8 row
 					('SPAN', (0,9),(1,9)),  #iniziale
-					('SPAN', (2,9),(3,8)),  #periodo inizlae
+					('SPAN', (2,9),(3,9)),  #periodo inizlae
 					('SPAN', (5,9),(6,9)),  #fase iniziale
 					('SPAN', (7,9),(8,9)),  #finale
 					('VALIGN',(0,9),(0,9),'TOP'), 
@@ -419,13 +419,13 @@ class single_US_pdf_sheet:
 					('SPAN', (5,14),(9,14)),  #Rapporti stratigrafici - Taglia - Tagliato da
 
 					#14 row
-					('SPAN', (0,14),(4,15)),  #Rapporti stratigrafici - Si appoggia a - Gli si appoggia
+					('SPAN', (0,15),(4,15)),  #Rapporti stratigrafici - Si appoggia a - Gli si appoggia
 					('SPAN', (5,15),(9,15)),  #Rapporti stratigrafici - Si appoggia a - Gli si appoggia
 
 					('VALIGN',(0,0),(-1,-1),'TOP'),
 
 					#16 row
-					('SPAN', (0,16),(9,15)),  #pie' di pagina
+					('SPAN', (0,16),(9,16)),  #pie' di pagina
 					('ALIGN',(0,16),(9,16),'CENTER'),
 
 					#15 row

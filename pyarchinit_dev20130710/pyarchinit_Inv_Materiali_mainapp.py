@@ -632,8 +632,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 	def on_pushButton_new_rec_pressed(self):
 		if self.BROWSE_STATUS == "b":
-			if self.records_equal_check() == 1:
-				msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+			if bool(self.DATA_LIST) == True:
+				if self.records_equal_check() == 1:
+					msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 
 		#set the GUI for a new record
 
@@ -677,12 +678,12 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
 					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
 
-				self.setComboBoxEditable(['self.comboBox_sito'], 1)
-				self.setComboBoxEnable(['self.comboBox_sito'], 'False')
-				self.setComboBoxEnable(['self.lineEdit_num_inv'], 'False')
+					self.setComboBoxEditable(['self.comboBox_sito'], 1)
+					self.setComboBoxEnable(['self.comboBox_sito'], 'False')
+					self.setComboBoxEnable(['self.lineEdit_num_inv'], 'False')
 
-				self.fill_fields(self.REC_CORR)
-				self.enable_button(1)
+					self.fill_fields(self.REC_CORR)
+					self.enable_button(1)
 				
 	def generate_list_pdf(self):
 		data_list = []
@@ -1017,7 +1018,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 	def on_pushButton_remove_row_rif_biblio_pressed(self):
 		self.remove_row('self.tableWidget_rif_biblio')
 
-	def on_pushButton_view_all_pressed(self):
+	def on_pushButton_view_all_2_pressed(self):
 		if self.records_equal_check() == 1:
 			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 		self.empty_fields()
@@ -1717,7 +1718,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 		self.pushButton_new_rec.setEnabled(n)
 
-		self.pushButton_view_all.setEnabled(n)
+		self.pushButton_view_all_2.setEnabled(n)
 
 		self.pushButton_first_rec.setEnabled(n)
 
@@ -1740,7 +1741,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 		self.pushButton_new_rec.setEnabled(n)
 
-		self.pushButton_view_all.setEnabled(n)
+		self.pushButton_view_all_2.setEnabled(n)
 
 		self.pushButton_first_rec.setEnabled(n)
 
