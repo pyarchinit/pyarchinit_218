@@ -327,55 +327,62 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 
 	#buttons functions
 	def on_pushButton_sort_2_pressed(self):
-		dlg = SortPanelMain(self)
-		dlg.insertItems(self.SORT_ITEMS)
-		dlg.exec_()
-
-		items,order_type = dlg.ITEMS, dlg.TYPE_ORDER
-
-		self.SORT_ITEMS_CONVERTED = []
-		for i in items:
-			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[unicode(i)])
-
-		self.SORT_MODE = order_type
-		self.empty_fields()
-
-		id_list = []
-		for i in self.DATA_LIST:
-			id_list.append(eval("i." + self.ID_TABLE))
-		self.DATA_LIST = []
-
-		temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
-
-		for i in temp_data_list:
-			self.DATA_LIST.append(i)
-		self.BROWSE_STATUS = "b"
-		self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-		if type(self.REC_CORR) == "<type 'str'>":
-			corr = 0
+		if self.check_record_state() == 1:
+			pass
 		else:
-			corr = self.REC_CORR
+			dlg = SortPanelMain(self)
+			dlg.insertItems(self.SORT_ITEMS)
+			dlg.exec_()
 
-		self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
-		self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
-		self.SORT_STATUS = "o"
-		self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
-		self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
-		self.fill_fields()
+			items,order_type = dlg.ITEMS, dlg.TYPE_ORDER
+
+			self.SORT_ITEMS_CONVERTED = []
+			for i in items:
+				self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[unicode(i)])
+
+			self.SORT_MODE = order_type
+			self.empty_fields()
+
+			id_list = []
+			for i in self.DATA_LIST:
+				id_list.append(eval("i." + self.ID_TABLE))
+			self.DATA_LIST = []
+
+			temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+
+			for i in temp_data_list:
+				self.DATA_LIST.append(i)
+			self.BROWSE_STATUS = "b"
+			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+			if type(self.REC_CORR) == "<type 'str'>":
+				corr = 0
+			else:
+				corr = self.REC_CORR
+
+			self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
+			self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
+			self.SORT_STATUS = "o"
+			self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
+			self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
+			self.fill_fields()
 
 	def on_pushButton_new_rec_2_pressed(self):
-		if self.BROWSE_STATUS == "b":
-			if bool(self.DATA_LIST) == True:
-				if self.records_equal_check() == 1:
-					msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+		if bool(self.DATA_LIST) == True:
+			if self.data_error_check() == 1:
+				pass
+			else:
+				if self.BROWSE_STATUS == "b":
+					if bool(self.DATA_LIST) == True:
+						if self.records_equal_check() == 1:
+							msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 
 		if self.BROWSE_STATUS != "n":
 			self.BROWSE_STATUS = "n"
 			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			self.empty_fields()
 			
-			self.setComboBoxEditable(["self.comboBox_progetto"],0)
-			self.setComboBoxEditable(["self.comboBox_nr_ut"],0)
+			self.setComboBoxEditable(["self.comboBox_progetto"],1)
+			self.setComboBoxEditable(["self.comboBox_nr_ut"],1)
 			self.setComboBoxEnable(["self.comboBox_progetto"],"True")
 			self.setComboBoxEnable(["self.comboBox_nr_ut"],"True")
 			self.setComboBoxEnable(["self.lineEdit_ut_letterale"],"True")
@@ -392,12 +399,15 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 	def on_pushButton_save_2_pressed(self):
 		#save record
 		if self.BROWSE_STATUS == "b":
-			if self.records_equal_check() == 1:
-				self.update_if(QMessageBox.warning(self,'ATTENZIONE',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-				self.label_sort.setText(self.SORTED_ITEMS["n"])
-				self.enable_button(1)
-			else:
-				QMessageBox.warning(self, "ATTENZIONE", "Non è stata realizzata alcuna modifica.",  QMessageBox.Ok)
+			if self.data_error_check() == 0:
+				if self.records_equal_check() == 1:
+					self.update_if(QMessageBox.warning(self,'ATTENZIONE',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+					self.SORT_STATUS = "n"
+					self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
+					self.enable_button(1)
+					self.fill_fields(self.REC_CORR)
+				else:
+					QMessageBox.warning(self, "ATTENZIONE", "Non è stata realizzata alcuna modifica.",  QMessageBox.Ok)
 		else:
 			if self.data_error_check() == 0:
 				test_insert = self.insert_new_rec()
@@ -410,12 +420,13 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
 					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-					self.fill_fields(self.REC_CORR)
+
 					self.setComboBoxEditable(["self.comboBox_progetto"],1)
 					self.setComboBoxEditable(["self.comboBox_nr_ut"],1)
 					self.setComboBoxEnable(["self.comboBox_progetto"],"False")
 					self.setComboBoxEnable(["self.comboBox_nr_ut"],"False")
 					self.setComboBoxEnable(["self.lineEdit_ut_letterale"],"False")
+					self.fill_fields(self.REC_CORR)
 					self.enable_button(1)
 				else:
 					pass
@@ -510,76 +521,89 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 			QMessageBox.warning(self, "Errore", "Attenzione 2 ! \n"+str(e),  QMessageBox.Ok)
 			return 0
 
+	def check_record_state(self):
+		ec = self.data_error_check()
+		if ec == 1:
+			return 1 #ci sono errori di immissione
+		elif self.records_equal_check() == 1 and ec == 0:
+			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+			self.charge_records()
+			return 0 #non ci sono errori di immissione
+
 	def on_pushButton_view_all_2_pressed(self):
-		self.empty_fields()
-		self.charge_records()
-		self.fill_fields()
-		self.BROWSE_STATUS = "b"
-		self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-		if type(self.REC_CORR) == "<type 'str'>":
-			corr = 0
+		if self.check_record_state() == 1:
+			pass
 		else:
-			corr = self.REC_CORR
-		self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
-		self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
-		self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
-		self.label_sort.setText(self.SORTED_ITEMS["n"])
+			self.empty_fields()
+			self.charge_records()
+			self.fill_fields()
+			self.BROWSE_STATUS = "b"
+			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+			if type(self.REC_CORR) == "<type 'str'>":
+				corr = 0
+			else:
+				corr = self.REC_CORR
+			self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
+			self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
+			self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
+			self.label_sort.setText(self.SORTED_ITEMS["n"])
 
 	#records surf functions
 	def on_pushButton_first_rec_2_pressed(self):
-		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-		try:
-			self.empty_fields()
-			self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
-			self.fill_fields(0)
-			self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-		except Exception, e:
-			QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
+		if self.check_record_state() == 1:
+			pass
+		else:
+			try:
+				self.empty_fields()
+				self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
+				self.fill_fields(0)
+				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+			except Exception, e:
+				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 	def on_pushButton_last_rec_2_pressed(self):
-		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-		try:
-			self.empty_fields()
-			self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
-			self.fill_fields(self.REC_CORR)
-			self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-		except Exception, e:
-			QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
+		if self.check_record_state() == 1:
+			pass
+		else:
+			try:
+				self.empty_fields()
+				self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
+				self.fill_fields(self.REC_CORR)
+				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+			except Exception, e:
+				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 	def on_pushButton_prev_rec_2_pressed(self):
-		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-
-		self.REC_CORR = self.REC_CORR-1
-		if self.REC_CORR == -1:
-			self.REC_CORR = 0
-			QMessageBox.warning(self, "Errore", "Sei al primo record!",  QMessageBox.Ok)
+		if self.check_record_state() == 1:
+			pass
 		else:
-			try:
-				self.empty_fields()
-				self.fill_fields(self.REC_CORR)
-				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-			except Exception, e:
-				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
+			self.REC_CORR = self.REC_CORR-1
+			if self.REC_CORR == -1:
+				self.REC_CORR = 0
+				QMessageBox.warning(self, "Errore", "Sei al primo record!",  QMessageBox.Ok)
+			else:
+				try:
+					self.empty_fields()
+					self.fill_fields(self.REC_CORR)
+					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+				except Exception, e:
+					QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 	def on_pushButton_next_rec_2_pressed(self):
-
-		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-
-		self.REC_CORR = self.REC_CORR+1
-		if self.REC_CORR >= self.REC_TOT:
-			self.REC_CORR = self.REC_CORR-1
-			QMessageBox.warning(self, "Errore", "Sei all'ultimo record!",  QMessageBox.Ok)
+		if self.check_record_state() == 1:
+			pass
 		else:
-			try:
-				self.empty_fields()
-				self.fill_fields(self.REC_CORR)
-				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-			except Exception, e:
-				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
+			self.REC_CORR = self.REC_CORR+1
+			if self.REC_CORR >= self.REC_TOT:
+				self.REC_CORR = self.REC_CORR-1
+				QMessageBox.warning(self, "Errore", "Sei all'ultimo record!",  QMessageBox.Ok)
+			else:
+				try:
+					self.empty_fields()
+					self.fill_fields(self.REC_CORR)
+					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+				except Exception, e:
+					QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 	def on_pushButton_delete_2_pressed(self):
 		msg = QMessageBox.warning(self,"Attenzione!!!",u"Vuoi veramente eliminare il record? \n L'azione è irreversibile", QMessageBox.Cancel,1)
@@ -606,33 +630,33 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 			if bool(self.DATA_LIST) == True:
 				self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
 				self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
-				self.fill_fields()
 				self.BROWSE_STATUS = "b"
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 				self.charge_list()
+				self.fill_fields()
 		self.SORT_STATUS = "n"
 		self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 
 	def on_pushButton_new_search_2_pressed(self):
-		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":
-			msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-		#else:
-		self.enable_button_search(0)
+		if self.check_record_state() == 1:
+			pass
+		else:
+			self.enable_button_search(0)
 
 
-		#set the GUI for a new search
-		if self.BROWSE_STATUS != "f":
-			self.BROWSE_STATUS = "f"
-			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-			self.empty_fields()
-			self.set_rec_counter('','')
-			self.label_sort.setText(self.SORTED_ITEMS["n"])
-			self.setComboBoxEditable(["self.comboBox_progetto"],1)
-			self.setComboBoxEditable(["self.comboBox_nr_ut"],0)
-			self.setComboBoxEnable(["self.comboBox_progetto"],"True")
-			self.setComboBoxEnable(["self.comboBox_nr_ut"],"True")
-			self.setComboBoxEnable(["self.lineEdit_ut_letterale"],"True")
+			#set the GUI for a new search
+			if self.BROWSE_STATUS != "f":
+				self.BROWSE_STATUS = "f"
+				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+				self.empty_fields()
+				self.set_rec_counter('','')
+				self.label_sort.setText(self.SORTED_ITEMS["n"])
+				self.setComboBoxEditable(["self.comboBox_progetto"],1)
+				self.setComboBoxEditable(["self.comboBox_nr_ut"],1)
+				self.setComboBoxEnable(["self.comboBox_progetto"],"True")
+				self.setComboBoxEnable(["self.comboBox_nr_ut"],"True")
+				self.setComboBoxEnable(["self.lineEdit_ut_letterale"],"True")
 
 	def on_pushButton_search_go_2_pressed(self):
 		if self.BROWSE_STATUS != "f":
@@ -718,7 +742,6 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 							self.DATA_LIST.append(i)
 						self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
 						self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
-						self.fill_fields()
 						self.BROWSE_STATUS = "b"
 						self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 						self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
@@ -731,7 +754,7 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 						self.setComboBoxEnable(["self.comboBox_progetto"],"False")
 						self.setComboBoxEnable(["self.comboBox_nr_ut"],"False")
 						self.setComboBoxEnable(["self.lineEdit_ut_letterale"],"False")
-
+						self.fill_fields()
 						QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
 
 		self.enable_button_search(1)

@@ -624,6 +624,11 @@
      </item>
      <item>
       <property name="text">
+       <string>definizione sito</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>definizione stratigrafica</string>
       </property>
      </item>
@@ -677,6 +682,11 @@
      <item>
       <property name="text">
        <string>us_table</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>site_table</string>
       </property>
      </item>
      <item>

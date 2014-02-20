@@ -204,12 +204,12 @@ class single_Finds_pdf_sheet:
 			for i in eval(self.elementi_reperto):
 				if elementi_reperto == '':
 					try:
-						elementi_reperto += ("Elemento rinvenuto: %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
+						elementi_reperto += ("Elemento rinvenuto: %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
 					except:
 						pass
 				else:
 					try:
-						elementi_reperto += ("<br/>Elemento rinvenuto: %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
+						elementi_reperto += ("<br/>Elemento rinvenuto: %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
 					except:
 						pass
 
@@ -221,12 +221,12 @@ class single_Finds_pdf_sheet:
 			for i in eval(self.misurazioni):
 				if misurazioni == '':
 					try:
-						misurazioni += ("<b>Tipo di misura: %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[2]), str(i[1]))
+						misurazioni += ("<b>Tipo di misura: %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[2]), str(i[1]))
 					except:
 						pass
 				else:
 					try:
-						misurazioni += ("<br/><b>Tipo di misura: %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[2]), str(i[1]))
+						misurazioni += ("<br/><b>Tipo di misura: %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[2]), str(i[1]))
 					except:
 						pass
 		misurazioni = Paragraph("<b>Misurazioni</b><br/>"  + misurazioni, styNormal)
@@ -237,12 +237,12 @@ class single_Finds_pdf_sheet:
 			for i in eval(self.tecnologie):
 				if tecnologie == '':
 					try:
-						tecnologie += ("<b>Tipo tecnologia: %s, Posizione: %s, Tipo quantita': %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
+						tecnologie += ("<b>Tipo tecnologia: %s, Posizione: %s, Tipo quantita': %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
 					except:
 						pass
 				else:
 					try:
-						tecnologie += ("<br/><b>Tipo tecnologia: %s, Posizione: %s, Tipo quantita': %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
+						tecnologie += ("<br/><b>Tipo tecnologia: %s, Posizione: %s, Tipo quantita': %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
 					except:
 						pass
 		tecnologie = Paragraph("<b>Tecnologie</b><br/>"  + tecnologie, styNormal)

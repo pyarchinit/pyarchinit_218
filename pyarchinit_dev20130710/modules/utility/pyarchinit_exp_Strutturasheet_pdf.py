@@ -200,12 +200,12 @@ class single_Struttura_pdf_sheet:
 			for i in eval(self.misure_struttura):
 				if misure_struttura == '':
 					try:
-						misure_struttura += ("<b>Tipo di misura: %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
+						misure_struttura += ("<b>Tipo di misura: %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
 					except:
 						pass
 				else:
 					try:
-						misure_struttura += ("<br/><b>Tipo di misura: %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
+						misure_struttura += ("<br/><b>Tipo di misura: %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
 					except:
 						pass
 		misure_struttura = Paragraph("<b>Misurazioni</b><br/>"  + misure_struttura, styNormal)

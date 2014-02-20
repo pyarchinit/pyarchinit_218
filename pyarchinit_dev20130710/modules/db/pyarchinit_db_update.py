@@ -26,14 +26,12 @@ class DB_update:
 
 	# connection string postgres"
 
-
 	# create engine and metadata
-	
-	def update_table(self):
-		internal_connection = Connection()
-		engine = create_engine(internal_connection.conn_str(), echo=False)
-		metadata = MetaData(engine)
+	internal_connection = Connection()
+	engine = create_engine(internal_connection.conn_str(), echo=False)
+	metadata = MetaData(engine)
 
+	def update_table(self):
 		table = Table("site_table", self.metadata, autoload=True)
 		table_column_names_list = []
 		for i in table.columns:
@@ -41,6 +39,10 @@ class DB_update:
 
 		if table_column_names_list.__contains__('provincia') == False:
 			self.engine.execute("ALTER TABLE site_table ADD COLUMN provincia varchar DEFAULT 'inserici un valore' ")
+
+
+		if table_column_names_list.__contains__('definizione_sito') == False:
+			self.engine.execute("ALTER TABLE site_table ADD COLUMN definizione_sito varchar DEFAULT 'inserici un valore' ")
 
 		table = Table("us_table", self.metadata, autoload=True)
 		table_column_names_list = []

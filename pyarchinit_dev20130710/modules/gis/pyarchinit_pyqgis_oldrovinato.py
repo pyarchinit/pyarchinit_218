@@ -830,49 +830,8 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			else:
 				QMessageBox.warning(self, "TESTER", "Layer Struttura non valido",QMessageBox.Ok)
 
-	def charge_individui_from_research(self, data):
-		#Clean Qgis Map Later Registry
-		#QgsMapLayerRegistry.instance().removeAllMapLayers()
-		# Get the user input, starting with the table name
-		
-		#self.find_us_cutted(data)
-
-		cfg_rel_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'config.cfg')
-		file_path = ('%s%s') % (self.HOME, cfg_rel_path)
-		conf = open(file_path, "r")
-		con_sett = conf.read()
-		conf.close()
-
-		settings = Settings(con_sett)
-		settings.set_configuration()
-		
-		if settings.SERVER == 'sqlite':
-			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
-			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
-
-			gidstr = "id_scheda_ind = '" + str(data[0].id_scheda_ind) +"'"
-			if len(data) > 1:
-				for i in range(len(data)):
-					gidstr += " OR id_scheda_ind = '" + str(data[i].id_scheda_ind) +"'"
-
-			uri = QgsDataSourceURI()
-			uri.setDatabase(db_file_path)
-
-			uri.setDataSource('','pyarchinit_individui_view', 'the_geom', gidstr, "ROWID")
-			layerIndividui=QgsVectorLayer(uri.uri(), 'pyarchinit_individui_view', 'spatialite')
-
-			if layerIndividui.isValid() == True:
-				QMessageBox.warning(self, "TESTER", "OK Layer Individui valido",QMessageBox.Ok)
-
-				#self.USLayerId = layerUS.getLayerID()
-##				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
-##				layerUS.loadNamedStyle(style_path)
-				self.iface.mapCanvas().setExtent(layerIndividui.extent())
-				QgsMapLayerRegistry.instance().addMapLayers([layerIndividui], True)
-			else:
-				QMessageBox.warning(self, "TESTER", "Layer Individui non valido",QMessageBox.Ok)
-
 class Order_layers:
+	####deprecato###
 
 	if os.name == 'posix':
 		HOME = os.environ['HOME']
@@ -1010,6 +969,7 @@ class Order_layers:
 
 
 class Order_layer_v2:
+	######persiste un errore in presenza di si lega a o uguale a se sballano la stratigrafia
 	order_dict = {}
 	order_count = 0
 	db = ''#Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
@@ -1101,7 +1061,7 @@ class Order_layer_v2:
 
 	def remove_from_list_in_dict(self, curr_base_matrix):
 		self.curr_base_matrix = curr_base_matrix
-
+##		try:
 		for k,v in self.order_dict.items():
 			l = v
 			#print self.curr_base_matrix
@@ -1111,6 +1071,8 @@ class Order_layer_v2:
 				except:
 					pass
 			self.order_dict[k]=l
+##		except:
+##			pass
 		return
 
 

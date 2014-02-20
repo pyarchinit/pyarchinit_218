@@ -62,12 +62,12 @@ class Pyarchinit_db_management:
 			self.metadata = MetaData(self.engine)
 			self.engine.connect()
 		except Exception, e:
-			test = e
+			test = str(e)
 		try:
 			db_upd = DB_update()
 			db_upd.update_table()
-		except:
-			pass
+		except Exception, e:
+			test = str(e)
 		return test
 
 	#insert statement
@@ -158,12 +158,13 @@ class Pyarchinit_db_management:
 	def insert_site_values(self, *arg):
 		"""Istanzia la classe SITE da pyarchinit_db_mapper"""
 		sito = SITE(arg[0],
-				arg[1],
-				arg[2],
-				arg[3],
-				arg[4],
-				arg[5],
-				arg[6])
+						arg[1],
+						arg[2],
+						arg[3],
+						arg[4],
+						arg[5],
+						arg[6],
+						arg[7])
 
 		return sito
 

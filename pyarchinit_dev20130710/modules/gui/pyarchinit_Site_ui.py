@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_Site_ui.ui'
 #
-# Created: Wed Feb 05 18:22:52 2014
+# Created: Mon Feb 17 12:03:52 2014
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_DialogSite(object):
     def setupUi(self, DialogSite):
         DialogSite.setObjectName(_fromUtf8("DialogSite"))
-        DialogSite.resize(540, 495)
+        DialogSite.resize(540, 496)
         DialogSite.setMinimumSize(QtCore.QSize(540, 400))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/images/iconSite.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -273,8 +273,10 @@ class Ui_DialogSite(object):
         self.verticalLayout.addWidget(self.line_8)
         self.comboBox_sito = QtGui.QComboBox(DialogSite)
         self.comboBox_sito.setEnabled(False)
+        self.comboBox_sito.setMinimumSize(QtCore.QSize(0, 0))
+        self.comboBox_sito.setMaximumSize(QtCore.QSize(16777215, 30))
         font = QtGui.QFont()
-        font.setPointSize(14)
+        font.setPointSize(12)
         font.setWeight(75)
         font.setBold(True)
         self.comboBox_sito.setFont(font)
@@ -288,10 +290,17 @@ class Ui_DialogSite(object):
         self.label = QtGui.QLabel(DialogSite)
         self.label.setObjectName(_fromUtf8("label"))
         self.verticalLayout.addWidget(self.label)
+        self.comboBox_definizione_sito = QtGui.QComboBox(DialogSite)
+        self.comboBox_definizione_sito.setEnabled(True)
+        self.comboBox_definizione_sito.setMinimumSize(QtCore.QSize(0, 30))
+        self.comboBox_definizione_sito.setMaximumSize(QtCore.QSize(16777215, 30))
+        self.comboBox_definizione_sito.setEditable(True)
+        self.comboBox_definizione_sito.setObjectName(_fromUtf8("comboBox_definizione_sito"))
+        self.verticalLayout.addWidget(self.comboBox_definizione_sito)
         self.toolBox = QtGui.QToolBox(DialogSite)
         self.toolBox.setObjectName(_fromUtf8("toolBox"))
         self.page = QtGui.QWidget()
-        self.page.setGeometry(QtCore.QRect(0, 0, 518, 202))
+        self.page.setGeometry(QtCore.QRect(0, 0, 501, 183))
         self.page.setObjectName(_fromUtf8("page"))
         self.gridLayout_8 = QtGui.QGridLayout(self.page)
         self.gridLayout_8.setObjectName(_fromUtf8("gridLayout_8"))

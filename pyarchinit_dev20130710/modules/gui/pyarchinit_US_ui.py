@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_US_ui.ui'
 #
-# Created: Wed Feb 05 18:28:19 2014
+# Created: Wed Feb 19 19:47:03 2014
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_DialogUS(object):
     def setupUi(self, DialogUS):
         DialogUS.setObjectName(_fromUtf8("DialogUS"))
-        DialogUS.resize(540, 584)
+        DialogUS.resize(540, 619)
         DialogUS.setMinimumSize(QtCore.QSize(540, 400))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/images/iconPAI.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -426,10 +426,12 @@ class Ui_DialogUS(object):
         self.verticalLayout_10 = QtGui.QVBoxLayout()
         self.verticalLayout_10.setObjectName(_fromUtf8("verticalLayout_10"))
         self.verticalLayout_9 = QtGui.QVBoxLayout()
+        self.verticalLayout_9.setSizeConstraint(QtGui.QLayout.SetFixedSize)
         self.verticalLayout_9.setObjectName(_fromUtf8("verticalLayout_9"))
         self.verticalLayout_8 = QtGui.QVBoxLayout()
         self.verticalLayout_8.setObjectName(_fromUtf8("verticalLayout_8"))
         self.gridLayout_15 = QtGui.QGridLayout()
+        self.gridLayout_15.setSizeConstraint(QtGui.QLayout.SetFixedSize)
         self.gridLayout_15.setObjectName(_fromUtf8("gridLayout_15"))
         self.label_12 = QtGui.QLabel(self.tab_2)
         font = QtGui.QFont()
@@ -455,6 +457,7 @@ class Ui_DialogUS(object):
         self.label_22.setObjectName(_fromUtf8("label_22"))
         self.gridLayout_15.addWidget(self.label_22, 1, 6, 1, 1)
         self.comboBox_per_iniz = QtGui.QComboBox(self.tab_2)
+        self.comboBox_per_iniz.setMinimumSize(QtCore.QSize(0, 20))
         self.comboBox_per_iniz.setObjectName(_fromUtf8("comboBox_per_iniz"))
         self.gridLayout_15.addWidget(self.comboBox_per_iniz, 3, 0, 1, 1)
         self.lineEdit_attivita = QtGui.QLineEdit(self.tab_2)
@@ -484,12 +487,15 @@ class Ui_DialogUS(object):
         self.label_32.setObjectName(_fromUtf8("label_32"))
         self.gridLayout_15.addWidget(self.label_32, 4, 4, 1, 1)
         self.comboBox_fas_iniz = QtGui.QComboBox(self.tab_2)
+        self.comboBox_fas_iniz.setMinimumSize(QtCore.QSize(0, 20))
         self.comboBox_fas_iniz.setObjectName(_fromUtf8("comboBox_fas_iniz"))
         self.gridLayout_15.addWidget(self.comboBox_fas_iniz, 3, 1, 1, 1)
         self.comboBox_per_fin = QtGui.QComboBox(self.tab_2)
+        self.comboBox_per_fin.setMinimumSize(QtCore.QSize(0, 20))
         self.comboBox_per_fin.setObjectName(_fromUtf8("comboBox_per_fin"))
         self.gridLayout_15.addWidget(self.comboBox_per_fin, 3, 3, 1, 1)
         self.comboBox_fas_fin = QtGui.QComboBox(self.tab_2)
+        self.comboBox_fas_fin.setMinimumSize(QtCore.QSize(0, 20))
         self.comboBox_fas_fin.setObjectName(_fromUtf8("comboBox_fas_fin"))
         self.gridLayout_15.addWidget(self.comboBox_fas_fin, 3, 4, 1, 1)
         self.verticalLayout_8.addLayout(self.gridLayout_15)
@@ -902,14 +908,14 @@ class Ui_DialogUS(object):
         self.pushButton_orderLayers.setObjectName(_fromUtf8("pushButton_orderLayers"))
         self.gridLayout_20.addWidget(self.pushButton_orderLayers, 6, 0, 1, 1)
         self.lineEditOrderLayer = QtGui.QLineEdit(self.page)
-        self.lineEditOrderLayer.setEnabled(False)
+        self.lineEditOrderLayer.setEnabled(True)
         self.lineEditOrderLayer.setObjectName(_fromUtf8("lineEditOrderLayer"))
         self.gridLayout_20.addWidget(self.lineEditOrderLayer, 6, 1, 1, 2)
         spacerItem8 = QtGui.QSpacerItem(20, 209, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.gridLayout_20.addItem(spacerItem8, 7, 2, 1, 1)
         self.toolBox.addItem(self.page, _fromUtf8(""))
         self.page_2 = QtGui.QWidget()
-        self.page_2.setGeometry(QtCore.QRect(0, 0, 314, 222))
+        self.page_2.setGeometry(QtCore.QRect(0, 0, 496, 222))
         self.page_2.setObjectName(_fromUtf8("page_2"))
         self.gridLayout_21 = QtGui.QGridLayout(self.page_2)
         self.gridLayout_21.setObjectName(_fromUtf8("gridLayout_21"))

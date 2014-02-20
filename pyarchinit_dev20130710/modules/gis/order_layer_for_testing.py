@@ -247,5 +247,5 @@ class MyError(Exception):
 			return repr(self.value)
 
 lista_rapporti = [(1, 2), (2, 3), (3, 0)]
-OL = Order_layers_non_funzia(lista_rapporti)
+OL = Order_layers_funzia(lista_rapporti)
 print OL.main()

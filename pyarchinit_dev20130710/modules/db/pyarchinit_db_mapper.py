@@ -364,7 +364,8 @@ class SITE(object):
 	regione,
 	comune,
 	descrizione,
-	provincia
+	provincia,
+	definizione_sito
 	):
 		self.id_sito = id_sito #0
 		self.sito = sito #1
@@ -372,18 +373,20 @@ class SITE(object):
 		self.regione = regione #3
 		self.comune = comune #4
 		self.descrizione = descrizione #5
-		self.provincia = provincia #5
+		self.provincia = provincia #6
+		self.definizione_sito = definizione_sito #7
 
 	#def __repr__"
 	def __repr__(self):
-		return "<SITE('%d','%s', '%s',%s,'%s','%s', '%s')>" % (
+		return "<SITE('%d','%s', '%s',%s,'%s','%s', '%s', '%s')>" % (
 		self.id_sito,
 		self.sito,
 		self.nazione,
 		self.regione,
 		self.comune,
 		self.descrizione,
-		self.provincia
+		self.provincia,
+		self.definizione_sito
 		)
 #mapper
 mapper(SITE, Site_table.site_table)

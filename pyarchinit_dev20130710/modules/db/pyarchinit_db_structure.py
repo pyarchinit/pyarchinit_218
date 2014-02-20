@@ -195,9 +195,10 @@ class Site_table:
 	Column('comune', String(100)),
 	Column('descrizione', Text),
 	Column('provincia', Text),
+	Column('definizione_sito', Text),
 
 	# explicit/composite unique constraint.  'name' is optional.
-    UniqueConstraint('sito', name='ID_sito_unico')
+	UniqueConstraint('sito', name='ID_sito_unico')
 	)
 
 	metadata.create_all(engine)

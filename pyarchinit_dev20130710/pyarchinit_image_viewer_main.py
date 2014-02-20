@@ -125,11 +125,12 @@ class Main(QDialog, Ui_DialogImageViewer):
 
 	def getDirectory(self):
 		directory = QtGui.QFileDialog.getExistingDirectory(self, "Scegli una directory", "Seleziona una directory:", QtGui.QFileDialog.ShowDirsOnly)
-		for image in sorted(os.listdir(directory.toUtf8())):
+		QMessageBox.warning(self, "Alert", str(dir(directory)) ,  QMessageBox.Ok)
+		for image in sorted(os.listdir(directory)):
 			if image.endswith(".png") or image.endswith(".PNG") or image.endswith(".JPG") or image.endswith(".jpg") or image.endswith(".jpeg") or image.endswith(".JPEG") or image.endswith(".tif") or image.endswith(".TIF") or image.endswith(".tiff") or image.endswith(".TIFF"):
 
 				filename, filetype = image.split(".")[0], image.split(".")[1]		#db definisce nome immagine originale
-				filepath = directory.toUtf8()+'/'+filename+"."+filetype 			#db definisce il path immagine originale
+				filepath = directory+'/'+filename+"."+filetype 			#db definisce il path immagine originale
 				idunique_image_check = self.db_search_check(self.MAPPER_TABLE_CLASS, 'filepath', filepath) #controlla che l'immagine non sia già presente nel db sulla base del suo path
 
 				if bool(idunique_image_check) == False:

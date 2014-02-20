@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>540</width>
-    <height>584</height>
+    <height>619</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -859,7 +859,7 @@
       </font>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -937,10 +937,16 @@ p, li { white-space: pre-wrap; }
             <layout class="QVBoxLayout" name="verticalLayout_10">
              <item>
               <layout class="QVBoxLayout" name="verticalLayout_9">
+               <property name="sizeConstraint">
+                <enum>QLayout::SetFixedSize</enum>
+               </property>
                <item>
                 <layout class="QVBoxLayout" name="verticalLayout_8">
                  <item>
                   <layout class="QGridLayout" name="gridLayout_15">
+                   <property name="sizeConstraint">
+                    <enum>QLayout::SetFixedSize</enum>
+                   </property>
                    <item row="0" column="0" colspan="4">
                     <widget class="QLabel" name="label_12">
                      <property name="font">
@@ -1007,7 +1013,14 @@ p, li { white-space: pre-wrap; }
                     </widget>
                    </item>
                    <item row="3" column="0">
-                    <widget class="QComboBox" name="comboBox_per_iniz"/>
+                    <widget class="QComboBox" name="comboBox_per_iniz">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </widget>
                    </item>
                    <item row="3" column="5">
                     <widget class="QLineEdit" name="lineEdit_attivita">
@@ -1068,13 +1081,34 @@ p, li { white-space: pre-wrap; }
                     </widget>
                    </item>
                    <item row="3" column="1">
-                    <widget class="QComboBox" name="comboBox_fas_iniz"/>
+                    <widget class="QComboBox" name="comboBox_fas_iniz">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </widget>
                    </item>
                    <item row="3" column="3">
-                    <widget class="QComboBox" name="comboBox_per_fin"/>
+                    <widget class="QComboBox" name="comboBox_per_fin">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </widget>
                    </item>
                    <item row="3" column="4">
-                    <widget class="QComboBox" name="comboBox_fas_fin"/>
+                    <widget class="QComboBox" name="comboBox_fas_fin">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                    </widget>
                    </item>
                   </layout>
                  </item>
@@ -2036,7 +2070,7 @@ p, li { white-space: pre-wrap; }
            <item row="6" column="1" colspan="2">
             <widget class="QLineEdit" name="lineEditOrderLayer">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -2060,7 +2094,7 @@ p, li { white-space: pre-wrap; }
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>314</width>
+            <width>496</width>
             <height>222</height>
            </rect>
           </property>

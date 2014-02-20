@@ -40,7 +40,7 @@ from  pyarchinit_error_check import *
 
 
 
-from  pyarchinit_pyqgis import Pyarchinit_pyqgis, Order_layers,Order_layer_v2
+from  pyarchinit_pyqgis import Pyarchinit_pyqgis, Order_layer_v2
 from  sortpanelmain import SortPanelMain
 from  pyarchinit_db_manager import *
 from  pyarchinit_exp_USsheet_pdf import *
@@ -213,7 +213,10 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			self.comboBox_per_iniz.setEditText("")
 		elif self.STATUS_ITEMS[self.BROWSE_STATUS] == "Usa":
 			if len(self.DATA_LIST) > 0:
-				self.comboBox_per_iniz.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
+				try:
+					self.comboBox_per_iniz.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
+				except:
+					pass #non vi sono periodi per questo scavo
 
 
 	def charge_periodo_fin_list(self):
@@ -238,7 +241,10 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			self.comboBox_per_fin.setEditText("")
 		elif self.STATUS_ITEMS[self.BROWSE_STATUS] == "Usa":
 			if len(self.DATA_LIST) > 0:
-				self.comboBox_per_fin.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
+				try:
+					self.comboBox_per_fin.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
+				except:
+					pass
 
 
 	def on_pushButton_go_to_us_pressed(self):
@@ -731,6 +737,91 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.launch_matrix_exp_if(QMessageBox.warning(self,u'ATTENZIONE',u"Si consiglia di lanciare il matrix e controllare se sono presenti paradossi stratigrafici prima di proseguire", QMessageBox.Cancel,1))
 
 		self.launch_order_layer_if(QMessageBox.warning(self,u'ATTENZIONE',u"Sei sicuro di voler proseguire? Se saranno presenti paradossi stratigrafici il sistema potrebbe andare in crush!", QMessageBox.Cancel,1))
+
+
+
+##	def launch_order_layer_if(self, msg):
+##		if msg == 1:
+##
+##			#report errori rapporti stratigrafici
+##			msg_tipo_rapp = "Manca il tipo di rapporto nell'US: \n"
+##			msg_nr_rapp = "Manca il numero del rapporto nell'US: \n"
+##			msg_paradx_rapp = "Paradosso nei rapporti: \n"
+##			msg_us_mancanti = "Mancano le seguenti schede US presenti nei rapporti: \n"
+##			#report errori rapporti stratigrafici
+##
+##			data = []
+##			for sing_rec in self.DATA_LIST:
+##				us = sing_rec.us
+##				rapporti_stratigrafici = eval(sing_rec.rapporti)
+##				for sing_rapp in rapporti_stratigrafici:
+##					if len(sing_rapp) != 2:
+##						msg_nr_rapp = msg_nr_rapp + str(sing_rapp) + "relativo a: " + str(us) + " \n"
+##						
+##					try:
+##						if sing_rapp[0] == 'Taglia' or  sing_rapp[0] == 'Copre' or  sing_rapp[0] == 'Si appoggia a' or  sing_rapp[0] == 'Riempie':  #or sing_rapp[0] == 'Si lega a' or  sing_rapp[0] == 'Uguale a'
+##							try:
+##								if sing_rapp[1] != '':
+##									harris_rapp = (int(us), int(sing_rapp[1]))
+####									if harris_rapp== (1, 67):
+####										QMessageBox.warning(self, "Messaggio", "Magagna", QMessageBox.Ok)
+##									data.append(harris_rapp)
+##							except:
+##								msg_nr_rapp = msg_nr_rapp + str(us) + " \n"
+##					except:
+##						msg_tipo_rapp = msg_tipo_rapp + str(us) + " \n"
+##
+##			for i in data:
+##				temp_tup = (i[1],i[0]) #controlla che nn vi siano rapporti inversi dentro la lista DA PROBLEMI CON GLI UGUALE A E I SI LEGA A
+##				#QMessageBox.warning(self, "Messaggio", "Temp_tup" + str(temp_tup), QMessageBox.Ok)
+##				if data.count(temp_tup) != 0:
+##					msg_paradx_rapp = msg_paradx_rapp + '\n'+str(i) + '\n' + str(temp_tup)
+##					data.remove(i)
+##			#OK
+####			QMessageBox.warning(self, "Messaggio", "DATA LIST" + str(data), QMessageBox.Ok)
+##
+##			#script order layer from pyqgis
+##			OL = Order_layer_v2(self.DB_MANAGER)
+##			order_layer_dict = OL.main_order_layer()
+##			#script order layer from pyqgis
+##			QMessageBox.warning(self,u'ATTENZIONE',str(order_layer_dict), QMessageBox.Cancel,1)
+##			
+####			if order_layer_dict == "error":
+####				QMessageBox.warning(self, "Messaggio", "Errore nei rapporti stratigrafici", QMessageBox.Ok)
+####			else:
+##			sito = self.DATA_LIST[0].sito #self.comboBox_sito_rappcheck.currentText()
+##			area = self.DATA_LIST[0].area #self.comboBox_area.currentText()
+##			order_number = ""
+##			us = ""
+##			for k,v in order_layer_dict.items():
+##				order_number = str(k)
+##				us = v
+##				for sing_us in v:
+##					search_dict = {'sito' : "'"+unicode(sito)+"'", 'area':"'"+unicode(area)+"'", 'us' : int(sing_us)}
+##					try:
+##						records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS) #carica tutti i dati di uno scavo ordinati per numero di US
+##
+##						self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, self.ID_TABLE, [int(records[0].id_us)], ['order_layer'], [order_number])
+##						self.lineEditOrderLayer.setText(unicode(order_number))
+##					except Exception, e:
+##						msg_us_mancanti = str(e) #msg_us_mancanti + "\n"+str(sito) + "area: " + str(area) + " us: " + (us)
+##			
+##			#blocco output errori
+##			filename_tipo_rapporti_mancanti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'tipo_rapporti_mancanti.txt')
+##			filename_nr_rapporti_mancanti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'nr_rapporti_mancanti.txt')
+##			filename_paradosso_rapporti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'paradosso_rapporti.txt')
+##			filename_us_mancanti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'us_mancanti.txt')
+##
+##			self.testing(filename_tipo_rapporti_mancanti, str(msg_tipo_rapp))
+##			self.testing(filename_nr_rapporti_mancanti, str(msg_nr_rapp))
+##			self.testing(filename_paradosso_rapporti, str(msg_paradx_rapp))
+##			self.testing(filename_us_mancanti, str(msg_us_mancanti))
+##		else:
+##			QMessageBox.warning(self,u'ATTENZIONE',u"Sistema di ordinamento US abortito", QMessageBox.Ok)
+##		#blocco output errori
+####
+
+
 		
 	def launch_order_layer_if(self, msg):
 		if msg == 1:
@@ -793,9 +884,9 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 						records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS) #carica tutti i dati di uno scavo ordinati per numero di US
 
 						self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, self.ID_TABLE, [int(records[0].id_us)], ['order_layer'], [order_number])
-						self.lineEditOrderLayer.setText(unicode(order_number))
+						self.on_pushButton_view_all_pressed()
 					except Exception, e:
-						msg_us_mancanti = msg_us_mancanti + "\n"+str(sito) + "area: " + str(area) + " us: " + (us)
+						msg_us_mancanti = str(e)#msg_us_mancanti + "\n"+str(sito) + "area: " + str(area) + " us: " + (us)
 			
 			#blocco output errori
 			filename_tipo_rapporti_mancanti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'tipo_rapporti_mancanti.txt')
@@ -807,6 +898,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			self.testing(filename_nr_rapporti_mancanti, str(msg_nr_rapp))
 			self.testing(filename_paradosso_rapporti, str(msg_paradx_rapp))
 			self.testing(filename_us_mancanti, str(msg_us_mancanti))
+			QMessageBox.warning(self,u'ATTENZIONE',u"Sistema di ordinamento Terminato", QMessageBox.Ok)
 		else:
 			QMessageBox.warning(self,u'ATTENZIONE',u"Sistema di ordinamento US abortito", QMessageBox.Ok)
 		#blocco output errori
@@ -856,42 +948,45 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
 
 	def on_pushButton_sort_pressed(self):
-		dlg = SortPanelMain(self)
-		dlg.insertItems(self.SORT_ITEMS)
-		dlg.exec_()
-
-		items,order_type = dlg.ITEMS, dlg.TYPE_ORDER
-
-		self.SORT_ITEMS_CONVERTED = []
-		for i in items:
-			QMessageBox.warning(self, "Messaggio",i, QMessageBox.Ok)
-			self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[unicode(i)]) #apportare la modifica nellle altre schede
-
-		self.SORT_MODE = order_type
-		self.empty_fields()
-
-		id_list = []
-		for i in self.DATA_LIST:
-			id_list.append(eval("i." + self.ID_TABLE))
-		self.DATA_LIST = []
-
-		temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
-
-		for i in temp_data_list:
-			self.DATA_LIST.append(i)
-		self.BROWSE_STATUS = 'b'
-		self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-		if type(self.REC_CORR) == "<type 'str'>":
-			corr = 0
+		if self.check_record_state() == 1:
+			pass
 		else:
-			corr = self.REC_CORR
+			dlg = SortPanelMain(self)
+			dlg.insertItems(self.SORT_ITEMS)
+			dlg.exec_()
 
-		self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
-		self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
-		self.SORT_STATUS = "o"
-		self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
-		self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
-		self.fill_fields()
+			items,order_type = dlg.ITEMS, dlg.TYPE_ORDER
+
+			self.SORT_ITEMS_CONVERTED = []
+			for i in items:
+				#QMessageBox.warning(self, "Messaggio",i, QMessageBox.Ok)
+				self.SORT_ITEMS_CONVERTED.append(self.CONVERSION_DICT[unicode(i)]) #apportare la modifica nellle altre schede
+
+			self.SORT_MODE = order_type
+			self.empty_fields()
+
+			id_list = []
+			for i in self.DATA_LIST:
+				id_list.append(eval("i." + self.ID_TABLE))
+			self.DATA_LIST = []
+
+			temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+
+			for i in temp_data_list:
+				self.DATA_LIST.append(i)
+			self.BROWSE_STATUS = 'b'
+			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+			if type(self.REC_CORR) == "<type 'str'>":
+				corr = 0
+			else:
+				corr = self.REC_CORR
+
+			self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
+			self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
+			self.SORT_STATUS = "o"
+			self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
+			self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
+			self.fill_fields()
 
 	def on_toolButtonGis_toggled(self):
 		if self.toolButtonGis.isChecked() == True:
@@ -918,10 +1013,14 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			self.pyQGIS.addRasterLayer()
 
 	def on_pushButton_new_rec_pressed(self):
-		if self.BROWSE_STATUS == "b":
-			if bool(self.DATA_LIST) == True:
-				if self.records_equal_check() == 1:
-					msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+		if bool(self.DATA_LIST) == True:
+			if self.data_error_check() == 1:
+				pass
+			else:
+				if self.BROWSE_STATUS == "b":
+					if bool(self.DATA_LIST) == True:
+						if self.records_equal_check() == 1:
+							msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 
 		if self.BROWSE_STATUS != "n":
 			self.BROWSE_STATUS = "n"
@@ -948,13 +1047,15 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def on_pushButton_save_pressed(self):
 		#save record
 		if self.BROWSE_STATUS == "b":
-			if self.records_equal_check() == 1:
-				self.update_if(QMessageBox.warning(self,u'ATTENZIONE',u"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-				self.SORT_STATUS = "n"
-				self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
-				self.enable_button(1)
-			else:
-				QMessageBox.warning(self, "ATTENZIONE", u"Non e' stata realizzata alcuna modifica.",  QMessageBox.Ok)
+			if self.data_error_check() == 0:
+				if self.records_equal_check() == 1:
+					self.update_if(QMessageBox.warning(self,'ATTENZIONE',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+					self.SORT_STATUS = "n"
+					self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
+					self.enable_button(1)
+					self.fill_fields(self.REC_CORR)
+				else:
+					QMessageBox.warning(self, "ATTENZIONE", "Non è stata realizzata alcuna modifica.",  QMessageBox.Ok)
 		else:
 			if self.data_error_check() == 0:
 				test_insert = self.insert_new_rec()
@@ -968,15 +1069,18 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
 					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-					self.fill_fields(self.REC_CORR)
+
 
 					self.setComboBoxEditable(["self.comboBox_sito"],1)
 					self.setComboBoxEditable(["self.comboBox_area"],1)
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
 					self.setComboBoxEnable(["self.comboBox_area"],"False")
 					self.setComboBoxEnable(["self.lineEdit_us"],"False")
+					self.fill_fields(self.REC_CORR)
 
 					self.enable_button(1)
+			else:
+				QMessageBox.warning(self, "ATTENZIONE", "Problema nell'inserimento dati",  QMessageBox.Ok)
 
 	def on_pushButton_rapp_check_pressed(self):
 		sito_check = unicode(self.comboBox_sito_rappcheck.currentText())
@@ -1194,6 +1298,15 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def on_pushButton_remove_row_documentazione_pressed(self):
 		self.remove_row('self.tableWidget_documentazione')
 
+	def check_record_state(self):
+		ec = self.data_error_check()
+		if ec == 1:
+			return 1 #ci sono errori di immissione
+		elif self.records_equal_check() == 1 and ec == 0:
+			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+			#self.charge_records()
+			return 0 #non ci sono errori di immissione
+
 
 	#records surf functions
 	def on_pushButton_view_all_pressed(self):
@@ -1213,61 +1326,62 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 
 
+	#records surf functions
 	def on_pushButton_first_rec_pressed(self):
-		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-		try:
-			self.empty_fields()
-			self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
-			self.fill_fields(0)
-			self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-		except Exception, e:
-			QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
-
+		if self.check_record_state() == 1:
+			pass
+		else:
+			try:
+				self.empty_fields()
+				self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
+				self.fill_fields(0)
+				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+			except Exception, e:
+				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 	def on_pushButton_last_rec_pressed(self):
-		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-		try:
-			self.empty_fields()
-			self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
-			self.fill_fields(self.REC_CORR)
-			self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-		except Exception, e:
-			QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
-
+		if self.check_record_state() == 1:
+			pass
+		else:
+			try:
+				self.empty_fields()
+				self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
+				self.fill_fields(self.REC_CORR)
+				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+			except Exception, e:
+				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 	def on_pushButton_prev_rec_pressed(self):
-		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-
-		self.REC_CORR = self.REC_CORR-1
-		if self.REC_CORR == -1:
-			self.REC_CORR = 0
-			QMessageBox.warning(self, "Errore", "Sei al primo record!",  QMessageBox.Ok)
+		if self.check_record_state() == 1:
+			pass
 		else:
-			try:
-				self.empty_fields()
-				self.fill_fields(self.REC_CORR)
-				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-			except Exception, e:
-				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
+			self.REC_CORR = self.REC_CORR-1
+			if self.REC_CORR == -1:
+				self.REC_CORR = 0
+				QMessageBox.warning(self, "Errore", "Sei al primo record!",  QMessageBox.Ok)
+			else:
+				try:
+					self.empty_fields()
+					self.fill_fields(self.REC_CORR)
+					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+				except Exception, e:
+					QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 	def on_pushButton_next_rec_pressed(self):
-		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-		self.REC_CORR = self.REC_CORR+1
-		if self.REC_CORR >= self.REC_TOT:
-			self.REC_CORR = self.REC_CORR-1
-			QMessageBox.warning(self, "Errore", "Sei all'ultimo record!",  QMessageBox.Ok)
+		if self.check_record_state() == 1:
+			pass
 		else:
-			try:
-				self.empty_fields()
-				self.fill_fields(self.REC_CORR)
-				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-			except Exception, e:
-				QMessageBox.warning(self, "Errore", str(self.REC_CORR),  QMessageBox.Ok)
-				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
+			self.REC_CORR = self.REC_CORR+1
+			if self.REC_CORR >= self.REC_TOT:
+				self.REC_CORR = self.REC_CORR-1
+				QMessageBox.warning(self, "Errore", "Sei all'ultimo record!",  QMessageBox.Ok)
+			else:
+				try:
+					self.empty_fields()
+					self.fill_fields(self.REC_CORR)
+					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+				except Exception, e:
+					QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
 
 	def on_pushButton_delete_pressed(self):
@@ -1295,45 +1409,46 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			if bool(self.DATA_LIST) == True:
 				self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
 				self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
-				self.fill_fields()
 				self.BROWSE_STATUS = "b"
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 				self.charge_list()
+				self.fill_fields()
 		self.SORT_STATUS = "n"
 		self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
 
 
 	def on_pushButton_new_search_pressed(self):
-		if self.records_equal_check() == 1 and self.BROWSE_STATUS == "b":
-			msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-		#else:
-		self.enable_button_search(0)
+		if self.BROWSE_STATUS != "f" and self.check_record_state() == 1:
+			pass
+		else:
+			self.enable_button_search(0)
 
-		#set the GUI for a new search
 
-		if self.BROWSE_STATUS != "f":
-			self.BROWSE_STATUS = "f"
-			###
-			self.lineEdit_data_schedatura.setText("")
-			self.lineEdit_anno.setText("")
-			self.comboBox_formazione.setEditText("")
-			self.comboBox_metodo.setEditText("")
-			self.setComboBoxEditable(["self.comboBox_sito"],1)
-			self.setComboBoxEditable(["self.comboBox_area"],1)
-			self.setComboBoxEnable(["self.comboBox_sito"],"True")
-			self.setComboBoxEnable(["self.comboBox_area"],"True")
-			self.setComboBoxEnable(["self.lineEdit_us"],"True")
-			self.setComboBoxEnable(["self.textEdit_descrizione"],"False")
-			self.setComboBoxEnable(["self.textEdit_interpretazione"],"False")
-			self.setTableEnable(["self.tableWidget_campioni", "self.tableWidget_rapporti","self.tableWidget_inclusi",
-			"self.tableWidget_documentazione"], "False")
-			###
-			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-			self.set_rec_counter('','')
-			self.label_sort.setText(self.SORTED_ITEMS["n"])
-			self.charge_list()
-			self.empty_fields()
+			#set the GUI for a new search
+
+			if self.BROWSE_STATUS != "f":
+				self.BROWSE_STATUS = "f"
+				###
+				self.lineEdit_data_schedatura.setText("")
+				self.lineEdit_anno.setText("")
+				self.comboBox_formazione.setEditText("")
+				self.comboBox_metodo.setEditText("")
+				self.setComboBoxEditable(["self.comboBox_sito"],1)
+				self.setComboBoxEditable(["self.comboBox_area"],1)
+				self.setComboBoxEnable(["self.comboBox_sito"],"True")
+				self.setComboBoxEnable(["self.comboBox_area"],"True")
+				self.setComboBoxEnable(["self.lineEdit_us"],"True")
+				self.setComboBoxEnable(["self.textEdit_descrizione"],"False")
+				self.setComboBoxEnable(["self.textEdit_interpretazione"],"False")
+				self.setTableEnable(["self.tableWidget_campioni", "self.tableWidget_rapporti","self.tableWidget_inclusi",
+				"self.tableWidget_documentazione"], "False")
+				###
+				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
+				self.set_rec_counter('','')
+				self.label_sort.setText(self.SORTED_ITEMS["n"])
+				self.charge_list()
+				self.empty_fields()
 
 
 
@@ -1408,7 +1523,6 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
 
-					self.fill_fields(self.REC_CORR)
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 
@@ -1418,7 +1532,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					
 					self.setTableEnable(["self.tableWidget_campioni", "self.tableWidget_rapporti","self.tableWidget_inclusi",
 												"self.tableWidget_documentazione"], "True")
-
+					self.fill_fields(self.REC_CORR)
 				else:
 					self.DATA_LIST = []
 
@@ -1728,7 +1842,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		unicode(self.comboBox_consistenza.currentText()),              #24 - consistenza
 		unicode(self.lineEdit_struttura.text()),									#25 - struttura
 		unicode(self.lineEdit_codice_periodo.text()),							#26 - codice periodo
-		unicode(order_layer),														#27 - order layer
+		str(order_layer),														#27 - order layer
 		unicode(documentazione)
 		]
 

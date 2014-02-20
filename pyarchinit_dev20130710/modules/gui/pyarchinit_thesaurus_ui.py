@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_thesaurus_ui.ui'
 #
-# Created: Wed Feb 05 18:26:55 2014
+# Created: Mon Feb 17 11:37:43 2014
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -321,6 +321,7 @@ class Ui_DialogThesaurus(object):
         self.comboBox_tipologia_sigla.addItem(_fromUtf8(""))
         self.comboBox_tipologia_sigla.addItem(_fromUtf8(""))
         self.comboBox_tipologia_sigla.addItem(_fromUtf8(""))
+        self.comboBox_tipologia_sigla.addItem(_fromUtf8(""))
         self.gridLayout_6.addWidget(self.comboBox_tipologia_sigla, 5, 0, 1, 1)
         self.comboBox_nome_tabella = QtGui.QComboBox(DialogThesaurus)
         self.comboBox_nome_tabella.setEnabled(False)
@@ -335,6 +336,7 @@ class Ui_DialogThesaurus(object):
         self.comboBox_nome_tabella.setMaxVisibleItems(99999)
         self.comboBox_nome_tabella.setMaxCount(2147483647)
         self.comboBox_nome_tabella.setObjectName(_fromUtf8("comboBox_nome_tabella"))
+        self.comboBox_nome_tabella.addItem(_fromUtf8(""))
         self.comboBox_nome_tabella.addItem(_fromUtf8(""))
         self.comboBox_nome_tabella.addItem(_fromUtf8(""))
         self.comboBox_nome_tabella.addItem(_fromUtf8(""))
@@ -395,14 +397,16 @@ class Ui_DialogThesaurus(object):
         self.label.setText(QtGui.QApplication.translate("DialogThesaurus", "Sigla", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2.setText(QtGui.QApplication.translate("DialogThesaurus", "Sigla estesa", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBox_tipologia_sigla.setItemText(0, QtGui.QApplication.translate("DialogThesaurus", "Tipologia di struttura", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_tipologia_sigla.setItemText(1, QtGui.QApplication.translate("DialogThesaurus", "definizione stratigrafica", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_tipologia_sigla.setItemText(2, QtGui.QApplication.translate("DialogThesaurus", "tipo di caratterizzazione", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_tipologia_sigla.setItemText(3, QtGui.QApplication.translate("DialogThesaurus", "tipo di us", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_tipologia_sigla.setItemText(4, QtGui.QApplication.translate("DialogThesaurus", "tipo reperto", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_tipologia_sigla.setItemText(1, QtGui.QApplication.translate("DialogThesaurus", "definizione sito", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_tipologia_sigla.setItemText(2, QtGui.QApplication.translate("DialogThesaurus", "definizione stratigrafica", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_tipologia_sigla.setItemText(3, QtGui.QApplication.translate("DialogThesaurus", "tipo di caratterizzazione", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_tipologia_sigla.setItemText(4, QtGui.QApplication.translate("DialogThesaurus", "tipo di us", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_tipologia_sigla.setItemText(5, QtGui.QApplication.translate("DialogThesaurus", "tipo reperto", None, QtGui.QApplication.UnicodeUTF8))
         self.comboBox_nome_tabella.setItemText(0, QtGui.QApplication.translate("DialogThesaurus", "us_table", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_nome_tabella.setItemText(1, QtGui.QApplication.translate("DialogThesaurus", "struttura_table", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_nome_tabella.setItemText(2, QtGui.QApplication.translate("DialogThesaurus", "pyunitastratigrafiche", None, QtGui.QApplication.UnicodeUTF8))
-        self.comboBox_nome_tabella.setItemText(3, QtGui.QApplication.translate("DialogThesaurus", "inventario_materiali_table", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_nome_tabella.setItemText(1, QtGui.QApplication.translate("DialogThesaurus", "site_table", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_nome_tabella.setItemText(2, QtGui.QApplication.translate("DialogThesaurus", "struttura_table", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_nome_tabella.setItemText(3, QtGui.QApplication.translate("DialogThesaurus", "pyunitastratigrafiche", None, QtGui.QApplication.UnicodeUTF8))
+        self.comboBox_nome_tabella.setItemText(4, QtGui.QApplication.translate("DialogThesaurus", "inventario_materiali_table", None, QtGui.QApplication.UnicodeUTF8))
         self.label_11.setText(QtGui.QApplication.translate("DialogThesaurus", "Tipologia sigla", None, QtGui.QApplication.UnicodeUTF8))
         self.label_10.setText(QtGui.QApplication.translate("DialogThesaurus", "Nome tabella", None, QtGui.QApplication.UnicodeUTF8))
         self.label_13.setText(QtGui.QApplication.translate("DialogThesaurus", "Dati descrittivi", None, QtGui.QApplication.UnicodeUTF8))
