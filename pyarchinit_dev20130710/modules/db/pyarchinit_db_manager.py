@@ -44,7 +44,7 @@ class Pyarchinit_db_management:
 	if os.name == 'posix':
 		boolean = 'True'
 	elif os.name == 'nt':
-		boolean = 'False'
+		boolean = 'True'
 
 	def __init__(self, c):
 		self.conn_str = c
@@ -878,7 +878,7 @@ class Pyarchinit_db_management:
 		res = self.engine.execute(sql_query_string)
 		return res
 
-	def query_in_contains(self, value_list):
+	def query_in_contains(self, value_list, sitof, areaf):
 		self.value_list = value_list
 
 		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
@@ -889,60 +889,71 @@ class Pyarchinit_db_management:
 		while self.value_list:
 			chunk = self.value_list[0:n]
 			self.value_list = self.value_list[n:]
-			res_list.extend(session.query(US).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
+			res_list.extend(session.query(US).filter_by(sito=sitof).filter_by(area=areaf).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
 			#res_list.extend(us for us, in session.query(US.us).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
 
 		return res_list
 
 
 	def select_like_from_db_sql(self, rapp_list, us_rapp_list):
-		self.us_rapp_list = us_rapp_list
-		rapp_type = rapp_list
-		query_string_base = """session.query(US).filter(or_("""
-		query_list = []
+		#this is a test
+		pass
+##		self.us_rapp_list = us_rapp_list
+##		rapp_type = rapp_list
+##		query_string_base = """session.query(US).filter(or_("""
+##		query_list = []
+##
+##		#costruisce la stringa che trova i like
+##		for sing_us_rapp in self.us_rapp_list:
+##			for sing_rapp in rapp_type:
+##				sql_query_string = """US.rapporti.contains("[u'%s', u'%s']")""" % (sing_rapp,sing_us_rapp) #funziona!!!
+##				query_list.append(sql_query_string)
+##
+##		string_contains = ""
+##		for sing_contains in range(len(query_list)):
+##			if sing_contains == 0:
+##				string_contains = query_list[sing_contains]
+##			else:
+##				string_contains = string_contains + "," + query_list[sing_contains]
+##
+##		query_string_execute = query_string_base + string_contains + '))'
+##
+##		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
+##		session = Session()
+##		res = eval(query_string_execute)
+##
+##		return res
 
-		#costruisce la stringa che trova i like
-		for sing_us_rapp in self.us_rapp_list:
-			for sing_rapp in rapp_type:
-				sql_query_string = """US.rapporti.contains("[u'%s', u'%s']")""" % (sing_rapp,sing_us_rapp) #funziona!!!
-				query_list.append(sql_query_string)
-
-		string_contains = ""
-		for sing_contains in range(len(query_list)):
-			if sing_contains == 0:
-				string_contains = query_list[sing_contains]
-			else:
-				string_contains = string_contains + "," + query_list[sing_contains]
-
-		query_string_execute = query_string_base + string_contains + '))'
-
-		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
-		session = Session()
-		res = eval(query_string_execute)
-
-		return res
-
-	def select_not_like_from_db_sql(self):
+	def select_not_like_from_db_sql(self, sitof, areaf):
 		#NB per funzionare con postgres è necessario che al posto di " ci sia '
 		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
 		session = Session()
-		res = session.query(US).filter(and_(~US.rapporti.like("%'Taglia'%"), ~US.rapporti.like("%'Si appoggia a'%"), ~US.rapporti.like("%'Copre'%"), ~US.rapporti.like("%'Riempie'%")))
+		res = session.query(US).filter_by(sito=sitof).filter_by(area=areaf).filter(and_(~US.rapporti.like("%'Taglia'%"), ~US.rapporti.like("%'Si appoggia a'%"), ~US.rapporti.like("%'Copre'%"), ~US.rapporti.like("%'Riempie'%")))
 		#MyModel.query.filter(sqlalchemy.not_(Mymodel.name.contains('a_string')))
 		return res
 
-##	def query_in_idusb(self):
+	def query_in_idusb(self):
+		pass
+		#test che apre funzionare da verificare
 ##		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
 ##		session = Session()
-##		value_list = ["[u'Coperto da', u'1']", "[u'Coperto da', u'2']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']"]
+##		value_list = ["[u'Coperto da', u'1']"]
 ##		res_list = []
 ##		n = len(value_list)-1
-##		while value_list:
-##			chunk = value_list[0:n]
-##			value_list = value_list[n:]
-##			res_list.extend(session.query(US).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
-##			#res_list.extend(us for us, in session.query(US.us).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
+##		area = [1]
+##		if len(value_list) == 1:
+##			chunk = value_list[0]
+##			#res_list.extend(session.query(US).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
+##			res_list.extend(session.query(US).filter_by(sito='Sito archeologico').filter_by(area=1).filter(or_(US.rapporti.contains(chunk) )))
+##		else:
+##			while value_list:
+##				chunk = value_list[0:n]
+##				value_list = value_list[n:]
+##				#res_list.extend(session.query(US).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
+##				res_list.extend(session.query(US).filter_by(sito='Sito archeologico').filter_by(area=1).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
+##	##			res_list.extend(area for area, in session.query(US.area).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
 
-		return res_list
+##		return res_list
 """
 class Order_layer_v2test:
 	order_dict = {}
@@ -1044,17 +1055,21 @@ class Order_layer_v2test:
 """
 
 
-##def main():
+def main():
+	pass
 ##	order_layer = Order_layer_v2test()
 ##	print order_layer.main_order_layer()
-######	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
-######	db.connection()
-######	res = db.query_in_idusb()
-######	print "gigi"
-######	print len(res)
-######	for i in res:
-######		print str(i.us)
+##	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
+##	db.connection()
+##	res = db.query_in_idusb()
+####	print "gigi"
+####	print len(res)
+##	for i in res:
+##		print str(i.us)
 ##main()
+
+if __name__ == '__main__':
+	main()
 """
 	for rec in data:
 
@@ -1216,4 +1231,17 @@ if __name__ == '__main__':
 
 	#db.update_for()
 """
+##def query_in_idusb(self):
+##	Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
+##	session = Session()
+##	value_list = ["[u'Coperto da', u'1']", "[u'Coperto da', u'2']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']"]
+##	res_list = []
+##	n = len(value_list)-1
+##	while value_list:
+##		chunk = value_list[0:n]
+##		value_list = value_list[n:]
+##		res_list.extend(session.query(US).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
+##		#res_list.extend(us for us, in session.query(US.us).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
+##
+##	return res_list
 

@@ -74,6 +74,7 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 		#self.charge_data()
 
 	def connect(self):
+		QMessageBox.warning(self, "Alert", "Sistema sperimentale. Esporta le schede PFF in /vostro_utente/pyarchinit_DB_folder. Sostituisce i documenti gia' presenti. Se volete conservarli fatene una copia o rinominateli." ,  QMessageBox.Ok)
 		from pyarchinit_conn_strings import *
 
 		conn = Connection()

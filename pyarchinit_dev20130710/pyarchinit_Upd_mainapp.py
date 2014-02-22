@@ -76,6 +76,7 @@ class pyarchinit_Upd_Values(QDialog, Ui_DialogSostituisciValori):
 
 
 	def load_connection(self):
+		QMessageBox.warning(self, "Alert", "Sistema in corso di abbandono. A breve verra' eliminato." ,  QMessageBox.Ok)
 		from pyarchinit_conn_strings import *
 
 		conn = Connection()

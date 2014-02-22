@@ -41,7 +41,7 @@ try:
 	from  pyarchinit_matrix_exp import *
 except:
 	pass
-from  pyarchinit_pyqgis import Pyarchinit_pyqgis, Order_layers
+from  pyarchinit_pyqgis import Pyarchinit_pyqgis
 from  sortpanelmain import SortPanelMain
 from  pyarchinit_db_manager import *
 from  pyarchinit_exp_USsheet_pdf import *
@@ -73,7 +73,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 	ID_TABLE:ID_TABLE,
 	"Sito":"sito",
 	"Numero scheda":"nr_scheda_taf",
-	"Tipo struttura scheda":"sigla_struttura",
+	"Sigla struttura":"sigla_struttura",
 	"Nr struttura":"nr_struttura",
 	"Nr Individuo": "nr_individuo",
 	"Rito":"rito",
@@ -105,7 +105,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 				ID_TABLE, 
 				"Sito",
 				"Numero scheda",
-				"Tipo struttura",
+				"Sigla struttura",
 				"Nr struttura",
 				"Nr Individuo",
 				"Rito",
@@ -900,6 +900,12 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 				self.setComboBoxEnable(["self.comboBox_sigla_struttura"],"True")
 				self.setComboBoxEnable(["self.comboBox_nr_struttura"],"True")
 				self.setComboBoxEnable(["self.comboBox_nr_individuo"],"True")
+
+				self.setComboBoxEnable(["self.textEdit_descrizione_taf"],"False")
+				self.setComboBoxEnable(["self.textEdit_interpretazione_taf"],"False")
+				self.setComboBoxEnable(["self.textEdit_descrizione_corredo"],"False")
+				self.setTableEnable(["self.tableWidget_caratteristiche", "self.tableWidget_corredo_tipo"], "False")
+
 				###
 				self.label_status_2.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.set_rec_counter('','')
@@ -1008,6 +1014,10 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 					self.setComboBoxEnable(["self.comboBox_sigla_struttura"],"False")
 					self.setComboBoxEnable(["self.comboBox_nr_struttura"],"False")
 					self.setComboBoxEnable(["self.comboBox_nr_individuo"],"False")
+					self.setComboBoxEnable(["self.textEdit_descrizione_taf"],"True")
+					self.setComboBoxEnable(["self.textEdit_interpretazione_taf"],"True")
+					self.setComboBoxEnable(["self.textEdit_descrizione_corredo"],"True")
+					self.setTableEnable(["self.tableWidget_caratteristiche", "self.tableWidget_corredo_tipo"], "True")
 				else:
 					self.DATA_LIST = []
 					for i in res:
@@ -1037,6 +1047,11 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 					self.setComboBoxEnable(["self.comboBox_sigla_struttura"],"False")
 					self.setComboBoxEnable(["self.comboBox_nr_struttura"],"False")
 					self.setComboBoxEnable(["self.comboBox_nr_individuo"],"False")
+					self.setComboBoxEnable(["self.textEdit_descrizione_taf"],"True")
+					self.setComboBoxEnable(["self.textEdit_interpretazione_taf"],"True")
+					self.setComboBoxEnable(["self.textEdit_descrizione_corredo"],"True")
+					self.setTableEnable(["self.tableWidget_caratteristiche", "self.tableWidget_corredo_tipo"], "True")
+
 
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
 		self.enable_button_search(1)
@@ -1398,6 +1413,14 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 
 		for fn in field_names:
 			cmd = ('%s%s%s%s') % (fn, '.setEnabled(', v, ')')
+			eval(cmd)
+
+	def setTableEnable(self, t, v):
+		tab_names = t
+		value = v
+
+		for tn in tab_names:
+			cmd = ('%s%s%s%s') % (tn, '.setEnabled(', v, ')')
 			eval(cmd)
 
 	def testing(self, name_file, message):

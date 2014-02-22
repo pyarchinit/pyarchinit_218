@@ -691,6 +691,14 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 				self.setComboBoxEnable(["self.comboBox_sito"],True)
 				self.setComboBoxEnable(["self.comboBox_sigla_struttura"],True)
 				self.setComboBoxEnable(["self.numero_struttura"],True)
+
+				self.setComboBoxEnable(["self.textEdit_descrizione_struttura"],"False")
+				self.setComboBoxEnable(["self.textEdit_interpretazione_struttura"],"False")
+				self.setTableEnable(["self.tableWidget_materiali_impiegati", "self.tableWidget_elementi_strutturali","self.tableWidget_rapporti",
+				"self.tableWidget_misurazioni"], "False")
+
+
+
 				###
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.set_rec_counter('','')
@@ -766,6 +774,12 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 					self.setComboBoxEnable(["self.numero_struttura"],"False")
 					self.setComboBoxEditable(["self.comboBox_sito"],1)
 					self.setComboBoxEditable(["self.comboBox_sigla_struttura"],1)
+					
+					self.setComboBoxEnable(["self.textEdit_descrizione_struttura"],"True")
+					self.setComboBoxEnable(["self.textEdit_interpretazione_struttura"],"True")
+					self.setTableEnable(["self.tableWidget_materiali_impiegati", "self.tableWidget_elementi_strutturali","self.tableWidget_rapporti",
+					"self.tableWidget_misurazioni"], "True")
+					
 					self.fill_fields(self.REC_CORR)
 				else:
 					self.DATA_LIST = []
@@ -794,6 +808,12 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
 					self.setComboBoxEnable(["self.comboBox_sigla_struttura"],"False")
 					self.setComboBoxEnable(["self.numero_struttura"],"False")
+					
+					self.setComboBoxEnable(["self.textEdit_descrizione_struttura"],"True")
+					self.setComboBoxEnable(["self.textEdit_interpretazione_struttura"],"True")
+					self.setTableEnable(["self.tableWidget_materiali_impiegati", "self.tableWidget_elementi_strutturali","self.tableWidget_rapporti",
+					"self.tableWidget_misurazioni"], "True")
+
 
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
 		self.enable_button_search(1)
@@ -916,6 +936,15 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 					sub_list.append(str(value.text()))
 			lista.append(sub_list)
 		return lista
+
+
+	def setTableEnable(self, t, v):
+		tab_names = t
+		value = v
+
+		for tn in tab_names:
+			cmd = ('%s%s%s%s') % (tn, '.setEnabled(', v, ')')
+			eval(cmd)
 
 	def empty_fields(self):
 

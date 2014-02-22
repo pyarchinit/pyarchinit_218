@@ -68,6 +68,7 @@ class pyarchinit_Images_directory_export(QDialog, Ui_Dialog_img_exp):
 		#self.charge_data()
 
 	def connect(self):
+		QMessageBox.warning(self, "Alert", "Sistema sperimentale solo per lo sviluppo" ,  QMessageBox.Ok)
 		from pyarchinit_conn_strings import *
 
 		conn = Connection()

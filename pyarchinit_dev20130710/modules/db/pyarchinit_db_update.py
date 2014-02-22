@@ -126,9 +126,12 @@ class DB_update:
 			self.engine.execute("update inventario_materiali_table set diagnostico = ''No")
 		
 		#aggiornamento tabelle geografiche
-
-		self.engine.execute("ALTER TABLE pyarchinit_strutture_ipotesi ADD COLUMN nr_strut integer DEFAULT 0 ")
-		self.engine.execute("ALTER TABLE pyarchinit_strutture_ipotesi ADD COLUMN sigla_strut varchar(3) DEFAULT 'NoD'")
+		try:
+			self.engine.execute("ALTER TABLE pyarchinit_strutture_ipotesi ADD COLUMN nr_strut integer DEFAULT 0 ")
+			self.engine.execute("ALTER TABLE pyarchinit_strutture_ipotesi ADD COLUMN sigla_strut varchar(3) DEFAULT 'NoD'")
+		except:
+			pass
+			#verificare se aggiorna le tabelle con i campi nuovi
 
 
 

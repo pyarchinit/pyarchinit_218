@@ -1175,6 +1175,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				self.setComboBoxEditable(['self.comboBox_lavato'], 1)
 				self.setComboBoxEnable(['self.comboBox_lavato'], 'True')
 				self.setComboBoxEnable(['self.lineEdit_num_inv'], 'True')
+				self.setComboBoxEnable(["self.textEdit_descrizione_reperto"],"False")
+				self.setTableEnable(["self.tableWidget_elementi_reperto", "self.tableWidget_misurazioni","self.tableWidget_rif_biblio",
+				"self.tableWidget_tecnologie"], "False")
 				###
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.set_rec_counter('','')
@@ -1289,6 +1292,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 					self.setComboBoxEditable(["self.comboBox_lavato"],1)
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
 					self.setComboBoxEnable(["self.lineEdit_num_inv"],"False")
+					self.setComboBoxEnable(["self.textEdit_descrizione_reperto"],"True")
+					self.setTableEnable(["self.tableWidget_elementi_reperto", "self.tableWidget_misurazioni","self.tableWidget_rif_biblio",
+					"self.tableWidget_tecnologie"], "True")
 					
 					check_for_buttons = 1
 
@@ -1318,6 +1324,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 					self.setComboBoxEnable(['self.lineEdit_num_inv'], "False")
 					self.setComboBoxEnable(['self.comboBox_sito'], "False")
+					self.setComboBoxEnable(["self.textEdit_descrizione_reperto"],"True")
+					self.setTableEnable(["self.tableWidget_elementi_reperto", "self.tableWidget_misurazioni","self.tableWidget_rif_biblio",
+					"self.tableWidget_tecnologie"], "True")
 					
 					check_for_buttons = 1
 
@@ -1778,6 +1787,15 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.pushButton_save.setEnabled(n)
 
 		self.pushButton_sort.setEnabled(n)
+
+
+	def setTableEnable(self, t, v):
+		tab_names = t
+		value = v
+
+		for tn in tab_names:
+			cmd = ('%s%s%s%s') % (tn, '.setEnabled(', v, ')')
+			eval(cmd)
 
 
 	def set_LIST_REC_CORR(self):

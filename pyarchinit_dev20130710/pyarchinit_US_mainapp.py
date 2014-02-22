@@ -734,6 +734,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 
 	def on_pushButton_orderLayers_pressed(self):
+		QMessageBox.warning(self,u'ATTENZIONE',u"""Il sistema accetta come dataset da elaborare ricerche su singolo SITO e AREA. Se state lanciando il sistema su siti o aree differenti, i dati di siti differenti saranno sovrascritti. Per terminare il sistema dopo l'Ok premere Cancel.""", QMessageBox.Ok)
+
 		self.launch_matrix_exp_if(QMessageBox.warning(self,u'ATTENZIONE',u"Si consiglia di lanciare il matrix e controllare se sono presenti paradossi stratigrafici prima di proseguire", QMessageBox.Cancel,1))
 
 		self.launch_order_layer_if(QMessageBox.warning(self,u'ATTENZIONE',u"Sei sicuro di voler proseguire? Se saranno presenti paradossi stratigrafici il sistema potrebbe andare in crush!", QMessageBox.Cancel,1))
@@ -862,17 +864,18 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					data.remove(i)
 			#OK
 ##			QMessageBox.warning(self, "Messaggio", "DATA LIST" + str(data), QMessageBox.Ok)
-
+			#Blocca il sistema di ordinamento su un sito ed area specifci in base alla ricerca eseguita sulla scheda US
+			sito = self.DATA_LIST[0].sito #self.comboBox_sito_rappcheck.currentText()
+			area = self.DATA_LIST[0].area #self.comboBox_area.currentText()
 			#script order layer from pyqgis
-			OL = Order_layer_v2(self.DB_MANAGER)
+			OL = Order_layer_v2(self.DB_MANAGER,sito,area)
 			order_layer_dict = OL.main_order_layer()
 			#script order layer from pyqgis
 			
 ##			if order_layer_dict == "error":
 ##				QMessageBox.warning(self, "Messaggio", "Errore nei rapporti stratigrafici", QMessageBox.Ok)
 ##			else:
-			sito = self.DATA_LIST[0].sito #self.comboBox_sito_rappcheck.currentText()
-			area = self.DATA_LIST[0].area #self.comboBox_area.currentText()
+
 			order_number = ""
 			us = ""
 			for k,v in order_layer_dict.items():
@@ -1529,9 +1532,9 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
 					self.setComboBoxEnable(["self.comboBox_area"],"False")
 					self.setComboBoxEnable(["self.lineEdit_us"],"False")
-					
-					self.setTableEnable(["self.tableWidget_campioni", "self.tableWidget_rapporti","self.tableWidget_inclusi",
-												"self.tableWidget_documentazione"], "True")
+					self.setComboBoxEnable(["self.textEdit_descrizione"],"True")
+					self.setComboBoxEnable(["self.textEdit_interpretazione"],"True")
+					self.setTableEnable(["self.tableWidget_campioni", "self.tableWidget_rapporti","self.tableWidget_inclusi","self.tableWidget_documentazione"], "True")
 					self.fill_fields(self.REC_CORR)
 				else:
 					self.DATA_LIST = []

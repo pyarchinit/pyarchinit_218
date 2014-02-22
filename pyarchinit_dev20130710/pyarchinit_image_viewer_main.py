@@ -109,6 +109,8 @@ class Main(QDialog, Ui_DialogImageViewer):
 		self.charge_sito_list()
 
 	def connection(self):
+		QMessageBox.warning(self, "Alert", "Sistema solo per sperimentazioni per lo sviluppo" ,  QMessageBox.Ok)
+
 		from pyarchinit_conn_strings import *
 		conn = Connection()
 		conn_str = conn.conn_str()

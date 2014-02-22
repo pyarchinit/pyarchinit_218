@@ -297,6 +297,7 @@ class pyarchinit_Detsesso(QDialog, Ui_DialogDetsesso):
 		self.pushButton_sort.setEnabled(n)
 
 	def on_pushButton_connect_pressed(self):
+		QMessageBox.warning(self, "Alert", "Sistema sperimentale solo per lo sviluppo" ,  QMessageBox.Ok)
 		from pyarchinit_conn_strings import *
 		conn = Connection()
 		conn_str = conn.conn_str()

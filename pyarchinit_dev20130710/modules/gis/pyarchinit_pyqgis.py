@@ -872,7 +872,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			else:
 				QMessageBox.warning(self, "TESTER", "Layer Individui non valido",QMessageBox.Ok)
 
-class Order_layers:
+class Order_layers_DEPRECATED:
 
 	if os.name == 'posix':
 		HOME = os.environ['HOME']
@@ -1014,9 +1014,14 @@ class Order_layer_v2:
 	order_count = 0
 	db = ''#Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
 	#db.connection()
+	SITO = ""
+	AREA = ""
+
 	
-	def __init__(self, dbconn):
+	def __init__(self, dbconn, SITOol, AREAol):
 		self.db = dbconn
+		self.SITO = SITOol
+		self.AREA = AREAol
 
 	def main_order_layer(self):
 		#ricava la base delle us del matrix a cui non succedono altre US
@@ -1031,7 +1036,7 @@ class Order_layer_v2:
 				rec_list_str.append(str(i))
 			#cerca prima di tutto se ci sono us uguali o che si legano alle US sottostanti
 			value_list_equal = self.create_list_values(['Uguale a', 'Si lega a'],rec_list_str)
-			res = self.db.query_in_contains(value_list_equal)
+			res = self.db.query_in_contains(value_list_equal, self.SITO, self.AREA)
 			
 			matrix_us_equal_level = []
 			for r in res:
@@ -1045,7 +1050,7 @@ class Order_layer_v2:
 			#le us che derivano dall'uguaglianza vanno aggiunte al rec_list_str
 			rec_list_str = rec_list_str + matrix_us_equal_level
 			value_list_post = value_list_equal = self.create_list_values(['Copre', 'Riempie', 'Taglia', 'Si appoggia a'],rec_list_str)
-			res = self.db.query_in_contains(value_list_post)
+			res = self.db.query_in_contains(value_list_post, self.SITO, self.AREA)
 
 			matrix_us_level = []
 			for r in res:
@@ -1061,7 +1066,7 @@ class Order_layer_v2:
 
 	#print bool()
 	def find_base_matrix(self):
-		res = self.db.select_not_like_from_db_sql()
+		res = self.db.select_not_like_from_db_sql(self.SITO, self.AREA)
 		rec_list = []
 		for rec in res:
 			rec_list.append(str(rec.us))

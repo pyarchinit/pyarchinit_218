@@ -616,6 +616,7 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 				self.setComboBoxEnable(["self.lineEdit_area"],"True")
 				self.setComboBoxEnable(["self.lineEdit_us"],"True")
 				self.setComboBoxEnable(["self.lineEdit_individuo"],"True")
+				self.setComboBoxEnable(["self.textEdit_osservazioni"],"False")
 
 				###
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
@@ -683,6 +684,7 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 					self.setComboBoxEnable(["self.lineEdit_area"],"False")
 					self.setComboBoxEnable(["self.lineEdit_us"],"False")
 					self.setComboBoxEnable(["self.lineEdit_individuo"],"False")
+					self.setComboBoxEnable(["self.textEdit_osservazioni"],"True")
 				else:
 					self.DATA_LIST = []
 					for i in res:
@@ -712,7 +714,7 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 					self.setComboBoxEnable(["self.lineEdit_area"],"False")
 					self.setComboBoxEnable(["self.lineEdit_us"],"False")
 					self.setComboBoxEnable(["self.lineEdit_individuo"],"False")
-
+					self.setComboBoxEnable(["self.textEdit_osservazioni"],"True")
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
 		
 		self.enable_button_search(1)

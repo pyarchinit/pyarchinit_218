@@ -89,8 +89,10 @@ class Comparision(QDialog, Ui_DialogImagesComparision):
 		QDialog.__init__(self)
 		self.setupUi(self)
 		self.setWindowTitle("pyArchInit - Images Comparision Tools")
+		QMessageBox.warning(self, "Alert", "Sistema sperimentale solo per lo sviluppo" ,  QMessageBox.Ok)
 
 	def connection(self):
+
 		from pyarchinit_conn_strings import *
 		conn = Connection()
 		conn_str = conn.conn_str()

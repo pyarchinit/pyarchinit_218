@@ -37,6 +37,7 @@ class pyarchinit_dbmanagment(QDialog, Ui_DBmanagment):
 		self.pyQGIS = Pyarchinit_pyqgis(self.iface)
 		QDialog.__init__(self)
 		self.setupUi(self)
+		QMessageBox.warning(self, "Alert", "Sistema sperimentale solo per lo sviluppo" ,  QMessageBox.Ok)
 		#self.customize_GUI() #call for GUI customizations
 
 		self.currentLayerId = None

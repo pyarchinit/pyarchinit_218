@@ -589,6 +589,7 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 				self.setComboBoxEnable(["self.comboBox_sito"],"True")
 				self.setComboBoxEnable(["self.comboBox_periodo"],"True")
 				self.setComboBoxEnable(["self.comboBox_fase"],"True")
+				self.setComboBoxEnable(["self.textEdit_descrizione_per"],"False")
 
 	def on_pushButton_search_go_pressed(self):
 		if self.BROWSE_STATUS != "f":
@@ -650,6 +651,8 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 					self.setComboBoxEnable(["self.comboBox_periodo"],"False")
 					self.setComboBoxEnable(["self.comboBox_fase"],"False")
 
+					self.setComboBoxEnable(["self.textEdit_descrizione_per"],"True")
+
 				else:
 					self.DATA_LIST = []
 					for i in res:
@@ -672,6 +675,7 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
 					self.setComboBoxEnable(["self.comboBox_periodo"],"False")
 					self.setComboBoxEnable(["self.comboBox_fase"],"False")
+					self.setComboBoxEnable(["self.textEdit_descrizione_per"],"True")
 
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
 
