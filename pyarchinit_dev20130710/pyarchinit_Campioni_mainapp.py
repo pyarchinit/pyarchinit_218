@@ -503,6 +503,7 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				###
 				self.setComboBoxEnable(["self.comboBox_sito"],"True")
+				self.setComboBoxEnable(["self.lineEdit_nr_campione"],"True")
 				self.setComboBoxEnable(["self.textEdit_descrizione_camp"],"False")
 				###
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
@@ -565,6 +566,7 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
+					self.setComboBoxEnable(["self.lineEdit_nr_campione"],"True")
 					self.setComboBoxEnable(["self.textEdit_descrizione_camp"],"True")
 
 				else:
@@ -586,6 +588,7 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 						strings = ("Sono stati trovati", self.REC_TOT, "records")
 
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
+					self.setComboBoxEnable(["self.lineEdit_nr_campione"],"True")
 					self.setComboBoxEnable(["self.textEdit_descrizione_camp"],"True")
 
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings, QMessageBox.Ok)

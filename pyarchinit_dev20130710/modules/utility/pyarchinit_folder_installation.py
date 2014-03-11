@@ -23,6 +23,7 @@
 import os
 import shutil
 from pyarchinit_OS_utility import *
+#import urllib
 
 class pyarchinit_Folder_installation:
 
@@ -51,6 +52,11 @@ class pyarchinit_Folder_installation:
 			OS_utility.create_dir(str(home_DB_path))
 
 			OS_utility.copy_file(config_copy_from_path, config_copy_to_path)
+			
+			#experimental
+			#il sistema funziona ma sovrascrive ogni volta il file. aggiungere sistema di verifica di presenza del file.
+			#urllib.urlretrieve( "https://raw.github.com/pyarchinit/pyarchinit_beta_test_dev/master/pyarchinit_dev20130710/modules/utility/DBfiles/pyarchinit_db.sqlite",db_copy_to_path)
+			
 			OS_utility.copy_file(db_copy_from_path, db_copy_to_path)
 
 

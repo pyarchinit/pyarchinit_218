@@ -1965,7 +1965,34 @@
        <property name="fieldGrowthPolicy">
         <enum>QFormLayout::FieldsStayAtSizeHint</enum>
        </property>
-       <item row="0" column="0">
+       <item row="1" column="1">
+        <widget class="QPushButton" name="pushButton_exp_pdf_sheet">
+         <property name="maximumSize">
+          <size>
+           <width>200</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Exp schede Pdf </string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="pushButton_exp_index_mat">
+         <property name="text">
+          <string>Exp indice  Pdf </string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QPushButton" name="pushButton_elenco_casse">
+         <property name="text">
+          <string>Elenco casse</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
         <widget class="QToolButton" name="toolButtonPreviewMedia">
          <property name="enabled">
           <bool>true</bool>
@@ -1981,39 +2008,6 @@
          </property>
          <property name="checkable">
           <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QPushButton" name="pushButton_exp_pdf_sheet">
-         <property name="maximumSize">
-          <size>
-           <width>200</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Exp schede Pdf </string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>590</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="4" column="0">
-        <widget class="QPushButton" name="pushButton_exp_index_mat">
-         <property name="text">
-          <string>Exp indice  Pdf </string>
          </property>
         </widget>
        </item>
@@ -2071,9 +2065,6 @@
   <tabstop>pushButton_remove_row_elementi</tabstop>
   <tabstop>comboBox_sito</tabstop>
   <tabstop>pushButtonQuant</tabstop>
-  <tabstop>toolButtonPreviewMedia</tabstop>
-  <tabstop>pushButton_exp_pdf_sheet</tabstop>
-  <tabstop>pushButton_exp_index_mat</tabstop>
  </tabstops>
  <resources>
   <include location="resources.qrc"/>

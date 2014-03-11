@@ -732,17 +732,49 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 	def on_pushButton_exp_index_mat_pressed(self):
 
-		self.exp_pdf_elenco_casse_main()
-
 		Mat_index_pdf = generate_reperti_pdf()
 		data_list = self.generate_list_pdf()
 		Mat_index_pdf.build_index_Finds(data_list, data_list[0][1])
 		
 #********************************************************************************
 
-	def exp_pdf_elenco_casse_main(self):
+	def on_pushButton_elenco_casse_pressed(self):
+		self.exp_pdf_elenco_casse()
+	
+	def exp_pdf_elenco_casse(self):
+		elenco_casse_res = self.DB_MANAGER.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"']], 'nr_cassa')
+		elenco_casse_list  = []
+		for i in elenco_casse_res:
+			elenco_casse_list.append(str(i.nr_cassa))
+		"""
+		data_for_pdf = []
+		for i in elenco_casse_list:
+			single_cassa = []
+			single_cassa.append(i) #inserisce la cassa
+			
+			us_res = self.DB_MANAGER.query_distinct('INVENTARIO_MATERIALI','sito','Sito archeologico', str(i))
+			us_res_list = []
+			for i in us_res:
+				us_res_list.append(i.us)
+			us_res_list.sort
+			single cassa.append(us_res_list)
+			
+			n_inv = query che trova le singole n_inv della cassa
+			n_inv_res_list = []
+			for i in n_inv:
+				n_inv_res_list.append(i.n_inv)
+			n_inv_res_list.sort
+			single cassa.append(n_inv_res_list)
+			
+			data_for_pdf.append(single cassa)
+		"""
+			
+		QMessageBox.warning(self,'tk',str(elenco_casse_list), QMessageBox.Ok)
+
+	def exp_pdf_elenco_casse_main_experimental(self):
 		##campi per generare la lista da passare al pdf
-		
+		#experimental to finish
+		#self.exp_pdf_elenco_casse_main()
 		elenco_casse = self.index_elenco_casse() #lista
 		elenco_us = [] #lista
 		diz_strutture_x_us = {}

@@ -21,6 +21,8 @@
 """
 import sys, os
 from sqlalchemy import and_, or_
+from sqlalchemy import distinct
+
 from sqlalchemy.orm import sessionmaker
 
 import pyarchinit_db_mapper
@@ -640,6 +642,25 @@ class Pyarchinit_db_management:
 
 		return eval(query_str)
 
+	def query_distinct(self,table, params, distinct_field_name):
+		u = Utility()
+		#params = u.remove_empty_items_fr_dict(params)
+
+		query_string = ""
+		for i in params:
+			if query_string == '':
+				query_string =  '%s.%s==%s' % (table, i[0], i[1])
+			else:
+				query_string = query_string + ',%s.%s==%s' % (table, i[0], i[1])
+	
+		query_cmd = "session.query(" + table + ").filter(and_("+query_string +")).distinct("+table+"."+distinct_field_name + ")"
+		#self.connection()
+		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
+		session = Session()
+
+		return eval(query_cmd)
+
+# count distinct "name" values
 
 	#session statement
 	def insert_data_session(self, data):
