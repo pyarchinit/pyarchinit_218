@@ -1108,7 +1108,17 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 		area = self.comboBox_area.currentText()
 		us = self.lineEdit_us.text()
+		attivita = self.lineEdit_attivita.text()
+		colore = self.comboBox_colore.currentText()
+		anno_scavo = self.lineEdit_anno.text()
+		formazione = self.comboBox_formazione.currentText()
+		stato_conservazione = self.comboBox_conservazione.currentText()
+		colore= self.comboBox_colore.currentText()
+		consistenza = self.comboBox_consistenza.currentText()
+		struttura = self.lineEdit_struttura.text()
+		cont_per = self.lineEdit_codice_periodo.text()
 
+		
 		if area != "":
 			if EC.data_is_int(area) == 0:
 				QMessageBox.warning(self, "ATTENZIONE", "Campo Area. \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
@@ -1118,6 +1128,53 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			if EC.data_is_int(us) == 0:
 				QMessageBox.warning(self, "ATTENZIONE", "Campo US. \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
 				test = 1
+				
+		if attivita != "":
+			if EC.data_lenght(attivita,3) == 0:
+				QMessageBox.warning(self, "ATTENZIONE", "Campo Attivita. \n Il valore non deve superare i 4 caratteri alfanumerici",  QMessageBox.Ok)
+				test = 1		
+				
+		#if anno_scavo != "":
+		#	if EC.data_lenght(anno_scavo,3) == 0:
+		#		QMessageBox.warning(self, "ATTENZIONE", "Campo Anno. \n immettere una sola data (es. 2014)",  QMessageBox.Ok)
+		#		test = 1
+				
+		if formazione != "":
+			if EC.data_lenght(formazione,19) == 0:
+				QMessageBox.warning(self, "ATTENZIONE", "Campo Formazione. \n Il valore non deve superare i 20 caratteri alfanumerici",  QMessageBox.Ok)
+				test = 1
+				
+		if stato_conservazione != "":
+			if EC.data_lenght(stato_conservazione,19) == 0:
+				QMessageBox.warning(self, "ATTENZIONE", "Campo Conservazione. \n Il valore non deve superare i 20 caratteri alfanumerici",  QMessageBox.Ok)
+				test = 1
+				
+				
+		if colore != "":
+			if EC.data_lenght(colore,19) == 0:
+				QMessageBox.warning(self, "ATTENZIONE", "Campo Colore. \n Il valore non deve superare i 20 caratteri alfanumerici",  QMessageBox.Ok)
+				test = 1
+				
+				
+		if consistenza != "":
+			if EC.data_lenght(consistenza,19) == 0:
+				QMessageBox.warning(self, "ATTENZIONE", "Campo Consistenza. \n Il valore non deve superare i 20 caratteri alfanumerici",  QMessageBox.Ok)
+				test = 1
+				
+				
+		if struttura != "":
+			if EC.data_lenght(struttura,29) == 0:
+				QMessageBox.warning(self, "ATTENZIONE", "Campo Struttura. \n Il valore non deve superare i 30 caratteri alfanumerici",  QMessageBox.Ok)
+				test = 1
+				
+				
+		#if cont_per != "":
+		#	if EC.data_lenght(cont_per,199) == 0:
+		#		QMessageBox.warning(self, "ATTENZIONE", "Campo codice periodo. \n Il valore non deve superare i 200 caratteri numerici",  QMessageBox.Ok)
+		#		test = 1
+				
+				
+				
 
 		#PERIODIZZAZIONE CHECK
 		#periodo iniz compilato e fase vuota  il blocco deve essere utilizzato meglio a partire dai signals

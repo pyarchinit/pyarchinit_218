@@ -51,6 +51,7 @@ class HARRIS_MATRIX_EXP:
 
 	def export_matrix(self):
 		G = p.AGraph(directed=True)
+		G.graph_attr['dpi']=300
 		G.graph_attr['label']='pyArchInit - Harris Matrix Exportation System'
 
 		elist = []
@@ -60,11 +61,12 @@ class HARRIS_MATRIX_EXP:
 			elist.append(a)
 
 		G.add_edges_from(elist)
-
+		
 		G.node_attr['shape']='box'
 		G.node_attr['style']='strocked' 
 		G.node_attr['color']='red'
-
+		
+		
 		for i in self.periodi:
 			G.subgraph(nbunch=i[0], 
 			name=i[1],
@@ -73,12 +75,12 @@ class HARRIS_MATRIX_EXP:
 			color='blue',
 			label=i[2],
 			font_color = 'Blue')
-	
+			
 		try:
 			data_to_plot =  G.tred()
 		except:
 			data_to_plot = G
-
+			
 		Matrix_path = ('%s%s%s') % (self.HOME, os.sep, "pyarchinit_Matrix_folder")
 
 		if os.name == 'posix':

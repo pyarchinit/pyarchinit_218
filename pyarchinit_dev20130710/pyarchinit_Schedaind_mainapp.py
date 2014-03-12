@@ -37,6 +37,7 @@ from psycopg2 import *
 from  pyarchinit_schedaind_ui import Ui_DialogInd
 from  pyarchinit_schedaind_ui import *
 from  pyarchinit_utility import *
+from  pyarchinit_error_check import *
 
 from  pyarchinit_pyqgis import Pyarchinit_pyqgis
 from  sortpanelmain import SortPanelMain
@@ -418,8 +419,56 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 
 	def data_error_check(self):
 		test = 0
-		#EC = Error_check()
-		#somes check here
+		EC = Error_check()
+		
+		if EC.data_is_empty(unicode(self.comboBox_sito.currentText())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo Sito. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			test = 1
+
+		if EC.data_is_empty(unicode(self.lineEdit_area.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo Area. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			test = 1
+
+		if EC.data_is_empty(unicode(self.lineEdit_us.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo US. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			test = 1
+			
+		if EC.data_is_empty(unicode(self.lineEdit_individuo.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo nr individuo. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			test = 1
+			
+		area =  self.lineEdit_area.text()
+		us = self.lineEdit_us.text()
+		nr_individuo = self.lineEdit_individuo.text()
+		eta_min =  self.comboBox_eta_min.currentText()
+		eta_max =  self.comboBox_eta_max.currentText()
+		
+		
+		if area != "":
+			if EC.data_lenght(area,3) == 0:
+				QMessageBox.warning(self, "ATTENZIONE", "Campo Area. \n Il valore deve essere lungo massimo 4 caratteri alfanumerici",  QMessageBox.Ok)
+				test = 1
+
+
+		if us != "":
+			if EC.data_is_int(us) == 0:
+				QMessageBox.warning(self, "ATTENZIONE", "Campo US. \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
+				test = 1
+
+		if nr_individuo != "":
+			if EC.data_is_int(nr_individuo) == 0:
+				QMessageBox.warning(self, "ATTENZIONE", "Campo Nr individuo. \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
+				test = 1
+
+		if eta_min != "":
+			if EC.data_is_int(eta_min) == 0:
+				QMessageBox.warning(self, "ATTENZIONE", "Campo Età minima \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
+				test = 1
+				
+		if eta_max != "":
+			if EC.data_is_int(eta_max) == 0:
+				QMessageBox.warning(self, "ATTENZIONE", "Campo Età massima \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
+				test = 1		
 		
 		return test
 
