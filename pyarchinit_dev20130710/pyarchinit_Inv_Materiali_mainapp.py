@@ -466,15 +466,13 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 	def on_pushButton_connect_pressed(self):
 		from pyarchinit_conn_strings import *
-		self.setComboBoxEditable(["self.comboBox_sito"],1)
+		#self.setComboBoxEditable(["self.comboBox_sito"],1)
 		conn = Connection()
 		conn_str = conn.conn_str()
 		try:
 			self.DB_MANAGER = Pyarchinit_db_management(conn_str)
 			self.DB_MANAGER.connection()
-			self.charge_records() #charge records from DB
-			#QMessageBox.warning(self, "test", str(len(self.DATA_LIST)),  QMessageBox.Ok)
-
+			self.charge_records()
 			#check if DB is empty
 			if bool(self.DATA_LIST) == True:
 				self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
@@ -496,7 +494,6 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br><br> E' NECESSARIO RIAVVIARE QGIS" + e ,  QMessageBox.Ok)
 			else:
 				QMessageBox.warning(self, "Alert", "Attenzione rilevato bug! Segnalarlo allo sviluppatore<br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
-		self.charge_list()
 
 	def customize_gui(self):
 		#media prevew system
@@ -579,11 +576,16 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		sito_vl = self.UTILITY.tup_2_list_III(self.DB_MANAGER.group_by('site_table', 'sito', 'SITE'))
 		try:
 			sito_vl.remove('')
-		except:
-			pass
+		except Exception, e:
+			if str(e) == "list.remove(x): x not in list":
+				pass
+			else:
+				QMessageBox.warning(self, "Messaggio", "Sistema di aggiornamento lista Sito: " + str(e), QMessageBox.Ok)
+
 		self.comboBox_sito.clear()
 		sito_vl.sort()
 		self.comboBox_sito.addItems(sito_vl)
+
 	#buttons functions
 
 	def on_pushButton_sort_pressed(self):
@@ -736,41 +738,65 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		data_list = self.generate_list_pdf()
 		Mat_index_pdf.build_index_Finds(data_list, data_list[0][1])
 		
-#********************************************************************************
 
 	def on_pushButton_elenco_casse_pressed(self):
-		self.exp_pdf_elenco_casse()
+		sito_ec = unicode(self.comboBox_sito.currentText())
+		Mat_casse_pdf = generate_reperti_pdf()
+		data_list = self.generate_el_casse_pdf(sito_ec)
+		Mat_casse_pdf.build_index_Casse(data_list, sito_ec)
 	
-	def exp_pdf_elenco_casse(self):
-		elenco_casse_res = self.DB_MANAGER.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"']], 'nr_cassa')
-		elenco_casse_list  = []
-		for i in elenco_casse_res:
-			elenco_casse_list.append(str(i.nr_cassa))
-		"""
-		data_for_pdf = []
-		for i in elenco_casse_list:
-			single_cassa = []
-			single_cassa.append(i) #inserisce la cassa
-			
-			us_res = self.DB_MANAGER.query_distinct('INVENTARIO_MATERIALI','sito','Sito archeologico', str(i))
-			us_res_list = []
-			for i in us_res:
-				us_res_list.append(i.us)
-			us_res_list.sort
-			single cassa.append(us_res_list)
-			
-			n_inv = query che trova le singole n_inv della cassa
-			n_inv_res_list = []
-			for i in n_inv:
-				n_inv_res_list.append(i.n_inv)
-			n_inv_res_list.sort
-			single cassa.append(n_inv_res_list)
-			
-			data_for_pdf.append(single cassa)
-		"""
-			
-		QMessageBox.warning(self,'tk',str(elenco_casse_list), QMessageBox.Ok)
+#********************************************************************************
+	def generate_el_casse_pdf(self, sito):
+		self.sito_ec = sito
+		elenco_casse_res = self.DB_MANAGER.query_distinct('INVENTARIO_MATERIALI',[['sito','"' + str(self.sito_ec)+'"']], ['nr_cassa'])
 
+		elenco_casse_list  = [] #accoglie la sigla numerica delle casse presenti per un determinato sito.
+		for i in elenco_casse_res:
+			elenco_casse_list.append(i.nr_cassa)
+
+		data_for_pdf = [] #contiene i singoli dati per l'esportazione dell'elenco casse
+
+		#QMessageBox.warning(self,'elenco casse',str(elenco_casse_list), QMessageBox.Ok)
+		elenco_casse_list.sort()
+		for cassa in elenco_casse_list:
+			single_cassa = [] #contiene i dati della singola cassa
+			single_cassa.append(cassa) #inserisce la sigla di cassa
+
+			###cerca le singole area/us presenti in quella cassa
+			res_us = self.DB_MANAGER.query_distinct('INVENTARIO_MATERIALI',[['sito','"' + str(self.sito_ec)+'"'], ['nr_cassa',cassa]], ['area', 'us'])
+
+			us_res_list = ""#[] #accoglie l'elenco delle US presenti in quella cassa
+			for i in res_us:
+				us_res_list += "Area:"+str(i.area) + ",US:"+str(i.us)+"<br/>"  #.append("Area:"+str(i.area) + ",US:"+str(i.us))
+			#us_res_list.sort()
+			#inserisce l'elenco delle us
+			single_cassa.append(us_res_list)
+
+			###cerca le singole area/us presenti in quella cassa
+			res_inv = self.DB_MANAGER.query_distinct('INVENTARIO_MATERIALI',[['sito','"' + str(self.sito_ec)+'"'], ['nr_cassa',cassa]], ['numero_inventario'])
+
+			n_inv_res_list = ""
+			for i in res_inv:
+				n_inv_res_list += "N.inv: " + str(i.numero_inventario) +"<br/>"
+			#inserisce l'elenco degli inventari
+			single_cassa.append(n_inv_res_list)
+			###cerca le singole area/us presenti in quella cassa
+			res_tip_reperto = self.DB_MANAGER.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"'], ['nr_cassa',cassa]], ['tipo_reperto'])
+
+			tip_rep_res_list = ""
+			for i in res_tip_reperto:
+				tip_rep_res_list += str(i.tipo_reperto) +"<br/>"
+
+			#inserisce l'elenco degli inventari
+			single_cassa.append(tip_rep_res_list)
+
+
+			data_for_pdf.append(single_cassa)
+
+		#QMessageBox.warning(self,'tk',str(data_for_pdf), QMessageBox.Ok)
+		return data_for_pdf
+
+####################################################
 	def exp_pdf_elenco_casse_main_experimental(self):
 		##campi per generare la lista da passare al pdf
 		#experimental to finish
@@ -1599,9 +1625,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.rec_num = n
 		#QMessageBox.warning(self, "check fill fields", str(self.rec_num),  QMessageBox.Ok)
 		try:
+			unicode(self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito)) 													#1 - Sito
 			self.comboBox_repertato.setEditText(unicode(self.DATA_LIST[self.rec_num].repertato))
 			self.comboBox_diagnostico.setEditText(unicode(self.DATA_LIST[self.rec_num].diagnostico))
-			unicode(self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito))  											#1 - Sito
 			self.lineEdit_num_inv.setText(str(self.DATA_LIST[self.rec_num].numero_inventario))							#2 - num_inv
 			unicode(self.comboBox_tipo_reperto.setEditText(self.DATA_LIST[self.rec_num].tipo_reperto))						#3 - Tipo reperto
 			unicode(self.comboBox_criterio_schedatura.setEditText(self.DATA_LIST[self.rec_num].criterio_schedatura))		#4 - Criterio schedatura
