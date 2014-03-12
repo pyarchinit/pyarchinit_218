@@ -64,6 +64,32 @@ class NumberedCanvas_FINDSindex(canvas.Canvas):
 		self.setFont("Helvetica", 8)
 		self.drawRightString(270*mm, 10*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
 
+
+class NumberedCanvas_CASSEindex(canvas.Canvas):
+	def __init__(self, *args, **kwargs):
+		canvas.Canvas.__init__(self, *args, **kwargs)
+		self._saved_page_states = []
+
+	def define_position(self, pos):
+		self.page_position(pos)
+
+	def showPage(self):
+		self._saved_page_states.append(dict(self.__dict__))
+		self._startPage()
+
+	def save(self):
+		"""add page info to each page (page x of y)"""
+		num_pages = len(self._saved_page_states)
+		for state in self._saved_page_states:
+			self.__dict__.update(state)
+			self.draw_page_number(num_pages)
+			canvas.Canvas.showPage(self)
+		canvas.Canvas.save(self)
+
+	def draw_page_number(self, page_count):
+		self.setFont("Helvetica", 8)
+		self.drawRightString(270*mm, 10*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
+
 class single_Finds_pdf_sheet:
 
 	def __init__(self, data):
@@ -362,6 +388,57 @@ class single_Finds_pdf_sheet:
 
 		return t
 
+class CASSE_index_pdf_sheet:
+
+	def __init__(self, data):
+		self.cassa= data[0] #1 - Cassa
+		self.elenco_us = data[1] #2-  elenco US
+		self.elenco_inv= data[2] #3 - elenco Inventari
+		self.tipo_reperto = data[3 ]#4 - tipo reperto
+
+	def getTable(self):
+		styleSheet = getSampleStyleSheet()
+		styNormal = styleSheet['Normal']
+		styNormal.spaceBefore = 20
+		styNormal.spaceAfter = 20
+		styNormal.alignment = 0 #LEFT
+		styNormal.fontSize = 9
+
+		#self.unzip_rapporti_stratigrafici()
+
+		num_cassa = Paragraph("<b>N. Cassa.</b><br/>" + str(self.cassa),styNormal)
+
+		if self.elenco_us == None:
+			elenco_us = Paragraph("<b>Elenco US</b><br/>",styNormal)
+		else:
+			elenco_us = Paragraph("<b>Elenco US</b><br/>" + str(self.elenco_us),styNormal)
+	
+		if self.elenco_inv == None:
+			elenco_inv = Paragraph("<b>Elenco N. Inv.</b><br/>",styNormal)
+		else:
+			elenco_inv = Paragraph("<b>Elenco N. Inv.</b><br/>" + str(self.elenco_inv ),styNormal)
+
+		if self.tipo_reperto == None:
+			tipo_reperto = Paragraph("<b>Tipo reperto</b><br/>" ,styNormal)
+		else:
+			tipo_reperto = Paragraph("<b>Tipo reperto</b><br/>" + str(self.tipo_reperto),styNormal)
+
+
+
+		data = [num_cassa,
+				elenco_us,
+				elenco_inv,
+				tipo_reperto]
+
+		return data
+
+	def makeStyles(self):
+		styles =TableStyle([('GRID',(0,0),(-1,-1),0.0,colors.black),('VALIGN', (0,0), (-1,-1), 'TOP')
+		])  #finale
+
+		return styles
+
+
 class FINDS_index_pdf_sheet:
 
 	def __init__(self, data):
@@ -472,7 +549,7 @@ class generate_reperti_pdf:
 		styH1 = styleSheet['Heading1']
 		data = self.datestrfdate()
 		lst = []
-		lst.append(Paragraph("<b>ELENCO MATERIALI</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH1))
+		lst.append(Paragraph("<b>ELENCO MATERIALI</b><br/><b>Sito: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH1))
 
 		table_data = []
 		for i in range(len(records)):
@@ -490,6 +567,35 @@ class generate_reperti_pdf:
 		f = open(filename, "wb")
 
 		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
+		doc.build(lst, canvasmaker=NumberedCanvas_FINDSindex)
+
+		f.close()
+
+	def build_index_Casse(self, records, sito):
+		styleSheet = getSampleStyleSheet()
+		styNormal = styleSheet['Normal']
+		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
+		styH1 = styleSheet['Heading1']
+		data = self.datestrfdate()
+		lst = []
+		lst.append(Paragraph("<b>ELENCO CASSE</b><br/><b>Sito: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH1))
+
+		table_data = []
+		for i in range(len(records)):
+			exp_index = CASSE_index_pdf_sheet(records[i])
+			table_data.append(exp_index.getTable())
+
+		styles = exp_index.makeStyles()
+		table_data_formatted = Table(table_data,  colWidths=110)
+		table_data_formatted.setStyle(styles)
+
+		lst.append(table_data_formatted)
+		lst.append(Spacer(0,2))
+
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_casse.pdf')
+		f = open(filename, "wb")
+
+		doc = SimpleDocTemplate(f, pagesize=(21*cm, 29*cm), showBoundary=0)
 		doc.build(lst, canvasmaker=NumberedCanvas_FINDSindex)
 
 		f.close()

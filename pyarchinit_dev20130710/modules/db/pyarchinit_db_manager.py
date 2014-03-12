@@ -642,23 +642,34 @@ class Pyarchinit_db_management:
 
 		return eval(query_str)
 
-	def query_distinct(self,table, params, distinct_field_name):
-		u = Utility()
+	def query_distinct(self,table, query_params, distinct_field_name_params):
+		#u = Utility()
 		#params = u.remove_empty_items_fr_dict(params)
+		##		return session.query(INVENTARIO_MATERIALI.area,INVENTARIO_MATERIALI.us ).filter(INVENTARIO_MATERIALI.sito=='Sito archeologico').distinct().order_by(INVENTARIO_MATERIALI.area,INVENTARIO_MATERIALI.us )
 
 		query_string = ""
-		for i in params:
+		for i in query_params:
 			if query_string == '':
 				query_string =  '%s.%s==%s' % (table, i[0], i[1])
 			else:
 				query_string = query_string + ',%s.%s==%s' % (table, i[0], i[1])
-	
-		query_cmd = "session.query(" + table + ").filter(and_("+query_string +")).distinct("+table+"."+distinct_field_name + ")"
+
+		distinct_string = ""
+		for i in distinct_field_name_params:
+			if distinct_string == '':
+				distinct_string =  '%s.%s' % (table, i)
+			else:
+				distinct_string = distinct_string + ',%s.%s' % (table, i)
+
+		query_cmd = "session.query(" + distinct_string +  ").filter(and_("+query_string +")).distinct().order_by("+distinct_string+")"
 		#self.connection()
 		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
 		session = Session()
 
 		return eval(query_cmd)
+
+
+
 
 # count distinct "name" values
 
@@ -975,119 +986,13 @@ class Pyarchinit_db_management:
 ##	##			res_list.extend(area for area, in session.query(US.area).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
 
 ##		return res_list
-"""
-class Order_layer_v2test:
-	order_dict = {}
-	order_count = 0
-	db = Pyarchinit_db_management('postgresql://postgres:alajolla39@localhost:5432/pyarchinit')
-	db.connection()
-
-	def main_order_layer(self):
-		#ricava la base delle us del matrix a cui non succedono altre US
-		matrix_us_level = self.find_base_matrix()
-
-		self.insert_into_dict(matrix_us_level)
-		#il test per il ciclo while viene settato a 0(zero)
-		test = 0
-		while test == 0:
-			rec_list_str = []
-			for i in matrix_us_level:
-				rec_list_str.append(str(i))
-			#cerca prima di tutto se ci sono us uguali o che si legano alle US sottostanti
-			value_list_equal = self.create_list_values(['Uguale a', 'Si lega a'],rec_list_str)
-			res = self.db.query_in_contains(value_list_equal)
-			
-			matrix_us_equal_level = []
-			for r in res:
-				matrix_us_equal_level.append(str(r.us))
-			if bool(matrix_us_equal_level) == True:
-				self.insert_into_dict(matrix_us_equal_level,1)
-			#se res bool == True 
-			
-			#aggiunge le us al dizionario nel livello in xui trova l'us uguale a cui è uguale
-			#se l'US è già presente non la aggiunge
-			#le us che derivano dall'uguaglianza vanno aggiunte al rec_list_str
-			rec_list_str = rec_list_str + matrix_us_equal_level
-			value_list_post = value_list_equal = self.create_list_values(['Copre', 'Riempie', 'Taglia', 'Si appoggia a'],rec_list_str)
-			res = self.db.query_in_contains(value_list_post)
-			
-			matrix_us_level = []
-			for r in res:
-				matrix_us_level.append(str(r.us))
-			if bool(matrix_us_level) == False:
-				test = 1
-				return self.order_dict
-			else:
-				self.insert_into_dict(matrix_us_level,1)
-
-	#print bool()
-	def find_base_matrix(self):
-		res = self.db.select_not_like_from_db_sql()
-		rec_list = []
-		for rec in res:
-			rec_list.append(str(rec.us))
-		return rec_list
-
-	def create_list_values(self, rapp_type_list, value_list):
-		self.rapp_type_list = rapp_type_list
-		self.value_list = value_list
-		
-		value_list_to_find = []
-		for sing_value in self.value_list:
-			for sing_rapp in self.rapp_type_list:
-				sql_query_string = "[u'%s', u'%s']" % (sing_rapp,sing_value) #funziona!!!
-				value_list_to_find.append(sql_query_string)
-		return value_list_to_find
-
-	def us_extractor(self, res):
-		self.res = res
-		rec_list = []
-		for rec in self.res:
-			rec_list.append(rec.us)
-		return rec_list
-
-	def insert_into_dict(self, base_matrix, v=0):
-		self.base_matrix = base_matrix
-		if v == 1:
-			self.remove_from_list_in_dict(self.base_matrix)
-		self.order_dict[self.order_count] = self.base_matrix
-		self.order_count +=1 #aggiunge un nuovo livello di ordinamento ad ogni passaggio
-
-	def insert_into_dict_equal(self, base_matrix, v=0):
-		self.base_matrix = base_matrix
-		if v == 1:
-			self.remove_from_list_in_dict(self.base_matrix)
-		self.order_dict[self.order_count] = self.base_matrix
-		self.order_count +=1 #aggiunge un nuovo livello di ordinamento ad ogni passaggio
-
-	def remove_from_list_in_dict(self, curr_base_matrix):
-		self.curr_base_matrix = curr_base_matrix
-
-		for k,v in self.order_dict.items():
-			l = v
-			#print self.curr_base_matrix
-			for i in self.curr_base_matrix:
-				try:
-					l.remove(str(i))
-				except:
-					pass
-			self.order_dict[k]=l
-		return
-"""
-
 
 def main():
-	pass
-##	order_layer = Order_layer_v2test()
-##	print order_layer.main_order_layer()
-##	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
-##	db.connection()
-##	res = db.query_in_idusb()
-####	print "gigi"
-####	print len(res)
-##	for i in res:
-##		print str(i.us)
-##main()
+	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
+	db.connection()
+	res = db.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"']], ['area', 'us'])
+	for i in res:
+		print str(i.area), str(i.us)
 
 if __name__ == '__main__':
 	main()
