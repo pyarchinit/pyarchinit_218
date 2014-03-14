@@ -137,7 +137,7 @@ class single_UT_pdf_sheet:
 		#format labels
 
 		#0 row
-		intestazione = Paragraph("<b>SCHEDA DI UNIT&Agrave; TOPOFICAGRA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
+		intestazione = Paragraph("<b>SCHEDA DI UNIT&Agrave; TOPOGRAFICA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
 		intestazione2 = Paragraph("<b>pyArchInit</b><br/>www.pyarchinit.blogspot.com", styNormal)
 
 		#1 row
@@ -165,7 +165,7 @@ class single_UT_pdf_sheet:
 		quota = Paragraph("<b>Quota</b><br/>"  + self.quota, styNormal)
 		andamento_terreno_pendenza = Paragraph("<b>Pendenza</b><br/>"  + self.andamento_terreno_pendenza, styNormal)
 		utilizzo_suolo_vegetazione = Paragraph("<b>Utilizzo suolo</b><br/>"  + self.utilizzo_suolo_vegetazione, styNormal)
-		descrizione_empirica_suolo = Paragraph("<b>Descrizione empirca suolo</b><br/>"  + self.descrizione_empirica_suolo, styNormal)
+		descrizione_empirica_suolo = Paragraph("<b>Descrizione empirica suolo</b><br/>"  + self.descrizione_empirica_suolo, styNormal)
 		descrizione_luogo = Paragraph("<b>Descrizione suolo</b><br/>"  + self.descrizione_luogo, styNormal)
 		metodo_rilievo_e_ricognizione = Paragraph("<b>Tipo ricognizione</b><br/>"  + self.metodo_rilievo_e_ricognizione, styNormal)
 		geometria = Paragraph("<b>Geometria</b><br/>"  + self.geometria, styNormal)
@@ -192,8 +192,9 @@ class single_UT_pdf_sheet:
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
 						[intestazione, '01', '02', '03', '04','05', '06', intestazione2, '08', '09'], #0 row ok
 		 				[progetto, '01', '02', '03', '04', UT, '06', '07', UTletterale, '09'], #1 row ok
-						[descrizione_ut, '01', '02','03','04', interpretazione_ut,'06', '07', '08', '09'], #2 row ok
-						[nazione, '01', provincia, '03', regione, '05', comune, frazione, '08', '09'],#3
+						[descrizione_ut, '01', '02','03','04'],
+						[interpretazione_ut,'01', '02', '03', '04','05','06', '07', '08'], #2 row ok
+						[nazione, '01',provincia,'03', regione, '06', comune,'9'],#3
 						[frazione, '01', localita, '03', indirizzo, '05', nr_civico, '08', '09'],#4
 						[carta_topo_igm, '01', carta_ctr, '03', coord_geografiche, '05', coord_piane, '08', '09'],#5
 						[quota, '01', andamento_terreno_pendenza, '03', utilizzo_suolo_vegetazione, '05', descrizione_empirica_suolo, '08', '09'],#6
@@ -201,7 +202,7 @@ class single_UT_pdf_sheet:
 						[data, '01', ora_meteo, '03', responsabile, '05', dimensioni_ut, '08', '09'],#7
 						[rep_per_mq, '01',rep_datanti, '03', periodo_I, '05', datazione_I, '08', '09'],#8
 						[interpretazione_I, '01', periodo_II, '03', datazione_II, '05', interpretazione_II, '08', '09'],#9
-						[documentazione, '01',enti_tutela_vincoli,'03', indagini_preliminari, '08', '09']#10 row ok
+						[documentazione, '01','02',enti_tutela_vincoli,'03','04', indagini_preliminari,'09']#10 row ok
 						]
 						
 						
@@ -219,49 +220,54 @@ class single_UT_pdf_sheet:
 					('SPAN', (8,1),(9,1)),  #dati identificativi
 
 					#2 row
-					('SPAN', (0,2),(4,2)),  #Definizione - interpretazone
-					('SPAN', (5,2),(9,2)),  #definizione - intepretazione
+					('SPAN', (0,2),(9,2)),  #Definizione - interpretazone
+					('SPAN', (0,3),(9,3)),  #definizione - intepretazione
 
 					#3 row
-					('SPAN', (0,3),(2,3)),  #conservazione - consistenza - colore
-					('SPAN', (3,3),(5,3)),  #conservazione - consistenza - colore
-					('SPAN', (6,3),(7,3)),  #conservazione - consistenza - colore
-					('SPAN', (8,3),(9,3)),  #conservazione - consistenza - colore
+					('SPAN', (0,4),(1,4)),  #conservazione - consistenza - colore
+					('SPAN', (2,4),(3,4)),  #conservazione - consistenza - colore
+					('SPAN', (4,4),(5,4)),  #conservazione - consistenza - colore
+					('SPAN', (6,4),(9,4)),  #conservazione - consistenza - colore
+					
 					#4 row
-					('SPAN', (0,4),(2,4)),  #conservazione - consistenza - colore
-					('SPAN', (3,4),(5,4)),  #conservazione - consistenza - colore
-					('SPAN', (6,4),(7,4)),  #conservazione - consistenza - colore
-					('SPAN', (8,4),(9,4)),  #conservazione - consistenza - colore
+					('SPAN', (0,5),(1,5)),  #conservazione - consistenza - colore
+					('SPAN', (2,5),(3,5)),  #conservazione - consistenza - colore
+					('SPAN', (4,5),(5,5)),  #conservazione - consistenza - colore
+					('SPAN', (6,5),(9,5)),  #conservazione - consistenza - colore
 					#5 row
-					('SPAN', (0,5),(2,5)),  #conservazione - consistenza - colore
-					('SPAN', (3,5),(5,5)),  #conservazione - consistenza - colore
-					('SPAN', (6,5),(7,5)),  #conservazione - consistenza - colore
-					('SPAN', (8,5),(9,5)),  #conservazione - consistenza - colore
+					('SPAN', (0,6),(1,6)),  #conservazione - consistenza - colore
+					('SPAN', (2,6),(3,6)),  #conservazione - consistenza - colore
+					('SPAN', (4,6),(5,6)),  #conservazione - consistenza - colore
+					('SPAN', (6,6),(9,6)),  #conservazione - consistenza - colore
 					#6 row
-					('SPAN', (0,6),(2,6)),  #conservazione - consistenza - colore
-					('SPAN', (3,6),(5,6)),  #conservazione - consistenza - colore
-					('SPAN', (6,6),(7,6)),  #conservazione - consistenza - colore
-					('SPAN', (8,6),(9,6)),  #conservazione - consistenza - colore
+					('SPAN', (0,7),(1,7)),  #conservazione - consistenza - colore
+					('SPAN', (2,7),(3,7)),  #conservazione - consistenza - colore
+					('SPAN', (4,7),(5,7)),  #conservazione - consistenza - colore
+					('SPAN', (6,7),(9,7)),  #conservazione - consistenza - colore
 					#7 row
-					('SPAN', (0,7),(2,7)),  #conservazione - consistenza - colore
-					('SPAN', (3,7),(5,7)),  #conservazione - consistenza - colore
-					('SPAN', (6,7),(7,7)),  #conservazione - consistenza - colore
-					('SPAN', (8,7),(9,7)),  #conservazione - consistenza - colore
+					('SPAN', (0,8),(1,8)),  #conservazione - consistenza - colore
+					('SPAN', (2,8),(3,8)),  #conservazione - consistenza - colore
+					('SPAN', (4,8),(5,8)),  #conservazione - consistenza - colore
+					('SPAN', (6,8),(9,8)),  #conservazione - consistenza - colore
 					#8 row
-					('SPAN', (0,8),(2,8)),  #conservazione - consistenza - colore
-					('SPAN', (3,8),(5,8)),  #conservazione - consistenza - colore
-					('SPAN', (6,8),(7,8)),  #conservazione - consistenza - colore
-					('SPAN', (8,8),(9,8)),  #conservazione - consistenza - colore
+					('SPAN', (0,9),(1,9)),  #conservazione - consistenza - colore
+					('SPAN', (2,9),(3,9)),  #conservazione - consistenza - colore
+					('SPAN', (4,9),(5,9)),  #conservazione - consistenza - colore
+					('SPAN', (6,9),(9,9)),  #conservazione - consistenza - colore
 					#9 row
-					('SPAN', (0,9),(2,9)),  #conservazione - consistenza - colore
-					('SPAN', (3,9),(5,9)),  #conservazione - consistenza - colore
-					('SPAN', (6,9),(7,9)),  #conservazione - consistenza - colore
-					('SPAN', (8,9),(9,9)),  #conservazione - consistenza - colore
-					#10 row
-					('SPAN', (0,10),(2,10)),  #conservazione - consistenza - colore
-					('SPAN', (3,10),(5,10)),  #conservazione - consistenza - colore
+					('SPAN', (0,10),(1,10)),  #conservazione - consistenza - colore
+					('SPAN', (2,10),(3,10)),  #conservazione - consistenza - colore
+					('SPAN', (4,10),(5,10)),  #conservazione - consistenza - colore
 					('SPAN', (6,10),(9,10)),  #conservazione - consistenza - colore
-										]
+					#10 row
+					('SPAN', (0,11),(1,11)),  #conservazione - consistenza - colore
+					('SPAN', (2,11),(3,11)),  #conservazione - consistenza - colore
+					('SPAN', (4,11),(5,11)),
+					('SPAN', (6,11),(9,11)),#conservazione - consistenza - colore
+					('SPAN', (0,12),(2,12)),  #conservazione - consistenza - colore
+					('SPAN', (3,12),(5,12)),  #conservazione - consistenza - colore
+					('SPAN', (6,12),(9,12)),  #conservazione - consistenza - colore
+											]
 
 					#4 row
 					
