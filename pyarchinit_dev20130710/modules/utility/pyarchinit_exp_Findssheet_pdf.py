@@ -392,9 +392,9 @@ class CASSE_index_pdf_sheet:
 
 	def __init__(self, data):
 		self.cassa= data[0] #1 - Cassa
-		self.elenco_us = data[1] #2-  elenco US
-		self.elenco_inv= data[2] #3 - elenco Inventari
-		self.tipo_reperto = data[3 ]#4 - tipo reperto
+		self.elenco_inv_tip_rep = data[1] #2-  elenco US
+		self.elenco_us = data[2] #3 - elenco Inventari
+		self.luogo_conservazione = data[3]#4 - luogo conservazione
 
 	def getTable(self):
 		styleSheet = getSampleStyleSheet()
@@ -406,35 +406,30 @@ class CASSE_index_pdf_sheet:
 
 		#self.unzip_rapporti_stratigrafici()
 
-		num_cassa = Paragraph("<b>N. Cassa.</b><br/>" + str(self.cassa),styNormal)
+		num_cassa = Paragraph("<b>N. Cassa</b><br/>" + str(self.cassa),styNormal)
+
+		if self.elenco_inv_tip_rep == None:
+			elenco_inv_tip_rep = Paragraph("<b>Elenco N. Inv. / Tipo materiale</b><br/>",styNormal)
+		else:
+			elenco_inv_tip_rep = Paragraph("<b>Elenco N. Inv. / Tipo materiale</b><br/>" + str(self.elenco_inv_tip_rep ),styNormal)
 
 		if self.elenco_us == None:
-			elenco_us = Paragraph("<b>Elenco US</b><br/>",styNormal)
+			elenco_us = Paragraph("<b>Elenco US/(Struttura)</b><br/>",styNormal)
 		else:
-			elenco_us = Paragraph("<b>Elenco US</b><br/>" + str(self.elenco_us),styNormal)
-	
-		if self.elenco_inv == None:
-			elenco_inv = Paragraph("<b>Elenco N. Inv.</b><br/>",styNormal)
-		else:
-			elenco_inv = Paragraph("<b>Elenco N. Inv.</b><br/>" + str(self.elenco_inv ),styNormal)
+			elenco_us = Paragraph("<b>Elenco US/(Struttura)</b><br/>" + str(self.elenco_us),styNormal)
 
-		if self.tipo_reperto == None:
-			tipo_reperto = Paragraph("<b>Tipo reperto</b><br/>" ,styNormal)
-		else:
-			tipo_reperto = Paragraph("<b>Tipo reperto</b><br/>" + str(self.tipo_reperto),styNormal)
-
+		luogo_conservazione = Paragraph("<b>Luogo di conservazione</b><br/>" + str(self.luogo_conservazione),styNormal)
 
 
 		data = [num_cassa,
-				elenco_us,
-				elenco_inv,
-				tipo_reperto]
+					elenco_inv_tip_rep,
+					elenco_us,
+					luogo_conservazione]
 
 		return data
 
 	def makeStyles(self):
-		styles =TableStyle([('GRID',(0,0),(-1,-1),0.0,colors.black),('VALIGN', (0,0), (-1,-1), 'TOP')
-		])  #finale
+		styles =TableStyle([('GRID',(0,0),(-1,-1),0.0,colors.black),('VALIGN', (0,0), (-1,-1), 'TOP')])  #finale
 
 		return styles
 
@@ -575,10 +570,10 @@ class generate_reperti_pdf:
 		styleSheet = getSampleStyleSheet()
 		styNormal = styleSheet['Normal']
 		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
-		styH1 = styleSheet['Heading1']
+		styH3 = styleSheet['Heading3']
 		data = self.datestrfdate()
 		lst = []
-		lst.append(Paragraph("<b>ELENCO CASSE</b><br/><b>Sito: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH1))
+		lst.append(Paragraph("<b>ELENCO CASSE</b><br/><b>Sito: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH3))
 
 		table_data = []
 		for i in range(len(records)):
@@ -586,11 +581,14 @@ class generate_reperti_pdf:
 			table_data.append(exp_index.getTable())
 
 		styles = exp_index.makeStyles()
-		table_data_formatted = Table(table_data,  colWidths=110)
-		table_data_formatted.setStyle(styles)
+		colWidths=[60,150,100, 120]
+		table_data_formatted = Table(table_data, colWidths, style=styles)
+		table_data_formatted.hAlign = "LEFT"
+
+		#table_data_formatted.setStyle(styles)
 
 		lst.append(table_data_formatted)
-		lst.append(Spacer(0,2))
+		lst.append(Spacer(0,0))
 
 		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_casse.pdf')
 		f = open(filename, "wb")

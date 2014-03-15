@@ -2,12 +2,12 @@
 #-*- coding: utf-8 -*-
 """
 /***************************************************************************
-        pyArchInit Plugin  - A QGIS plugin to manage archaeological dataset
-        					 stored in Postgres
-                             -------------------
-    begin                : 2010-12-01
-    copyright            : (C) 2008 by Enzo Cocca
-    email                : enzo.ccc@gmail.com
+	pyArchInit Plugin  - A QGIS plugin to manage archaeological dataset
+							 stored in Postgres
+							 -------------------
+	begin                : 2010-12-01
+	copyright            : (C) 2008 by Enzo Cocca
+	email                : enzo.ccc@gmail.com
  ***************************************************************************/
 
 /***************************************************************************
@@ -662,20 +662,20 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 			self.setComboBoxEnable(["self.lineEdit_quadrato"],"True")
 		
 	def on_calcola_pressed(self):#####modifiche apportate per il calcolo statistico con R
-	    	from pyarchinit_conn_strings import *
+		from pyarchinit_conn_strings import *
 		self.ITEMS = []
-			
+
 		if self.radioButtonUsMin.isChecked() == True:
-			self.TYPE_QUANT = "US"			
+			self.TYPE_QUANT = "US"
 		else:
 			self.close()
 			
 		if self.bos.isChecked() == True:
-			self.TYPE_QUANT = ""			
+			self.TYPE_QUANT = ""
 		else:
 			pass
 		if self.calcinati.isChecked() == True:
-			self.TYPE_QUANT = ""			
+			self.TYPE_QUANT = ""
 		else:
 			pass
 		if self.camoscio.isChecked() == True:
@@ -683,7 +683,7 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		else:
 			pass
 		if self.combuste.isChecked() == True:
-			self.TYPE_QUANT = ""			
+			self.TYPE_QUANT = ""
 		else:
 			pass
 		if self.coni.isChecked() == True:
@@ -757,7 +757,7 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 			user = ''
 		else:
 			user = str(self.user.currentText())
-			
+
 		if self.port.currentText() == "":
 			port = ''
 		else:
@@ -921,8 +921,8 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		eval (n)
 		con = "r('archezoology_table<-dbGetQuery(con,\"select * from archeozoology_table where us = %d AND bos_bison IS NOT NULL\")')" % int(self.DATA_LIST[i].us)
 		eval (con)
-		if self.bos.isChecked() == True:			
-		 	x1= "r('VGM_PARAM_A3 <- gstat(id=\"%s\", formula=%s~1,locations=~coord_x+coord_y, data=archezoology_table, nmax = 10)')" % (str(self.lineEdit_bos_2.currentText()),str(self.c1.currentText()))
+		if self.bos.isChecked() == True:
+			x1= "r('VGM_PARAM_A3 <- gstat(id=\"%s\", formula=%s~1,locations=~coord_x+coord_y, data=archezoology_table, nmax = 10)')" % (str(self.lineEdit_bos_2.currentText()),str(self.c1.currentText()))
 			eval (x1)
 		else:
 			pass
@@ -976,7 +976,7 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		else:
 			pass
 		if self.ursidi.isChecked() == True:
-		 	x12="r('VGM_PARAM_A3 <- gstat(VGM_PARAM_A3, \"%s\", %s~1, locations=~coord_x+coord_y,archezoology_table, nmax = 10)')"% (str(self.lineEdit_ursidi_2.text()),str(self.c12.currentText()))
+			x12="r('VGM_PARAM_A3 <- gstat(VGM_PARAM_A3, \"%s\", %s~1, locations=~coord_x+coord_y,archezoology_table, nmax = 10)')"% (str(self.lineEdit_ursidi_2.text()),str(self.c12.currentText()))
 			eval (x12)
 		else:
 			pass
@@ -1316,12 +1316,12 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		else:
 			pass
 		if self.ursidi.isChecked() == True:
-		 	x12="r('VGM_PARAM_A3 <- gstat(VGM_PARAM_A3, \"%s\", %s~1, locations=~coord_x+coord_y,archezoology_table, nmax = 10)')"% (str(self.lineEdit_ursidi_2.text()),str(self.c12.currentText()))
+			x12="r('VGM_PARAM_A3 <- gstat(VGM_PARAM_A3, \"%s\", %s~1, locations=~coord_x+coord_y,archezoology_table, nmax = 10)')"% (str(self.lineEdit_ursidi_2.text()),str(self.c12.currentText()))
 			eval (x12)
 		else:
 			pass
 		if self.canidi.isChecked() == True:
-		 	x13="r('VGM_PARAM_A3 <- gstat(VGM_PARAM_A3, \"%s\", %s~1, locations=~coord_x+coord_y,archezoology_table, nmax = 10)')"% (str(self.lineEdit_canidi_2.text()),str(self.c11.currentText()))
+			x13="r('VGM_PARAM_A3 <- gstat(VGM_PARAM_A3, \"%s\", %s~1, locations=~coord_x+coord_y,archezoology_table, nmax = 10)')"% (str(self.lineEdit_canidi_2.text()),str(self.c11.currentText()))
 			eval (x13)
 		else:
 			pass	 

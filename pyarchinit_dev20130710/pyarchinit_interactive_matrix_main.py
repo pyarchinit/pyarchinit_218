@@ -180,7 +180,8 @@ class pyarchinit_Interactive_Matrix(QDialog, Ui_DialogInteractiveMatrix):
 	def plot_matrix(self, dp):
 		self.data_plot = dp
 
-		G1=nx.DiGraph(self.data_plot)          # now make it a Graph 
+		G1=nx.DiGraph(self.data_plot)
+		# now make it a Graph 
 		#G1.write_dot(G1,'test.dot')
 		#nx.write_dot(G1,'test.dot')
 		#plt.title("draw_networkx")

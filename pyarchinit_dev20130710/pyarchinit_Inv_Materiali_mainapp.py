@@ -760,35 +760,55 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		elenco_casse_list.sort()
 		for cassa in elenco_casse_list:
 			single_cassa = [] #contiene i dati della singola cassa
-			single_cassa.append(cassa) #inserisce la sigla di cassa
+
+			str_cassa = "<b>"+str(cassa)+"</b>"
+			single_cassa.append(str_cassa) #inserisce la sigla di cassa
+
+			###cerca le singole area/us presenti in quella cassa
+			res_inv = self.DB_MANAGER.query_distinct('INVENTARIO_MATERIALI',[['sito','"' + str(self.sito_ec)+'"'], ['nr_cassa',cassa]], ['numero_inventario', 'tipo_reperto'])
+
+			n_inv_res_list = ""
+			for i in res_inv:
+				n_inv_res_list += "N.inv: " + str(i.numero_inventario) + "/"+ str(i.tipo_reperto) + "<br/>"
+			#inserisce l'elenco degli inventari
+			single_cassa.append(n_inv_res_list)
+
 
 			###cerca le singole area/us presenti in quella cassa
 			res_us = self.DB_MANAGER.query_distinct('INVENTARIO_MATERIALI',[['sito','"' + str(self.sito_ec)+'"'], ['nr_cassa',cassa]], ['area', 'us'])
 
 			us_res_list = ""#[] #accoglie l'elenco delle US presenti in quella cassa
 			for i in res_us:
-				us_res_list += "Area:"+str(i.area) + ",US:"+str(i.us)+"<br/>"  #.append("Area:"+str(i.area) + ",US:"+str(i.us))
+				params_dict = {'sito':'"'+str(self.sito_ec)+'"', 'area': '"'+str(i.area)+'"', 'us':'"'+str(i.us)+'"'}
+				res_struct = self.DB_MANAGER.query_bool(params_dict, 'US')
+				structure_string = ""
+				if bool(res_struct) == True:
+					structure_string += "(" 
+					for sing_us in res_struct:
+						structure_string += str(sing_us.struttura) + '/'
+					structure_string += ")" 
+				
+				us_res_list += "Area:"+str(i.area) + ",US:"+str(i.us)+structure_string+"<br/>"  #.append("Area:"+str(i.area) + ",US:"+str(i.us))
 			#us_res_list.sort()
 			#inserisce l'elenco delle us
 			single_cassa.append(us_res_list)
 
-			###cerca le singole area/us presenti in quella cassa
-			res_inv = self.DB_MANAGER.query_distinct('INVENTARIO_MATERIALI',[['sito','"' + str(self.sito_ec)+'"'], ['nr_cassa',cassa]], ['numero_inventario'])
 
-			n_inv_res_list = ""
-			for i in res_inv:
-				n_inv_res_list += "N.inv: " + str(i.numero_inventario) +"<br/>"
-			#inserisce l'elenco degli inventari
-			single_cassa.append(n_inv_res_list)
-			###cerca le singole area/us presenti in quella cassa
-			res_tip_reperto = self.DB_MANAGER.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"'], ['nr_cassa',cassa]], ['tipo_reperto'])
+			###cerca il luogo di conservazione della cassa
+			params_dict = {'sito':'"'+str(self.sito_ec)+'"', 'nr_cassa': '"'+str(cassa)+'"'}
+			res_luogo_conservazione = self.DB_MANAGER.query_bool(params_dict, 'INVENTARIO_MATERIALI')
+			luogo_conservazione = res_luogo_conservazione[0].luogo_conservazione
+			single_cassa.append(luogo_conservazione) #inserisce la sigla di cassa
 
-			tip_rep_res_list = ""
-			for i in res_tip_reperto:
-				tip_rep_res_list += str(i.tipo_reperto) +"<br/>"
-
-			#inserisce l'elenco degli inventari
-			single_cassa.append(tip_rep_res_list)
+##			###cerca le singole area/us presenti in quella cassa
+##			res_tip_reperto = self.DB_MANAGER.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"'], ['nr_cassa',cassa]], ['tipo_reperto'])
+##
+##			tip_rep_res_list = ""
+##			for i in res_tip_reperto:
+##				tip_rep_res_list += str(i.tipo_reperto) +"<br/>"
+##
+##			#inserisce l'elenco degli inventari
+##			single_cassa.append(tip_rep_res_list)
 
 
 			data_for_pdf.append(single_cassa)

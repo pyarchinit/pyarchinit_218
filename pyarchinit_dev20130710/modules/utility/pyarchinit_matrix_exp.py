@@ -19,25 +19,25 @@
  *                                                                         *
  ***************************************************************************/
 """
-from PyQt4 import QtCore, QtGui
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-import PyQt4.QtGui
-
-from qgis.core import *
-from qgis.gui import *
+##from PyQt4 import QtCore, QtGui
+##from PyQt4.QtCore import *
+##from PyQt4.QtGui import *
+##import PyQt4.QtGui
+##
+##from qgis.core import *
+##from qgis.gui import *
 import pygraphviz as p
 import os
 try:
 	import pygraphviz as pgv
 except:
 	pass
-from networkx import *
-import matplotlib
-
-import matplotlib.pyplot as plt
-
-import pylab
+##from networkx import *
+##import matplotlib
+##
+##import matplotlib.pyplot as plt
+##
+##import pylab
 
 class HARRIS_MATRIX_EXP:
 	if os.name == 'posix':
@@ -52,7 +52,7 @@ class HARRIS_MATRIX_EXP:
 	def export_matrix(self):
 		G = p.AGraph(directed=True)
 		G.graph_attr['dpi']=300
-		G.graph_attr['label']='pyArchInit - Harris Matrix Exportation System'
+		G.graph_attr['label']='pyArchInit -  MandoMatrix Exportation System'
 
 		elist = []
 
