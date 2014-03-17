@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>576</width>
-    <height>829</height>
+    <width>540</width>
+    <height>573</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -880,211 +880,303 @@ p, li { white-space: pre-wrap; }
         <attribute name="title">
          <string>Localizzazione</string>
         </attribute>
-        <layout class="QGridLayout" name="gridLayout_23">
-         <item row="0" column="0">
-          <layout class="QVBoxLayout" name="verticalLayout_6">
-           <item>
-            <layout class="QGridLayout" name="gridLayout_20">
-             <item row="1" column="0">
-              <widget class="QComboBox" name="comboBox_nazione">
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QComboBox" name="comboBox_regione">
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_9">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Nazione</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLabel" name="label_48">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Regione</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_4">
-               <property name="font">
-                <font>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Localizzazione non georeferenziata</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QGridLayout" name="gridLayout_22">
-             <item row="0" column="0">
-              <widget class="QComboBox" name="comboBox_provincia">
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_11">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Provincia</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QComboBox" name="comboBox_comune">
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="3" column="0">
-              <widget class="QLabel" name="label_15">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Comune</string>
-               </property>
-              </widget>
-             </item>
-             <item row="4" column="0">
-              <widget class="QComboBox" name="comboBox_frazione">
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="5" column="0">
-              <widget class="QLabel" name="label_30">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Frazione</string>
-               </property>
-              </widget>
-             </item>
-             <item row="6" column="0">
-              <widget class="QComboBox" name="comboBox_localita">
-               <property name="editable">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="7" column="0">
-              <widget class="QLabel" name="label_31">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Localita'</string>
-               </property>
-              </widget>
-             </item>
-             <item row="8" column="0">
-              <layout class="QGridLayout" name="gridLayout_21">
-               <item row="0" column="0">
-                <widget class="QLineEdit" name="lineEdit_indirizzo">
-                 <property name="minimumSize">
-                  <size>
-                   <width>490</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QLineEdit" name="lineEdit_nr_civico">
-                 <property name="maximumSize">
-                  <size>
-                   <width>50</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string/>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="0">
-                <widget class="QLabel" name="label_49">
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Indirizzo</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="1" column="1">
-                <widget class="QLabel" name="label_50">
-                 <property name="font">
-                  <font>
-                   <pointsize>10</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>nr civico</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <spacer name="verticalSpacer_3">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>40</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-        </layout>
+        <widget class="QWidget" name="">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>10</y>
+           <width>491</width>
+           <height>68</height>
+          </rect>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_20">
+          <item row="1" column="0">
+           <widget class="QComboBox" name="comboBox_nazione">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="comboBox_regione">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_9">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Nazione</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="label_48">
+            <property name="font">
+             <font>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Regione</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="font">
+             <font>
+              <weight>75</weight>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Localizzazione non georeferenziata</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QComboBox" name="comboBox_provincia">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="geometry">
+          <rect>
+           <x>11</x>
+           <y>85</y>
+           <width>141</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_11">
+         <property name="geometry">
+          <rect>
+           <x>11</x>
+           <y>107</y>
+           <width>51</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Provincia</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboBox_comune">
+         <property name="geometry">
+          <rect>
+           <x>11</x>
+           <y>129</y>
+           <width>141</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_30">
+         <property name="geometry">
+          <rect>
+           <x>11</x>
+           <y>193</y>
+           <width>49</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Frazione</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_15">
+         <property name="geometry">
+          <rect>
+           <x>11</x>
+           <y>150</y>
+           <width>47</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Comune</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboBox_frazione">
+         <property name="geometry">
+          <rect>
+           <x>11</x>
+           <y>172</y>
+           <width>141</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboBox_localita">
+         <property name="geometry">
+          <rect>
+           <x>11</x>
+           <y>215</y>
+           <width>141</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_31">
+         <property name="geometry">
+          <rect>
+           <x>11</x>
+           <y>236</y>
+           <width>46</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Localita'</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_indirizzo">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>262</y>
+           <width>490</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>22</height>
+          </size>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_nr_civico">
+         <property name="geometry">
+          <rect>
+           <x>450</x>
+           <y>230</y>
+           <width>50</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>22</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>50</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_49">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>290</y>
+           <width>141</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Indirizzo</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_50">
+         <property name="geometry">
+          <rect>
+           <x>390</x>
+           <y>230</y>
+           <width>50</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>nr civico</string>
+         </property>
+        </widget>
         <zorder></zorder>
        </widget>
        <widget class="QWidget" name="tab_2">
@@ -1106,13 +1198,34 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="lineEdit_carta_topo_igm"/>
+          <widget class="QLineEdit" name="lineEdit_carta_topo_igm">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>22</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item row="1" column="2" colspan="2">
-          <widget class="QLineEdit" name="lineEdit_carta_ctr"/>
+          <widget class="QLineEdit" name="lineEdit_carta_ctr">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>22</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item row="1" column="5">
-          <widget class="QLineEdit" name="lineEdit_foglio_catastale"/>
+          <widget class="QLineEdit" name="lineEdit_foglio_catastale">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>22</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item row="2" column="1">
           <widget class="QLabel" name="label_10">
@@ -1257,6 +1370,12 @@ p, li { white-space: pre-wrap; }
          </item>
          <item row="14" column="1" colspan="3">
           <widget class="QTextEdit" name="textEdit_descrizione_luogo">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>22</height>
+            </size>
+           </property>
            <property name="font">
             <font>
              <pointsize>10</pointsize>
@@ -1349,54 +1468,6 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
          </item>
-         <item row="11" column="1">
-          <widget class="QLabel" name="label_22">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>15</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Andamento terreno/pendenza</string>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="11" column="2">
-          <widget class="QLabel" name="label_32">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>15</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Utilizzo suolo/Vegetazione</string>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="13" column="4" colspan="2">
-          <widget class="QLabel" name="label_33">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>15</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Descrizione empirica del suolo</string>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
          <item row="4" column="1">
           <widget class="QLabel" name="label_18">
            <property name="minimumSize">
@@ -1436,6 +1507,54 @@ p, li { white-space: pre-wrap; }
            </property>
           </widget>
          </item>
+         <item row="14" column="5">
+          <widget class="QLabel" name="label_33">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>15</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Descrizione empirica del suolo</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="1" rowspan="2">
+          <widget class="QLabel" name="label_22">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>15</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Andamento terreno/pendenza</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="11" column="2" rowspan="2">
+          <widget class="QLabel" name="label_32">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>15</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Utilizzo suolo/Vegetazione</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
        <widget class="QWidget" name="tab_3">
@@ -1457,13 +1576,34 @@ p, li { white-space: pre-wrap; }
           </widget>
          </item>
          <item row="1" column="0">
-          <widget class="QLineEdit" name="lineEdit_data"/>
+          <widget class="QLineEdit" name="lineEdit_data">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>22</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item row="1" column="1" colspan="2">
-          <widget class="QLineEdit" name="lineEdit_ora_meteo"/>
+          <widget class="QLineEdit" name="lineEdit_ora_meteo">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>22</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item row="1" column="3" colspan="2">
-          <widget class="QLineEdit" name="lineEdit_responsabile"/>
+          <widget class="QLineEdit" name="lineEdit_responsabile">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>22</height>
+            </size>
+           </property>
+          </widget>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_20">
@@ -1907,6 +2047,9 @@ p, li { white-space: pre-wrap; }
            <property name="columnCount">
             <number>2</number>
            </property>
+           <attribute name="horizontalHeaderDefaultSectionSize">
+            <number>248</number>
+           </attribute>
            <row/>
            <column>
             <property name="text">
@@ -1998,7 +2141,7 @@ p, li { white-space: pre-wrap; }
             <number>1</number>
            </property>
            <attribute name="horizontalHeaderDefaultSectionSize">
-            <number>400</number>
+            <number>496</number>
            </attribute>
            <row/>
            <column>
@@ -2014,149 +2157,189 @@ p, li { white-space: pre-wrap; }
         <attribute name="title">
          <string>Tools</string>
         </attribute>
-        <layout class="QGridLayout" name="gridLayout_8">
-         <item row="4" column="1" alignment="Qt::AlignTop">
-          <widget class="QPushButton" name="pushButton_showLayer">
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Show Selcted Features</string>
-           </property>
-           <property name="text">
-            <string>Visualizza UT</string>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>:/images/sheet.png</normaloff>:/images/sheet.png</iconset>
-           </property>
-           <property name="checkable">
-            <bool>false</bool>
-           </property>
-           <property name="default">
-            <bool>false</bool>
-           </property>
-           <property name="flat">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1" alignment="Qt::AlignTop">
-          <widget class="QPushButton" name="pushButton_pdf_exp">
-           <property name="font">
-            <font>
-             <pointsize>9</pointsize>
-            </font>
-           </property>
-           <property name="toolTip">
-            <string>Export PDF</string>
-           </property>
-           <property name="text">
-            <string>Singole schede UT</string>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>:/images/sheet.png</normaloff>:/images/sheet.png</iconset>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1" alignment="Qt::AlignTop">
-          <widget class="QLabel" name="label_36">
-           <property name="minimumSize">
-            <size>
-             <width>396</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>18</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Tools</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1" alignment="Qt::AlignTop">
-          <widget class="QToolButton" name="toolButtonGis">
-           <property name="minimumSize">
-            <size>
-             <width>109</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="toolTip">
-            <string/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset>
-             <normaloff>:/images/GIS.png</normaloff>:/images/GIS.png</iconset>
-           </property>
-           <property name="shortcut">
-            <string>Ctrl+G</string>
-           </property>
-           <property name="checkable">
-            <bool>true</bool>
-           </property>
-           <property name="checked">
-            <bool>false</bool>
-           </property>
-           <property name="toolButtonStyle">
-            <enum>Qt::ToolButtonTextOnly</enum>
-           </property>
-           <property name="arrowType">
-            <enum>Qt::NoArrow</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2" alignment="Qt::AlignTop">
-          <widget class="QLabel" name="label_38">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Visualizzazione GIS</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="2" alignment="Qt::AlignTop">
-          <widget class="QLabel" name="label_46">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Visualizza UT</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="2" alignment="Qt::AlignTop">
-          <widget class="QLabel" name="label_41">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Esportazioni PDF</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QPushButton" name="pushButton_showLayer">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>110</y>
+           <width>96</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>Show Selcted Features</string>
+         </property>
+         <property name="text">
+          <string>Visualizza UT</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>:/images/sheet.png</normaloff>:/images/sheet.png</iconset>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <property name="default">
+          <bool>false</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_pdf_exp">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>150</y>
+           <width>130</width>
+           <height>24</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+          </font>
+         </property>
+         <property name="toolTip">
+          <string>Export PDF</string>
+         </property>
+         <property name="text">
+          <string>Singole schede UT</string>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>:/images/sheet.png</normaloff>:/images/sheet.png</iconset>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_36">
+         <property name="geometry">
+          <rect>
+           <x>9</x>
+           <y>9</y>
+           <width>396</width>
+           <height>29</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>396</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>18</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Tools</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_38">
+         <property name="geometry">
+          <rect>
+           <x>130</x>
+           <y>80</y>
+           <width>122</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Visualizzazione GIS</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_46">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>110</y>
+           <width>82</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Visualizza UT</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_41">
+         <property name="geometry">
+          <rect>
+           <x>150</x>
+           <y>150</y>
+           <width>106</width>
+           <height>16</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Esportazioni PDF</string>
+         </property>
+        </widget>
+        <widget class="QToolButton" name="toolButtonGis">
+         <property name="geometry">
+          <rect>
+           <x>9</x>
+           <y>77</y>
+           <width>109</width>
+           <height>22</height>
+          </rect>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>109</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>:/images/GIS.png</normaloff>:/images/GIS.png</iconset>
+         </property>
+         <property name="shortcut">
+          <string>Ctrl+G</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonTextOnly</enum>
+         </property>
+         <property name="arrowType">
+          <enum>Qt::NoArrow</enum>
+         </property>
+        </widget>
        </widget>
       </widget>
      </item>
