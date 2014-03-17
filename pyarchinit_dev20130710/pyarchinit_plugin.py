@@ -159,12 +159,12 @@ class PyArchInitPlugin:
 		self.actionSchedaind.setWhatsThis("pyArchInit Scheda Individuo")
 		QObject.connect(self.actionSchedaind, SIGNAL("triggered()"), self.runSchedaind)
 
-		icon_Detsesso = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconSesso.png'))
+		icon_Detsesso = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconSESSO.png'))
 		self.actionDetsesso = QAction(QIcon(icon_Detsesso), "pyArchInit Scheda Determinazione del sesso", self.iface.mainWindow())
 		self.actionDetsesso.setWhatsThis("pyArchInit Scheda Determinazione del sesso")
 		QObject.connect(self.actionDetsesso, SIGNAL("triggered()"), self.runDetsesso)
 
-		icon_Deteta = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconEta.png'))
+		icon_Deteta = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconETA.png'))
 		self.actionDeteta = QAction(QIcon(icon_Deteta), "pyArchInit Scheda Determinazione dell'età", self.iface.mainWindow())
 		self.actionSchedaind.setWhatsThis("pyArchInit Scheda Determinazione dell'età")
 		QObject.connect(self.actionDeteta, SIGNAL("triggered()"), self.runDeteta)
