@@ -382,24 +382,10 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 	def data_error_check(self):
 		test = 0
 		EC = Error_check()
-		
-		data_estesa= self.lineEdit_per_estesa.text()
-		
-		if data_estesa != "":
-			if EC.data_lenght(data_estesa, 299) == 0:
-				QMessageBox.warning(self, "ATTENZIONE", "Campo Datazione estesa. \n non deve superare i 300 caratteri alfanumerici",  QMessageBox.Ok)
-				test = 1
-		
-		periodo = self.comboBox_periodo.currentText()
+
 		cron_iniz = self.lineEdit_cron_iniz.text()
 		cron_fin = self.lineEdit_cron_fin.text()
 		cod_per =  self.lineEdit_codice_periodo.text()
-
-		if periodo != "":
-			if EC.data_is_int(periodo) == 0:
-				QMessageBox.warning(self, "ATTENZIONE", "Campo Periodo. \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
-				test = 1
-
 
 		if cron_iniz != "":
 			if EC.data_is_int(cron_iniz) == 0:

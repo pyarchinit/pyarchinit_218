@@ -18,8 +18,7 @@
  *   (at your option) any later version.                                  									*
  *                                                                         											*
  ***************************************************************************/
-to pull
-""" 
+"""
 import sys, os
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import *

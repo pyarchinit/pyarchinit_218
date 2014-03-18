@@ -737,7 +737,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		Mat_index_pdf = generate_reperti_pdf()
 		data_list = self.generate_list_pdf()
 		Mat_index_pdf.build_index_Finds(data_list, data_list[0][1])
-		
+
 
 	def on_pushButton_elenco_casse_pressed(self):
 		sito_ec = unicode(self.comboBox_sito.currentText())

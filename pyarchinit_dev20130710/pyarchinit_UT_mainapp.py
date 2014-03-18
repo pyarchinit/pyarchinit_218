@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 #-*- coding: utf-8 -*-
 """
-/***************************************************************************
+/**************************************************************************
         pyArchInit Plugin  - A QGIS plugin to manage archaeological dataset
         					 stored in Postgres
                              -------------------
@@ -1000,8 +1000,8 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 		str(self.comboBox_nr_ut.currentText()),
 		str(self.lineEdit_ut_letterale.text()),
 		str(self.lineEdit_def_ut.text()),
-		str(self.textEdit_descrizione_ut.toPlainText()),
-		str(self.textEdit_interpretazione_ut.toPlainText()),
+		str(self.textEdit_descrizione_ut.toPlainText().unicode()),
+		str(self.textEdit_interpretazione_ut.toPlainText().unicode()),
 		str(self.comboBox_nazione.currentText()),
 		str(self.comboBox_regione.currentText()),
 		str(self.comboBox_provincia.currentText()),

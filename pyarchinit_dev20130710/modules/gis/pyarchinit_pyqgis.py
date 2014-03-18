@@ -108,7 +108,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 
 			uri.setDataSource('','pyarchinit_us_view', 'Geometry', gidstr, "gid")
 			layerUS=QgsVectorLayer(uri.uri(), 'pyarchinit_us_view', 'spatialite')
-###################################################################à
+###################################################################
 			if  layerUS.isValid() == True:
 				#self.USLayerId = layerUS.getLayerID()
 				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_caratterizzazioni.qml')
@@ -142,8 +142,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			if  layerUS.isValid() == True:
 				layerUS.setCrs(srs)
 				#self.USLayerId = layerUS.getLayerID()
-				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
-				style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
 
@@ -230,8 +229,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			if  layerUS.isValid() == True:
 				layerUS.setCrs(srs)
 				#self.USLayerId = layerUS.getLayersID()
-				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
-				style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
 			else:
@@ -327,8 +325,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			if  layerUS.isValid() == True:
 				layerUS.setCrs(srs)
 				#self.USLayerId = layerUS.getLayersID()
-				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
-				style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
 			else:
@@ -409,8 +406,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			if  layerUS.isValid() == True:
 				layerUS.setCrs(srs)
 				#self.USLayerId = layerUS.getLayerID()
-				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
-				style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
 			uri.setDataSource("public", "pyarchinit_quote_view", "the_geom", cont_per_string, "gid")
@@ -544,14 +540,18 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 
 	#iface custom methods
 	def dataProviderFields(self):
+		###FUNZIONE DA RIPRISTINARE PER le selectedFeatures
 		fields = self.iface.mapCanvas().currentLayer().dataProvider().fields()
 		return fields
 		
 	def selectedFeatures(self):
+		###FUNZIONE DA RIPRISTINARE PER le selectedFeatures
 		selected_features = self.iface.mapCanvas().currentLayer().selectedFeatures()
 		return selected_features
 
 	def findFieldFrDict(self, fn):
+		###FUNZIONE DA RIPRISTINARE PER le selectedFeatures
+		##non funziona piu dopo changelog
 		self.field_name = fn
 		fields_dict = self.dataProviderFields()
 		for k in fields_dict:
@@ -560,6 +560,8 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 		return res
 
 	def findItemInAttributeMap(self, fp, fl):
+		###FUNZIONE DA RIPRISTINARE PER le selectedFeatures
+		##non funziona piu dopo changelog
 		self.field_position = fp
 		self.features_list = fl
 		value_list = []
@@ -567,6 +569,8 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			value_list.append(item.attributeMap().__getitem__(self.field_position).toString())
 		return value_list
 
+
+###################### - Site Section - ########################
 	def charge_layers_for_draw(self, options):
 		self.options = options
 
@@ -646,6 +650,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 					#self.USLayerId = layerUS.getLayerID()
 					##style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
 					##ayerUS.loadNamedStyle(style_path)
+					self.iface.mapCanvas().setExtent(layer.extent())
 					QgsMapLayerRegistry.instance().addMapLayers([layer], True)
 				else:
 					QMessageBox.warning(self, "TESTER", "Layer non valido",QMessageBox.Ok)
@@ -741,7 +746,133 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			else:
 				QMessageBox.warning(self, "TESTER", "Layer non valido",QMessageBox.Ok)
 
-class Order_layers:
+	def charge_sites_from_research(self, data):
+		#Clean Qgis Map Later Registry
+		#QgsMapLayerRegistry.instance().removeAllMapLayers()
+		# Get the user input, starting with the table name
+		
+		#self.find_us_cutted(data)
+
+		cfg_rel_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'config.cfg')
+		file_path = ('%s%s') % (self.HOME, cfg_rel_path)
+		conf = open(file_path, "r")
+		con_sett = conf.read()
+		conf.close()
+
+		settings = Settings(con_sett)
+		settings.set_configuration()
+		
+		if settings.SERVER == 'sqlite':
+			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
+			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
+
+			gidstr =  "sito_nome= '" + str(data[0].sito) +"'"
+			if len(data) > 1:
+				for i in range(len(data)):
+					gidstr += " OR sito_nome = '" + str(data[i].sito) +"'"
+
+			uri = QgsDataSourceURI()
+			uri.setDatabase(db_file_path)
+
+			uri.setDataSource('','pyarchinit_site_view', 'the_geom', gidstr, "ROWID")
+			layerSITE=QgsVectorLayer(uri.uri(), 'pyarchinit_site_view', 'spatialite')
+
+			if layerSITE.isValid() == True:
+				QMessageBox.warning(self, "TESTER", "OK Layer Sito valido",QMessageBox.Ok)
+
+				#self.USLayerId = layerUS.getLayerID()
+##				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+##				layerUS.loadNamedStyle(style_path)
+				self.iface.mapCanvas().setExtent(layerSITE.extent())
+				QgsMapLayerRegistry.instance().addMapLayers([layerSITE], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "Layer US non valido",QMessageBox.Ok)
+
+	def charge_structure_from_research(self, data):
+		#Clean Qgis Map Later Registry
+		#QgsMapLayerRegistry.instance().removeAllMapLayers()
+		# Get the user input, starting with the table name
+		
+		#self.find_us_cutted(data)
+
+		cfg_rel_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'config.cfg')
+		file_path = ('%s%s') % (self.HOME, cfg_rel_path)
+		conf = open(file_path, "r")
+		con_sett = conf.read()
+		conf.close()
+
+		settings = Settings(con_sett)
+		settings.set_configuration()
+		
+		if settings.SERVER == 'sqlite':
+			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
+			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
+
+			gidstr = "id_struttura = '" + str(data[0].id_struttura) +"'"
+			if len(data) > 1:
+				for i in range(len(data)):
+					gidstr += " OR id_struttura = '" + str(data[i].id_struttura) +"'"
+
+			uri = QgsDataSourceURI()
+			uri.setDatabase(db_file_path)
+
+			uri.setDataSource('','pyarchinit_strutture_view', 'the_geom', gidstr, "ROWID")
+			layerSTRUTTURA=QgsVectorLayer(uri.uri(), 'pyarchinit_strutture_view', 'spatialite')
+
+			if layerSTRUTTURA.isValid() == True:
+				QMessageBox.warning(self, "TESTER", "OK Layer Struttura valido",QMessageBox.Ok)
+
+				#self.USLayerId = layerUS.getLayerID()
+##				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+##				layerUS.loadNamedStyle(style_path)
+				self.iface.mapCanvas().setExtent(layerSTRUTTURA.extent())
+				QgsMapLayerRegistry.instance().addMapLayers([layerSTRUTTURA], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "Layer Struttura non valido",QMessageBox.Ok)
+
+	def charge_individui_from_research(self, data):
+		#Clean Qgis Map Later Registry
+		#QgsMapLayerRegistry.instance().removeAllMapLayers()
+		# Get the user input, starting with the table name
+		
+		#self.find_us_cutted(data)
+
+		cfg_rel_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'config.cfg')
+		file_path = ('%s%s') % (self.HOME, cfg_rel_path)
+		conf = open(file_path, "r")
+		con_sett = conf.read()
+		conf.close()
+
+		settings = Settings(con_sett)
+		settings.set_configuration()
+		
+		if settings.SERVER == 'sqlite':
+			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
+			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
+
+			gidstr = "id_scheda_ind = '" + str(data[0].id_scheda_ind) +"'"
+			if len(data) > 1:
+				for i in range(len(data)):
+					gidstr += " OR id_scheda_ind = '" + str(data[i].id_scheda_ind) +"'"
+
+			uri = QgsDataSourceURI()
+			uri.setDatabase(db_file_path)
+
+			uri.setDataSource('','pyarchinit_individui_view', 'the_geom', gidstr, "ROWID")
+			layerIndividui=QgsVectorLayer(uri.uri(), 'pyarchinit_individui_view', 'spatialite')
+
+			if layerIndividui.isValid() == True:
+				QMessageBox.warning(self, "TESTER", "OK Layer Individui valido",QMessageBox.Ok)
+
+				#self.USLayerId = layerUS.getLayerID()
+##				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+##				layerUS.loadNamedStyle(style_path)
+				self.iface.mapCanvas().setExtent(layerIndividui.extent())
+				QgsMapLayerRegistry.instance().addMapLayers([layerIndividui], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "Layer Individui non valido",QMessageBox.Ok)
+
+class Order_layers_DEPRECATED:
 
 	if os.name == 'posix':
 		HOME = os.environ['HOME']
@@ -883,9 +1014,14 @@ class Order_layer_v2:
 	order_count = 0
 	db = ''#Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
 	#db.connection()
+	SITO = ""
+	AREA = ""
+
 	
-	def __init__(self, dbconn):
+	def __init__(self, dbconn, SITOol, AREAol):
 		self.db = dbconn
+		self.SITO = SITOol
+		self.AREA = AREAol
 
 	def main_order_layer(self):
 		#ricava la base delle us del matrix a cui non succedono altre US
@@ -900,7 +1036,7 @@ class Order_layer_v2:
 				rec_list_str.append(str(i))
 			#cerca prima di tutto se ci sono us uguali o che si legano alle US sottostanti
 			value_list_equal = self.create_list_values(['Uguale a', 'Si lega a'],rec_list_str)
-			res = self.db.query_in_contains(value_list_equal)
+			res = self.db.query_in_contains(value_list_equal, self.SITO, self.AREA)
 			
 			matrix_us_equal_level = []
 			for r in res:
@@ -914,7 +1050,7 @@ class Order_layer_v2:
 			#le us che derivano dall'uguaglianza vanno aggiunte al rec_list_str
 			rec_list_str = rec_list_str + matrix_us_equal_level
 			value_list_post = value_list_equal = self.create_list_values(['Copre', 'Riempie', 'Taglia', 'Si appoggia a'],rec_list_str)
-			res = self.db.query_in_contains(value_list_post)
+			res = self.db.query_in_contains(value_list_post, self.SITO, self.AREA)
 
 			matrix_us_level = []
 			for r in res:
@@ -930,7 +1066,7 @@ class Order_layer_v2:
 
 	#print bool()
 	def find_base_matrix(self):
-		res = self.db.select_not_like_from_db_sql()
+		res = self.db.select_not_like_from_db_sql(self.SITO, self.AREA)
 		rec_list = []
 		for rec in res:
 			rec_list.append(str(rec.us))

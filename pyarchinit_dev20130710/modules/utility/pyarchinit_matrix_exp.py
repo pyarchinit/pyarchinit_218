@@ -19,25 +19,25 @@
  *                                                                         *
  ***************************************************************************/
 """
-##from PyQt4 import QtCore, QtGui
-##from PyQt4.QtCore import *
-##from PyQt4.QtGui import *
-##import PyQt4.QtGui
-##
-##from qgis.core import *
-##from qgis.gui import *
+from PyQt4 import QtCore, QtGui
+from PyQt4.QtCore import *
+from PyQt4.QtGui import *
+import PyQt4.QtGui
+
+from qgis.core import *
+from qgis.gui import *
 import pygraphviz as p
 import os
 try:
 	import pygraphviz as pgv
 except:
 	pass
-##from networkx import *
-##import matplotlib
-##
-##import matplotlib.pyplot as plt
-##
-##import pylab
+from networkx import *
+import matplotlib
+
+import matplotlib.pyplot as plt
+
+import pylab
 
 class HARRIS_MATRIX_EXP:
 	if os.name == 'posix':
@@ -51,8 +51,7 @@ class HARRIS_MATRIX_EXP:
 
 	def export_matrix(self):
 		G = p.AGraph(directed=True)
-		G.graph_attr['dpi']=300
-		G.graph_attr['label']='pyArchInit -  MandoMatrix Exportation System'
+		G.graph_attr['label']='pyArchInit - Harris Matrix Exportation System'
 
 		elist = []
 
@@ -61,12 +60,11 @@ class HARRIS_MATRIX_EXP:
 			elist.append(a)
 
 		G.add_edges_from(elist)
-		
+
 		G.node_attr['shape']='box'
 		G.node_attr['style']='strocked' 
 		G.node_attr['color']='red'
-		
-		
+
 		for i in self.periodi:
 			G.subgraph(nbunch=i[0], 
 			name=i[1],
@@ -75,12 +73,12 @@ class HARRIS_MATRIX_EXP:
 			color='blue',
 			label=i[2],
 			font_color = 'Blue')
-			
+	
 		try:
 			data_to_plot =  G.tred()
 		except:
 			data_to_plot = G
-			
+
 		Matrix_path = ('%s%s%s') % (self.HOME, os.sep, "pyarchinit_Matrix_folder")
 
 		if os.name == 'posix':

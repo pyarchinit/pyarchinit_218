@@ -990,8 +990,7 @@ class Pyarchinit_db_management:
 def main():
 	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
 	db.connection()
-	#res = db.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"']], ['area', 'us'])
-	res = db.query_bool({'sito':'"Sito archeologico"', 'area': '"1"', 'us':'"5"'}, 'US')
+	res = db.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"']], ['area', 'us'])
 	for i in res:
 		print str(i.area), str(i.us)
 
