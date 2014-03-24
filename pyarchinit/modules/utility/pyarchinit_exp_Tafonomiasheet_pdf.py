@@ -1,3 +1,7 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
 import os
 import copy
 from reportlab.lib.testutils import makeSuiteForClasses, outputfile, printLocation
@@ -12,6 +16,7 @@ from reportlab.platypus.paragraph import Paragraph
 from datetime import date, time
 
 from pyarchinit_OS_utility import *
+from pyarchinit_utility import Utility
 
 
 class NumberedCanvas_TAFONOMIAsheet(canvas.Canvas):
@@ -41,37 +46,38 @@ class NumberedCanvas_TAFONOMIAsheet(canvas.Canvas):
 
 
 class single_Tafonomia_pdf_sheet:
+	PU = Utility()
 	#rapporti stratigrafici
 
 	def __init__(self, data):
-		self.sito =  							data[0]
-		self.nr_scheda_taf =  			data[1]
-		self.sigla_struttura =  			data[2]
-		self.nr_struttura =  				data[3]
-		self.nr_individuo =  				data[4]
-		self.rito =  							data[5]
-		self.descrizione_taf =  			data[6]
-		self.interpretazione_taf = 		data[7]
-		self.segnacoli =  					data[8]
-		self.canale_libatorio_si_no = 	data[9]
-		self.oggetti_rinvenuti_esterno =  data[10]
-		self.stato_di_conservazione = data[11]
-		self.copertura_tipo =  			data[12]
-		self.tipo_contenitore_resti = 	data[13]
-		self.orientamento_asse = 		data[14]
-		self.orientamento_azimut = 	data[15]
-		self.corredo_presenza = 		data[16]
-		self.corredo_tipo =  				data[17]
-		self.corredo_descrizione = 		data[18]
-		self.lunghezza_scheletro = 	data[19]
-		self.posizione_scheletro =  	data[20]
-		self.posizione_cranio =  		data[21]
-		self.posizione_arti_superiori =  data[22]
-		self.posizione_arti_inferiori =  	data[23]
-		self.completo_si_no =  			data[24]
-		self.disturbato_si_no =  		data[25]
-		self.in_connessione_si_no =  	data[26]
-		self.caratteristiche = 			data[27]
+		self.sito =  								data[0]
+		self.nr_scheda_taf =  				data[1]
+		self.sigla_struttura =  				data[2]
+		self.nr_struttura =  					data[3]
+		self.nr_individuo =  					data[4]
+		self.rito =  								data[5]
+		self.descrizione_taf =  				data[6]
+		self.interpretazione_taf = 			data[7]
+		self.segnacoli =  						data[8]
+		self.canale_libatorio_si_no = 		data[9]
+		self.oggetti_rinvenuti_esterno =	data[10]
+		self.stato_di_conservazione =		data[11]
+		self.copertura_tipo =  				data[12]
+		self.tipo_contenitore_resti = 		data[13]
+		self.orientamento_asse = 			data[14]
+		self.orientamento_azimut = 		data[15]
+		self.corredo_presenza = 			data[16]
+		self.corredo_tipo =  					data[17]
+		self.corredo_descrizione = 			data[18]
+		self.lunghezza_scheletro = 		data[19]
+		self.posizione_scheletro =  		data[20]
+		self.posizione_cranio =  			data[21]
+		self.posizione_arti_superiori 	=	data[22]
+		self.posizione_arti_inferiori =  		data[23]
+		self.completo_si_no =  				data[24]
+		self.disturbato_si_no =  			data[25]
+		self.in_connessione_si_no = 	 	data[26]
+		self.caratteristiche = 				data[27]
 
 	def datestrfdate(self):
 		now = date.today()
@@ -111,7 +117,8 @@ class single_Tafonomia_pdf_sheet:
 		if str(self.orientamento_azimut) == "None":
 			orientamento_azimut = Paragraph("<b>Azimut</b><br/>", styNormal)
 		else:
-			orientamento_azimut = Paragraph("<b>Azimut</b><br/>"  + str(self.orientamento_azimut), styNormal)
+			orientamento_azimut_conv = self.PU.conversione_numeri(self.orientamento_azimut)
+			orientamento_azimut = Paragraph("<b>Azimut</b><br/>"  + orientamento_azimut_conv + "°", styNormal)
 
 		#3 row
 		segnacoli = Paragraph("<b>Segnacoli</b><br/>"  + str(self.segnacoli), styNormal)
@@ -123,9 +130,11 @@ class single_Tafonomia_pdf_sheet:
 		if str(self.lunghezza_scheletro) == "None":
 			lunghezza_scheletro = Paragraph("<b>Lunghezza scheletro</b><br/>", styNormal)
 		else:
-			lunghezza_scheletro = Paragraph("<b>Lunghezza scheletro</b><br/>"  + str(self.lunghezza_scheletro), styNormal)
+			lunghezza_scheletro_conv = self.PU.conversione_numeri(self.lunghezza_scheletro)
+
+			lunghezza_scheletro = Paragraph("<b>Lunghezza scheletro</b><br/>"  + lunghezza_scheletro_conv + " m", styNormal)
 		posizione_scheletro = Paragraph("<b>Posizione scheletro</b><br/>"  + str(self.posizione_scheletro), styNormal)
-		posizione_cranio = Paragraph("<b>Posizione cranio</b><br/>"  + str(self.posizione_scheletro), styNormal)
+		posizione_cranio = Paragraph("<b>Posizione cranio</b><br/>"  + str(self.posizione_cranio), styNormal)
 
 		#5 row
 		posizione_arti_superiori = Paragraph("<b>Posizione arti superiori</b><br/>"  + str(self.posizione_arti_superiori), styNormal)

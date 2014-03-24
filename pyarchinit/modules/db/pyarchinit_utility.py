@@ -290,9 +290,50 @@ class Utility:
 					res_list.append(temp_tup2)
 		return res_list
 
+	def conversione_numeri(self,Numero):
+		self.numero = Numero
+		#source from http://www.python-it.org/forum/index.php?topic=7142.0
+		if type(self.numero) is not str:
+			self.numero = str(self.numero)
+		
+		Punto = self.numero.find(".")
+		Decimale = self.numero[Punto+1:]
+		if len(Decimale) == 1:
+			Decimale += "0"
+		elif Punto == -1:
+			Decimale = "00"
+			Punto = len(self.numero)
+		
+		self.numero = self.numero[:Punto]
+
+		ListaNumero = []
+		for n in range(int(len(self.numero)/3)):
+			newNumero = self.numero[-3:]
+			self.numero = self.numero[:-3]
+			ListaNumero.append(newNumero)
+
+		ListaNumero.reverse()
+		
+		if self.numero <> "":
+			ListaNumero[0:0] = [self.numero]
+		
+		Decimale = Decimale[0:3]
+
+		res =  ".".join(ListaNumero) + "." + Decimale
+		
+		f = open("C://test_schelettro.txt", "w")
+		f.write(Decimale)
+		f.close()
+		
+		return res
+
+
+
+
 #print dir(Utility())
 #Samples - uncomment and run the module to view the functions
-##u = Utility()
+u = Utility()
+print u.conversione_numeri(45.0000000)
 ##print u.sum_list_of_tuples_for_value([("a", 1), ("b", 2), ("a", 3)])
 #print u.remove_dup_from_list([1,1, 2, 2, 2, 3, 4, 5, 5, 6, 6, 7])
 #print u.findFieldFrDict((2))
