@@ -35,7 +35,10 @@ from  pyarchinit_db_manager import *
 from datetime import date
 from psycopg2 import *
 #--import rpy
-#from pyper import *
+try:
+	from pyper import *
+except:
+	pass	
 
 #--import pyArchInit modules--#
 from  pyarchinit_Archeozoology_ui import Ui_DialogArcheoZoology
@@ -900,7 +903,7 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		#dlg.exec_()
 		#dataset = []
 		     	
-		#from pyper import *
+		from pyper import *
 		for i in range(len(self.DATA_LIST)):
 				temp_dataset = ()
 				
@@ -1240,7 +1243,7 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		#dlg.exec_()
 		#dataset = []
 		     	
-		#from pyper import *
+		from pyper import *
 		for i in range(len(self.DATA_LIST)):
 				temp_dataset = ()
 				
@@ -1397,7 +1400,7 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		else:
 			nugget_3 = str(self.nugget_3.text())
 
-		#from pyper import *
+		from pyper import *
 		for i in range(len(self.DATA_LIST)):
 				temp_dataset = ()
 				
@@ -1522,7 +1525,7 @@ MSDR <- function(xv.obj){
 			size = str(self.size.text())	
 		
 		
-		#from pyper import *
+		from pyper import *
 		for i in range(len(self.DATA_LIST)):
 				temp_dataset = ()
 				
@@ -1645,7 +1648,7 @@ MSDR <- function(xv.obj){
 			size = str(self.size.text())	
 		
 		
-		#from pyper import *
+		from pyper import *
 		for i in range(len(self.DATA_LIST)):
 				temp_dataset = ()
 				
@@ -1753,7 +1756,7 @@ MSDR <- function(xv.obj){
 			size = str(self.size.text())	
 		
 		
-		#from pyper import *
+		from pyper import *
 		for i in range(len(self.DATA_LIST)):
 				temp_dataset = ()
 				
@@ -1844,7 +1847,7 @@ do.it <- function (x) {
 		
 		
 		
-		#from pyper import *
+		from pyper import *
 		for i in range(len(self.DATA_LIST)):
 				temp_dataset = ()
 				
@@ -1959,7 +1962,7 @@ do.it <- function (x) {
 			size = str(self.size.text())	
 		
 		
-		#from pyper import *
+		from pyper import *
 		for i in range(len(self.DATA_LIST)):
 				temp_dataset = ()
 				
@@ -2073,7 +2076,7 @@ do.it <- function (x) {
 		else:
 			size = str(self.size.text())	
 
-		#from pyper import *
+		from pyper import *
 		for i in range(len(self.DATA_LIST)):
 				temp_dataset = ()
 				
