@@ -1080,11 +1080,11 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			unicode(self.DATA_LIST[i].copertura_tipo), 						#12 - copertura tipo
 			unicode(self.DATA_LIST[i].tipo_contenitore_resti),				#13 - tipo contenitore resti
 			unicode(self.DATA_LIST[i].orientamento_asse),					#14 - orientamento asse
-			unicode(self.DATA_LIST[i].orientamento_azimut),				#15 orientamento azimut
+			self.DATA_LIST[i].orientamento_azimut,							#15 orientamento azimut
 			unicode(self.DATA_LIST[i].corredo_presenza),					#16-  corredo presenza
 			unicode(self.DATA_LIST[i].corredo_tipo),							#17 - corredo tipo
 			unicode(self.DATA_LIST[i].corredo_descrizione),				#18 - corredo descrizione
-			unicode(self.DATA_LIST[i].lunghezza_scheletro),				#19 - lunghezza scheletro
+			self.DATA_LIST[i].lunghezza_scheletro,							#19 - lunghezza scheletro
 			unicode(self.DATA_LIST[i].posizione_cranio),						#20 - posizione cranio
 			unicode(self.DATA_LIST[i].posizione_scheletro),					#21 - posizione cranio
 			unicode(self.DATA_LIST[i].posizione_arti_superiori),			#22 - posizione arti superiori
