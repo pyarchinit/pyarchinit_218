@@ -12,7 +12,7 @@
 name=pyArchInit
 qgisMinimumVersion=2.0
 description=pyarchinit archaeological tools
-version=0.1
+version=0.1.1
 author=Luca Mandolesi
 email=pyarchinit@gmail.com
 
@@ -24,11 +24,11 @@ email=pyarchinit@gmail.com
 # changelog=
 
 # tags are comma separated with spaces allowed
-tags=
+tags=archaeology, archeologia, funerary archaeology, pottery, bones, excavations, scavi, archeologici, siti, carte, archeologiche, carta di potenzialita, strutture, antiche, tempio, medioevo, romana, preistoria, roman, medieval, prehistoric
 
-homepage=
-tracker=
-repository=
+homepage=https://sites.google.com/site/pyarchinit/
+tracker=https://github.com/pyarchinit/pyarchinit_beta_test_dev/issues?direction=asc&labels=enhancement&milestone=1&sort=created&state=open
+repository=https://github.com/pyarchinit/pyarchinit_beta_test_dev
 icon=icon.png
 # experimental flag
 experimental=True
