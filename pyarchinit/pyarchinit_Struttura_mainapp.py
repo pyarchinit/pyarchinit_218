@@ -500,28 +500,28 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 		##Misurazioni
 		misurazioni = self.table2dict("self.tableWidget_misurazioni")
 
+
+		if self.comboBox_per_iniz.currentText() == "":
+			per_iniz = None
+		else:
+			per_iniz = int(self.comboBox_per_iniz.currentText())
+
+		if self.comboBox_fas_iniz.currentText() == "":
+			fas_iniz = None
+		else:
+			fas_iniz = int(self.comboBox_fas_iniz.currentText())
+
+		if self.comboBox_per_fin.currentText() == "":
+			per_fin = None
+		else:
+			per_fin = int(self.comboBox_per_fin.currentText())
+
+		if self.comboBox_fas_fin.currentText() == "":
+			fas_fin = None
+		else:
+			fas_fin = int(self.comboBox_fas_fin.currentText())
+
 		try:
-			if self.comboBox_per_iniz.currentText() == "":
-				per_iniz = None
-			else:
-				per_iniz = int(self.comboBox_per_iniz.currentText())
-
-			if self.comboBox_fas_iniz.currentText() == "":
-				fas_iniz = None
-			else:
-				fas_iniz = int(self.comboBox_fas_iniz.currentText())
-
-			if self.comboBox_per_fin.currentText() == "":
-				per_fin = None
-			else:
-				per_fin = int(self.comboBox_per_fin.currentText())
-
-			if self.comboBox_fas_fin.currentText() == "":
-				fas_fin = None
-			else:
-				fas_fin = int(self.comboBox_fas_fin.currentText())
-
-
 			data = self.DB_MANAGER.insert_struttura_values(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1, #0
 			str(self.comboBox_sito.currentText()), 														#1 - Sito
@@ -697,8 +697,6 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 				self.setTableEnable(["self.tableWidget_materiali_impiegati", "self.tableWidget_elementi_strutturali","self.tableWidget_rapporti",
 				"self.tableWidget_misurazioni"], "False")
 
-
-
 				###
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.set_rec_counter('','')
@@ -736,19 +734,19 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 				fase_finale = ""
 
 			search_dict = {
-			self.TABLE_FIELDS[0] : "'"+str(self.comboBox_sito.currentText())+"'",							#1 - Sito
-			self.TABLE_FIELDS[1] : "'"+str(self.comboBox_sigla_struttura.currentText())+"'", 			#2 - Sigla struttura
-			self.TABLE_FIELDS[2] : numero_struttura, 																#3 - numero struttura
-			self.TABLE_FIELDS[3] : "'"+str(self.comboBox_categoria_struttura.currentText())+"'",		#4 - categoria struttura
-			self.TABLE_FIELDS[4] : "'"+str(self.comboBox_tipologia_struttura.currentText())+"'", 		#5 - tipologia struttura
-			self.TABLE_FIELDS[5] : "'"+str(self.comboBox_definizione_struttura.currentText())+"'", 	#6 - definizione struttura
-			#self.TABLE_FIELDS[6] : str(self.textEdit_descrizione_struttura.toPlainText()),					#7 - descrizione struttura
-			#self.TABLE_FIELDS[7] : str(self.textEdit_interpretazione_struttura.toPlainText()),				#8 - intepretazione struttura
-			self.TABLE_FIELDS[8] : periodo_iniziale,																	#9 - periodo iniziale
-			self.TABLE_FIELDS[9] : fase_iniziale,																		#10 - fase iniziale
-			self.TABLE_FIELDS[10] : periodo_finale,																	#11 - periodo finale
-			self.TABLE_FIELDS[11] : fase_finale,																		#12 - fase finale
-			self.TABLE_FIELDS[12] : str(self.lineEdit_datazione_estesa.text())									#10 - datazione_estesa
+			self.TABLE_FIELDS[0] : "'"+unicode(self.comboBox_sito.currentText())+"'",								#1 - Sito
+			self.TABLE_FIELDS[1] : "'"+unicode(self.comboBox_sigla_struttura.currentText())+"'", 				#2 - Sigla struttura
+			self.TABLE_FIELDS[2] : numero_struttura, 																			#3 - numero struttura
+			self.TABLE_FIELDS[3] : "'"+unicode(self.comboBox_categoria_struttura.currentText())+"'",			#4 - categoria struttura
+			self.TABLE_FIELDS[4] : "'"+unicode(self.comboBox_tipologia_struttura.currentText())+"'", 			#5 - tipologia struttura
+			self.TABLE_FIELDS[5] : "'"+unicode(self.comboBox_definizione_struttura.currentText())+"'", 		#6 - definizione struttura
+			#self.TABLE_FIELDS[6] : str(self.textEdit_descrizione_struttura.toPlainText()),								#7 - descrizione struttura
+			#self.TABLE_FIELDS[7] : str(self.textEdit_interpretazione_struttura.toPlainText()),							#8 - intepretazione struttura
+			self.TABLE_FIELDS[8] : periodo_iniziale,																				#9 - periodo iniziale
+			self.TABLE_FIELDS[9] : fase_iniziale,																					#10 - fase iniziale
+			self.TABLE_FIELDS[10] : periodo_finale,																				#11 - periodo finale
+			self.TABLE_FIELDS[11] : fase_finale,																					#12 - fase finale
+			self.TABLE_FIELDS[12] : "'"+unicode(self.lineEdit_datazione_estesa.text())+"'"							#10 - datazione_estesa
 			}
 
 			u = Utility()
@@ -986,27 +984,27 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 	def fill_fields(self, n=0):
 		self.rec_num = n
 
-		if str(self.DATA_LIST[self.rec_num].periodo_iniziale) == 'None':
-			periodo_iniziale = ''
-		else:
-			periodo_iniziale = str(self.DATA_LIST[self.rec_num].periodo_iniziale)
-
-		if str(self.DATA_LIST[self.rec_num].fase_iniziale) == 'None':
-			fase_iniziale = ''
-		else:
-			fase_iniziale = str(self.DATA_LIST[self.rec_num].fase_iniziale)
-
-		if str(self.DATA_LIST[self.rec_num].periodo_finale) == 'None':
-			periodo_finale = ''
-		else:
-			periodo_finale = str(self.DATA_LIST[self.rec_num].periodo_finale)
-
-		if str(self.DATA_LIST[self.rec_num].fase_finale) == 'None':
-			fase_finale = ''
-		else:
-			fase_finale = str(self.DATA_LIST[self.rec_num].fase_finale)
-
 		try:
+			if self.DATA_LIST[self.rec_num].periodo_iniziale == None:
+				self.comboBox_per_iniz.setEditText("")
+			else:
+				self.comboBox_per_iniz.setEditText(str(self.DATA_LIST[self.rec_num].periodo_iniziale))
+
+			if self.DATA_LIST[self.rec_num].fase_iniziale == None:
+				self.comboBox_fas_iniz.setEditText("")
+			else:
+				self.comboBox_fas_iniz.setEditText(str(self.DATA_LIST[self.rec_num].fase_iniziale))
+
+			if self.DATA_LIST[self.rec_num].periodo_finale == None:
+				self.comboBox_per_fin.setEditText("")
+			else:
+				self.comboBox_per_fin.setEditText(str(self.DATA_LIST[self.rec_num].periodo_finale))
+
+			if self.DATA_LIST[self.rec_num].fase_finale == None:
+				self.comboBox_fas_fin.setEditText("")
+			else:
+				self.comboBox_fas_fin.setEditText(str(self.DATA_LIST[self.rec_num].fase_finale))
+
 			self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito)																#1 - Sito
 			self.comboBox_sigla_struttura.setEditText(str(self.DATA_LIST[self.rec_num].sigla_struttura)) 							#2 - Periodo
 			self.numero_struttura.setText(str(self.DATA_LIST[self.rec_num].numero_struttura)) 										#3 - Fase
@@ -1015,10 +1013,6 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 			self.comboBox_definizione_struttura.setEditText(str(self.DATA_LIST[self.rec_num].definizione_struttura)) 			#6 - definizione_struttura
 			unicode(self.textEdit_descrizione_struttura.setText(self.DATA_LIST[self.rec_num].descrizione))							#6 - descrizione
 			unicode(self.textEdit_interpretazione_struttura.setText(self.DATA_LIST[self.rec_num].interpretazione))				#7 - interpretazione
-			self.comboBox_per_iniz.setEditText(periodo_iniziale)																					#8 - periodo iniziale
-			self.comboBox_fas_iniz.setEditText(fase_iniziale)																						#9 - fase iniziale
-			self.comboBox_per_fin.setEditText(periodo_finale)																						#10 - periodo finale
-			self.comboBox_fas_fin.setEditText(fase_finale)																							#11 - fase finale
 			self.lineEdit_datazione_estesa.setText(str(self.DATA_LIST[self.rec_num].datazione_estesa))								#12 - datazione estesa
 			self.tableInsertData("self.tableWidget_materiali_impiegati", self.DATA_LIST[self.rec_num].materiali_impiegati)			#13 - materiali impiegati
 			self.tableInsertData("self.tableWidget_elementi_strutturali", self.DATA_LIST[self.rec_num].elementi_strutturali)		#14 - elementi struttura
@@ -1035,32 +1029,31 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 
 	def set_LIST_REC_TEMP(self):
 		#data
-
-		if self.numero_struttura.text() != "":
+		if self.numero_struttura.text() == "":
+			numero_struttura = None
+		else:
 			numero_struttura = self.numero_struttura.text()
-		else:
-			numero_struttura = 'None'
 
-		if self.comboBox_per_iniz.currentText() != "":
+		if self.comboBox_per_iniz.currentText() == "":
+			periodo_iniziale = None
+		else:
 			periodo_iniziale = self.comboBox_per_iniz.currentText()
-		else:
-			periodo_iniziale = 'None'
 
-		if self.comboBox_fas_iniz.currentText() != "":
+		if self.comboBox_fas_iniz.currentText() == "":
+			fase_iniziale = None
+		else:
 			fase_iniziale = self.comboBox_fas_iniz.currentText()
-		else:
-			fase_iniziale = 'None'
 
-		if self.comboBox_per_fin.currentText() != "":
+		if self.comboBox_per_fin.currentText() == "":
+			periodo_finale = None
+		else:
 			periodo_finale = self.comboBox_per_fin.currentText()
-		else:
-			periodo_finale = 'None'
 
-		if self.comboBox_fas_fin.currentText() != "":
-			fase_finale = self.comboBox_fas_fin.currentText()
+		if self.comboBox_fas_fin.currentText() == "":
+			fase_finale = None
 		else:
-			fase_finale = 'None'
-			
+			fase_finale = self.comboBox_fas_fin.currentText()
+
 		##Campioni
 		materiali_impiegati = self.table2dict("self.tableWidget_materiali_impiegati")
 		##Elementi_strutturali
@@ -1151,13 +1144,11 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 	def on_pushButton_remove_row_materiali_pressed(self):
 		self.remove_row('self.tableWidget_materiali_impiegati')
 ##
-
 	def on_pushButton_insert_row_elementi_pressed(self):
 		self.insert_new_row('self.tableWidget_elementi_strutturali')
 
 	def on_pushButton_remove_row_elementi_pressed(self):
 		self.remove_row('self.tableWidget_elementi_strutturali')
-
 
 	def on_pushButton_insert_row_misurazioni_pressed(self):
 		self.insert_new_row('self.tableWidget_misurazioni')

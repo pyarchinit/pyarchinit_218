@@ -98,7 +98,12 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 	"Completo":"completo_si_no",
 	"Disturbato":"disturbato_si_no",
 	"In connessione":"in_connessione_si_no",
-	"Caratteristiche":"caratteristiche"
+	"Caratteristiche":"caratteristiche",
+	"Periodo iniziale":"periodo_iniziale",
+	"Fase iniziale":"fase_iniziale",
+	"Periodo finale":"periodo_finale",
+	"Fase finale":"fase_finale",
+	"Datazione estesa":"datazione_estesa"
 	}
 
 	SORT_ITEMS = [
@@ -130,7 +135,12 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 				"Completo",
 				"Disturbato",
 				"In connessione",
-				"Caratteristiche"
+				"Caratteristiche",
+				"Periodo iniziale",
+				"Fase iniziale",
+				"Periodo finale",
+				"Fase finale",
+				"Datazione estesa"
 				]
 
 	TABLE_FIELDS = [
@@ -161,7 +171,13 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 				"completo_si_no",
 				"disturbato_si_no",
 				"in_connessione_si_no",
-				"caratteristiche"
+				"caratteristiche",
+				"periodo_iniziale",
+				"fase_iniziale",
+				"periodo_finale",
+				"fase_finale",
+				"datazione_estesa",
+				"misure_tafonomia"
 				]
 
 	def __init__(self, iface):
@@ -181,6 +197,9 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		#SIGNALS & SLOTS Functions
 		self.connect(self.comboBox_sito, SIGNAL("currentIndexChanged(int)"), self.charge_struttura_list)  
 		self.connect(self.comboBox_sito, SIGNAL("currentIndexChanged(int)"), self.charge_individuo_list)
+		self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_list)
+		self.connect(self.comboBox_per_iniz, SIGNAL("currentIndexChanged(int)"), self.charge_fase_iniz_list)
+		self.connect(self.comboBox_per_fin, SIGNAL("currentIndexChanged(int)"), self.charge_fase_fin_list)
 		#self.connect(self.comboBox_struttura, SIGNAL("editTextChanged (const QString&)"), self.charge_struttura_list)
 
 
@@ -275,6 +294,11 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		self.setComboBoxEditable(["self.comboBox_in_connessione"],1)
 		self.setComboBoxEditable(["self.comboBox_disturbato"],1)
 		self.setComboBoxEditable(["self.comboBox_completo"],1)
+
+		self.setComboBoxEditable(["self.comboBox_per_iniz"],1)
+		self.setComboBoxEditable(["self.comboBox_fas_iniz"],1)
+		self.setComboBoxEditable(["self.comboBox_per_fin"],1)
+		self.setComboBoxEditable(["self.comboBox_fas_fin"],1)
 
 		#map prevew system
 		#self.mapPreview = QgsMapCanvas(self)
@@ -412,6 +436,92 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		d_stratigrafica_vl.sort()
 		self.comboBox_def_strat.addItems(d_stratigrafica_vl)
 		"""
+
+	def charge_periodo_list(self):
+		try:
+			search_dict = {
+			'sito'  : "'"+str(self.comboBox_sito.currentText())+"'",
+			}
+
+			periodo_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')
+
+			periodo_list = []
+
+			for i in range(len(periodo_vl)):
+				periodo_list.append(str(periodo_vl[i].periodo))
+			try:
+				periodo_vl.remove('')
+			except:
+				pass
+
+			periodo_list.sort()
+
+			self.comboBox_per_iniz.clear()
+			self.comboBox_per_iniz.addItems(periodo_list)
+			self.comboBox_per_iniz.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
+			self.comboBox_per_fin.clear()
+			self.comboBox_per_fin.addItems(periodo_list)
+			self.comboBox_per_fin.setEditText(self.DATA_LIST[self.rec_num].periodo_finale)
+		except:
+			pass
+
+	def charge_fase_iniz_list(self):
+		try:
+			search_dict = {
+			'sito'  : "'"+str(self.comboBox_sito.currentText())+"'",
+			'periodo'  : "'"+str(self.comboBox_per_iniz.currentText())+"'",
+			}
+
+			fase_list_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')
+
+			fase_list = []
+
+			for i in range(len(fase_list_vl)):
+				fase_list.append(str(fase_list_vl[i].fase))
+
+			try:
+				fase_list.remove('')
+			except:
+				pass
+
+			self.comboBox_fas_iniz.clear()
+
+			fase_list.sort()
+			self.comboBox_fas_iniz.addItems(fase_list)
+			self.comboBox_fas_iniz.setEditText(self.DATA_LIST[self.rec_num].fase_iniziale)
+
+		except:
+			pass
+
+
+	def charge_fase_fin_list(self):
+		try:
+			search_dict = {
+			'sito'  : "'"+str(self.comboBox_sito.currentText())+"'",
+			'periodo'  : "'"+str(self.comboBox_per_fin.currentText())+"'",
+			}
+
+			fase_list_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')
+
+			fase_list = []
+
+			for i in range(len(fase_list_vl)):
+				fase_list.append(str(fase_list_vl[i].fase))
+
+			try:
+				fase_list.remove('')
+			except:
+				pass
+
+			self.comboBox_fas_fin.clear()
+
+			fase_list.sort()
+			self.comboBox_fas_fin.addItems(fase_list)
+			self.comboBox_fas_fin.setEditText(self.DATA_LIST[self.rec_num].fase_finale)
+
+		except:
+			pass
+
 
 	def charge_struttura_list(self):
 		search_dict = {
@@ -686,6 +796,8 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		caratteristiche = self.table2dict("self.tableWidget_caratteristiche")
 		##
 		corredo_tipo = self.table2dict("self.tableWidget_corredo_tipo")
+		##Misurazioni
+		misurazioni = self.table2dict("self.tableWidget_misurazioni")
 
 		##orientamento azimut
 		if self.lineEdit_orientamento_azimut.text() == "":
@@ -699,38 +811,64 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		else:
 			lunghezza_scheletro = float(self.lineEdit_lunghezza_scheletro.text())
 
+		if self.comboBox_per_iniz.currentText() == "":
+			per_iniz = None
+		else:
+			per_iniz = int(self.comboBox_per_iniz.currentText())
+
+		if self.comboBox_fas_iniz.currentText() == "":
+			fas_iniz = None
+		else:
+			fas_iniz = int(self.comboBox_fas_iniz.currentText())
+
+		if self.comboBox_per_fin.currentText() == "":
+			per_fin = None
+		else:
+			per_fin = int(self.comboBox_per_fin.currentText())
+
+		if self.comboBox_fas_fin.currentText() == "":
+			fas_fin = None
+		else:
+			fas_fin = int(self.comboBox_fas_fin.currentText())
+
 		try:
 			#data
 			data = self.DB_MANAGER.insert_values_tafonomia(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
-			str(self.comboBox_sito.currentText()), 						#1 - Sito
-			int(self.lineEdit_nr_scheda.text()),						#2 - nr scheda tafonomica
-			str(self.comboBox_sigla_struttura.currentText()),			#3 - tipo struttura
-			int(self.comboBox_nr_struttura.currentText()),				#4 - nr struttura
-			int(self.comboBox_nr_individuo.currentText()),				#5 - nr  individuo
-			str(self.comboBox_rito.currentText()),						#6 - rito
-			unicode(self.textEdit_descrizione_taf.toPlainText()),		#7 - descrizione
-			unicode(self.textEdit_interpretazione_taf.toPlainText()),	#8 - interpretazione
-			str(self.comboBox_segnacoli.currentText()),					#9 - segnacoli
-			str(self.comboBox_canale_libatorio.currentText()),			#10 - canale libatorio
-			str(self.comboBox_oggetti_esterno.currentText()),			#11 - oggetti esterno
-			str(self.comboBox_conservazione_taf.currentText()),			#12 - conservazione
-			str(self.comboBox_copertura_tipo.currentText()),			#13 - copertura
-			str(self.comboBox_tipo_contenitore_resti.currentText()),	#14 - tipo contenitore resti
-			str(self.lineEdit_orientamento_asse.text()),				#15 - orientamento asse
-			orientamento_azimut,										#16 - orientamento azimut
-			str(self.comboBox_corredo_presenza.currentText()),			#17 - corredo presenza
-			str(corredo_tipo),											#18 - corredo tipo
-			unicode(self.textEdit_descrizione_corredo.toPlainText()),	#19 - descrizione corredo
-			lunghezza_scheletro,										#20 - lunghezza scheletro
-			str(self.comboBox_posizione_scheletro.currentText()),		#21 - posizione scheletro
-			str(self.comboBox_posizione_cranio.currentText()),			#22 - posizione cranio
-			str(self.comboBox_arti_superiori.currentText()),			#23 - arti inferiori
-			str(self.comboBox_arti_inferiori.currentText()),			#24 - arti superiori
-			str(self.comboBox_completo.currentText()),					#25 - completo
-			str(self.comboBox_disturbato.currentText()),				#26 - disturbato
-			str(self.comboBox_in_connessione.currentText()), 			#27 - in connessione
-			str(caratteristiche))										#28 - caratteristiche
+			str(self.comboBox_sito.currentText()), 								#1 - Sito
+			int(self.lineEdit_nr_scheda.text()),										#2 - nr scheda tafonomica
+			str(self.comboBox_sigla_struttura.currentText()),					#3 - tipo struttura
+			int(self.comboBox_nr_struttura.currentText()),						#4 - nr struttura
+			int(self.comboBox_nr_individuo.currentText()),						#5 - nr  individuo
+			str(self.comboBox_rito.currentText()),									#6 - rito
+			unicode(self.textEdit_descrizione_taf.toPlainText()),				#7 - descrizione
+			unicode(self.textEdit_interpretazione_taf.toPlainText()),			#8 - interpretazione
+			str(self.comboBox_segnacoli.currentText()),							#9 - segnacoli
+			str(self.comboBox_canale_libatorio.currentText()),					#10 - canale libatorio
+			str(self.comboBox_oggetti_esterno.currentText()),					#11 - oggetti esterno
+			str(self.comboBox_conservazione_taf.currentText()),				#12 - conservazione
+			str(self.comboBox_copertura_tipo.currentText()),					#13 - copertura
+			str(self.comboBox_tipo_contenitore_resti.currentText()),			#14 - tipo contenitore resti
+			str(self.lineEdit_orientamento_asse.text()),							#15 - orientamento asse
+			orientamento_azimut,														#16 - orientamento azimut
+			str(self.comboBox_corredo_presenza.currentText()),				#17 - corredo presenza
+			str(corredo_tipo),																#18 - corredo tipo
+			unicode(self.textEdit_descrizione_corredo.toPlainText()),			#19 - descrizione corredo
+			lunghezza_scheletro,															#20 - lunghezza scheletro
+			str(self.comboBox_posizione_scheletro.currentText()),			#21 - posizione scheletro
+			str(self.comboBox_posizione_cranio.currentText()),				#22 - posizione cranio
+			str(self.comboBox_arti_superiori.currentText()),						#23 - arti inferiori
+			str(self.comboBox_arti_inferiori.currentText()),						#24 - arti superiori
+			str(self.comboBox_completo.currentText()),							#25 - completo
+			str(self.comboBox_disturbato.currentText()),						#26 - disturbato
+			str(self.comboBox_in_connessione.currentText()), 				#27 - in connessione
+			str(caratteristiche),															#28 - caratteristiche
+			per_iniz,																			#29 - periodo iniziale
+			fas_iniz,																			#30 - fase iniziale
+			per_fin, 																			#31 - periodo finale iniziale
+			fas_fin, 																			#32 - fase finale
+			str(self.lineEdit_datazione_estesa.text()),								#33 - datazione estesa
+			str(misurazioni))																#34 - misurazioni
 
 			try:
 				self.DB_MANAGER.insert_data_session(data)
@@ -741,11 +879,11 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 					msg = self.ID_TABLE + " gia' presente nel database"
 				else:
 					msg = e
-				QMessageBox.warning(self, "Errore", "Errore di immisione 1 \n"+ str(msg),  QMessageBox.Ok)
+				QMessageBox.warning(self, "Errore imm1", "Errore di immisione 1 \n"+ str(msg),  QMessageBox.Ok)
 				return 0
 
 		except Exception, e:
-			QMessageBox.warning(self, "Errore", "Errore di immisione 2 \n"+str(e),  QMessageBox.Ok)
+			QMessageBox.warning(self, "Errore imm2", "Errore di immisione 2 \n"+str(e),  QMessageBox.Ok)
 			return 0
 
 
@@ -759,6 +897,12 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		self.insert_new_row('self.tableWidget_caratteristiche')
 	def on_pushButton_remove_row_caratteristiche_pressed(self):
 		self.remove_row('self.tableWidget_caratteristiche')
+
+	def on_pushButton_insert_row_misurazioni_pressed(self):
+		self.insert_new_row('self.tableWidget_misurazioni')
+		
+	def on_pushButton_remove_row_misurazioni_pressed(self):
+		self.remove_row('self.tableWidget_misurazioni')
 
 	def check_record_state(self):
 		ec = self.data_error_check()
@@ -904,7 +1048,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 				self.setComboBoxEnable(["self.textEdit_descrizione_taf"],"False")
 				self.setComboBoxEnable(["self.textEdit_interpretazione_taf"],"False")
 				self.setComboBoxEnable(["self.textEdit_descrizione_corredo"],"False")
-				self.setTableEnable(["self.tableWidget_caratteristiche", "self.tableWidget_corredo_tipo"], "False")
+				self.setTableEnable(["self.tableWidget_caratteristiche", "self.tableWidget_corredo_tipo", "self.tableWidget_misurazioni"], "False")
 
 				###
 				self.label_status_2.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
@@ -961,32 +1105,58 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			else:
 				lunghezza_scheletro = None
 
+			if self.comboBox_per_iniz.currentText() != "":
+				periodo_iniziale = int(self.comboBox_per_iniz.currentText())
+			else:
+				periodo_iniziale = ""
+
+			if self.comboBox_fas_iniz.currentText() != "":
+				fase_iniziale = int(self.comboBox_fas_iniz.currentText())
+			else:
+				fase_iniziale = ""
+
+			if self.comboBox_per_fin.currentText() != "":
+				periodo_finale = int(self.comboBox_per_fin.currentText())
+			else:
+				periodo_finale = ""
+
+			if self.comboBox_fas_fin.currentText() != "":
+				fase_finale = int(self.comboBox_fas_fin.currentText())
+			else:
+				fase_finale = ""
+
+
 			search_dict = {
 			self.TABLE_FIELDS[0]  : "'"+unicode(self.comboBox_sito.currentText())+"'", 									#1 - Sito
-			self.TABLE_FIELDS[1]  : nr_scheda,																			#2 - Nr schede
-			self.TABLE_FIELDS[2]  : "'"+unicode(self.comboBox_sigla_struttura.currentText())+"'",						#3 - Tipo struttura
-			self.TABLE_FIELDS[3]  : nr_struttura,																		#4 - Nr struttura
-			self.TABLE_FIELDS[4]  : nr_individuo,																		#5 - Nr struttura
+			self.TABLE_FIELDS[1]  : nr_scheda,																						#2 - Nr schede
+			self.TABLE_FIELDS[2]  : "'"+unicode(self.comboBox_sigla_struttura.currentText())+"'",					#3 - Tipo struttura
+			self.TABLE_FIELDS[3]  : nr_struttura,																						#4 - Nr struttura
+			self.TABLE_FIELDS[4]  : nr_individuo,																						#5 - Nr struttura
 			self.TABLE_FIELDS[5]  : "'"+unicode(self.comboBox_rito.currentText())+"'",									#6 - Rito
 			self.TABLE_FIELDS[6]  : "'"+unicode(self.textEdit_descrizione_taf.toPlainText())+"'",						#7 - Descrizione tafonimia
 			self.TABLE_FIELDS[7]  : "'"+unicode(self.textEdit_interpretazione_taf.toPlainText())+"'",					#8 - Interpretazione tafonimia
-			self.TABLE_FIELDS[8]  : "'"+unicode(self.comboBox_segnacoli.currentText())+"'",								#9 - Segnacoli
-			self.TABLE_FIELDS[9]  : "'"+unicode(self.comboBox_canale_libatorio.currentText())+"'",						#10 - Canale libatorio
-			self.TABLE_FIELDS[10]  : "'"+unicode(self.comboBox_oggetti_esterno.currentText())+"'",	 					#11 - Oggetti esterno
-			self.TABLE_FIELDS[11] : "'"+unicode(self.comboBox_conservazione_taf.currentText())+"'", 					#12 - Conservazione tafonomia
-			self.TABLE_FIELDS[12] : "'"+unicode(self.comboBox_copertura_tipo.currentText())+"'",						#13 - Copertura tipo
-			self.TABLE_FIELDS[13] : "'"+unicode(self.comboBox_tipo_contenitore_resti.currentText())+"'",				#14 - Tipo contenitore resti  
+			self.TABLE_FIELDS[8]  : "'"+unicode(self.comboBox_segnacoli.currentText())+"'",							#9 - Segnacoli
+			self.TABLE_FIELDS[9]  : "'"+unicode(self.comboBox_canale_libatorio.currentText())+"'",					#10 - Canale libatorio
+			self.TABLE_FIELDS[10]  : "'"+unicode(self.comboBox_oggetti_esterno.currentText())+"'",	 			#11 - Oggetti esterno
+			self.TABLE_FIELDS[11] : "'"+unicode(self.comboBox_conservazione_taf.currentText())+"'", 				#12 - Conservazione tafonomia
+			self.TABLE_FIELDS[12] : "'"+unicode(self.comboBox_copertura_tipo.currentText())+"'",					#13 - Copertura tipo
+			self.TABLE_FIELDS[13] : "'"+unicode(self.comboBox_tipo_contenitore_resti.currentText())+"'",			#14 - Tipo contenitore resti  
 			self.TABLE_FIELDS[14] : "'"+unicode(self.lineEdit_orientamento_asse.text())+"'",							#15 - orientamento asse
-			self.TABLE_FIELDS[15] : orientamento_azimut,																#16 - orientamento azimut
-			self.TABLE_FIELDS[17] : "'"+unicode(self.comboBox_corredo_presenza.currentText())+"'",						#17 - corredo
-			self.TABLE_FIELDS[20] : lunghezza_scheletro,																#18 - lunghezza scheletro
-			self.TABLE_FIELDS[21] : "'"+unicode(self.comboBox_posizione_scheletro.currentText())+"'",					#19 - posizione scheletro
-			self.TABLE_FIELDS[22] : "'"+unicode(self.comboBox_posizione_cranio.currentText())+"'",						#20 - posizione cranio
+			self.TABLE_FIELDS[15] : orientamento_azimut,																			#16 - orientamento azimut
+			self.TABLE_FIELDS[17] : "'"+unicode(self.comboBox_corredo_presenza.currentText())+"'",				#17 - corredo
+			self.TABLE_FIELDS[20] : lunghezza_scheletro,																			#18 - lunghezza scheletro
+			self.TABLE_FIELDS[21] : "'"+unicode(self.comboBox_posizione_scheletro.currentText())+"'",				#19 - posizione scheletro
+			self.TABLE_FIELDS[22] : "'"+unicode(self.comboBox_posizione_cranio.currentText())+"'",					#20 - posizione cranio
 			self.TABLE_FIELDS[23] : "'"+unicode(self.comboBox_arti_superiori.currentText())+"'",						#21 - arti superiori
 			self.TABLE_FIELDS[24] : "'"+unicode(self.comboBox_arti_inferiori.currentText())+"'",						#24 - arti inferiori
-			self.TABLE_FIELDS[25] : "'"+unicode(self.comboBox_completo.currentText())+"'",								#25 - completo
+			self.TABLE_FIELDS[25] : "'"+unicode(self.comboBox_completo.currentText())+"'",							#25 - completo
 			self.TABLE_FIELDS[26] : "'"+unicode(self.comboBox_disturbato.currentText())+"'",							#26 - disturbato
-			self.TABLE_FIELDS[27] : "'"+unicode(self.comboBox_in_connessione.currentText())+"'"							#27 - in connessione
+			self.TABLE_FIELDS[27] : "'"+unicode(self.comboBox_in_connessione.currentText())+"'",					#27 - in connessione
+			self.TABLE_FIELDS[29] : periodo_iniziale,																					#29 - periodo iniziale
+			self.TABLE_FIELDS[30] : fase_iniziale,																						#10 - fase iniziale
+			self.TABLE_FIELDS[31] : periodo_finale,																					#11 - periodo finale
+			self.TABLE_FIELDS[32] : fase_finale,																						#12 - fase finale
+			self.TABLE_FIELDS[33] : str(self.lineEdit_datazione_estesa.text())													#10 - datazione_estesa
 			}
 
 			u = Utility()
@@ -1017,7 +1187,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 					self.setComboBoxEnable(["self.textEdit_descrizione_taf"],"True")
 					self.setComboBoxEnable(["self.textEdit_interpretazione_taf"],"True")
 					self.setComboBoxEnable(["self.textEdit_descrizione_corredo"],"True")
-					self.setTableEnable(["self.tableWidget_caratteristiche", "self.tableWidget_corredo_tipo"], "True")
+					self.setTableEnable(["self.tableWidget_caratteristiche", "self.tableWidget_corredo_tipo","self.tableWidget_misurazioni"], "True")
 				else:
 					self.DATA_LIST = []
 					for i in res:
@@ -1050,7 +1220,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 					self.setComboBoxEnable(["self.textEdit_descrizione_taf"],"True")
 					self.setComboBoxEnable(["self.textEdit_interpretazione_taf"],"True")
 					self.setComboBoxEnable(["self.textEdit_descrizione_corredo"],"True")
-					self.setTableEnable(["self.tableWidget_caratteristiche", "self.tableWidget_corredo_tipo"], "True")
+					self.setTableEnable(["self.tableWidget_caratteristiche", "self.tableWidget_corredo_tipo","self.tableWidget_misurazioni"], "True")
 
 
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
@@ -1225,6 +1395,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 	def empty_fields(self):
 		caratteristiche_row_count = self.tableWidget_caratteristiche.rowCount()
 		corredo_tipo_row_count = self.tableWidget_corredo_tipo.rowCount()
+		misurazioni_row_count = self.tableWidget_misurazioni.rowCount()
 
 		for i in range(caratteristiche_row_count):
 			self.tableWidget_caratteristiche.removeRow(0)
@@ -1234,19 +1405,23 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			self.tableWidget_corredo_tipo.removeRow(0)
 		self.insert_new_row("self.tableWidget_corredo_tipo")				#18 - corredo tipo
 
-		self.comboBox_sito.setEditText("") 						#1 - Sito
-		self.lineEdit_nr_scheda.clear()							#2 - nr scheda tafonomica
-		self.comboBox_sigla_struttura.setEditText("")			#3 - tipo struttura
-		self.comboBox_nr_struttura.setEditText("")				#4 - nr struttura
-		self.comboBox_nr_individuo.setEditText("")				#4 - nr struttura
-		self.comboBox_rito.setEditText("")						#5 - rito
-		self.textEdit_descrizione_taf.clear()					#6 - descrizione
-		self.textEdit_interpretazione_taf.clear()				#7 - interpretazione
-		self.comboBox_segnacoli.setEditText("")					#8 - segnacoli
-		self.comboBox_canale_libatorio.setEditText("")			#9 - canale libatorio
-		self.comboBox_oggetti_esterno.setEditText("")			#10 - oggetti esterno
+		for i in range(misurazioni_row_count):
+			self.tableWidget_misurazioni.removeRow(0)
+		self.insert_new_row("self.tableWidget_misurazioni")			#19 - misurazioni
+
+		self.comboBox_sito.setEditText("") 								#1 - Sito
+		self.lineEdit_nr_scheda.clear()									#2 - nr scheda tafonomica
+		self.comboBox_sigla_struttura.setEditText("")				#3 - tipo struttura
+		self.comboBox_nr_struttura.setEditText("")					#4 - nr struttura
+		self.comboBox_nr_individuo.setEditText("")					#4 - nr struttura
+		self.comboBox_rito.setEditText("")								#5 - rito
+		self.textEdit_descrizione_taf.clear()								#6 - descrizione
+		self.textEdit_interpretazione_taf.clear()						#7 - interpretazione
+		self.comboBox_segnacoli.setEditText("")						#8 - segnacoli
+		self.comboBox_canale_libatorio.setEditText("")				#9 - canale libatorio
+		self.comboBox_oggetti_esterno.setEditText("")				#10 - oggetti esterno
 		self.comboBox_conservazione_taf.setEditText("")			#11 - conservazione
-		self.comboBox_copertura_tipo.setEditText("")			#12 - copertura
+		self.comboBox_copertura_tipo.setEditText("")				#12 - copertura
 		self.comboBox_tipo_contenitore_resti.setEditText("")	#13 - tipo contenitore resti
 		self.lineEdit_orientamento_asse.clear()					#14 - orientamento asse
 		self.lineEdit_orientamento_azimut.clear()				#14 - orientamento azimut
@@ -1260,11 +1435,35 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		self.comboBox_completo.setEditText("")					#26 - completo
 		self.comboBox_disturbato.setEditText("")				#27 - disturbato
 		self.comboBox_in_connessione.setEditText("") 			#28 - in connessione
-
+		self.comboBox_per_iniz.setEditText("")							#9 - periodo iniziale
+		self.comboBox_fas_iniz.setEditText("")							#10 - fase iniziale
+		self.comboBox_per_fin.setEditText("")							#11 - periodo finale iniziale
+		self.comboBox_fas_fin.setEditText("")							#12 - fase finale
+		self.lineEdit_datazione_estesa.clear()							#13 - datazione estesa
 
 	def fill_fields(self, n=0):
 		self.rec_num = n
 		try:
+			if self.DATA_LIST[self.rec_num].periodo_iniziale == None:
+				self.comboBox_per_iniz.setEditText("")
+			else:
+				self.comboBox_per_iniz.setEditText(str(self.DATA_LIST[self.rec_num].periodo_iniziale))
+
+			if self.DATA_LIST[self.rec_num].fase_iniziale == None:
+				self.comboBox_fas_iniz.setEditText("")
+			else:
+				self.comboBox_fas_iniz.setEditText(str(self.DATA_LIST[self.rec_num].fase_iniziale))
+
+			if self.DATA_LIST[self.rec_num].periodo_finale == None:
+				self.comboBox_per_fin.setEditText("")
+			else:
+				self.comboBox_per_fin.setEditText(str(self.DATA_LIST[self.rec_num].periodo_finale))
+
+			if self.DATA_LIST[self.rec_num].fase_finale == None:
+				self.comboBox_fas_fin.setEditText("")
+			else:
+				self.comboBox_fas_fin.setEditText(str(self.DATA_LIST[self.rec_num].fase_finale))
+
 			if self.DATA_LIST[self.rec_num].orientamento_azimut == None:
 				self.lineEdit_orientamento_azimut.setText("")
 			else:
@@ -1299,8 +1498,10 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			self.comboBox_completo.setEditText(self.DATA_LIST[self.rec_num].completo_si_no)													#22 - completo
 			self.comboBox_disturbato.setEditText(self.DATA_LIST[self.rec_num].disturbato_si_no)												#23 - disturbato
 			self.comboBox_in_connessione.setEditText(self.DATA_LIST[self.rec_num].in_connessione_si_no) 									#24 - in connessione
+			self.lineEdit_datazione_estesa.setText(str(self.DATA_LIST[self.rec_num].datazione_estesa))								#12 - datazione estesa
 			self.tableInsertData("self.tableWidget_caratteristiche", self.DATA_LIST[self.rec_num].caratteristiche)							#26 - caratteristiche
 			self.tableInsertData("self.tableWidget_corredo_tipo", self.DATA_LIST[self.rec_num].corredo_tipo)								#27 - corredo tipo
+			self.tableInsertData("self.tableWidget_misurazioni", self.DATA_LIST[self.rec_num].misure_tafonomia)					#16 - misure struttura
 
 			#gestione tool
 			if self.toolButtonPreview.isChecked() == True:
@@ -1308,7 +1509,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			if self.toolButtonPreviewMedia.isChecked() == True:
 				self.loadMediaPreview()
 		except Exception, e:
-			QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
+			QMessageBox.warning(self, "Errore fill", str(e),  QMessageBox.Ok)
 
 	def set_rec_counter(self, t, c):
 		self.rec_tot = t
@@ -1347,12 +1548,34 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		else:
 			lunghezza_scheletro = self.lineEdit_lunghezza_scheletro.text()
 
+		if self.comboBox_per_iniz.currentText() == "":
+			periodo_iniziale = None
+		else:
+			periodo_iniziale = self.comboBox_per_iniz.currentText()
+
+		if self.comboBox_fas_iniz.currentText() == "":
+			fase_iniziale = None
+		else:
+			fase_iniziale = self.comboBox_fas_iniz.currentText()
+
+		if self.comboBox_per_fin.currentText() == "":
+			periodo_finale = None
+		else:
+			periodo_finale = self.comboBox_per_fin.currentText()
+
+		if self.comboBox_fas_fin.currentText() == "":
+			fase_finale = None
+		else:
+			fase_finale = self.comboBox_fas_fin.currentText()
+
 		#TableWidget
 
 		##Caratteristiche
 		caratteristiche = self.table2dict("self.tableWidget_caratteristiche")
 		##Corredo tipo
 		corredo_tipo = self.table2dict("self.tableWidget_corredo_tipo")
+		##Misurazioni
+		misurazioni = self.table2dict("self.tableWidget_misurazioni")
 
 		self.DATA_LIST_REC_TEMP = [
 		unicode(self.comboBox_sito.currentText()), 									#1 - Sito
@@ -1382,7 +1605,13 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		unicode(self.comboBox_completo.currentText()),								#25 - completo
 		unicode(self.comboBox_disturbato.currentText()),							#26 - disturbato
 		unicode(self.comboBox_in_connessione.currentText()), 						#27 - in connessione
-		unicode(caratteristiche)													#28 - caratteristiche
+		unicode(caratteristiche),													#28 - caratteristiche
+		unicode(periodo_iniziale),																			#6 - descrizioene
+		unicode(fase_iniziale),																				#6 - descrizioene
+		unicode(periodo_finale),																			#6 - descrizioene
+		unicode(fase_finale),																				#6 - descrizioene
+		unicode(self.lineEdit_datazione_estesa.text()),												#7- cron estesa
+		unicode(misurazioni)
 		]
 
 	def set_LIST_REC_CORR(self):

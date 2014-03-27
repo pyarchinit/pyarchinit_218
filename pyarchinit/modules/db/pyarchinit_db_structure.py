@@ -474,6 +474,13 @@ class Tafonomia_table:
 	Column('disturbato_si_no',  String(2)),
 	Column('in_connessione_si_no',  String(2)),	
 	Column('caratteristiche', Text),
+	Column('periodo_iniziale', Integer),
+	Column('fase_iniziale', Integer),
+	Column('periodo_finale', Integer),
+	Column('fase_finale', Integer),
+	Column('datazione_estesa', String(300)),
+	Column('misure_tafonomia', Text),
+
 	# explicit/composite unique constraint.  'name' is optional.
     UniqueConstraint('sito','nr_scheda_taf', name='ID_tafonomia_unico')
 	)

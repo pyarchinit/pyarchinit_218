@@ -1838,7 +1838,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				unicode(self.lineEdit_codice_periodo.setText(""))
 			else:
 				unicode(self.lineEdit_codice_periodo.setText(self.DATA_LIST[self.rec_num].cont_per))										#27 - codice periodo
-#27 - codice periodo
+			#27 - codice periodo
 			if self.DATA_LIST[self.rec_num].order_layer == None:
 				self.lineEditOrderLayer.setText("")
 			else:
@@ -1902,7 +1902,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		unicode(self.comboBox_consistenza.currentText()),              #24 - consistenza
 		unicode(self.lineEdit_struttura.text()),									#25 - struttura
 		unicode(self.lineEdit_codice_periodo.text()),							#26 - codice periodo
-		str(order_layer),														#27 - order layer
+		unicode(order_layer),														#27 - order layer era str(order_layer)
 		unicode(documentazione)
 		]
 
