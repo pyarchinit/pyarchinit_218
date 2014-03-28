@@ -448,7 +448,13 @@ class Pyarchinit_db_management:
 								arg[25],
 								arg[26],
 								arg[27],
-								arg[28])
+								arg[28],
+								arg[29],
+								arg[30],
+								arg[31],
+								arg[32],
+								arg[33],
+								arg[34])
 
 		return tafonomia
 

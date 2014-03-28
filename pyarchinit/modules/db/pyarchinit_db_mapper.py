@@ -811,7 +811,13 @@ class TAFONOMIA(object):
 	completo_si_no,
 	disturbato_si_no,
 	in_connessione_si_no,
-	caratteristiche
+	caratteristiche,
+	periodo_iniziale,
+	fase_iniziale,
+	periodo_finale,
+	fase_finale,
+	datazione_estesa,
+	misure_tafonomia
 	):
 		self.id_tafonomia = id_tafonomia
 		self.sito = sito
@@ -842,10 +848,15 @@ class TAFONOMIA(object):
 		self.disturbato_si_no = disturbato_si_no
 		self.in_connessione_si_no = in_connessione_si_no
 		self.caratteristiche = caratteristiche
-
+		self.periodo_iniziale = periodo_iniziale
+		self.fase_iniziale =fase_iniziale
+		self.periodo_finale = periodo_finale
+		self.fase_finale = fase_finale
+		self.datazione_estesa = datazione_estesa
+		self.misure_tafonomia = misure_tafonomia
 		#def __repr__"
 	def __repr__(self):
-		return "<TAFONOMIA('%d', '%s', '%d', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%f', '%s', '%s', '%s', '%f', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')>" % (
+		return "<TAFONOMIA('%d', '%s', '%d', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%f', '%s', '%s', '%s', '%f', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d','%d','%d','%d', '%s', '%s')>" % (
 		self.id_tafonomia,
 		self.sito,
 		self.nr_scheda_taf,
@@ -874,7 +885,13 @@ class TAFONOMIA(object):
 		self.completo_si_no,
 		self.disturbato_si_no,
 		self.in_connessione_si_no,
-		self.caratteristiche
+		self.caratteristiche,
+		self.periodo_iniziale,
+		self.fase_iniziale,
+		self.periodo_finale,
+		self.fase_finale,
+		self.datazione_estesa,
+		self.misure_tafonomia
 		)
 
 #mapper

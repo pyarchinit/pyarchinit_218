@@ -32,6 +32,7 @@ class DB_update:
 	metadata = MetaData(engine)
 
 	def update_table(self):
+		####site_table
 		table = Table("site_table", self.metadata, autoload=True)
 		table_column_names_list = []
 		for i in table.columns:
@@ -44,16 +45,20 @@ class DB_update:
 		if table_column_names_list.__contains__('definizione_sito') == False:
 			self.engine.execute("ALTER TABLE site_table ADD COLUMN definizione_sito varchar DEFAULT 'inserici un valore' ")
 
+		####US_table
 		table = Table("us_table", self.metadata, autoload=True)
 		table_column_names_list = []
+
 		for i in table.columns:
 			table_column_names_list.append(str(i.name))
+
 		if table_column_names_list.__contains__('cont_per') == False:
 			self.engine.execute("ALTER TABLE us_table ADD COLUMN cont_per varchar DEFAULT")
 
 		if table_column_names_list.__contains__('documentazione') == False:
 			self.engine.execute("ALTER TABLE us_table ADD COLUMN documentazione varchar DEFAULT")
 
+		####periodizzazione_table
 		table = Table("periodizzazione_table", self.metadata, autoload=True)
 		table_column_names_list = []
 		for i in table.columns:
@@ -61,12 +66,13 @@ class DB_update:
 
 		if table_column_names_list.__contains__('cont_per') == False:
 			self.engine.execute("ALTER TABLE periodizzazione_table ADD COLUMN cont_per integer DEFAULT 0 ")
-
+		
+		####inventario_materiali_table
 		table = Table("inventario_materiali_table", self.metadata, autoload=True)
 		table_column_names_list = []
 		for i in table.columns:
 			table_column_names_list.append(str(i.name))
-			
+
 		if table_column_names_list.__contains__('stato_conservazione') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN stato_conservazione varchar DEFAULT ''")
 
@@ -93,9 +99,7 @@ class DB_update:
 		
 		if table_column_names_list.__contains__('totale_frammenti') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN totale_frammenti integer DEFAULT 0")
-		
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
+
 		if table_column_names_list.__contains__('corpo_ceramico') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN corpo_ceramico varchar(20)")
 			self.engine.execute("update inventario_materiali_table set corpo_ceramico = ''")
@@ -124,8 +128,32 @@ class DB_update:
 		if table_column_names_list.__contains__('diagnostico') == False:
 			self.engine.execute("ALTER TABLE inventario_materiali_table ADD COLUMN diagnostico varchar(2)")
 			self.engine.execute("update inventario_materiali_table set diagnostico = ''No")
-		
-		#aggiornamento tabelle geografiche
+
+		####tafonomia_table
+		table = Table("tafonomia_table", self.metadata, autoload=True)
+		table_column_names_list = []
+		for i in table.columns:
+			table_column_names_list.append(str(i.name))
+
+		if table_column_names_list.__contains__('periodo_iniziale') == False:
+			self.engine.execute("ALTER TABLE tafonomia_table ADD COLUMN periodo_iniziale integer")
+
+		if table_column_names_list.__contains__('fase_iniziale') == False:
+			self.engine.execute("ALTER TABLE tafonomia_table ADD COLUMN fase_iniziale integer")
+
+		if table_column_names_list.__contains__('periodo_finale') == False:
+			self.engine.execute("ALTER TABLE tafonomia_table ADD COLUMN periodo_finale integer")
+
+		if table_column_names_list.__contains__('fase_finale') == False:
+			self.engine.execute("ALTER TABLE tafonomia_table ADD COLUMN fase_finale integer")
+
+		if table_column_names_list.__contains__('datazione_estesa') == False:
+			self.engine.execute("ALTER TABLE tafonomia_table ADD COLUMN datazione_estesa text")
+
+		if table_column_names_list.__contains__('misure_tafonomia') == False:
+			self.engine.execute("ALTER TABLE tafonomia_table ADD COLUMN misure_tafonomia text DEFAULT '[]' ")
+
+		####aggiornamento tabelle geografiche
 		try:
 			self.engine.execute("ALTER TABLE pyarchinit_strutture_ipotesi ADD COLUMN nr_strut integer DEFAULT 0 ")
 			self.engine.execute("ALTER TABLE pyarchinit_strutture_ipotesi ADD COLUMN sigla_strut varchar(3) DEFAULT 'NoD'")
