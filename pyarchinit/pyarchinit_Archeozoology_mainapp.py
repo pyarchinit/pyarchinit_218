@@ -1,8 +1,7 @@
 #! /usr/bin/env python
 #-*- coding: utf-8 -*-
 """
-
-/**************************************************************************
+/***************************************************************************
         pyArchInit Plugin  - A QGIS plugin to manage archaeological dataset
         					 stored in Postgres
                              -------------------
@@ -36,10 +35,7 @@ from  pyarchinit_db_manager import *
 from datetime import date
 from psycopg2 import *
 #--import rpy
-try:
-	from pyper import *
-except:
-	pass	
+from pyper import *
 
 #--import pyArchInit modules--#
 from  pyarchinit_Archeozoology_ui import Ui_DialogArcheoZoology
@@ -666,7 +662,7 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 			self.setComboBoxEnable(["self.lineEdit_quadrato"],"True")
 		
 	def on_calcola_pressed(self):#####modifiche apportate per il calcolo statistico con R
-		from pyarchinit_conn_strings import *
+	    	from pyarchinit_conn_strings import *
 		self.ITEMS = []
 			
 		if self.radioButtonUsMin.isChecked() == True:
@@ -926,8 +922,8 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		con = "r('archezoology_table<-dbGetQuery(con,\"select * from archeozoology_table where us = %d AND bos_bison IS NOT NULL\")')" % int(self.DATA_LIST[i].us)
 		eval (con)
 		if self.bos.isChecked() == True:			
-			x1="r('VGM_PARAM_A3 <- gstat(id=\"%s\", formula=%s~1,locations=~coord_x+coord_y, data=archezoology_table, nmax = 10)')" % (str(self.lineEdit_bos_2.currentText()),str(self.c1.currentText()))
-			eval(x1)
+		 	x1= "r('VGM_PARAM_A3 <- gstat(id=\"%s\", formula=%s~1,locations=~coord_x+coord_y, data=archezoology_table, nmax = 10)')" % (str(self.lineEdit_bos_2.currentText()),str(self.c1.currentText()))
+			eval (x1)
 		else:
 			pass
 		if self.calcinati.isChecked() == True:
@@ -981,7 +977,7 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 			pass
 		if self.ursidi.isChecked() == True:
 		 	x12="r('VGM_PARAM_A3 <- gstat(VGM_PARAM_A3, \"%s\", %s~1, locations=~coord_x+coord_y,archezoology_table, nmax = 10)')"% (str(self.lineEdit_ursidi_2.text()),str(self.c12.currentText()))
-			eval(x12)
+			eval (x12)
 		else:
 			pass
 		if self.canidi.isChecked() == True:
