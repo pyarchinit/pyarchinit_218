@@ -77,6 +77,7 @@ except ImportError, e:
       error_str = error_str.replace( error_mod, req_mods[error_mod] )
     raise ImportError( error_str )
 
+	
 
 
 class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
@@ -409,7 +410,7 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		elif EC.data_is_empty(str(self.lineEdit_quadrato.text())) == 0:
 			QMessageBox.warning(self, "ATTENZIONE", "Campo Quadrato. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
 			test = 1
-
+			
 		return test
 
 	def insert_new_rec(self):
@@ -662,11 +663,28 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 			self.setComboBoxEnable(["self.lineEdit_area"],"True")
 			self.setComboBoxEnable(["self.lineEdit_us"],"True")
 			self.setComboBoxEnable(["self.lineEdit_quadrato"],"True")
+			
+			
+	def on_toolButton_esp_generale_pressed(self):
+		self.percorso = QFileDialog.getExistingDirectory(self,'Choose Save Directory')
+		self.lineEdit_esp_generale.setText(self.percorso)		
 		
 	def on_calcola_pressed(self):#####modifiche apportate per il calcolo statistico con R
-	    	from pyarchinit_conn_strings import *
+		from pyarchinit_conn_strings import *
 		self.ITEMS = []
-			
+		test = 0
+		EC = Error_check()
+		if EC.data_is_empty(str(self.lineEdit_esp_generale.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo scegli la path. \n Aggiungi path per l'sportazione",  QMessageBox.Ok)
+			test = 1	
+		#return test
+		
+		if self.lineEdit_esp_generale.text() == "":
+			lineEdit_esp_generale = ''
+		else:
+			lineEdit_esp_generale = str(self.lineEdit_esp_generale.text())
+		
+		
 		if self.radioButtonUsMin.isChecked() == True:
 			self.TYPE_QUANT = "US"			
 		else:
@@ -924,8 +942,8 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		con = "r('archezoology_table<-dbGetQuery(con,\"select * from archeozoology_table where us = %d AND bos_bison IS NOT NULL\")')" % int(self.DATA_LIST[i].us)
 		eval (con)
 		if self.bos.isChecked() == True:			
-		 	x1= "r('VGM_PARAM_A3 <- gstat(id=\"%s\", formula=%s~1,locations=~coord_x+coord_y, data=archezoology_table, nmax = 10)')" % (str(self.lineEdit_bos_2.currentText()),str(self.c1.currentText()))
-			eval (x1)
+			x1="r('VGM_PARAM_A3 <- gstat(id=\"%s\", formula=%s~1,locations=~coord_x+coord_y, data=archezoology_table, nmax = 10)')" % (str(self.lineEdit_bos_2.currentText()),str(self.c1.currentText()))
+			eval(x1)
 		else:
 			pass
 		if self.calcinati.isChecked() == True:
@@ -979,7 +997,7 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 			pass
 		if self.ursidi.isChecked() == True:
 		 	x12="r('VGM_PARAM_A3 <- gstat(VGM_PARAM_A3, \"%s\", %s~1, locations=~coord_x+coord_y,archezoology_table, nmax = 10)')"% (str(self.lineEdit_ursidi_2.text()),str(self.c12.currentText()))
-			eval (x12)
+			eval(x12)
 		else:
 			pass
 		if self.canidi.isChecked() == True:
@@ -994,7 +1012,7 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 			
 			fittare="r('VARMODEL_A3 = fit.lmc(ESV_A3, A3,model=vgm(%d,\"%s\",%s, nugget = %d, kappa= %s))')" % (int(self.psill.text()), str(self.model.currentText()), str(self.rang.text()), int(self.nugget_2.text()), str(self.kappa.text()))
 			eval (fittare)			
-			a = "r('png(\"/home/enzo/pyarchinit_R_folder/A%d_semivariogram.png\", width=%d, height=%d, res=400); plot(ESV_A3, model=VARMODEL_A3,xlab=,ylab=,pch=20, cex=0.7, col=\"red\", main=\"Linear Model of Coregionalization A%d\")')" % (int(self.DATA_LIST[i].us), int(self.set_size_plot.text()), int(self.set_size_plot.text()),int(self.DATA_LIST[i].us))
+			a = "r('png(\"%s/A%d_semivariogram.png\", width=%d, height=%d, res=400); plot(ESV_A3, model=VARMODEL_A3,xlab=,ylab=,pch=20, cex=0.7, col=\"red\", main=\"Linear Model of Coregionalization A%d\")')" % (str(self.lineEdit_esp_generale.text()),int(self.DATA_LIST[i].us), int(self.set_size_plot.text()), int(self.set_size_plot.text()),int(self.DATA_LIST[i].us))
 			eval(a)
 			
 		
@@ -1003,7 +1021,19 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 	    	
 		from pyarchinit_conn_strings import *
 		self.ITEMS = []
-			
+		
+		test = 0
+		EC = Error_check()
+		if EC.data_is_empty(str(self.lineEdit_esp_generale.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo scegli la path. \n Aggiungi path per l'sportazione",  QMessageBox.Ok)
+			test = 1	
+		#return test
+		
+		if self.lineEdit_esp_generale.text() == "":
+			lineEdit_esp_generale = ''
+		else:
+			lineEdit_esp_generale = str(self.lineEdit_esp_generale.text())
+		
 		if self.radioButtonUsMin.isChecked() == True:
 			self.TYPE_QUANT = "US"
 		
@@ -1332,7 +1362,7 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 			d = "r('ESV_A3 <- variogram(VGM_PARAM_A3, map=TRUE, width=%s, cutoff=%d)')" % (str(self.lineEdit_width.text()), int(self.cutoff.text()))
 			eval (d)
 			r('VARMODEL_A3 = fit.lmc(ESV_A3, VGM_PARAM_A3)')
-			a = "r('png(\"/home/enzo/pyarchinit_R_folder/A%d_semivariogram_map.png\", width=%d, height=%d, res=400); plot(ESV_A3, threshold = 5, col.regions = terrain.colors, model=vgm(%d,\"%s\",%s,%d),xlab=,ylab=, main=\"Linear Model of Coregionalization A%d\")')" % (int(self.DATA_LIST[i].us), int(self.set_size_plot.text()), int(self.set_size_plot.text()),int(self.psill.text()), str(self.model.currentText()), str(self.rang.text()), int(self.nugget_2.text()),int(self.DATA_LIST[i].us))
+			a = "r('png(\"%s/A%d_semivariogram_map.png\", width=%d, height=%d, res=400); plot(ESV_A3, threshold = 5, col.regions = terrain.colors, model=vgm(%d,\"%s\",%s,%d),xlab=,ylab=, main=\"Linear Model of Coregionalization A%d\")')" % (str(self.lineEdit_esp_generale.text()),int(self.DATA_LIST[i].us), int(self.set_size_plot.text()), int(self.set_size_plot.text()),int(self.psill.text()), str(self.model.currentText()), str(self.rang.text()), int(self.nugget_2.text()),int(self.DATA_LIST[i].us))
 			eval(a)
 		
 
@@ -1342,13 +1372,21 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		from PyQt4.QtCore import *
 	    	from pyarchinit_conn_strings import *
 		self.ITEMS = []
-			
+		test = 0
+		EC = Error_check()
+		if EC.data_is_empty(str(self.lineEdit_esp_generale.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo scegli la path. \n Aggiungi path per l'sportazione",  QMessageBox.Ok)
+			test = 1	
 		if self.radioButtonUsMin.isChecked() == True:
 			self.TYPE_QUANT = "US"			
 		else:
 			self.close()
 			
-					
+		if self.lineEdit_esp_generale.text() == "":
+			lineEdit_esp_generale = ''
+		else:
+			lineEdit_esp_generale = str(self.lineEdit_esp_generale.text())
+			
 		if self.host.currentText() == "":
 			host = ''
 		else:
@@ -1428,14 +1466,14 @@ class pyarchinit_Archeozoology(QDialog, Ui_DialogArcheoZoology):
 		kr= "r('kriging_result = autoKrige(%s~1, archezoology_table,model=c(\"%s\"),fix.values = c(%s,%s,%s))')" % (str(self.lineEdit_automap.currentText()), str(self.model_2.currentText()), str(self.nugget_3.text()), str(self.rang_2.text()), str(self.psill_2.text()))
 		eval(kr)
 
-		plotkr = "r('png(\"/home/enzo/pyarchinit_R_folder/A%d_kriging_%s.png\", width=3500, height=3500, res=400); plot(kriging_result)')" % (int(self.DATA_LIST[i].us),  str(self.lineEdit_automap.currentText()))
+		plotkr = "r('png(\"%s/A%d_kriging_%s.png\", width=3500, height=3500, res=400); plot(kriging_result)')" % (str(self.lineEdit_esp_generale.text()),int(self.DATA_LIST[i].us),  str(self.lineEdit_automap.currentText()))
 		eval(plotkr)
 		
-		plot2= "r('png(\"/home/enzo/pyarchinit_R_folder/A%d_kriging_predict_%s.png\", width=3500, height=3500, res=400); automapPlot(kriging_result$krige_output, \"var1.pred\", sp.layout = list(\"sp.points\", archezoology_table))')" % (int(self.DATA_LIST[i].us),  str(self.lineEdit_automap.currentText()))
+		plot2= "r('png(\"%s/A%d_kriging_predict_%s.png\", width=3500, height=3500, res=400); automapPlot(kriging_result$krige_output, \"var1.pred\", sp.layout = list(\"sp.points\", archezoology_table))')" % (str(self.lineEdit_esp_generale.text()),int(self.DATA_LIST[i].us),  str(self.lineEdit_automap.currentText()))
 		eval(plot2)
-		raster= "r('writeRaster(raster(kriging_result$krige_output),\"/home/enzo/pyarchinit_R_folder/A%d_kriging_predict_%s.tif\",\"GTiff\")')" % (int(self.DATA_LIST[i].us),  str(self.lineEdit_automap.currentText()))		
+		raster= "r('writeRaster(raster(kriging_result$krige_output),\"%s/A%d_kriging_predict_%s.tif\",\"GTiff\")')" % (str(self.lineEdit_esp_generale.text()),int(self.DATA_LIST[i].us),  str(self.lineEdit_automap.currentText()))		
 		eval(raster)
-		add_map="self.iface.addRasterLayer(\"/home/enzo/pyarchinit_R_folder/A%d_kriging_predict_%s.tif\")" % (int(self.DATA_LIST[i].us),  str(self.lineEdit_automap.currentText()))
+		add_map="self.iface.addRasterLayer(\"%s/A%d_kriging_predict_%s.tif\")" % (str(self.lineEdit_esp_generale.text()),int(self.DATA_LIST[i].us),  str(self.lineEdit_automap.currentText()))
 		eval(add_map)
 		test= "r('verifica_errore <- krige.cv(%s~1, archezoology_table, model=vgm(%s,\"%s\",%s,%s),nfold=nrow(archezoology_table))')"% (str(self.lineEdit_automap.currentText()),  str(self.psill_2.text()), str(self.model_2.currentText()),str(self.rang_2.text()),str(self.nugget_3.text())) 
 		eval(test)
@@ -1462,11 +1500,17 @@ MSDR <- function(xv.obj){
      
      return(msdr)}
 ''')
-		r('write.table(ME(verifica_errore),"/home/enzo/pyarchinit_R_folder/ME.txt");write.table(MSE(verifica_errore),"/home/enzo/pyarchinit_R_folder/MSE.txt");write.table(MSDR(verifica_errore),"/home/enzo/pyarchinit_R_folder/MSDR.txt")')
+		error= "r('write.table(ME(verifica_errore),\"%s\ME.txt\");write.table(MSE(verifica_errore),\"%s\MSE.txt\");write.table(MSDR(verifica_errore),\"%s\MSDR.txt\")')" % (str(self.lineEdit_esp_generale.text()),str(self.lineEdit_esp_generale.text()),str(self.lineEdit_esp_generale.text()))
+		eval(error)
+		
 	def on_report_pressed(self):
 		from pyarchinit_conn_strings import *
 		self.ITEMS = []
-			
+		test = 0
+		EC = Error_check()
+		if EC.data_is_empty(str(self.lineEdit_esp_generale.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo scegli la path. \n Aggiungi path per l'sportazione",  QMessageBox.Ok)
+			test = 1	
 		if self.radioButtonUsMin.isChecked() == True:
 			self.TYPE_QUANT = "US"
 		
@@ -1476,7 +1520,10 @@ MSDR <- function(xv.obj){
 		else:
 			self.close()
 			
-		
+		if self.lineEdit_esp_generale.text() == "":
+			lineEdit_esp_generale = ''
+		else:
+			lineEdit_esp_generale = str(self.lineEdit_esp_generale.text())
 			
 		if self.host.currentText() == "":
 			host = ''
@@ -1548,7 +1595,8 @@ MSDR <- function(xv.obj){
 		eval (con)
 		query = "r('archezoology_table<-dbGetQuery(con,\"select * from archeozoology_table where us = %d AND bos_bison IS NOT NULL\")')" % int(self.DATA_LIST[i].us)
 		eval (query)	
-		r('directory = setwd("/home/enzo/pyarchinit_R_folder")')
+		direc = "r('directory = setwd(\"%s\")')"% str(self.lineEdit_esp_generale.text())
+		eval(direc)	
 		test1 = "r('myfile<-file.path(getwd(),\"%s.html\")')"  % str(self.plot.currentText())
 		eval(test1)
 		test2 = "r('HTMLoutput=file.path(getwd(),\"%s.html\")')" % str(self.plot.currentText())
@@ -1590,7 +1638,11 @@ MSDR <- function(xv.obj){
 	def on_hist_pressed(self):
 		from pyarchinit_conn_strings import *
 		self.ITEMS = []
-			
+		test = 0
+		EC = Error_check()
+		if EC.data_is_empty(str(self.lineEdit_esp_generale.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo scegli la path. \n Aggiungi path per l'sportazione",  QMessageBox.Ok)
+			test = 1	
 		if self.radioButtonUsMin.isChecked() == True:
 			self.TYPE_QUANT = "US"
 		
@@ -1599,7 +1651,10 @@ MSDR <- function(xv.obj){
 			
 		else:
 			self.close()
-			
+		if self.lineEdit_esp_generale.text() == "":
+			lineEdit_esp_generale = ''
+		else:
+			lineEdit_esp_generale = str(self.lineEdit_esp_generale.text())	
 							
 		if self.host.currentText() == "":
 			host = ''
@@ -1673,7 +1728,7 @@ MSDR <- function(xv.obj){
 		eval (query)
 		
 		
-		histogram= "r('png(\"/home/enzo/pyarchinit_R_folder/%s_histogram.png\", width=2500, height=2500, res=400); hist(archezoology_table$%s, col=\"yellow\",xlab=\"Quantità\", ylab=\"Frequenza\",labels=TRUE, main=\"Distribuzione di frequenza %s\")')" % (str(self.plot.currentText()), str(self.plot.currentText()), str(self.plot.currentText()))
+		histogram= "r('png(\"%s/%s_histogram.png\", width=2500, height=2500, res=400); hist(archezoology_table$%s, col=\"yellow\",xlab=\"Quantità\", ylab=\"Frequenza\",labels=TRUE, main=\"Distribuzione di frequenza %s\")')" % (str(self.lineEdit_esp_generale.text()), str(self.plot.currentText()), str(self.plot.currentText()), str(self.plot.currentText()))
 		eval(histogram)
 		abline1= "r('abline(v=mean(archezoology_table$%s, na.rm=TRUE),col=\"red\", lwd=2)')"%str(self.plot.currentText())
 		eval(abline1)
@@ -1690,7 +1745,15 @@ MSDR <- function(xv.obj){
 	def on_hist_period_pressed(self):
 		from pyarchinit_conn_strings import *
 		self.ITEMS = []
-
+		test = 0
+		EC = Error_check()
+		if EC.data_is_empty(str(self.lineEdit_esp_generale.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo scegli la path. \n Aggiungi path per l'sportazione",  QMessageBox.Ok)
+			test = 1
+		if self.lineEdit_esp_generale.text() == "":
+			lineEdit_esp_generale = ''
+		else:
+			lineEdit_esp_generale = str(self.lineEdit_esp_generale.text())
 
 		if self.c1_2.currentText() == "":
 			c1_2 = ''
@@ -1781,7 +1844,7 @@ MSDR <- function(xv.obj){
 		eval (query)
 		
 		
-		histogram1= "r('png(\"/home/enzo/pyarchinit_R_folder/A%d/histogram/test.png\", width=7000, height=3500, res=400)')" %int(self.DATA_LIST[i].us)
+		histogram1= "r('png(\"%s/A%d/histogram/test.png\", width=7000, height=3500, res=400)')" %(str(self.lineEdit_esp_generale.text()),int(self.DATA_LIST[i].us))
 		eval(histogram1)
 
 		r('''
@@ -1808,9 +1871,16 @@ do.it <- function (x) {
 	def on_boxplot_pressed(self):
 		from pyarchinit_conn_strings import *
 		self.ITEMS = []
+		test = 0
+		EC = Error_check()
+		if EC.data_is_empty(str(self.lineEdit_esp_generale.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo scegli la path. \n Aggiungi path per l'sportazione",  QMessageBox.Ok)
+			test = 1
 
-
-		
+		if self.lineEdit_esp_generale.text() == "":
+			lineEdit_esp_generale = ''
+		else:
+			lineEdit_esp_generale = str(self.lineEdit_esp_generale.text())
 
 		if self.host.currentText() == "":
 			host = ''
@@ -1872,7 +1942,7 @@ do.it <- function (x) {
 		eval (query)
 		
 		
-		boxplot="r('png(\"/home/enzo/pyarchinit_R_folder/A%d/boxplot/%s_boxplot.png\", width=3500, height=3500, res=400)')"%(int(self.DATA_LIST[i].us),str(self.plot.currentText()))
+		boxplot="r('png(\"%s/A%d/boxplot/%s_boxplot.png\", width=3500, height=3500, res=400)')"%(str(self.lineEdit_esp_generale.text()),int(self.DATA_LIST[i].us),str(self.plot.currentText()))
 		eval(boxplot)
 		r('op=par(mar=c(0,5,0,0)); layout(matrix(c(1,1,1,2), nc=1))')
 		codice= "r('a=archezoology_table$%s')"%str(self.plot.currentText())
@@ -1903,7 +1973,11 @@ do.it <- function (x) {
 	def on_coplot_pressed(self):
 		from pyarchinit_conn_strings import *
 		self.ITEMS = []
-			
+		test = 0
+		EC = Error_check()
+		if EC.data_is_empty(str(self.lineEdit_esp_generale.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo scegli la path. \n Aggiungi path per l'sportazione",  QMessageBox.Ok)
+			test = 1	
 		if self.radioButtonUsMin.isChecked() == True:
 			self.TYPE_QUANT = "US"
 		
@@ -1913,7 +1987,10 @@ do.it <- function (x) {
 		else:
 			self.close()
 			
-		
+		if self.lineEdit_esp_generale.text() == "":
+			lineEdit_esp_generale = ''
+		else:
+			lineEdit_esp_generale = str(self.lineEdit_esp_generale.text())
 			
 		if self.host.currentText() == "":
 			host = ''
@@ -1985,7 +2062,7 @@ do.it <- function (x) {
 		query = "r('archezoology_table<-dbGetQuery(con,\"select * from archeozoology_table\" )')" 
 		eval (query)	
 
-		coplot= "r('png(\"/home/enzo/pyarchinit_R_folder/%s_coplot.png\", width=3500, height=3500, res=400); coplot(coord_y ~ coord_x | us*%s , data= archezoology_table, overlap=0, cex=1,pch=20,col=4)')" % (str(self.plot.currentText()), str(self.plot.currentText()))
+		coplot= "r('png(\"%s/%s_coplot.png\", width=3500, height=3500, res=400); coplot(coord_y ~ coord_x | us*%s , data= archezoology_table, overlap=0, cex=1,pch=20,col=4)')" % (str(self.lineEdit_esp_generale.text()), str(self.plot.currentText()), str(self.plot.currentText()))
 		eval(coplot)
 
 	def on_clipper_pressed(self):
@@ -2018,7 +2095,11 @@ do.it <- function (x) {
 
 		from pyarchinit_conn_strings import *
 		self.ITEMS = []
-			
+		test = 0
+		EC = Error_check()
+		if EC.data_is_empty(str(self.lineEdit_esp_generale.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo scegli la path. \n Aggiungi path per l'sportazione",  QMessageBox.Ok)
+			test = 1	
 		if self.radioButtonUsMin.isChecked() == True:
 			self.TYPE_QUANT = "US"
 		
@@ -2028,7 +2109,10 @@ do.it <- function (x) {
 		else:
 			self.close()
 			
-		
+		if self.lineEdit_esp_generale.text() == "":
+			lineEdit_esp_generale = ''
+		else:
+			lineEdit_esp_generale = str(self.lineEdit_esp_generale.text())
 			
 		if self.host.currentText() == "":
 			host = ''
@@ -2073,9 +2157,10 @@ do.it <- function (x) {
 		if self.size.text() == "":
 			size = 1
 		else:
-			size = str(self.size.text())	
-
+			size = str(self.size.text())
+		
 		from pyper import *
+		from pyarchinit_folder_installation import *
 		for i in range(len(self.DATA_LIST)):
 				temp_dataset = ()
 				
@@ -2089,7 +2174,7 @@ do.it <- function (x) {
 					
 				except:
 					pass
-		
+			
 		r = R()
 		#r('load("/home/postgres/.RData")')
 		r('library(RPostgreSQL)')
@@ -2097,13 +2182,11 @@ do.it <- function (x) {
 		r('drv <- dbDriver("PostgreSQL")')
 		con = "r('con <- dbConnect(drv, host=\"%s\", dbname=\"%s\", port=\"%d\", password=\"%s\", user=\"%s\")')" % (str(self.host.currentText()), str(self.db.text()), int(self.port.currentText()), str(self.password.text()), str(self.user.currentText()))
 		eval (con)
-		g = "r('png(\"/home/enzo/pyarchinit_R_folder/A%d_correlation_matrix.png\", width=2500, height=2500, pointsize=20)')" % int(self.DATA_LIST[i].us)
+		g = "r('png(\"%s/A%d_correlation_matrix.png\", width=2500, height=2500, pointsize=20)')" % (str(self.lineEdit_esp_generale.text()),int(self.DATA_LIST[i].us))
 		eval(g)
 		h = "r('archezoology_table<-dbGetQuery(con,\"select * from archeozoology_table where us = %d AND bos_bison IS NOT NULL\")')" % int(self.DATA_LIST[i].us)
 		eval (h)		
-		#f = open("C:\Users\User\pyarchinit_R_folder\query1.txt", 'w')
-		#f.write(str(h))
-		#f.close()
+		
 		r('''
 panel.hist <- function(x, ...)      {
   usr <- par("usr"); on.exit(par(usr))
@@ -2150,13 +2233,19 @@ title(sub="Rosso = coppie con r>|0.5|, Verde = coppie con |0.25|<r<|0.5|;
       cex.sub=0.7)
 		''')#### creazione ed esportazione della statistica descrittiva
 		
-		
+	
+
+
 	def on_tre_d_pressed(self):
+		
 		#layer.select([])
 		#layer.setSelectedFeatures([obj.id() for obj in layer])
 		#tre_d =''
 		mylayer = self.iface.activeLayer()
+		#self.iface.activeLayer().select([])
+		#self.iface.activeLayer().setSelectedFeatures([obj.id() for obj in mylayer])
 		#tre_d(mylayer)	
+		#edge_id = getIntAttributeByIndex(feature, edge_id_fno)
 		if self.tab_5.text() == "":
 			tab_5 = 0
 		else:
@@ -2172,19 +2261,22 @@ title(sub="Rosso = coppie con r>|0.5|, Verde = coppie con |0.25|<r<|0.5|;
 			   geom= elem.geometry() 
 			   wkb = geom.asWkb()
 			   data = loads(wkb)
+			  
 			   x.append(data.x)
 			   y.append(data.y)
-			   z.append(data.z)
-
+			   z.append(0)
+			   
 		x=[]
 		y=[]
 		z=[]
 		for elem in mylayer.selectedFeatures():
+			   
 			   geom= elem.geometry() 
 			   x.append(geom.asPoint()[0])
 			   y.append(geom.asPoint()[1])
-			   tab = "(z.append(elem.attributeMap()[%d].toFloat()[0]))"% int(self.tab_5.text()) 
-			   eval (tab)	
+			   tab = "(z.append(elem.attributes()[%d]))" % int(self.tab_5.text()) 
+			   eval (tab)
+			  
 		from mpl_toolkits.mplot3d.axes3d import *
 		import matplotlib.pyplot as plt
 		from matplotlib import cm
