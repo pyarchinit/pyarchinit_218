@@ -35,8 +35,10 @@ from  pyarchinit_db_manager import *
 from datetime import date
 from psycopg2 import *
 #--import rpy
-from pyper import *
-
+try:
+	from pyper import *
+except:
+	pass
 #--import pyArchInit modules--#
 from  pyarchinit_Archeozoology_ui import Ui_DialogArcheoZoology
 from  pyarchinit_Archeozoology_ui import *
