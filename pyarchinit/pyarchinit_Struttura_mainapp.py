@@ -139,9 +139,24 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 
 		#SIGNALS & SLOTS Functions
 		self.connect(self.comboBox_sigla_struttura, SIGNAL("editTextChanged (const QString&)"), self.add_value_to_categoria)
-		self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_list)
+		#self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_list)
+		
+		#self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_list)
 		self.connect(self.comboBox_per_iniz, SIGNAL("currentIndexChanged(int)"), self.charge_fase_iniz_list)
 		self.connect(self.comboBox_per_fin, SIGNAL("currentIndexChanged(int)"), self.charge_fase_fin_list)
+		#self.connect(self.comboBox_struttura, SIGNAL("editTextChanged (const QString&)"), self.charge_struttura_list)
+		self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_iniz_list)
+		self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_fin_list)
+
+
+		self.connect(self.comboBox_sito, SIGNAL("currentIndexChanged(int)"), self.charge_periodo_iniz_list)
+		self.connect(self.comboBox_sito, SIGNAL("currentIndexChanged(int)"), self.charge_periodo_fin_list)
+
+		self.connect(self.comboBox_per_iniz, SIGNAL("editTextChanged (const QString&)"), self.charge_fase_iniz_list)
+		sito = self.comboBox_sito.currentText() 
+		self.comboBox_sito.setEditText(sito)
+		self.charge_periodo_iniz_list()
+		self.charge_periodo_fin_list()
 
 	def enable_button(self, n):
 		self.pushButton_connect.setEnabled(n)
@@ -265,33 +280,64 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 		sito_vl.sort()
 		self.comboBox_sito.addItems(sito_vl)
 
-	def charge_periodo_list(self):
+	def charge_periodo_iniz_list(self):
+		sito =unicode(self.comboBox_sito.currentText())
+		#sitob = sito.decode('utf-8')
+
+		search_dict = {
+		'sito'  : "'"+sito+"'"
+		}
+
+		periodo_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')
+
+		periodo_list = []
+
+		for i in range(len(periodo_vl)):
+			periodo_list.append(str(periodo_vl[i].periodo))
 		try:
-			search_dict = {
-			'sito'  : "'"+str(self.comboBox_sito.currentText())+"'",
-			}
-
-			periodo_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')
-
-			periodo_list = []
-
-			for i in range(len(periodo_vl)):
-				periodo_list.append(str(periodo_vl[i].periodo))
-			try:
-				periodo_vl.remove('')
-			except:
-				pass
-
-			periodo_list.sort()
-
-			self.comboBox_per_iniz.clear()
-			self.comboBox_per_iniz.addItems(periodo_list)
-			self.comboBox_per_iniz.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
-			self.comboBox_per_fin.clear()
-			self.comboBox_per_fin.addItems(periodo_list)
-			self.comboBox_per_fin.setEditText(self.DATA_LIST[self.rec_num].periodo_finale)
+			periodo_vl.remove('')
 		except:
 			pass
+		
+		self.comboBox_per_iniz.clear()
+		self.comboBox_per_iniz.addItems(self.UTILITY.remove_dup_from_list(periodo_list))
+		
+		if self.STATUS_ITEMS[self.BROWSE_STATUS] == "Trova":
+			self.comboBox_per_iniz.setEditText("")
+		elif self.STATUS_ITEMS[self.BROWSE_STATUS] == "Usa":
+			if len(self.DATA_LIST) > 0:
+				try:
+					self.comboBox_per_iniz.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
+				except:
+					pass #non vi sono periodi per questo scavo
+
+
+	def charge_periodo_fin_list(self):
+		search_dict = {
+		'sito'  : "'"+unicode(self.comboBox_sito.currentText())+"'"
+		}
+	
+		periodo_vl = self.DB_MANAGER.query_bool(search_dict, 'PERIODIZZAZIONE')   
+		periodo_list = []
+
+		for i in range(len(periodo_vl)):
+			periodo_list.append(str(periodo_vl[i].periodo))
+		try:
+			periodo_vl.remove('')
+		except:
+			pass
+		
+		self.comboBox_per_fin.clear()
+		self.comboBox_per_fin.addItems(self.UTILITY.remove_dup_from_list(periodo_list))
+		
+		if self.STATUS_ITEMS[self.BROWSE_STATUS] == "Trova":
+			self.comboBox_per_fin.setEditText("")
+		elif self.STATUS_ITEMS[self.BROWSE_STATUS] == "Usa":
+			if len(self.DATA_LIST) > 0:
+				try:
+					self.comboBox_per_fin.setEditText(self.DATA_LIST[self.rec_num].periodo_iniziale)
+				except:
+					pass
 
 	def charge_fase_iniz_list(self):
 		try:
@@ -315,11 +361,15 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 			self.comboBox_fas_iniz.clear()
 
 			fase_list.sort()
-			self.comboBox_fas_iniz.addItems(fase_list)
-			self.comboBox_fas_iniz.setEditText(self.DATA_LIST[self.rec_num].fase_iniziale)
+			self.comboBox_fas_iniz.addItems(self.UTILITY.remove_dup_from_list(fase_list))
 
+			if self.STATUS_ITEMS[self.BROWSE_STATUS] == "Trova":
+				self.comboBox_fas_iniz.setEditText("")
+			else:
+				self.comboBox_fas_iniz.setEditText(self.DATA_LIST[self.rec_num].fase_iniziale)
 		except:
 			pass
+
 
 
 	def charge_fase_fin_list(self):
@@ -342,11 +392,13 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 				pass
 
 			self.comboBox_fas_fin.clear()
-
 			fase_list.sort()
-			self.comboBox_fas_fin.addItems(fase_list)
-			self.comboBox_fas_fin.setEditText(self.DATA_LIST[self.rec_num].fase_finale)
+			self.comboBox_fas_fin.addItems(self.UTILITY.remove_dup_from_list(fase_list))
 
+			if self.STATUS_ITEMS[self.BROWSE_STATUS] == "Trova":
+				self.comboBox_fas_fin.setEditText("")
+			else:
+				self.comboBox_fas_fin.setEditText(self.DATA_LIST[self.rec_num].fase_finale)
 		except:
 			pass
 
