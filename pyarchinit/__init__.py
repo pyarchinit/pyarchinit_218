@@ -32,6 +32,7 @@ import sys
 ##
 ##def version():
 ##  return "Version 1.0001 dev"
+##  return "0.1.2"
 ##
 ##def plugin_type():
 ##  return QgisPlugin.UI # UI plugin

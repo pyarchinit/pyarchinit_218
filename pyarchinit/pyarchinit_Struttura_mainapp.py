@@ -139,24 +139,25 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 
 		#SIGNALS & SLOTS Functions
 		self.connect(self.comboBox_sigla_struttura, SIGNAL("editTextChanged (const QString&)"), self.add_value_to_categoria)
-		#self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_list)
 		
-		#self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_list)
-		self.connect(self.comboBox_per_iniz, SIGNAL("currentIndexChanged(int)"), self.charge_fase_iniz_list)
-		self.connect(self.comboBox_per_fin, SIGNAL("currentIndexChanged(int)"), self.charge_fase_fin_list)
-		#self.connect(self.comboBox_struttura, SIGNAL("editTextChanged (const QString&)"), self.charge_struttura_list)
+		#SIGNALS & SLOTS Functions
 		self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_iniz_list)
 		self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_fin_list)
-
 
 		self.connect(self.comboBox_sito, SIGNAL("currentIndexChanged(int)"), self.charge_periodo_iniz_list)
 		self.connect(self.comboBox_sito, SIGNAL("currentIndexChanged(int)"), self.charge_periodo_fin_list)
 
 		self.connect(self.comboBox_per_iniz, SIGNAL("editTextChanged (const QString&)"), self.charge_fase_iniz_list)
+		self.connect(self.comboBox_per_iniz, SIGNAL("currentIndexChanged(int)"), self.charge_fase_iniz_list)
+
+		self.connect(self.comboBox_per_fin, SIGNAL("editTextChanged (const QString&)"), self.charge_fase_fin_list)
+		self.connect(self.comboBox_per_fin, SIGNAL("currentIndexChanged(int)"), self.charge_fase_fin_list)
+
 		sito = self.comboBox_sito.currentText() 
 		self.comboBox_sito.setEditText(sito)
 		self.charge_periodo_iniz_list()
 		self.charge_periodo_fin_list()
+		self.fill_fields()
 
 	def enable_button(self, n):
 		self.pushButton_connect.setEnabled(n)
@@ -1037,6 +1038,21 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 		self.rec_num = n
 
 		try:
+
+			self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito)																#1 - Sito
+			self.comboBox_sigla_struttura.setEditText(str(self.DATA_LIST[self.rec_num].sigla_struttura)) 							#2 - Periodo
+			self.numero_struttura.setText(str(self.DATA_LIST[self.rec_num].numero_struttura)) 										#3 - Fase
+			self.comboBox_categoria_struttura.setEditText(str(self.DATA_LIST[self.rec_num].categoria_struttura))				#4 - Fase
+			self.comboBox_tipologia_struttura.setEditText(str(self.DATA_LIST[self.rec_num].tipologia_struttura))					#5 - tipologia_struttura
+			self.comboBox_definizione_struttura.setEditText(str(self.DATA_LIST[self.rec_num].definizione_struttura)) 			#6 - definizione_struttura
+			unicode(self.textEdit_descrizione_struttura.setText(self.DATA_LIST[self.rec_num].descrizione))							#6 - descrizione
+			unicode(self.textEdit_interpretazione_struttura.setText(self.DATA_LIST[self.rec_num].interpretazione))				#7 - interpretazione
+			self.lineEdit_datazione_estesa.setText(str(self.DATA_LIST[self.rec_num].datazione_estesa))								#12 - datazione estesa
+			self.tableInsertData("self.tableWidget_materiali_impiegati", self.DATA_LIST[self.rec_num].materiali_impiegati)			#13 - materiali impiegati
+			self.tableInsertData("self.tableWidget_elementi_strutturali", self.DATA_LIST[self.rec_num].elementi_strutturali)		#14 - elementi struttura
+			self.tableInsertData("self.tableWidget_rapporti", self.DATA_LIST[self.rec_num].rapporti_struttura)						#15 - rapporti struttura
+			self.tableInsertData("self.tableWidget_misurazioni", self.DATA_LIST[self.rec_num].misure_struttura)					#16 - misure struttura
+
 			if self.DATA_LIST[self.rec_num].periodo_iniziale == None:
 				self.comboBox_per_iniz.setEditText("")
 			else:
@@ -1057,19 +1073,6 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 			else:
 				self.comboBox_fas_fin.setEditText(str(self.DATA_LIST[self.rec_num].fase_finale))
 
-			self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito)																#1 - Sito
-			self.comboBox_sigla_struttura.setEditText(str(self.DATA_LIST[self.rec_num].sigla_struttura)) 							#2 - Periodo
-			self.numero_struttura.setText(str(self.DATA_LIST[self.rec_num].numero_struttura)) 										#3 - Fase
-			self.comboBox_categoria_struttura.setEditText(str(self.DATA_LIST[self.rec_num].categoria_struttura))				#4 - Fase
-			self.comboBox_tipologia_struttura.setEditText(str(self.DATA_LIST[self.rec_num].tipologia_struttura))					#5 - tipologia_struttura
-			self.comboBox_definizione_struttura.setEditText(str(self.DATA_LIST[self.rec_num].definizione_struttura)) 			#6 - definizione_struttura
-			unicode(self.textEdit_descrizione_struttura.setText(self.DATA_LIST[self.rec_num].descrizione))							#6 - descrizione
-			unicode(self.textEdit_interpretazione_struttura.setText(self.DATA_LIST[self.rec_num].interpretazione))				#7 - interpretazione
-			self.lineEdit_datazione_estesa.setText(str(self.DATA_LIST[self.rec_num].datazione_estesa))								#12 - datazione estesa
-			self.tableInsertData("self.tableWidget_materiali_impiegati", self.DATA_LIST[self.rec_num].materiali_impiegati)			#13 - materiali impiegati
-			self.tableInsertData("self.tableWidget_elementi_strutturali", self.DATA_LIST[self.rec_num].elementi_strutturali)		#14 - elementi struttura
-			self.tableInsertData("self.tableWidget_rapporti", self.DATA_LIST[self.rec_num].rapporti_struttura)						#15 - rapporti struttura
-			self.tableInsertData("self.tableWidget_misurazioni", self.DATA_LIST[self.rec_num].misure_struttura)					#16 - misure struttura
 		except Exception, e:
 			QMessageBox.warning(self, "Errore Fill Fields", "Problema di riempimento campi" + str(e),  QMessageBox.Ok)
 
