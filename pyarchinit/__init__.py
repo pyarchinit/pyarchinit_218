@@ -31,7 +31,6 @@ import sys
 ##  return "Under Testing - Use for testing only - PyArchInit it's tool to manage archaeological dataset - Only Windows 7 Tested"
 ##
 ##def version():
-##  return "Version 1.0001 dev"
 ##  return "0.1.2"
 ##
 ##def plugin_type():
