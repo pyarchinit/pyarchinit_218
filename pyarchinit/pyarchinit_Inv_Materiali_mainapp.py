@@ -730,6 +730,10 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			self.update_if(QMessageBox.warning(self,'Errore',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
 		Finds_pdf_sheet = generate_reperti_pdf()
 		data_list = self.generate_list_pdf()
+		Finds_pdf_sheet.build_box_labels_Finds(data_list)
+		
+		Finds_pdf_sheet = generate_reperti_pdf()
+		data_list = self.generate_list_pdf()
 		Finds_pdf_sheet.build_Finds_sheets(data_list)
 
 	def on_pushButton_exp_index_mat_pressed(self):
