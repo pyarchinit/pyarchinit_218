@@ -4,7 +4,7 @@ from reportlab.lib.testutils import makeSuiteForClasses, outputfile, printLocati
 from reportlab.lib import colors
 from reportlab.lib.units import inch, cm, mm
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.lib.enums import TA_JUSTIFY
+from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Table, PageBreak, SimpleDocTemplate, Paragraph, Spacer, TableStyle
 from reportlab.platypus.paragraph import Paragraph
@@ -89,6 +89,10 @@ class NumberedCanvas_CASSEindex(canvas.Canvas):
 	def draw_page_number(self, page_count):
 		self.setFont("Helvetica", 8)
 		self.drawRightString(270*mm, 10*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
+
+
+
+
 
 class single_Finds_pdf_sheet:
 
@@ -388,6 +392,89 @@ class single_Finds_pdf_sheet:
 
 		return t
 
+
+class Box_labels_Finds_pdf_sheet:
+
+	def __init__(self, data, sito):
+		self.sito = sito #Sito
+		self.cassa= data[0] #1 - Cassa
+		self.elenco_inv_tip_rep = data[1] #2-  elenco US
+		self.elenco_us = data[2] #3 - elenco Inventari
+		self.luogo_conservazione = data[3]#4 - luogo conservazione
+
+	def datestrfdate(self):
+		now = date.today()
+		today = now.strftime("%d-%m-%Y")
+		return today
+
+	def create_sheet(self):
+		styleSheet = getSampleStyleSheet()
+		
+		styleSheet.add(ParagraphStyle(name='Cassa Label', fontName ='Helvetica',fontSize=22, textColor=colors.black, alignment=TA_LEFT))
+
+		styNormal = styleSheet['Normal']
+		styNormal.spaceBefore = 20
+		styNormal.spaceAfter = 20
+		styNormal.alignment = 0 #LEFT
+
+		styCassaLabel = styleSheet['Cassa Label']
+		styCassaLabel.spaceBefore = 20
+		styCassaLabel.spaceAfter = 20
+		styCassaLabel.alignment = 0 #LEFT
+
+
+		#format labels
+
+		num_cassa = Paragraph("<b>N. Cassa</b>" + str(self.cassa),styCassaLabel)
+		sito = Paragraph("<b>Sito: </b>" + str(self.sito),styCassaLabel)
+
+		if self.elenco_inv_tip_rep == None:
+			elenco_inv_tip_rep = Paragraph("<b>Elenco N. Inv. / Tipo materiale</b><br/>",styNormal)
+		else:
+			elenco_inv_tip_rep = Paragraph("<b>Elenco N. Inv. / Tipo materiale</b><br/>" + str(self.elenco_inv_tip_rep ),styNormal)
+
+		if self.elenco_us == None:
+			elenco_us = Paragraph("<b>Elenco US/(Struttura)</b>",styNormal)
+		else:
+			elenco_us = Paragraph("<b>Elenco US/(Struttura)</b>" + str(self.elenco_us),styNormal)
+
+		luogo_conservazione = Paragraph("<b>Luogo di conservazione</b><br/>" + str(self.luogo_conservazione),styNormal)
+
+		#schema
+		cell_schema =	[ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
+							[sito, '01', '02', '03', '04','05', '06', '07', num_cassa, '09'],
+							[elenco_us, '01', '02', '03','04', '05','06', '07', '08', '09'],
+							[elenco_inv_tip_rep, '01', '02','03', '04', '05','06', '07', '08', '09'], #1 row ok
+							[luogo_conservazione, '01', '02','03', '04', '05', '06' , '07', '08', '09']]
+
+
+		#table style
+		table_style=[
+
+					('GRID',(0,0),(-1,-1),0,colors.white),#,0.0,colors.black
+					#0 row
+					('SPAN', (0,0),(7,0)),  #intestazione
+					('SPAN', (8,0),(9,0)), #intestazione
+					('VALIGN',(0,0),(9,0),'TOP'), 
+					#1 row
+					('SPAN', (0,1),(9,1)),  #elenco US
+					('VALIGN',(0,1),(9,1),'TOP'), 
+					#2 row
+					('SPAN', (0,2),(9,2)),  #elenco_inv_tip_rep
+					('VALIGN',(0,2),(9,2),'TOP'), 
+
+					#3 row
+					('SPAN', (0,3),(9,3)), #luogo conservazione
+					('VALIGN',(0,3),(9,3),'TOP')
+					]
+		colWidths=[80,80,80, 80,80, 80,80,80,80, 60]
+		t=Table(cell_schema, colWidths, rowHeights=80,style= table_style)
+
+		return t
+
+
+
+
 class CASSE_index_pdf_sheet:
 
 	def __init__(self, data):
@@ -593,7 +680,21 @@ class generate_reperti_pdf:
 		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_casse.pdf')
 		f = open(filename, "wb")
 
-		doc = SimpleDocTemplate(f, pagesize=(21*cm, 29*cm), showBoundary=0)
+		doc = SimpleDocTemplate(f, pagesize=(21*cm, 29*cm), showBoundary=1)
 		doc.build(lst, canvasmaker=NumberedCanvas_FINDSindex)
 
 		f.close()
+
+
+	def build_box_labels_Finds(self, records, sito):
+		elements = []
+		for i in range(len(records)):
+			single_finds_sheet = Box_labels_Finds_pdf_sheet(records[i], sito)
+			elements.append(single_finds_sheet.create_sheet())
+			elements.append(PageBreak())
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'etichette_casse.pdf')
+		f = open(filename, "wb")
+		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
+		doc.build(elements)
+		f.close()
+
