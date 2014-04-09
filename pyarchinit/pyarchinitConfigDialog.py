@@ -107,34 +107,80 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 
 
 	def on_pushButton_crea_database_pressed(self):
+		import time
 		try:
-			from pyarchinit_conn_strings import *
-			conn = Connection()
-			conn_str = conn.conn_str()
-			from  pyarchinit_db_manager import *
-			self.DB_MANAGER = Pyarchinit_db_management(conn_str)
-			self.DB_MANAGER.connection()
-			self.DB_MANAGER.execute_sql_create_db()
-		except:
-			QMessageBox.warning(self, "Alert", "L'installazione e' fallita. Riavvia Qgis. Se l'errore persiste verifica che il DB non sia gia' installato oppure si stia usando un db SQLITE",  QMessageBox.Ok)
-		else:
-			QMessageBox.warning(self, "Alert", "L'installazione ha avuto successo!",  QMessageBox.Ok)
-
+			
+			db = os.popen ("createdb -U postgres -p %s -h localhost -E UTF8  -T %s -e %s" % (str(self.lineEdit_port_db.text()), str(self.lineEdit_template_postgis.text()), str(self.lineEdit_dbname.text())))
+			barra = self.pyarchinit_progressBar_db
+			#barra.show()
+			barra.setMinimum(0)
+			barra.setMaximum(9)
+			for a in range(10):
+				time.sleep(1)
+				barra.setValue(a)
+			QMessageBox.warning(self, "ok","Installazione avvenuta con successo",  QMessageBox.Ok)
+		except Exception,e:
+			QMessageBox.warning(self, "opss", u"qualcosa non va" + str(e),  QMessageBox.Ok)
+			
+		
 
 	def on_pushButton_crea_layer_pressed(self):
-		try:
-			from pyarchinit_conn_strings import *
-			conn = Connection()
-			conn_str = conn.conn_str()
-			from  pyarchinit_db_manager import *
-			self.DB_MANAGER = Pyarchinit_db_management(conn_str)
-			self.DB_MANAGER.connection()
-			self.DB_MANAGER.execute_sql_create_layers()
-		except:
-			QMessageBox.warning(self, "Alert", "L'installazione e' fallita. Riavvia Qgis. Se l'errore persiste verifica che i layer non siano gia' installati oppure sia stia usando un db SQLITE",  QMessageBox.Ok)
-		else:
-			QMessageBox.warning(self, "Alert", "L'installazione ha avuto successo!",  QMessageBox.Ok)
+		from pyarchinit_OS_utility import *
+		import time
+	     
+		
 
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+		
+		
+		
+		try:
+			module_path_rel = os.path.join(os.sep, '.qgis2', 'python','plugins', 'pyarchinit', 'modules', 'utility','DBfiles', 'pyarchinit_postgis15_empty.dump')
+			module_path = ('%s%s') % (home, module_path_rel)
+			postgis15 = os.popen ("pg_restore --host localhost --port %s --username postgres --dbname %s --role postgres --no-password  --verbose %s" % (str(self.lineEdit_port_db.text()), str(self.lineEdit_dbname.text()), str(module_path)))
+			barra2 = self.pyarchinit_progressBar_template
+			barra2.setMinimum(0)
+			barra2.setMaximum(9)
+			for a in range(10):
+				time.sleep(1)
+				barra2.setValue(a)
+			QMessageBox.warning(self, "ok","Installazione avvenuta con successo",  QMessageBox.Ok)
+		except Exception,e:
+			QMessageBox.warning(self, "opss", u"qualcosa non va" + str(e),  QMessageBox.Ok)
+			
+	
+	def on_pushButton_crea_layer_2_pressed(self):
+		from pyarchinit_OS_utility import *
+		import time
+	     
+		
+
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+		
+		
+		
+		try:
+			module_path_rel = os.path.join(os.sep, '.qgis2', 'python','plugins', 'pyarchinit', 'modules', 'utility','DBfiles', 'pyarchinit_postgis20_empty.dump')
+			module_path = ('%s%s') % (home, module_path_rel)
+			postgis15 = os.popen ("pg_restore --host localhost --port %s --username postgres --dbname %s --role postgres --no-password  --verbose %s" % (str(self.lineEdit_port_db.text()), str(self.lineEdit_dbname.text()), str(module_path)))
+			barra2 = self.pyarchinit_progressBar_template
+			barra2.setMinimum(0)
+			barra2.setMaximum(9)
+			for a in range(10):
+				time.sleep(1)
+				barra2.setValue(a)
+			QMessageBox.warning(self, "ok","Installazione avvenuta con successo",  QMessageBox.Ok)
+		except Exception,e:
+			QMessageBox.warning(self, "opss", u"qualcosa non va" + str(e),  QMessageBox.Ok)
+			
+	
+	
 	def on_pushButton_crea_db_sqlite_pressed(self):
 		try:
 			from pyarchinit_conn_strings import *
