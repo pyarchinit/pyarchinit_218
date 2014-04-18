@@ -49,7 +49,7 @@ from test_area import Test_area
 ##from 
 
 class pyarchinit_Site(QDialog, Ui_DialogSite):
-	MSG_BOX_TITLE = "PyArchInit - pyarchinit_version 0.4 - Scheda Sito"
+	MSG_BOX_TITLE = "PyArchInit - Scheda Sito vv"
 	DATA_LIST = []
 	DATA_LIST_REC_CORR = []
 	DATA_LIST_REC_TEMP = []
