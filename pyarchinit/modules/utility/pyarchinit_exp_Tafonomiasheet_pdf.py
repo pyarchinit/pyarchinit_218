@@ -78,6 +78,12 @@ class single_Tafonomia_pdf_sheet:
 		self.disturbato_si_no =  			data[25]
 		self.in_connessione_si_no = 	 	data[26]
 		self.caratteristiche = 				data[27]
+		self.periodo_iniziale = 				data[28]
+		self.fase_iniziale =	 				data[29]
+		self.periodo_finale = 					data[30]
+		self.fase_finale = 					data[31]
+		self.datazione_estesa = 			data[32]
+		self.misure_tafonomia = 			data[33]
 
 	def datestrfdate(self):
 		now = date.today()
@@ -110,18 +116,30 @@ class single_Tafonomia_pdf_sheet:
 		nr_scheda = Paragraph("<b>Nr. Scheda</b><br/>"  + str(self.nr_scheda_taf), styNormal)
 
 		#2 row
-		elementi_strutturali = Paragraph("<b>ELEMENTI STRUTTURALI</b></b>",styNormal)
+		periodizzazione = Paragraph("<b>PERIODIZZAZIONE DEL RITO DI SEPOLTURA</b><br/>", styNormal)
 
 		#3 row
+		periodo_iniziale = Paragraph("<b>Periodo iniziale</b><br/>" + str(self.periodo_iniziale), styNormal)
+		fase_iniziale = Paragraph("<b>Fase iniziale</b><br/>" + str(self.fase_iniziale), styNormal)
+		periodo_finale = Paragraph("<b>Periodo finale</b><br/>" + str(self.periodo_finale), styNormal)
+		fase_finale = Paragraph("<b>Fase finale</b><br/>" + str(self.fase_finale), styNormal)
+
+		#4 row
+		datazione_estesa = Paragraph("<b>Datazione estesa</b><br/>" + str(self.datazione_estesa), styNormal)
+
+		#5 row
+		elementi_strutturali = Paragraph("<b>ELEMENTI STRUTTURALI</b></b>",styNormal)
+
+		#6row
 		tipo_contenitore_resti = Paragraph("<b>Tipo contenitore resti</b><br/>"  + str(self.tipo_contenitore_resti), styNormal)
 		tipo_copertura = Paragraph("<b>Tipo copertura</b><br/>"  + str(self.copertura_tipo), styNormal)
 		segnacoli = Paragraph("<b>Segnacoli</b><br/>"  + str(self.segnacoli), styNormal)
 		canale_libatorio = Paragraph("<b>Canale libatorio</b><br/>"  + str(self.canale_libatorio_si_no), styNormal)
 
-		#4 row
+		#7 row
 		dati_deposizionali = Paragraph("<b>DATI DEPOSIZIONALI INUMATO<b></b>",styNormal)
 
-		#5 row
+		#8 row
 		rito = Paragraph("<b>Rito</b><br/>"  + self.rito, styNormal)
 		orientamento_asse = Paragraph("<b>Orientamento asse</b><br/>"  + str(self.orientamento_asse), styNormal)
 		if str(self.orientamento_azimut) == "None":
@@ -131,7 +149,7 @@ class single_Tafonomia_pdf_sheet:
 			orientamento_azimut = Paragraph("<b>Azimut</b><br/>"  + orientamento_azimut_conv + "°", styNormal)
 		posizione_cranio = Paragraph("<b>Posizione cranio</b><br/>"  + str(self.posizione_cranio), styNormal)
 
-		#6 row
+		#9 row
 		posizione_scheletro = Paragraph("<b>Posizione scheletro</b><br/>"  + str(self.posizione_scheletro), styNormal)
 		if str(self.lunghezza_scheletro) == "None":
 			lunghezza_scheletro = Paragraph("<b>Lunghezza scheletro</b><br/>", styNormal)
@@ -141,16 +159,16 @@ class single_Tafonomia_pdf_sheet:
 		posizione_arti_superiori = Paragraph("<b>Posizione arti superiori</b><br/>"  + str(self.posizione_arti_superiori), styNormal)
 		posizione_arti_inferiori = Paragraph("<b>Posizione arti inferiori</b><br/>"  + str(self.posizione_arti_inferiori), styNormal)
 
-		#7 row
+		#10 row
 		dati_postdeposizionali = Paragraph("<b>DATI POSTDEPOSIZIONALI<b></b>",styNormal)
 
-		#8 row
+		#11 row
 		stato_conservazione = Paragraph("<b>Stato di conservazione</b><br/>"  + str(self.stato_di_conservazione), styNormal)
 		disturbato = Paragraph("<b>Disturbato</b><br/>"  + str(self.segnacoli), styNormal)
 		completo = Paragraph("<b>Completo</b><br/>"  + str(self.canale_libatorio_si_no), styNormal)
 		in_connessione = Paragraph("<b></b><br/>"  + str(self.oggetti_rinvenuti_esterno), styNormal)
 
-		#9 row
+		#12 row
 		caratteristiche_tafonomiche = ''
 		caratteristiche_list = eval(self.caratteristiche)
 		if len(caratteristiche_list) > 0 :
@@ -163,7 +181,7 @@ class single_Tafonomia_pdf_sheet:
 		caratteristiche_tafonomiche_txt = Paragraph("<b>CARATTERISTICHE TAFONOMICHE</b><br/>"  + caratteristiche_tafonomiche, styNormal)
 
 
-		#10 row
+		#13 row
 		descrizione = ''
 		try:
 			descrizione = Paragraph("<b>Descrizione</b><br/>" + str(self.descrizione_taf), styDescrizione)
@@ -176,13 +194,16 @@ class single_Tafonomia_pdf_sheet:
 		except:
 			pass
 		
-		#11 row
+		#14 row
 		corredo = Paragraph("<b>CORREDO</b></b>",styNormal)
 
-		#12 row
-		corredo_presente = Paragraph("<b>Corredo presente</b><br/>" + str(self.corredo_presenza),styDescrizione)
+		#15 row
+		corredo_presente = Paragraph("<b>Presenza</b><br/>" + str(self.corredo_presenza),styDescrizione)
+		
+		#16 row
+		corredo_descrizione = Paragraph("<b>Descrizione</b><br/>" + str(self.corredo_descrizione),styDescrizione)
 
-		#13 row
+		#17 row
 		corredo_tipo = ''
 		if eval(self.corredo_tipo) > 0 :
 			for i in eval(self.corredo_tipo):
@@ -203,18 +224,22 @@ class single_Tafonomia_pdf_sheet:
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
 						[intestazione, '01', '02', '03', '04','05', '06', intestazione2, '08', '09'], #0 row  ok
 						[sito, '01', '02', '03', '04', sigla_struttura, '06', '07',nr_individuo,nr_scheda], #1 row ok
-						[elementi_strutturali, '01', '02', '03', '04', '07', '06', '07','08', '09'], #2 row ok
-						[tipo_contenitore_resti, '01', '02', tipo_copertura,'04', segnacoli,'06', canale_libatorio, '08'], #3 row ok
-						[dati_deposizionali, '01', '02','03','04', '05','06', '07', '08','09'], #4 row ok
-						[rito, '01', '02',orientamento_asse,'04', orientamento_azimut,'06', 'posizione_cranio', '08','09'], #5 row ok
-						[posizione_scheletro, '01', lunghezza_scheletro, '03', posizione_arti_superiori,'05','06', posizione_arti_inferiori, '08','09'], #6 row ok
-						[dati_postdeposizionali, '01', '02','03','04', '05','06', '07', '08','09'], #7 row ok
-						[stato_conservazione, '01', '02', disturbato,'04', completo,'06', in_connessione, '08'], #8 row ok
-						[caratteristiche_tafonomiche_txt, '01', '02','03','04', '05','06', '07', '08','09'], #9 row ok
-						[descrizione, '01','02', '03', '04', interpretazione, '06', '07', '08', '09'], #10 row ok
-						[corredo, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #11 row ok
-						[corredo_presente,'01', '02', '03', '04','05', '06', '07', '08', '09'], #12row
-						[corredo_tipo_txt,'01', '02', '03', '04','05', '06', '07', '08', '09'] #13 row
+						[periodizzazione, '01', '02', '03', '04', '07', '06', '07','08', '09'], #2 row ok
+						[periodo_iniziale, '01', '02', fase_iniziale, '04', periodo_finale, '06', fase_finale,'08','09'], #3 row ok
+						[datazione_estesa, '01', '02', '03', '04', '07', '06', '07','08', '09'], #4 row ok
+						[elementi_strutturali, '01', '02', '03', '04', '07', '06', '07','08', '09'], #5 row ok
+						[tipo_contenitore_resti, '01', '02', tipo_copertura,'04', segnacoli,'06', canale_libatorio, '08'], #6 row ok
+						[dati_deposizionali, '01', '02','03','04', '05','06', '07', '08','09'], #7 row ok
+						[rito, '01', '02',orientamento_asse,'04', orientamento_azimut,'06', 'posizione_cranio', '08','09'], #8 row ok
+						[posizione_scheletro, '01', lunghezza_scheletro, '03', posizione_arti_superiori,'05','06', posizione_arti_inferiori, '08','09'], #9 row ok
+						[dati_postdeposizionali, '01', '02','03','04', '05','06', '07', '08','09'], #10 row ok
+						[stato_conservazione, '01', '02', disturbato,'04', completo,'06', in_connessione, '08'], #11 row ok
+						[caratteristiche_tafonomiche_txt, '01', '02','03','04', '05','06', '07', '08','09'], #12 row ok
+						[descrizione, '01','02', '03', '04', interpretazione, '06', '07', '08', '09'], #13 row ok
+						[corredo, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #14 row ok
+						[corredo_presente,'01', '02', '03', '04','05', '06', '07', '08', '09'], #15 ow
+						[corredo_descrizione,'01', '02', '03', '04','05', '06', '07', '08', '09'], #16 row
+						[corredo_tipo_txt,'01', '02', '03', '04','05', '06', '07', '08', '09'] #17 row
 						]
 
 		#table style
@@ -231,27 +256,24 @@ class single_Tafonomia_pdf_sheet:
 					('SPAN', (9,1),(9,1)),  #dati identificativi
 
 					#2 row
-					('SPAN', (0,2),(9,2)),  #Elementi strutturali
-
+					('SPAN', (0,2),(9,2)),  #Periodizzazione
+	
 					#3 row
 					('SPAN', (0,3),(2,3)),  #
 					('SPAN', (3,3),(4,3)),  #
 					('SPAN', (5,3),(6,3)),  #
 					('SPAN', (7,3),(9,3)),  #
-
+					
 					#4 row
-					('SPAN', (0,4),(9,4)),  #
-
+					('SPAN', (0,4),(9,4)),  #datazione estesa
+##################################
 					#5 row
-					('SPAN', (0,5),(2,5)),  #
-					('SPAN', (3,5),(4,5)),  #
-					('SPAN', (5,5),(6,5)),  #
-					('SPAN', (7,5),(9,5)),  #
+					('SPAN', (0,5),(9,5)),  #Elementi strutturali
 
 					#6 row
-					('SPAN', (0,6),(1,6)),  #
-					('SPAN', (2,6),(3,6)),  #
-					('SPAN', (4,6),(6,6)),  #
+					('SPAN', (0,6),(2,6)),  #
+					('SPAN', (3,6),(4,6)),  #
+					('SPAN', (5,6),(6,6)),  #
 					('SPAN', (7,6),(9,6)),  #
 
 					#7 row
@@ -263,23 +285,39 @@ class single_Tafonomia_pdf_sheet:
 					('SPAN', (5,8),(6,8)),  #
 					('SPAN', (7,8),(9,8)),  #
 
-					#9 row
-					('SPAN', (0,9),(9,9)),  #
+					#6 row
+					('SPAN', (0,9),(1,9)),  #
+					('SPAN', (2,9),(3,9)),  #
+					('SPAN', (4,9),(6,9)),  #
+					('SPAN', (7,9),(9,9)),  #
 
 					#10 row
-					('SPAN', (0,10),(4,10)),  #
-					('SPAN', (5,10),(9,10)),  #
+					('SPAN', (0,10),(9,10)),  #
 
-					#11 row
-					('SPAN', (0,11),(9,11)),  #
+					#8 row
+					('SPAN', (0,11),(2,11)),  #
+					('SPAN', (3,11),(4,11)),  #
+					('SPAN', (5,11),(6,11)),  #
+					('SPAN', (7,11),(9,11)),  #
 
-
-					#12 row
+					#9 row
 					('SPAN', (0,12),(9,12)),  #
 
+					#10 row
+					('SPAN', (0,13),(4,13)),  #
+					('SPAN', (5,13),(9,13)),  #
+
+					#11 row
+					('SPAN', (0,14),(9,14)),  #
+
+					#12 row
+					('SPAN', (0,15),(9,15)),  #
 
 					#13 row
-					('SPAN', (0,13),(9,13)),  #
+					('SPAN', (0,16),(9,16)),  
+
+					#14 row
+					('SPAN', (0,17),(9,17)),  #
 
 					('VALIGN',(0,0),(-1,-1),'TOP')
 

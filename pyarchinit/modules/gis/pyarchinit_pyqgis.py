@@ -723,7 +723,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 
 			layer_name = 'pyarchinit_strutture_ipotesi'
 			layer_name_conv = "'"+str(layer_name)+"'"
-			value_conv =  ('"scavo = %s"') % ("'"+str(self.val)+"'")
+			value_conv =  ('"sito = %s"') % ("'"+str(self.val)+"'")
 			cmq_set_uri_data_source = "uri.setDataSource('',%s, %s, %s)" % (layer_name_conv, "'the_geom'", value_conv)
 			eval(cmq_set_uri_data_source)
 			layer_label = self.LAYERS_CONVERT_DIZ[layer_name]
@@ -845,7 +845,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 
 			layer_name = 'pyarchinit_strutture_ipotesi'
 			layer_name_conv = "'"+str(layer_name)+"'"
-			value_conv =  ('"scavo = %s"') % ("'"+str(self.val)+"'")
+			value_conv =  ('"sito = %s"') % ("'"+str(self.val)+"'")
 			cmq_set_uri_data_source = "uri.setDataSource('',%s, %s, %s)" % (layer_name_conv, "'the_geom'", value_conv)
 			eval(cmq_set_uri_data_source)
 			layer_label = self.LAYERS_CONVERT_DIZ[layer_name]

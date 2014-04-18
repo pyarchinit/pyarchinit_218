@@ -125,7 +125,7 @@ class UT_table:
 	Column('indagini_preliminari', String(100)), #41
 	
 	# explicit/composite unique constraint.  'name' is optional.
-    UniqueConstraint('progetto', 'nr_ut', 'ut_letterale', name='ID_ut_unico')	
+	UniqueConstraint('progetto', 'nr_ut', 'ut_letterale', name='ID_ut_unico')
 	)
 
 	metadata.create_all(engine)

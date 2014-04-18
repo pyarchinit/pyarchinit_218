@@ -468,7 +468,7 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 		if eta_max != "":
 			if EC.data_is_int(eta_max) == 0:
 				QMessageBox.warning(self, "ATTENZIONE", "Campo Età massima \n Il valore deve essere di tipo numerico",  QMessageBox.Ok)
-				test = 1		
+				test = 1	
 		
 		return test
 
@@ -560,18 +560,6 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 
 	#records surf functions
 	def on_pushButton_first_rec_pressed(self):
-		if self.records_equal_check() == 1:
-			self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-		try:
-			self.empty_fields()
-			self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
-			self.fill_fields(0)
-			self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-		except Exception, e:
-			QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
-
-
-	def on_pushButton_last_rec_pressed(self):
 		if self.check_record_state() == 1:
 			pass
 		else:
@@ -582,6 +570,19 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
 			except Exception, e:
 				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
+
+	def on_pushButton_last_rec_pressed(self):
+		if self.check_record_state() == 1:
+			pass
+		else:
+			try:
+				self.empty_fields()
+				self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
+				self.fill_fields(self.REC_CORR)
+				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+			except Exception, e:
+				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
+
 
 	def on_pushButton_prev_rec_pressed(self):
 		if self.check_record_state() == 1:

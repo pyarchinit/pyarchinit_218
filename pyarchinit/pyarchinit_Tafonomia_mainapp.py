@@ -1300,9 +1300,15 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			unicode(self.DATA_LIST[i].completo_si_no),						#24 - completo
 			unicode(self.DATA_LIST[i].disturbato_si_no),					#25- disturbato
 			unicode(self.DATA_LIST[i].in_connessione_si_no),				#26 - in connessione
-			unicode(self.DATA_LIST[i].caratteristiche)						#27 - caratteristiche
+			unicode(self.DATA_LIST[i].caratteristiche),						#27 - caratteristiche
+			unicode(self.DATA_LIST[i].periodo_iniziale),						#28 - periodo iniziale
+			unicode(self.DATA_LIST[i].fase_iniziale),							#29 - fase iniziale
+			unicode(self.DATA_LIST[i].periodo_finale),						#30 - periodo finale
+			unicode(self.DATA_LIST[i].fase_finale),							#31 - fase finale
+			unicode(self.DATA_LIST[i].datazione_estesa),					#32 - datazione estesa
+			unicode(self.DATA_LIST[i].misure_tafonomia)					#33 - misure tafonomia
 		])
-
+		
 		return data_list
 
 	def update_if(self, msg):
