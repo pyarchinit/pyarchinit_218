@@ -84,6 +84,10 @@ class single_Tafonomia_pdf_sheet:
 		self.fase_finale = 					data[31]
 		self.datazione_estesa = 			data[32]
 		self.misure_tafonomia = 			data[33]
+		self.quota_min_ind = 				data[34]
+		self.quota_max_ind = 				data[35]
+		self.quota_min_strutt = 			data[36]
+		self.quota_max_strutt = 			data[37]
 
 	def datestrfdate(self):
 		now = date.today()
@@ -147,7 +151,7 @@ class single_Tafonomia_pdf_sheet:
 		else:
 			orientamento_azimut_conv = self.PU.conversione_numeri(self.orientamento_azimut)
 			orientamento_azimut = Paragraph("<b>Azimut</b><br/>"  + orientamento_azimut_conv + "°", styNormal)
-		posizione_cranio = Paragraph("<b>Posizione cranio</b><br/>"  + str(self.posizione_cranio), styNormal)
+		posizione_cranio = Paragraph("<b>Posizione cranio</b><br/>"  +  str(self.posizione_cranio), styNormal)
 
 		#9 row
 		posizione_scheletro = Paragraph("<b>Posizione scheletro</b><br/>"  + str(self.posizione_scheletro), styNormal)
@@ -219,6 +223,33 @@ class single_Tafonomia_pdf_sheet:
 						pass
 
 		corredo_tipo_txt = Paragraph("<b>Singoli oggetti di corredo</b><br/>"  + corredo_tipo, styNormal)
+		
+		#18 row
+		misure_tafonomia = ''
+		if eval(self.misure_tafonomia) > 0 :
+			for i in eval(self.misure_tafonomia):
+				if misure_tafonomia == '':
+					try:
+						misure_tafonomia += ("%s: %s %s") % (str(i[0]), str(i[2]), str(i[1]))
+					except:
+						pass
+				else:
+					try:
+						misure_tafonomia += ("<br/>%s: %s %s") % (str(i[0]), str(i[2]), str(i[1]))
+					except:
+						pass
+
+		misure_tafonomia_txt = Paragraph("<b>Misurazioni</b><br/>"  + misure_tafonomia, styNormal)
+
+		#19 row
+		quote_tafonomia = Paragraph("<b>QUOTE INDIVIDUO E STRUTTURA</b><br/>", styNormal)
+
+		#20 row
+		quota_min_ind = Paragraph("<b>Quota min individuo</b><br/>" + str(self.quota_min_ind), styNormal)
+		quota_max_ind = Paragraph("<b>Quota max individuo</b><br/>" + str(self.quota_max_ind), styNormal)
+		quota_min_strutt = Paragraph("<b>Quota min struttura</b><br/>" + str(self.quota_min_strutt), styNormal)
+		quota_max_strutt = Paragraph("<b>Quota max struttura</b><br/>" + str(self.quota_max_strutt), styNormal)
+
 
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
@@ -230,7 +261,7 @@ class single_Tafonomia_pdf_sheet:
 						[elementi_strutturali, '01', '02', '03', '04', '07', '06', '07','08', '09'], #5 row ok
 						[tipo_contenitore_resti, '01', '02', tipo_copertura,'04', segnacoli,'06', canale_libatorio, '08'], #6 row ok
 						[dati_deposizionali, '01', '02','03','04', '05','06', '07', '08','09'], #7 row ok
-						[rito, '01', '02',orientamento_asse,'04', orientamento_azimut,'06', 'posizione_cranio', '08','09'], #8 row ok
+						[rito, '01', '02',orientamento_asse,'04', orientamento_azimut,'06', posizione_cranio, '08','09'], #8 row ok
 						[posizione_scheletro, '01', lunghezza_scheletro, '03', posizione_arti_superiori,'05','06', posizione_arti_inferiori, '08','09'], #9 row ok
 						[dati_postdeposizionali, '01', '02','03','04', '05','06', '07', '08','09'], #10 row ok
 						[stato_conservazione, '01', '02', disturbato,'04', completo,'06', in_connessione, '08'], #11 row ok
@@ -239,7 +270,10 @@ class single_Tafonomia_pdf_sheet:
 						[corredo, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #14 row ok
 						[corredo_presente,'01', '02', '03', '04','05', '06', '07', '08', '09'], #15 ow
 						[corredo_descrizione,'01', '02', '03', '04','05', '06', '07', '08', '09'], #16 row
-						[corredo_tipo_txt,'01', '02', '03', '04','05', '06', '07', '08', '09'] #17 row
+						[corredo_tipo_txt,'01', '02', '03', '04','05', '06', '07', '08', '09'], #17 row
+						[misure_tafonomia_txt,'01', '02', '03', '04','05', '06', '07', '08', '09'], #18 row
+						[quote_tafonomia, '01', '02', '03', '04', '07', '06', '07','08', '09'], #19 row ok
+						[quota_min_ind, '01', '02', quota_max_ind, '04', quota_min_strutt, '06', quota_max_strutt,'08','09'] #20 row ok
 						]
 
 		#table style
@@ -285,7 +319,7 @@ class single_Tafonomia_pdf_sheet:
 					('SPAN', (5,8),(6,8)),  #
 					('SPAN', (7,8),(9,8)),  #
 
-					#6 row
+					#9 row
 					('SPAN', (0,9),(1,9)),  #
 					('SPAN', (2,9),(3,9)),  #
 					('SPAN', (4,9),(6,9)),  #
@@ -294,30 +328,41 @@ class single_Tafonomia_pdf_sheet:
 					#10 row
 					('SPAN', (0,10),(9,10)),  #
 
-					#8 row
+					#11 row
 					('SPAN', (0,11),(2,11)),  #
 					('SPAN', (3,11),(4,11)),  #
 					('SPAN', (5,11),(6,11)),  #
 					('SPAN', (7,11),(9,11)),  #
 
-					#9 row
+					#12 row
 					('SPAN', (0,12),(9,12)),  #
 
-					#10 row
+					#13 row
 					('SPAN', (0,13),(4,13)),  #
 					('SPAN', (5,13),(9,13)),  #
 
-					#11 row
+					#14 row
 					('SPAN', (0,14),(9,14)),  #
 
-					#12 row
+					#15 row
 					('SPAN', (0,15),(9,15)),  #
 
-					#13 row
+					#16 row
 					('SPAN', (0,16),(9,16)),  
 
-					#14 row
+					#17 row
 					('SPAN', (0,17),(9,17)),  #
+
+					#18 row
+					('SPAN', (0,18),(9,18)),  #
+
+					('SPAN', (0,19),(9,19)),  #Periodizzazione
+
+					#3 row
+					('SPAN', (0,20),(2,20)),  #
+					('SPAN', (3,20),(4,20)),  #
+					('SPAN', (5,20),(6,20)),  #
+					('SPAN', (7,20),(9,20)),  #
 
 					('VALIGN',(0,0),(-1,-1),'TOP')
 

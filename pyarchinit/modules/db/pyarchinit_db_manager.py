@@ -992,17 +992,19 @@ class Pyarchinit_db_management:
 ##	##			res_list.extend(area for area, in session.query(US.area).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
 
 ##		return res_list
-
+"""
 def main():
 	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
 	db.connection()
-	res = db.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"']], ['area', 'us'])
+	res = db.query_bool({"sito": "'Sito archeologico'", "nr_individuo":"'1'"}, "SCHEDAIND")
+	#res = db.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"']], ['area', 'us'])
+	print len(res)
 	for i in res:
-		print str(i.area), str(i.us)
+		print "record: ", str(i.sito), str(i.area), str(i.us)
 
 if __name__ == '__main__':
 	main()
-"""
+
 	for rec in data:
 
 		id_invmat = rec.id_invmat

@@ -1272,6 +1272,71 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 	def generate_list_pdf(self):
 		data_list = []
 		for i in range(len(self.DATA_LIST)):
+			sito =  unicode(self.DATA_LIST[i].sito)
+			nr_individuo = unicode(self.DATA_LIST[i].nr_individuo)
+			sigla_struttura = ('%s%s') % (unicode(self.DATA_LIST[i].sigla_struttura), unicode(self.DATA_LIST[i].nr_struttura))
+
+			res_ind = self.DB_MANAGER.query_bool({"sito": "'" + str(sito) + "'", "nr_individuo" : "'" + str(nr_individuo) + "'"}, "SCHEDAIND")
+			#res = db.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"']], ['area', 'us'])
+			us_ind_list = []
+			if bool(res_ind) == True:
+				for ri in res_ind:
+					us_ind_list.append([str(ri.sito), str(ri.area), str(ri.us)])
+
+			quote_ind = []
+			if bool(us_ind_list) == True:
+				res_quote_ind = self.DB_MANAGER.select_quote_from_db_sql(us_ind_list[0][0], us_ind_list[0][1], us_ind_list[0][2])
+
+				for sing_us in res_quote_ind:
+					sing_quota_value = str(sing_us[5])
+					if sing_quota_value[0] == '-':
+						sing_quota_value = sing_quota_value[:7]
+					else:
+						sing_quota_value = sing_quota_value[:6]
+
+					sing_quota = [sing_quota_value, sing_us[4]]
+					quote_ind.append(sing_quota)
+				quote_ind.sort()
+
+			if bool(quote_ind) == True:
+				quota_min_ind = '%s %s' % (quote_ind[0][0], quote_ind[0][1])
+				quota_max_ind = '%s %s' % (quote_ind[-1][0], quote_ind[-1][1])
+			else:
+				quota_min_ind = "Non inserita su GIS"
+				quota_max_ind = "Non inserita su GIS"
+
+			##########################################################################
+
+			res_strutt = self.DB_MANAGER.query_bool({"sito": "'" + str(sito) + "'", "struttura":"'"+str(sigla_struttura)+"'"}, "US")
+			#res = db.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"']], ['area', 'us'])
+			us_strutt_list = []
+			if bool(res_strutt) == True:
+				for rs in res_strutt:
+					us_strutt_list.append([str(rs.sito), str(rs.area), str(rs.area)])
+
+			quote_strutt = []
+			if bool(us_strutt_list) == True:
+				for sing_us in us_strutt_list:
+					res_quote_strutt = self.DB_MANAGER.select_quote_from_db_sql(sing_us[0], sing_us[1], sing_us[2])
+					if bool(res_quote_strutt) == True:
+						for sing_us in res_quote_strutt:
+							sing_quota_value = str(sing_us[5])
+							if sing_quota_value[0] == '-':
+								sing_quota_value = sing_quota_value[:7]
+							else:
+								sing_quota_value = sing_quota_value[:6]
+
+							sing_quota = [sing_quota_value, sing_us[4]]
+							quote_strutt.append(sing_quota)
+						quote_strutt.sort()
+
+			if bool(quote_strutt) == True:
+				quota_min_strutt = '%s %s' % (quote_strutt[0][0], quote_strutt[0][1])
+				quota_max_strutt = '%s %s' % (quote_strutt[-1][0], quote_strutt[-1][1])
+			else:
+				quota_min_strutt = "Non inserita su GIS"
+				quota_max_strutt = "Non inserita su GIS"
+
 			data_list.append([
 			unicode(self.DATA_LIST[i].sito), 									#0 - Sito
 			unicode(self.DATA_LIST[i].nr_scheda_taf),						#1 - numero scheda taf
@@ -1306,7 +1371,11 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			unicode(self.DATA_LIST[i].periodo_finale),						#30 - periodo finale
 			unicode(self.DATA_LIST[i].fase_finale),							#31 - fase finale
 			unicode(self.DATA_LIST[i].datazione_estesa),					#32 - datazione estesa
-			unicode(self.DATA_LIST[i].misure_tafonomia)					#33 - misure tafonomia
+			unicode(self.DATA_LIST[i].misure_tafonomia),					#33 - misure tafonomia
+			quota_min_ind,															#34 - quota min individuo
+			quota_max_ind,															#35 - quota max individuo
+			quota_min_strutt,															#36 - quota min struttura
+			quota_max_strutt															#37 - quota max struttura
 		])
 		
 		return data_list
