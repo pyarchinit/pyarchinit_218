@@ -876,26 +876,61 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 
 	def generate_list_pdf(self):
 		data_list = []
+
 		for i in range(len(self.DATA_LIST)):
+			sito =  unicode(self.DATA_LIST[i].sito)
+			sigla_struttura = ('%s%s') % (unicode(self.DATA_LIST[i].sigla_struttura), unicode(self.DATA_LIST[i].numero_struttura))
+
+			res_strutt = self.DB_MANAGER.query_bool({"sito": "'" + str(sito) + "'", "struttura":"'"+str(sigla_struttura)+"'"}, "US")
+			us_strutt_list = []
+			if bool(res_strutt) == True:
+				for rs in res_strutt:
+					us_strutt_list.append([str(rs.sito), str(rs.area), str(rs.area)])
+
+			quote_strutt = []
+			if bool(us_strutt_list) == True:
+				for sing_us in us_strutt_list:
+					res_quote_strutt = self.DB_MANAGER.select_quote_from_db_sql(sing_us[0], sing_us[1], sing_us[2])
+					if bool(res_quote_strutt) == True:
+						for sing_us in res_quote_strutt:
+							sing_quota_value = str(sing_us[5])
+							if sing_quota_value[0] == '-':
+								sing_quota_value = sing_quota_value[:7]
+							else:
+								sing_quota_value = sing_quota_value[:6]
+
+							sing_quota = [sing_quota_value, sing_us[4]]
+							quote_strutt.append(sing_quota)
+						quote_strutt.sort()
+
+			if bool(quote_strutt) == True:
+				quota_min_strutt = '%s %s' % (quote_strutt[0][0], quote_strutt[0][1])
+				quota_max_strutt = '%s %s' % (quote_strutt[-1][0], quote_strutt[-1][1])
+			else:
+				quota_min_strutt = "Non inserita su GIS"
+				quota_max_strutt = "Non inserita su GIS"
+
 			data_list.append([
-			unicode(self.DATA_LIST[i].sito), 									#1 - Sito
-			unicode(self.DATA_LIST[i].sigla_struttura),									#2 - Area
-			int(self.DATA_LIST[i].numero_struttura),												#3 - US
-			unicode(self.DATA_LIST[i].categoria_struttura),				#4 - definizione stratigrafica
-			unicode(self.DATA_LIST[i].tipologia_struttura),						#5 - definizione intepretata
-			unicode(self.DATA_LIST[i].definizione_struttura),							#6 - descrizione
-			unicode(self.DATA_LIST[i].descrizione),						#7 - interpretazione
-			unicode(self.DATA_LIST[i].interpretazione),						#7 - interpretazione
-			unicode(self.DATA_LIST[i].periodo_iniziale),						#8 - periodo iniziale
-			unicode(self.DATA_LIST[i].fase_iniziale),							#9 - fase iniziale
-			unicode(self.DATA_LIST[i].periodo_finale),						#10 - periodo finale iniziale
-			unicode(self.DATA_LIST[i].fase_finale), 							#11 - fase finale
-			unicode(self.DATA_LIST[i].datazione_estesa),								#12 - scavato
-			unicode(self.DATA_LIST[i].materiali_impiegati),									#13 - attivita
-			unicode(self.DATA_LIST[i].elementi_strutturali),							#14 - anno scavo
-			unicode(self.DATA_LIST[i].rapporti_struttura),					#15 - metodo
-			unicode(self.DATA_LIST[i].misure_struttura)									#16 - inclusi
-		])
+			unicode(self.DATA_LIST[i].sito), 												#1 - Sito
+			unicode(self.DATA_LIST[i].sigla_struttura),									#2 -  sigla struttura
+			int(self.DATA_LIST[i].numero_struttura),										#3 - numero struttura
+			unicode(self.DATA_LIST[i].categoria_struttura),								#4 - categoria
+			unicode(self.DATA_LIST[i].tipologia_struttura),								#5 - tipologia
+			unicode(self.DATA_LIST[i].definizione_struttura),							#6 - definizione
+			unicode(self.DATA_LIST[i].descrizione),										#7 - descrizione
+			unicode(self.DATA_LIST[i].interpretazione),									#7 - iintepretazione
+			unicode(self.DATA_LIST[i].periodo_iniziale),									#8 - periodo iniziale
+			unicode(self.DATA_LIST[i].fase_iniziale),										#9 - fase iniziale
+			unicode(self.DATA_LIST[i].periodo_finale),									#10 - periodo finale
+			unicode(self.DATA_LIST[i].fase_finale), 										#11 - fase finale
+			unicode(self.DATA_LIST[i].datazione_estesa),								#12 - datazione estesa
+			unicode(self.DATA_LIST[i].materiali_impiegati),								#13 - materiali impiegati
+			unicode(self.DATA_LIST[i].elementi_strutturali),								#14 - elementi strutturali
+			unicode(self.DATA_LIST[i].rapporti_struttura),								#15 - rapporti struttura
+			unicode(self.DATA_LIST[i].misure_struttura),								#16 - misure
+			quota_min_strutt,																		#17 - quota min
+			quota_max_strutt																		#18 - quota max
+			])
 		return data_list
 
 
@@ -1120,22 +1155,22 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 
 		self.DATA_LIST_REC_TEMP = [
 		unicode(self.comboBox_sito.currentText()), 												#1 - Sito
-		unicode(self.comboBox_sigla_struttura.currentText()), 									#2 - sigla
-		unicode(numero_struttura), 																		#3 - numero_struttura
-		unicode(self.comboBox_categoria_struttura.currentText()),							#3 - numero_struttura
-		unicode(self.comboBox_tipologia_struttura.currentText()), 								#3 - numero_struttura
-		unicode(self.comboBox_definizione_struttura.currentText()),							#4 - cron iniziale
-		unicode(self.textEdit_descrizione_struttura.toPlainText()),					#6 - descrizioene
-		unicode(self.textEdit_interpretazione_struttura.toPlainText()),			#6 - descrizioene
-		unicode(periodo_iniziale),																			#6 - descrizioene
-		unicode(fase_iniziale),																				#6 - descrizioene
-		unicode(periodo_finale),																			#6 - descrizioene
-		unicode(fase_finale),																				#6 - descrizioene
-		unicode(self.lineEdit_datazione_estesa.text()),												#7- cron estesa
-		unicode(materiali_impiegati),
-		unicode(elementi_strutturali),
-		unicode(rapporti_struttura),
-		unicode(misurazioni)
+		unicode(self.comboBox_sigla_struttura.currentText()), 								#2 - sigla
+		unicode(numero_struttura), 																	#3 - numero_struttura
+		unicode(self.comboBox_categoria_struttura.currentText()),							#3 - categoria
+		unicode(self.comboBox_tipologia_struttura.currentText()), 							#3 - tipologia
+		unicode(self.comboBox_definizione_struttura.currentText()),						#4 - definizione
+		unicode(self.textEdit_descrizione_struttura.toPlainText()),								#6 - descrizione
+		unicode(self.textEdit_interpretazione_struttura.toPlainText()),						#6 - intepretazione
+		unicode(periodo_iniziale),																		#6 - periodo iniziale
+		unicode(fase_iniziale),																			#6 - fase iniziale
+		unicode(periodo_finale),																			#6 - periodo finale
+		unicode(fase_finale),																				#6 - fase finale
+		unicode(self.lineEdit_datazione_estesa.text()),											#7- cron estesa
+		unicode(materiali_impiegati),																	#8-  materiali impiegati
+		unicode(elementi_strutturali),																	#8- elementi strutturali
+		unicode(rapporti_struttura),																	#8- rapporti struttura
+		unicode(misurazioni)																				#8- misurazioni
 		]
 
 	def rec_toupdate(self):

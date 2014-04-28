@@ -1377,7 +1377,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			quota_min_strutt,															#36 - quota min struttura
 			quota_max_strutt															#37 - quota max struttura
 		])
-		
+			
 		return data_list
 
 	def update_if(self, msg):

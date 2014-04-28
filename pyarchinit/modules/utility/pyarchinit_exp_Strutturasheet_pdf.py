@@ -66,6 +66,8 @@ class single_Struttura_pdf_sheet:
 		self.elementi_strutturali = 		data[14]
 		self.rapporti_struttura = 		data[15]
 		self.misure_struttura = 			data[16]
+		self.quota_min = 					data[17]
+		self.quota_max = 				data[18]
 
 	def datestrfdate(self):
 		now = date.today()
@@ -208,12 +210,21 @@ class single_Struttura_pdf_sheet:
 						misure_struttura += ("<br/><b>Tipo di misura: %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
 					except:
 						pass
+
 		misure_struttura = Paragraph("<b>Misurazioni</b><br/>"  + misure_struttura, styNormal)
+
+		#19 row
+		quote_struttura = Paragraph("<b>QUOTE</b><br/>", styNormal)
+
+		#20 row
+		quota_min = Paragraph("<b>Quota min</b><br/>" + str(self.quota_min), styNormal)
+		quota_max = Paragraph("<b>Quota max</b><br/>" + str(self.quota_max), styNormal)
+
 
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
 						[intestazione, '01', '02', '03', '04','05', '06', intestazione2, '08', '09'], #0 row ok
-		 				[sito, '01', '02', '03', '04', sigla_struttura, '06', '07', numero_struttura, '09'], #1 row ok
+						[sito, '01', '02', '03', '04', sigla_struttura, '06', '07', numero_struttura, '09'], #1 row ok
 						[categoria, '01', '02','03', tipologia,'05', '06', '07', definizione, '09'], #2 row ok
 						[descrizione, '01','02', '03', '04', interpretazione, '06', '07', '08', '09'], #3 row ok
 						[periodizzazione, '02', '03', '04', '05', '06', '06', '07', '08', '09'], #4 row
@@ -222,7 +233,9 @@ class single_Struttura_pdf_sheet:
 						[rapporti_struttura, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #7 row
 						[materiali_impiegati, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #8 row
 						[elementi_strutturali, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #9 row
-						[misure_struttura, '01', '02', '03', '04', '05', '06', '07', '08', '09'] #10 row
+						[misure_struttura, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #10 row
+						[quote_struttura, '01', '02', '03', '04', '07', '06', '07','08', '09'], #19 row ok
+						[quota_min, '01', '02', '03', quota_max,'06', '07','08','09'] #20 row ok
 						]
 
 		#table style
@@ -271,6 +284,13 @@ class single_Struttura_pdf_sheet:
 
 					#10 row
 					('SPAN', (0,10),(9,10)),  #Attivita - Struttura - Quota min - Quota max
+
+					#10 row
+					('SPAN', (0,11),(9,11)),  #Attivita - Struttura - Quota min - Quota max
+
+					#10 row
+					('SPAN', (0,12),(3,12)),  #conservazione - consistenza - colore
+					('SPAN', (4,12),(9,12)),  #conservazione - consistenza - colore
 
 					('VALIGN',(0,0),(-1,-1),'TOP')
 
