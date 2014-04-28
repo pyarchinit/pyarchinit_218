@@ -30,7 +30,6 @@ from pyarchinit_OS_utility import *
 #from PyQt4 import QtCore, QtGui
 import sys, os
 
-
 class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 	if os.name == 'posix':
 		HOME = os.environ['HOME']
@@ -67,7 +66,6 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 		conf = open(path_rel, "r")
 		data = conf.read()
 		self.PARAMS_DICT = eval(data)
-
 
 	def save_dict(self):
 		#save data into config.cfg file
@@ -109,8 +107,7 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 	def on_pushButton_crea_database_pressed(self):
 		import time
 		try:
-			
-			db = os.popen ("createdb -U postgres -p %s -h localhost -E UTF8  -T %s -e %s" % (str(self.lineEdit_port_db.text()), str(self.lineEdit_template_postgis.text()), str(self.lineEdit_dbname.text())))
+			db = os.popen("createdb -U postgres -p %s -h localhost -E UTF8  -T %s -e %s" % (str(self.lineEdit_port_db.text()), str(self.lineEdit_template_postgis.text()), str(self.lineEdit_dbname.text())))
 			barra = self.pyarchinit_progressBar_db
 			#barra.show()
 			barra.setMinimum(0)
@@ -121,14 +118,12 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 			QMessageBox.warning(self, "ok","Installazione avvenuta con successo",  QMessageBox.Ok)
 		except Exception,e:
 			QMessageBox.warning(self, "opss", u"qualcosa non va" + str(e),  QMessageBox.Ok)
-			
-		
+
 
 	def on_pushButton_crea_layer_pressed(self):
 		from pyarchinit_OS_utility import *
 		import time
-	     
-		
+
 
 		if os.name == 'posix':
 			home = os.environ['HOME']
