@@ -46,10 +46,9 @@ try:
 except:
 	pass
 
-from  pyarchinit_exp_Individui_pdf import *
+from pyarchinit_exp_Individui_pdf import *
 
 from delegateComboBox import *
-
 
 class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 	MSG_BOX_TITLE = "PyArchInit - pyarchinit_US_version 0.4 - Scheda Individuo"

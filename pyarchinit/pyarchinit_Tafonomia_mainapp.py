@@ -1265,9 +1265,9 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		self.enable_button_search(1)
 
 	def on_pushButton_pdf_exp_pressed(self):
-		Tafonomia_pdf_sheet = generate_tafonomia_pdf() #deve essere importata la classe
-		data_list = self.generate_list_pdf() #deve essere aggiunta la funzione
-		Tafonomia_pdf_sheet.build_Tafonomia_sheets(data_list) #deve essere aggiunto il file per generare i pdf
+		Tafonomia_pdf_sheet = generate_tafonomia_pdf() 
+		data_list = self.generate_list_pdf() 
+		Tafonomia_pdf_sheet.build_Tafonomia_sheets(data_list) 
 
 	def generate_list_pdf(self):
 		data_list = []
@@ -1277,7 +1277,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			sigla_struttura = ('%s%s') % (unicode(self.DATA_LIST[i].sigla_struttura), unicode(self.DATA_LIST[i].nr_struttura))
 
 			res_ind = self.DB_MANAGER.query_bool({"sito": "'" + str(sito) + "'", "nr_individuo" : "'" + str(nr_individuo) + "'"}, "SCHEDAIND")
-			#res = db.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"']], ['area', 'us'])
+
 			us_ind_list = []
 			if bool(res_ind) == True:
 				for ri in res_ind:
