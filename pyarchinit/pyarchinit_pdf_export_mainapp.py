@@ -38,7 +38,9 @@ from  pyarchinit_exp_Findssheet_pdf import *
 from  pyarchinit_exp_Tafonomiasheet_pdf import *
 from pyarchinit_exp_Individui_pdf import *
 
-
+import os
+import platform
+import subprocess
 
 class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 	UTILITY = Utility()
@@ -109,6 +111,16 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 			self.HOME = os.environ['HOME']
 		elif os.name == 'nt':
 			self.HOME = os.environ['HOMEPATH']
+
+	def on_pushButton_open_dir_pressed(self):
+		path = ('%s%s%s') % (self.HOME, os.sep, "pyarchinit_PDF_folder")
+
+		if platform.system() == "Windows":
+			os.startfile(path)
+		elif platform.system() == "Darwin":
+			subprocess.Popen(["open", path])
+		else:
+			subprocess.Popen(["xdg-open", path])
 
 	def on_pushButton_exp_pdf_pressed(self):
 		sito = str(self.comboBox_sito.currentText())

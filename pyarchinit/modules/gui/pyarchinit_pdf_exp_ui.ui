@@ -12,13 +12,13 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
+    <width>396</width>
     <height>279</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>450</width>
+    <width>300</width>
     <height>279</height>
    </size>
   </property>
@@ -38,7 +38,21 @@
    <iconset resource="resources.qrc">
     <normaloff>:/images/directoryExp.png</normaloff>:/images/directoryExp.png</iconset>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(170, 170, 127);</string>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
+   <item row="1" column="0">
+    <widget class="QPushButton" name="pushButton_exp_pdf">
+     <property name="text">
+      <string>Esporta PDF</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/images/pdf-icon.jpg</normaloff>:/images/pdf-icon.jpg</iconset>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="sizePolicy">
@@ -55,51 +69,53 @@
        <string>Parametri di esportazione</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0" colspan="3">
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>Seleziona un sito da esportare...</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="comboBox_sito">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="mouseTracking">
-            <bool>false</bool>
-           </property>
-           <property name="contextMenuPolicy">
-            <enum>Qt::DefaultContextMenu</enum>
-           </property>
-           <property name="acceptDrops">
-            <bool>false</bool>
-           </property>
-           <property name="editable">
-            <bool>true</bool>
-           </property>
-           <property name="duplicatesEnabled">
-            <bool>false</bool>
-           </property>
-           <property name="frame">
-            <bool>true</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string>Seleziona un valore...</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="0">
-        <widget class="QCheckBox" name="checkBox_US">
+       <item row="0" column="0" colspan="4">
+        <widget class="QLabel" name="label">
          <property name="text">
-          <string>Unità Stratigrafiche</string>
+          <string>Seleziona un sito da esportare...</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="5">
+        <widget class="QComboBox" name="comboBox_sito">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="mouseTracking">
+          <bool>false</bool>
+         </property>
+         <property name="contextMenuPolicy">
+          <enum>Qt::DefaultContextMenu</enum>
+         </property>
+         <property name="acceptDrops">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 255, 255);</string>
+         </property>
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+         <property name="duplicatesEnabled">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>true</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>Seleziona un valore...</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QCheckBox" name="checkBox_US">
+         <property name="toolTip">
+          <string>Scheda US</string>
+         </property>
+         <property name="text">
+          <string/>
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
@@ -113,10 +129,16 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="3" column="2">
         <widget class="QCheckBox" name="checkBox_struttura">
+         <property name="toolTip">
+          <string>Strutture</string>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
          <property name="text">
-          <string>Struttura</string>
+          <string/>
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
@@ -128,12 +150,41 @@
            <height>30</height>
           </size>
          </property>
+         <property name="autoRepeatInterval">
+          <number>100</number>
+         </property>
+         <property name="tristate">
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
-       <item row="1" column="2">
-        <widget class="QCheckBox" name="checkBox_periodo">
+       <item row="3" column="3">
+        <widget class="QCheckBox" name="checkBox_individui">
+         <property name="toolTip">
+          <string>Individui</string>
+         </property>
          <property name="text">
-          <string>Periodo</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="resources.qrc">
+           <normaloff>:/images/iconIND.png</normaloff>:/images/iconIND.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>30</width>
+           <height>30</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QCheckBox" name="checkBox_periodo">
+         <property name="toolTip">
+          <string>Periodizzazione</string>
+         </property>
+         <property name="text">
+          <string/>
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
@@ -147,10 +198,13 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QCheckBox" name="checkBox_reperti">
+         <property name="toolTip">
+          <string>Inventario Materiali</string>
+         </property>
          <property name="text">
-          <string>Reperti</string>
+          <string/>
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
@@ -164,10 +218,13 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="4" column="3">
         <widget class="QCheckBox" name="checkBox_tafonomia">
-         <property name="text">
+         <property name="toolTip">
           <string>Tafonomia</string>
+         </property>
+         <property name="text">
+          <string/>
          </property>
          <property name="icon">
           <iconset resource="resources.qrc">
@@ -184,36 +241,26 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
-        <widget class="QCheckBox" name="checkBox_individui">
-         <property name="text">
-          <string>Individui</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/images/iconIND.png</normaloff>:/images/iconIND.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>30</width>
-           <height>30</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QPushButton" name="pushButton_exp_pdf">
-         <property name="text">
-          <string>Esporta PDF</string>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/images/pdf-icon.jpg</normaloff>:/images/pdf-icon.jpg</iconset>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QPushButton" name="pushButton_open_dir">
+     <property name="text">
+      <string>open dir</string>
+     </property>
+     <property name="icon">
+      <iconset resource="resources.qrc">
+       <normaloff>:/images/directoryExp.png</normaloff>:/images/directoryExp.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
     </widget>
    </item>
   </layout>

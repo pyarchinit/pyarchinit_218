@@ -42,8 +42,10 @@ from pyarchinit_Tafonomia_mainapp import pyarchinit_Tafonomia
 from pyarchinit_Archeozoology_mainapp import pyarchinit_Archeozoology
 from pyarchinit_UT_mainapp import pyarchinit_UT
 from pyarchinit_images_directory_export_mainapp import pyarchinit_Images_directory_export
-from pyarchinit_PDF_administrator_mainapp import pyarchinit_PDFAdministrator
+#from pyarchinit_PDF_administrator_mainapp import pyarchinit_PDFAdministrator
+from pyarchinit_pdf_export_mainapp import pyarchinit_pdf_export
 from ui_pyarchinitplugin import Ui_PyarchinitPlugin
+
 
 #from ui_login import Ui_LoginDialog
 ##from qgiscloudapi.qgiscloudapi import *
@@ -173,6 +175,6 @@ class PyarchinitPluginDialog(QDockWidget):
 		self.pluginGui = pluginUT # save
 
 	def runPDFadministrator(self):
-		pluginPDFadmin = pyarchinit_PDFAdministrator(self.iface)
+		pluginPDFadmin = pyarchinit_pdf_export()
 		pluginPDFadmin.show()
 		self.pluginGui = pluginPDFadmin # save
