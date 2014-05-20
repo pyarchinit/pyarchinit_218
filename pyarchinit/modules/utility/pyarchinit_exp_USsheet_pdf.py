@@ -84,35 +84,35 @@ class single_US_pdf_sheet:
 
 
 	def __init__(self, data):
-		self.sito = 							data[0]
+		self.sito = 								data[0]
 		self.area = 							data[1]
-		self.us   = 							data[2]
-		self.d_stratigrafica = 					data[3]
+		self.us   = 								data[2]
+		self.d_stratigrafica = 				data[3]
 		self.d_interpretativa = 				data[4]
-		self.descrizione = 						data[5]
-		self.interpretazione = 					data[6]
+		self.descrizione = 					data[5]
+		self.interpretazione = 				data[6]
 		self.periodo_iniziale = 				data[7]
 		self.fase_iniziale = 					data[8]
 		self.periodo_finale = 					data[9]
-		self.fase_finale = 						data[10]
-		self.scavato = 							data[11]
-		self.attivita = 						data[12]
-		self.anno_scavo = 						data[13]
-		self.metodo_di_scavo = 					data[14]
+		self.fase_finale = 					data[10]
+		self.scavato = 						data[11]
+		self.attivita = 							data[12]
+		self.anno_scavo = 					data[13]
+		self.metodo_di_scavo = 			data[14]
 		self.inclusi = 							data[15]
 		self.campioni = 						data[16]
 		self.rapporti = 						data[17]
-		self.data_schedatura = 					data[18]
-		self.schedatore = 						data[19]
-		self.formazione = 						data[20]
-		self.stato_di_conservazione = 			data[21]
+		self.data_schedatura = 			data[18]
+		self.schedatore = 					data[19]
+		self.formazione = 					data[20]
+		self.stato_di_conservazione = 	data[21]
 		self.colore = 							data[22]
-		self.consistenza = 						data[23]
+		self.consistenza = 					data[23]
 		self.struttura = 						data[24]
 		self.quota_min = 						data[25]
-		self.quota_max = 						data[26]
+		self.quota_max = 					data[26]
 		self.piante = 							data[27]
-		self.documentazione =					data[28]
+		self.documentazione =				data[28]
 
 	def unzip_rapporti_stratigrafici(self):
 		rapporti = eval(self.rapporti)
@@ -215,7 +215,14 @@ class single_US_pdf_sheet:
 		intestazione = Paragraph("<b>SCHEDA DI UNITA' STRATIGRAFICA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
 		#intestazione2 = Paragraph("<b>Pyarchinit</b><br/>https://sites.google.com/site/pyarchinit/", styNormal)
 
-		logo = Image("//Users//adarteprivate//pyarchinit_PDF_folder//logo.jpg")
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
+		logo = Image(logo_path)
 
 		##		if test_image.drawWidth < 800:
 

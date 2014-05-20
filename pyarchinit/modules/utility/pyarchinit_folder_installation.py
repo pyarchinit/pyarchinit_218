@@ -45,6 +45,10 @@ class pyarchinit_Folder_installation:
 		db_copy_from_path_rel = os.path.join(os.sep, 'DBfiles', 'pyarchinit_db.sqlite')
 		db_copy_from_path = ('%s%s') % (module_path, db_copy_from_path_rel)
 		db_copy_to_path = ('%s%s%s') % (home_DB_path, os.sep, 'pyarchinit_db.sqlite')
+
+		logo_copy_from_path_rel = os.path.join(os.sep, 'DBfiles', 'logo.jpg')
+		logo_copy_from_path = ('%s%s') % (module_path, logo_copy_from_path_rel)
+		logo_copy_to_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
 	
 		OS_utility = pyarchinit_OS_Utility()
 
@@ -52,7 +56,7 @@ class pyarchinit_Folder_installation:
 
 		OS_utility.copy_file(config_copy_from_path, config_copy_to_path)
 		OS_utility.copy_file(db_copy_from_path, db_copy_to_path)
-
+		OS_utility.copy_file(logo_copy_from_path, logo_copy_to_path)
 
 		home_PDF_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_PDF_folder')
 		OS_utility.create_dir(home_PDF_path)
@@ -62,8 +66,7 @@ class pyarchinit_Folder_installation:
 	
 		home_THUMBNAILS_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_Thumbnails_folder')
 		OS_utility.create_dir(home_THUMBNAILS_path)
-		
-		
+
 		home_MAPS_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_MAPS_folder')
 		OS_utility.create_dir(home_MAPS_path)
 

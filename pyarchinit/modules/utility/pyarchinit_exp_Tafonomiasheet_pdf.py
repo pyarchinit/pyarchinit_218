@@ -50,37 +50,37 @@ class single_Tafonomia_pdf_sheet:
 	#rapporti stratigrafici
 
 	def __init__(self, data):
-		self.sito =  						data[0]
+		self.sito =  								data[0]
 		self.nr_scheda_taf =  				data[1]
-		self.sigla_struttura =  			data[2]
-		self.nr_struttura =  				data[3]
-		self.nr_individuo =  				data[4]
-		self.rito =  						data[5]
-		self.descrizione_taf =  			data[6]
+		self.sigla_struttura =  				data[2]
+		self.nr_struttura =  					data[3]
+		self.nr_individuo =  					data[4]
+		self.rito =  								data[5]
+		self.descrizione_taf =  				data[6]
 		self.interpretazione_taf = 			data[7]
-		self.segnacoli =  					data[8]
+		self.segnacoli =  						data[8]
 		self.canale_libatorio_si_no = 		data[9]
 		self.oggetti_rinvenuti_esterno =	data[10]
 		self.stato_di_conservazione =		data[11]
 		self.copertura_tipo =  				data[12]
 		self.tipo_contenitore_resti = 		data[13]
 		self.orientamento_asse = 			data[14]
-		self.orientamento_azimut = 			data[15]
+		self.orientamento_azimut = 		data[15]
 		self.corredo_presenza = 			data[16]
-		self.corredo_tipo =  				data[17]
+		self.corredo_tipo =  					data[17]
 		self.corredo_descrizione = 			data[18]
-		self.lunghezza_scheletro = 			data[19]
+		self.lunghezza_scheletro = 		data[19]
 		self.posizione_scheletro =  		data[20]
 		self.posizione_cranio =  			data[21]
 		self.posizione_arti_superiori 	=	data[22]
-		self.posizione_arti_inferiori =  	data[23]
+		self.posizione_arti_inferiori =  		data[23]
 		self.completo_si_no =  				data[24]
 		self.disturbato_si_no =  			data[25]
 		self.in_connessione_si_no = 	 	data[26]
 		self.caratteristiche = 				data[27]
-		self.periodo_iniziale = 			data[28]
-		self.fase_iniziale =	 			data[29]
-		self.periodo_finale = 				data[30]
+		self.periodo_iniziale = 				data[28]
+		self.fase_iniziale =	 				data[29]
+		self.periodo_finale = 					data[30]
 		self.fase_finale = 					data[31]
 		self.datazione_estesa = 			data[32]
 		self.misure_tafonomia = 			data[33]
@@ -116,7 +116,14 @@ class single_Tafonomia_pdf_sheet:
 		#intestazione2 = Paragraph("<b>pyArchInit</b><br/>pyarchinit", styNormal)
 		
 		#intestazione2  = Paragraph("<b>Ditta esecutrice</b><br/>", styNormal)
-		logo = Image("//Users//adarteprivate//pyarchinit_PDF_folder//logo.jpg")
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
+		logo = Image(logo_path)
 
 		##		if test_image.drawWidth < 800:
 

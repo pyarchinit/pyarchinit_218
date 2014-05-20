@@ -92,8 +92,14 @@ class single_Struttura_pdf_sheet:
 		#0 row
 		intestazione = Paragraph("<b>SCHEDA STRUTTURA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
 		#intestazione2 = Paragraph("<b>pyArchInit</b><br/>www.pyarchinit.blogspot.com", styNormal)
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
 
-		logo = Image("//Users//adarteprivate//pyarchinit_PDF_folder//logo.jpg")
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
+		logo = Image(logo_path)
 
 		##		if test_image.drawWidth < 800:
 
