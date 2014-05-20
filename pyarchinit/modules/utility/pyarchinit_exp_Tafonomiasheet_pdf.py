@@ -10,7 +10,7 @@ from reportlab.lib.units import inch, cm, mm
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_JUSTIFY
 from reportlab.pdfgen import canvas
-from reportlab.platypus import Table, PageBreak, SimpleDocTemplate, Paragraph, Spacer, TableStyle
+from reportlab.platypus import Table, PageBreak, SimpleDocTemplate, Paragraph, Spacer, TableStyle, Image
 from reportlab.platypus.paragraph import Paragraph
 
 from datetime import date, time
@@ -50,37 +50,37 @@ class single_Tafonomia_pdf_sheet:
 	#rapporti stratigrafici
 
 	def __init__(self, data):
-		self.sito =  								data[0]
+		self.sito =  						data[0]
 		self.nr_scheda_taf =  				data[1]
-		self.sigla_struttura =  				data[2]
-		self.nr_struttura =  					data[3]
-		self.nr_individuo =  					data[4]
-		self.rito =  								data[5]
-		self.descrizione_taf =  				data[6]
+		self.sigla_struttura =  			data[2]
+		self.nr_struttura =  				data[3]
+		self.nr_individuo =  				data[4]
+		self.rito =  						data[5]
+		self.descrizione_taf =  			data[6]
 		self.interpretazione_taf = 			data[7]
-		self.segnacoli =  						data[8]
+		self.segnacoli =  					data[8]
 		self.canale_libatorio_si_no = 		data[9]
 		self.oggetti_rinvenuti_esterno =	data[10]
 		self.stato_di_conservazione =		data[11]
 		self.copertura_tipo =  				data[12]
 		self.tipo_contenitore_resti = 		data[13]
 		self.orientamento_asse = 			data[14]
-		self.orientamento_azimut = 		data[15]
+		self.orientamento_azimut = 			data[15]
 		self.corredo_presenza = 			data[16]
-		self.corredo_tipo =  					data[17]
+		self.corredo_tipo =  				data[17]
 		self.corredo_descrizione = 			data[18]
-		self.lunghezza_scheletro = 		data[19]
+		self.lunghezza_scheletro = 			data[19]
 		self.posizione_scheletro =  		data[20]
 		self.posizione_cranio =  			data[21]
 		self.posizione_arti_superiori 	=	data[22]
-		self.posizione_arti_inferiori =  		data[23]
+		self.posizione_arti_inferiori =  	data[23]
 		self.completo_si_no =  				data[24]
 		self.disturbato_si_no =  			data[25]
 		self.in_connessione_si_no = 	 	data[26]
 		self.caratteristiche = 				data[27]
-		self.periodo_iniziale = 				data[28]
-		self.fase_iniziale =	 				data[29]
-		self.periodo_finale = 					data[30]
+		self.periodo_iniziale = 			data[28]
+		self.fase_iniziale =	 			data[29]
+		self.periodo_finale = 				data[30]
 		self.fase_finale = 					data[31]
 		self.datazione_estesa = 			data[32]
 		self.misure_tafonomia = 			data[33]
@@ -111,7 +111,17 @@ class single_Tafonomia_pdf_sheet:
 
 		#0 row
 		intestazione = Paragraph("<b>SCHEDA TAFONOMICA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
-		intestazione2 = Paragraph("<b>pyArchInit</b><br/>pyarchinit", styNormal)
+
+		
+		#intestazione2 = Paragraph("<b>pyArchInit</b><br/>pyarchinit", styNormal)
+		
+		#intestazione2  = Paragraph("<b>Ditta esecutrice</b><br/>", styNormal)
+		logo = Image("//Users//adarteprivate//pyarchinit_PDF_folder//logo.jpg")
+
+		##		if test_image.drawWidth < 800:
+
+		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
+		logo.drawWidth = 1.5*inch
 
 		#1 row
 		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
@@ -123,13 +133,32 @@ class single_Tafonomia_pdf_sheet:
 		periodizzazione = Paragraph("<b>PERIODIZZAZIONE DEL RITO DI SEPOLTURA</b><br/>", styNormal)
 
 		#3 row
-		periodo_iniziale = Paragraph("<b>Periodo iniziale</b><br/>" + str(self.periodo_iniziale), styNormal)
-		fase_iniziale = Paragraph("<b>Fase iniziale</b><br/>" + str(self.fase_iniziale), styNormal)
-		periodo_finale = Paragraph("<b>Periodo finale</b><br/>" + str(self.periodo_finale), styNormal)
-		fase_finale = Paragraph("<b>Fase finale</b><br/>" + str(self.fase_finale), styNormal)
+		if  str(self.periodo_iniziale) == "None":
+			periodo_iniziale = Paragraph("<b>Periodo iniziale</b><br/>", styNormal)
+		else:
+			periodo_iniziale = Paragraph("<b>Periodo iniziale</b><br/>" + str(self.periodo_iniziale), styNormal)
+		
+		if  str(self.fase_iniziale) == "None":
+			fase_iniziale = Paragraph("<b>Fase iniziale</b><br/>", styNormal)
+		else:
+			fase_iniziale = Paragraph("<b>Fase iniziale</b><br/>" + str(self.fase_iniziale), styNormal)
+
+		if  str(self.periodo_finale) == "None":
+			periodo_finale = Paragraph("<b>Periodo finale</b><br/>", styNormal)
+		else:
+			periodo_finale = Paragraph("<b>Periodo finale</b><br/>" + str(self.periodo_finale), styNormal)
+			
+
+		if  str(self.fase_finale) == "None":
+			fase_finale = Paragraph("<b>Fase finale</b><br/>", styNormal)
+		else:
+			fase_finale = Paragraph("<b>Fase finale</b><br/>" + str(self.fase_finale), styNormal)
 
 		#4 row
-		datazione_estesa = Paragraph("<b>Datazione estesa</b><br/>" + str(self.datazione_estesa), styNormal)
+		if  str(self.datazione_estesa) == "None":
+			datazione_estesa = Paragraph("<b>Datazione estesa</b><br/>", styNormal)
+		else:
+			datazione_estesa = Paragraph("<b>Datazione estesa</b><br/>" + str(self.datazione_estesa), styNormal)
 
 		#5 row
 		elementi_strutturali = Paragraph("<b>ELEMENTI STRUTTURALI</b></b>",styNormal)
@@ -253,7 +282,7 @@ class single_Tafonomia_pdf_sheet:
 
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
-						[intestazione, '01', '02', '03', '04','05', '06', intestazione2, '08', '09'], #0 row  ok
+						[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'], #0 row  ok
 						[sito, '01', '02', '03', '04', sigla_struttura, '06', '07',nr_individuo,nr_scheda], #1 row ok
 						[periodizzazione, '01', '02', '03', '04', '07', '06', '07','08', '09'], #2 row ok
 						[periodo_iniziale, '01', '02', fase_iniziale, '04', periodo_finale, '06', fase_finale,'08','09'], #3 row ok

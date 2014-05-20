@@ -8,7 +8,7 @@ from reportlab.lib.units import inch, cm, mm
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_JUSTIFY
 from reportlab.pdfgen import canvas
-from reportlab.platypus import Table, PageBreak, SimpleDocTemplate, Paragraph, Spacer, TableStyle
+from reportlab.platypus import Table, PageBreak, SimpleDocTemplate, Paragraph, Spacer, TableStyle, Image
 from reportlab.platypus.paragraph import Paragraph
 
 from datetime import date, time
@@ -84,34 +84,34 @@ class single_US_pdf_sheet:
 
 
 	def __init__(self, data):
-		self.sito = 									data[0]
-		self.area = 								data[1]
-		self.us   = 									data[2]
+		self.sito = 							data[0]
+		self.area = 							data[1]
+		self.us   = 							data[2]
 		self.d_stratigrafica = 					data[3]
-		self.d_interpretativa = 					data[4]
+		self.d_interpretativa = 				data[4]
 		self.descrizione = 						data[5]
 		self.interpretazione = 					data[6]
-		self.periodo_iniziale = 					data[7]
-		self.fase_iniziale = 						data[8]
-		self.periodo_finale = 						data[9]
+		self.periodo_iniziale = 				data[7]
+		self.fase_iniziale = 					data[8]
+		self.periodo_finale = 					data[9]
 		self.fase_finale = 						data[10]
 		self.scavato = 							data[11]
-		self.attivita = 								data[12]
+		self.attivita = 						data[12]
 		self.anno_scavo = 						data[13]
-		self.metodo_di_scavo = 				data[14]
-		self.inclusi = 								data[15]
-		self.campioni = 							data[16]
-		self.rapporti = 							data[17]
-		self.data_schedatura = 				data[18]
+		self.metodo_di_scavo = 					data[14]
+		self.inclusi = 							data[15]
+		self.campioni = 						data[16]
+		self.rapporti = 						data[17]
+		self.data_schedatura = 					data[18]
 		self.schedatore = 						data[19]
 		self.formazione = 						data[20]
-		self.stato_di_conservazione = 		data[21]
-		self.colore = 								data[22]
+		self.stato_di_conservazione = 			data[21]
+		self.colore = 							data[22]
 		self.consistenza = 						data[23]
-		self.struttura = 							data[24]
-		self.quota_min = 							data[25]
+		self.struttura = 						data[24]
+		self.quota_min = 						data[25]
 		self.quota_max = 						data[26]
-		self.piante = 								data[27]
+		self.piante = 							data[27]
 		self.documentazione =					data[28]
 
 	def unzip_rapporti_stratigrafici(self):
@@ -212,8 +212,16 @@ class single_US_pdf_sheet:
 		#format labels
 
 		#0 row
-		intestazione = Paragraph("<b>SCHEDA DI UNIT&Agrave; STRATIGRAFICA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
-		intestazione2 = Paragraph("<b>Pyarchinit</b><br/>https://sites.google.com/site/pyarchinit/", styNormal)
+		intestazione = Paragraph("<b>SCHEDA DI UNITA' STRATIGRAFICA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
+		#intestazione2 = Paragraph("<b>Pyarchinit</b><br/>https://sites.google.com/site/pyarchinit/", styNormal)
+
+		logo = Image("//Users//adarteprivate//pyarchinit_PDF_folder//logo.jpg")
+
+		##		if test_image.drawWidth < 800:
+
+		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
+		logo.drawWidth = 1.5*inch
+
 
 		#1 row
 		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
@@ -274,7 +282,7 @@ class single_US_pdf_sheet:
 			pass
 
 		#6 row
-		attivita = Paragraph("<b>Attivit&agrave;</b><br/>" + self.attivita,styNormal)
+		attivita = Paragraph("<b>Attivita'</b><br/>" + self.attivita,styNormal)
 		struttura = Paragraph("<b>Struttura</b><br/>" + self.struttura,styNormal)
 		quota_min = Paragraph("<b>Quota Min:</b><br/>"+ self.quota_min,styNormal)
 		quota_max = Paragraph("<b>Quota Max:</b><br/>"+ self.quota_max,styNormal)
@@ -330,7 +338,7 @@ class single_US_pdf_sheet:
 		
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
-						[intestazione, '01', '02', '03', '04','05', '06', intestazione2, '08', '09'], #0 row ok
+						[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'], #0 row ok
 		 				[sito, '01', '02', '03', '04', area, '06', '07', us, '09'], #1 row ok
 						[d_stratigrafica, '01', '02','03','04', d_interpretativa,'06', '07', '08', '09'], #2 row ok
 						[stato_conservazione, '01', '02', consistenza,'04', '05', colore, '07', '08', '09'], #3 row ok
@@ -625,7 +633,7 @@ class generate_US_pdf:
 		styH1 = styleSheet['Heading2']
 		data = self.datestrfdate()
 		lst = []
-		lst.append(Paragraph("<b>ELENCO UNIT&Agrave; STRATIGRAFICHE</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta Esecutrice: Ad Arte srl</b>" % (sito, data), styH1))
+		lst.append(Paragraph("<b>ELENCO UNITA' STRATIGRAFICHE</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta Esecutrice: Ad Arte srl</b>" % (sito, data), styH1))
 
 		table_data = []
 		for i in range(len(records)):

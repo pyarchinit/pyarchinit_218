@@ -89,6 +89,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	"Fase finale":"fase_finale",
 	u"Attività":"attivita",
 	"Anno di scavo":"anno_scavo",
+	"Sigla struttura":"struttura",
 	"Scavato":"scavato",
 	"Codice periodo" : "cont_per",
 	"Indice di ordinamento" : "order_layer"
@@ -109,6 +110,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				"Fase Finale",
 				u"Attività",
 				"Anno di scavo",
+				"Sigla struttura",
 				"Scavato",
 				"Codice periodo",
 				"Indice di ordinamento"

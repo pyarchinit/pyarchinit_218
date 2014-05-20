@@ -6,7 +6,7 @@ from reportlab.lib.units import inch, cm, mm
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_JUSTIFY
 from reportlab.pdfgen import canvas
-from reportlab.platypus import Table, PageBreak, SimpleDocTemplate, Paragraph, Spacer, TableStyle
+from reportlab.platypus import Table, PageBreak, SimpleDocTemplate, Paragraph, Spacer, TableStyle, Image
 from reportlab.platypus.paragraph import Paragraph
 
 from datetime import date, time
@@ -91,7 +91,14 @@ class single_Struttura_pdf_sheet:
 
 		#0 row
 		intestazione = Paragraph("<b>SCHEDA STRUTTURA<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
-		intestazione2 = Paragraph("<b>pyArchInit</b><br/>www.pyarchinit.blogspot.com", styNormal)
+		#intestazione2 = Paragraph("<b>pyArchInit</b><br/>www.pyarchinit.blogspot.com", styNormal)
+
+		logo = Image("//Users//adarteprivate//pyarchinit_PDF_folder//logo.jpg")
+
+		##		if test_image.drawWidth < 800:
+
+		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
+		logo.drawWidth = 1.5*inch
 
 		#1 row
 		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
@@ -121,22 +128,22 @@ class single_Struttura_pdf_sheet:
 
 		#5 row
 		iniziale = Paragraph("<b>INIZIALE</b>",styNormal)
-		if self.periodo_iniziale == None:
+		if self.periodo_iniziale == "None":
 			periodo_iniziale = Paragraph("<b>Periodo</b><br/>",styNormal)
 		else:
 			periodo_iniziale = Paragraph("<b>Periodo</b><br/>" + self.periodo_iniziale,styNormal)
-		if self.fase_iniziale == None:
+		if self.fase_iniziale == "None":
 			fase_iniziale = Paragraph("<b>Fase</b><br/>",styNormal)
 		else:
 			fase_iniziale = Paragraph("<b>Fase</b><br/>" + self.fase_iniziale,styNormal)
 
 		finale = Paragraph("<b>FINALE</b>",styNormal)
 
-		if self.periodo_finale == None:
+		if self.periodo_finale == "None":
 			periodo_finale = Paragraph("<b>Periodo</b><br/>",styNormal)
 		else:
 			periodo_finale = Paragraph("<b>Periodo</b><br/>" + self.periodo_finale,styNormal)
-		if self.fase_finale == None:
+		if self.fase_finale == "None":
 			fase_finale = Paragraph("<b>Fase</b><br/>",styNormal)
 		else:	
 			fase_finale = Paragraph("<b>Fase</b><br/>" + self.fase_finale,styNormal)
@@ -202,12 +209,12 @@ class single_Struttura_pdf_sheet:
 			for i in eval(self.misure_struttura):
 				if misure_struttura == '':
 					try:
-						misure_struttura += ("<b>Tipo di misura: %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
+						misure_struttura += ("Tipo di misura: %s = %s %s") % (str(i[0]), str(i[2]), str(i[1]))
 					except:
 						pass
 				else:
 					try:
-						misure_struttura += ("<br/><b>Tipo di misura: %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
+						misure_struttura += ("<br/>Tipo di misura: %s = %s %s") % (str(i[0]), str(i[2]), str(i[1]))
 					except:
 						pass
 
@@ -223,7 +230,7 @@ class single_Struttura_pdf_sheet:
 
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
-						[intestazione, '01', '02', '03', '04','05', '06', intestazione2, '08', '09'], #0 row ok
+						[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'], #0 row ok
 						[sito, '01', '02', '03', '04', sigla_struttura, '06', '07', numero_struttura, '09'], #1 row ok
 						[categoria, '01', '02','03', tipologia,'05', '06', '07', definizione, '09'], #2 row ok
 						[descrizione, '01','02', '03', '04', interpretazione, '06', '07', '08', '09'], #3 row ok

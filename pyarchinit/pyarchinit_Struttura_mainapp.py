@@ -885,7 +885,7 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 			us_strutt_list = []
 			if bool(res_strutt) == True:
 				for rs in res_strutt:
-					us_strutt_list.append([str(rs.sito), str(rs.area), str(rs.area)])
+					us_strutt_list.append([str(rs.sito), str(rs.area), str(rs.us)])
 
 			quote_strutt = []
 			if bool(us_strutt_list) == True:

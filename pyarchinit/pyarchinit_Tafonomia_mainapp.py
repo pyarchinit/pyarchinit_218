@@ -1275,7 +1275,8 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			sito =  unicode(self.DATA_LIST[i].sito)
 			nr_individuo = unicode(self.DATA_LIST[i].nr_individuo)
 			sigla_struttura = ('%s%s') % (unicode(self.DATA_LIST[i].sigla_struttura), unicode(self.DATA_LIST[i].nr_struttura))
-
+			
+			self.testing("/sigla_struttura.txt", str(sigla_struttura))
 			res_ind = self.DB_MANAGER.query_bool({"sito": "'" + str(sito) + "'", "nr_individuo" : "'" + str(nr_individuo) + "'"}, "SCHEDAIND")
 
 			us_ind_list = []
@@ -1312,12 +1313,15 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			us_strutt_list = []
 			if bool(res_strutt) == True:
 				for rs in res_strutt:
-					us_strutt_list.append([str(rs.sito), str(rs.area), str(rs.area)])
+					us_strutt_list.append([str(rs.sito), str(rs.area), str(rs.us)])
+				
 
 			quote_strutt = []
+			self.testing("/res_struttura.txt", str(us_strutt_list))
 			if bool(us_strutt_list) == True:
 				for sing_us in us_strutt_list:
 					res_quote_strutt = self.DB_MANAGER.select_quote_from_db_sql(sing_us[0], sing_us[1], sing_us[2])
+					self.testing("/res_quote_strutt.txt", str(res_quote_strutt))
 					if bool(res_quote_strutt) == True:
 						for sing_us in res_quote_strutt:
 							sing_quota_value = str(sing_us[5])
