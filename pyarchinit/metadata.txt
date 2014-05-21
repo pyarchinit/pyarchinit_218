@@ -24,7 +24,7 @@ email=pyarchinit@gmail.com
 # changelog=
 
 # tags are comma separated with spaces allowed
-tags=archaeology, postgres, postgis, spatialite, sqlite, archeologia, funerary archaeology, pottery, bones, excavations, scavi, archeologici, siti, carte, archeologiche, carta di potenzialita, strutture, antiche, tempio, medioevo, romana, preistoria, roman, medieval, prehistoric
+tags=archaeology, analysis, database, digitizing, postgres, postgis, spatialite, sqlite, archeologia, funerary archaeology, pottery, bones, excavations, scavi, archeologici, siti, carte, archeologiche, carta di potenzialita, strutture, antiche, tempio, medioevo, romana, preistoria, roman, medieval, prehistoric
 
 homepage=https://sites.google.com/site/pyarchinit/
 tracker=https://github.com/pyarchinit/pyarchinit_beta_test_dev/issues?direction=asc&labels=enhancement&milestone=1&sort=created&state=open
