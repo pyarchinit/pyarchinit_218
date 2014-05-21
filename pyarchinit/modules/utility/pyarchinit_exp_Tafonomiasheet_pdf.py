@@ -336,7 +336,7 @@ class single_Tafonomia_pdf_sheet:
 					
 					#4 row
 					('SPAN', (0,4),(9,4)),  #datazione estesa
-##################################
+					##################################
 					#5 row
 					('SPAN', (0,5),(9,5)),  #Elementi strutturali
 

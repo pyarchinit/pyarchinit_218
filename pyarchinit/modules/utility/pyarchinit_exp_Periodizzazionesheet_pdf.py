@@ -6,7 +6,7 @@ from reportlab.lib.units import inch, cm, mm
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_JUSTIFY
 from reportlab.pdfgen import canvas
-from reportlab.platypus import Table, PageBreak, SimpleDocTemplate, Paragraph, Spacer, TableStyle
+from reportlab.platypus import Table, PageBreak, SimpleDocTemplate, Paragraph, Spacer, TableStyle, Image
 from reportlab.platypus.paragraph import Paragraph
 
 from datetime import date, time
@@ -44,12 +44,12 @@ class single_Periodizzazione_pdf_sheet:
 
 	def __init__(self, data):
 		self.sito = 					data[0]
-		self.periodo = 				data[1]
+		self.periodo = 					data[1]
 		self.fase = 					data[2]
-		self.cron_iniziale =		data[3]
-		self.cron_finale =			data[4]
-		self.datazione_estesa =	data[5]
-		self.descrizione =			data[6]
+		self.cron_iniziale =			data[3]
+		self.cron_finale =				data[4]
+		self.datazione_estesa =			data[5]
+		self.descrizione =				data[6]
 
 
 	def datestrfdate(self):
@@ -75,7 +75,23 @@ class single_Periodizzazione_pdf_sheet:
 
 		#0 row
 		intestazione = Paragraph("<b>SCHEDA PERIODIZZAZIONE<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
-		intestazione2 = Paragraph("<b>pyArchInit</b><br/>www.pyarchinit.blogspot.com", styNormal)
+
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
+		logo = Image(logo_path)
+
+		##		if test_image.drawWidth < 800:
+
+		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
+		logo.drawWidth = 1.5*inch
+
+
+		#intestazione2 = Paragraph("<b>pyArchInit</b><br/>www.pyarchinit.blogspot.com", styNormal)
 
 		#1 row
 		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
@@ -99,7 +115,7 @@ class single_Periodizzazione_pdf_sheet:
 
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
-						[intestazione, '01', '02', '03', '04','05', '06', intestazione2, '08', '09'], #0 row ok
+						[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'], #0 row ok
 						[sito, '01', '02', '03', '04', periodo, '06', '07', fase, '09'], #1 row ok
 						[cronologia, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #2 row ok
 						[cronologia_iniziale, '01', cronologia_finale, '03', datazione_ext,'05', '06', '07', '08', '09'], #3 row

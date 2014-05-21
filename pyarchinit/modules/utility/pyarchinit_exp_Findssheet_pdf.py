@@ -6,7 +6,7 @@ from reportlab.lib.units import inch, cm, mm
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT
 from reportlab.pdfgen import canvas
-from reportlab.platypus import Table, PageBreak, SimpleDocTemplate, Paragraph, Spacer, TableStyle
+from reportlab.platypus import Table, PageBreak, SimpleDocTemplate, Paragraph, Spacer, TableStyle, Image
 from reportlab.platypus.paragraph import Paragraph
 
 from datetime import date, time
@@ -204,7 +204,21 @@ class single_Finds_pdf_sheet:
 
 		#0 row
 		intestazione = Paragraph("<b>SCHEDA INVENTARIO REPERTI<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
-		intestazione2 = Paragraph("<b>pyArchInit</b>", styNormal)
+		#intestazione2 = Paragraph("<b>pyArchInit</b>", styNormal)
+
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
+		logo = Image(logo_path)
+
+		##		if test_image.drawWidth < 800:
+
+		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
+		logo.drawWidth = 1.5*inch
 
 		#1 row
 		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
@@ -311,7 +325,7 @@ class single_Finds_pdf_sheet:
 
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
-						[intestazione, '01', '02', '03', '04','05', '06', '07', intestazione2, '09'],
+						[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'],
 						[sito, '01', '02', area, '04', us,'06', '07', nr_inventario, '09'], #1 row ok
 						[tipo_reperto, '01', '02', criterio_schedatura,'04', '05',definizione, '07', '08', '09'], #2 row ok
 						[datazione, '01', '02', '03', '04', stato_conservazione, '06', '07', '08', '09'], #3 row ok
@@ -323,8 +337,7 @@ class single_Finds_pdf_sheet:
 						[riferimenti_stratigrafici, '02', '03', '04', '05', '06', '07', '08', '09'], #9 row ok
 						[area, '01', '02', us,'04', '05', '06', '07', '08', '09'], #10 row ok
 						[riferimenti_magazzino, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #11 row ok
-						[lavato, '01', '02', nr_cassa, '04', '05', luogo_conservazione, '07', '08', '09'], #12 row ok
-						['https://sites.google.com/site/pyarchinit/', '01', '02', '03', '04','05', '06', '07','08', '09'] #13 row
+						[lavato, '01', '02', nr_cassa, '04', '05', luogo_conservazione, '07', '08', '09'] #12 row ok
 						]
 
 
@@ -333,8 +346,8 @@ class single_Finds_pdf_sheet:
 
 					('GRID',(0,0),(-1,-1),0.5,colors.black),
 					#0 row
-					('SPAN', (0,0),(7,0)),  #intestazione
-					('SPAN', (8,0),(9,0)), #intestazione
+					('SPAN', (0,0),(6,0)),  #intestazione
+					('SPAN', (7,0),(9,0)), #intestazione
 
 					#1 row
 					('SPAN', (0,1),(2,1)),  #dati identificativi
@@ -382,9 +395,7 @@ class single_Finds_pdf_sheet:
 					('SPAN', (3,12),(5,12)),  #Riferimenti magazzino - nr_cassa
 					('SPAN', (6,12),(9,12)),   #Riferimenti magazzino - luogo conservazione
 
-					#13 row
-					('SPAN', (0,13),(9,13)),  #pie' di pagina
-					('ALIGN',(0,13),(9,13),'CENTER')
+					('VALIGN',(0,0),(-1,-1),'TOP')
 
 					]
 

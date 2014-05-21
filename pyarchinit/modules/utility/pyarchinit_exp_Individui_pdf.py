@@ -6,7 +6,7 @@ from reportlab.lib.units import inch, cm, mm
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_JUSTIFY
 from reportlab.pdfgen import canvas
-from reportlab.platypus import Table, PageBreak, SimpleDocTemplate, Paragraph, Spacer, TableStyle
+from reportlab.platypus import Table, PageBreak, SimpleDocTemplate, Paragraph, Spacer, TableStyle, Image
 from reportlab.platypus.paragraph import Paragraph
 
 from datetime import date, time
@@ -177,24 +177,49 @@ class single_Individui_pdf_sheet:
 		self.classi_eta = data[10]
 		self.osservazioni = data[11]
 		"""
-
 		#0 row
-		intestazione = Paragraph("<b>SCHEDA INDIVIDUI<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
-		intestazione2 = Paragraph("<b>pyArchInit</b>", styNormal)
+		intestazione = Paragraph("<b>SCHEDA INDIVIDUI<br/>" + unicode(self.datestrfdate()) + "</b>", styNormal)
+		#intestazione2 = Paragraph("<b>pyArchInit</b>", styNormal)
+
+
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
+		logo = Image(logo_path)
+
+		##		if test_image.drawWidth < 800:
+
+		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
+		logo.drawWidth = 1.5*inch
+
 
 		#1 row
-		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
-		area = Paragraph("<b>Area</b><br/>"  + str(self.area), styNormal)
-		us = Paragraph("<b>US</b><br/>"  + str(self.us), styNormal)
-		nr_inventario = Paragraph("<b>Nr. Individuo</b><br/>"  + str(self.nr_individuo), styNormal)
+		sito = Paragraph("<b>Sito</b><br/>"  + unicode(self.sito), styNormal)
+		area = Paragraph("<b>Area</b><br/>"  + unicode(self.area), styNormal)
+		us = Paragraph("<b>US</b><br/>"  + unicode(self.us), styNormal)
+		nr_inventario = Paragraph("<b>Nr. Individuo</b><br/>"  + unicode(self.nr_individuo), styNormal)
 
 		#2 row
 		sesso = Paragraph("<b>Sesso</b><br/>"  + self.sesso, styNormal)
-		eta_min = Paragraph("<b>Eta' minima</b><br/>"  + self.eta_min, styNormal)
-		eta_max = Paragraph("<b>Eta' massima</b><br/>"  + self.eta_max, styNormal)
+
+		if  str(self.eta_min) == "None":
+			eta_min = Paragraph("<b>Eta' Minima</b><br/>", styNormal)
+		else:
+			eta_min = Paragraph("<b>Eta' Minima</b><br/>" + unicode(self.eta_min), styNormal)
+
+		if  str(self.eta_max) == "None":
+			eta_max = Paragraph("<b>Eta' massima</b><br/>", styNormal)
+		else:
+			eta_max = Paragraph("<b>Eta' massima</b><br/>" + unicode(self.eta_max), styNormal)
 
 		#3 row
-		classi_eta = Paragraph("<b>Classi di eta'</b><br/>"  + self.classi_eta, styNormal)
+		classi_eta_string = unicode(self.classi_eta).replace("<", "&lt;")
+		#classi_eta = Paragraph(classi_eta_string, styNormal)
+		classi_eta = Paragraph("<b>Classi di eta'</b><br/>"  + classi_eta_string, styNormal)
 
 		#4 row
 		osservazioni = ''
@@ -277,13 +302,13 @@ class single_Individui_pdf_sheet:
 
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
-						[intestazione, '01', '02', '03', '04','05', '06', '07', intestazione2, '09'],
+						[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'],
 						[sito, '01', '02', area, '04', us,'06', '07', nr_inventario, '09'], #1 row ok
 						[sesso, '01', '02', eta_min,'04', '05',eta_max, '07', '08', '09'], #2 row ok
 						[classi_eta, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #3 row ok
 						[osservazioni, '01','02', '03', '04', '05','06', '07', '08', '09'], #4 row ok
-						[data_schedatura, '01', '02', '03', '04', '05', schedatore, '07', '08', '09'], #5 row ok
-						['https://sites.google.com/site/pyarchinit/', '01', '02', '03', '04','05', '06', '07','08', '09'] #6 row
+						[data_schedatura, '01', '02', '03', '04', '05', schedatore, '07', '08', '09'] #5 row ok
+						#['https://sites.google.com/site/pyarchinit/', '01', '02', '03', '04','05', '06', '07','08', '09'] #6 row
 						]
 
 
@@ -292,8 +317,8 @@ class single_Individui_pdf_sheet:
 
 					('GRID',(0,0),(-1,-1),0.5,colors.black),
 					#0 row
-					('SPAN', (0,0),(7,0)),  #intestazione
-					('SPAN', (8,0),(9,0)), #intestazione2
+					('SPAN', (0,0),(6,0)),  #intestazione
+					('SPAN', (7,0),(9,0)), #intestazione2
 
 					#1 row
 					('SPAN', (0,1),(2,1)),  #sito
@@ -317,10 +342,7 @@ class single_Individui_pdf_sheet:
 					('SPAN', (0,5),(5,5)),  #data_schedatura
 					('SPAN', (6,5),(9,5)),  #schedatore
 
-					#13 row
-					('SPAN', (0,6),(9,6)),  #pie' di pagina
-					('ALIGN',(0,6),(9,6),'CENTER')
-
+					('VALIGN',(0,0),(-1,-1),'TOP')
 					]
 
 		t=Table(cell_schema, colWidths=50, rowHeights=None,style= table_style)
