@@ -20,6 +20,7 @@
  ***************************************************************************/
 """
 
+import sys
 import os
 import shutil
 from pyarchinit_OS_utility import *
@@ -33,8 +34,10 @@ class pyarchinit_Folder_installation:
 		elif os.name == 'nt':
 			home = os.environ['HOMEPATH']
 
-		module_path_rel = os.path.join(os.sep, '.qgis2', 'python','plugins', 'pyarchinit', 'modules', 'utility')
-		module_path = ('%s%s') % (home, module_path_rel)
+		module_path =  os.path.dirname(__file__)
+
+		#module_path_rel = os.path.join(os.sep, '.qgis2', 'python','plugins', 'pyarchinit', 'modules', 'utility')
+		#module_path = "/Users/adarteprivate/Documents/pyarchinit_beta_test_dev/pyarchinit/modules/utility/" #('%s%s') % (home, module_path_rel) 
 
 		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
 
@@ -85,3 +88,6 @@ class pyarchinit_Folder_installation:
 		#experimental
 		#il sistema funziona ma sovrascrive ogni volta il file. aggiungere sistema di verifica di presenza del file.
 		#urllib.urlretrieve( "https://raw.github.com/pyarchinit/pyarchinit_beta_test_dev/master/pyarchinit_dev20130710/modules/utility/DBfiles/pyarchinit_db.sqlite",db_copy_to_path)
+
+a = pyarchinit_Folder_installation()
+a.install_dir()
