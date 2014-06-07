@@ -206,7 +206,7 @@ class single_Tafonomia_pdf_sheet:
 		stato_conservazione = Paragraph("<b>Stato di conservazione</b><br/>"  + str(self.stato_di_conservazione), styNormal)
 		disturbato = Paragraph("<b>Disturbato</b><br/>"  + str(self.segnacoli), styNormal)
 		completo = Paragraph("<b>Completo</b><br/>"  + str(self.canale_libatorio_si_no), styNormal)
-		in_connessione = Paragraph("<b></b><br/>"  + str(self.oggetti_rinvenuti_esterno), styNormal)
+		in_connessione = Paragraph("<b>In connessione</b><br/>"  + str(self.oggetti_rinvenuti_esterno), styNormal)
 
 		#12 row
 		caratteristiche_tafonomiche = ''
