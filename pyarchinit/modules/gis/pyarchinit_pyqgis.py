@@ -289,7 +289,9 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				QMessageBox.warning(self, "TESTER", "OK Layer US valido",QMessageBox.Ok)
 
 				#self.USLayerId = layerUS.getLayerID()
-				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+				style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
+
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
 			else:
