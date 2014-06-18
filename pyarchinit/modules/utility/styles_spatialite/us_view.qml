@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis version="2.0.1-Dufour" minimumScale="-4.65661e-10" maximumScale="1e+08" minLabelScale="1" maxLabelScale="1e+08" hasScaleBasedVisibilityFlag="0" scaleBasedLabelVisibilityFlag="0">
+<qgis version="2.3.0-Master" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="1" maxLabelScale="1e+08" simplifyDrawingTol="1" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
   <renderer-v2 symbollevels="0" type="RuleRenderer">
     <rules>
       <rule filter="&quot;tipo_us_s&quot;  = 'laterizio' and  &quot;stratigraph_index_us&quot; = 1" symbol="0" label="Caratterizzazione: Laterizio"/>
@@ -59,6 +59,34 @@
           <prop k="style_border" v="solid"/>
           <prop k="width_border" v="0.26"/>
         </layer>
+        <layer pass="0" class="SVGFill" locked="0">
+          <prop k="angle" v="0"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="pattern_width_unit" v="MM"/>
+          <prop k="svgFile" v="concotto.svg"/>
+          <prop k="svgFillColor" v="#000000"/>
+          <prop k="svgOutlineColor" v="#000000"/>
+          <prop k="svgOutlineWidth" v="1"/>
+          <prop k="svgOutlineWidth_expression" v="svgOutlineWidth_expression"/>
+          <prop k="svg_outline_width_unit" v="MM"/>
+          <prop k="width" v="20"/>
+          <symbol alpha="1" type="line" name="@1@1">
+            <layer pass="0" class="SimpleLine" locked="0">
+              <prop k="capstyle" v="square"/>
+              <prop k="color" v="0,0,0,255"/>
+              <prop k="customdash" v="5;2"/>
+              <prop k="customdash_unit" v="MM"/>
+              <prop k="draw_inside_polygon" v="0"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="penstyle" v="solid"/>
+              <prop k="use_custom_dash" v="0"/>
+              <prop k="width" v="0.26"/>
+              <prop k="width_unit" v="MM"/>
+            </layer>
+          </symbol>
+        </layer>
       </symbol>
       <symbol alpha="1" type="fill" name="10">
         <layer pass="0" class="SimpleFill" locked="0">
@@ -93,6 +121,34 @@
           <prop k="style_border" v="solid"/>
           <prop k="width_border" v="0.26"/>
         </layer>
+        <layer pass="0" class="SVGFill" locked="0">
+          <prop k="angle" v="0"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="pattern_width_unit" v="MM"/>
+          <prop k="svgFile" v="malta.svg"/>
+          <prop k="svgFillColor" v="#000000"/>
+          <prop k="svgOutlineColor" v="#000000"/>
+          <prop k="svgOutlineWidth" v="1"/>
+          <prop k="svgOutlineWidth_expression" v="svgOutlineWidth_expression"/>
+          <prop k="svg_outline_width_unit" v="MM"/>
+          <prop k="width" v="20"/>
+          <symbol alpha="1" type="line" name="@11@1">
+            <layer pass="0" class="SimpleLine" locked="0">
+              <prop k="capstyle" v="square"/>
+              <prop k="color" v="0,0,0,255"/>
+              <prop k="customdash" v="5;2"/>
+              <prop k="customdash_unit" v="MM"/>
+              <prop k="draw_inside_polygon" v="0"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="penstyle" v="solid"/>
+              <prop k="use_custom_dash" v="0"/>
+              <prop k="width" v="0.26"/>
+              <prop k="width_unit" v="MM"/>
+            </layer>
+          </symbol>
+        </layer>
       </symbol>
       <symbol alpha="1" type="fill" name="2">
         <layer pass="0" class="SimpleFill" locked="0">
@@ -105,6 +161,34 @@
           <prop k="style_border" v="solid"/>
           <prop k="width_border" v="0.26"/>
         </layer>
+        <layer pass="0" class="SVGFill" locked="0">
+          <prop k="angle" v="0"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="pattern_width_unit" v="MM"/>
+          <prop k="svgFile" v="carbone.svg"/>
+          <prop k="svgFillColor" v="#000000"/>
+          <prop k="svgOutlineColor" v="#000000"/>
+          <prop k="svgOutlineWidth" v="1"/>
+          <prop k="svgOutlineWidth_expression" v="svgOutlineWidth_expression"/>
+          <prop k="svg_outline_width_unit" v="MM"/>
+          <prop k="width" v="20"/>
+          <symbol alpha="1" type="line" name="@2@1">
+            <layer pass="0" class="SimpleLine" locked="0">
+              <prop k="capstyle" v="square"/>
+              <prop k="color" v="0,0,0,255"/>
+              <prop k="customdash" v="5;2"/>
+              <prop k="customdash_unit" v="MM"/>
+              <prop k="draw_inside_polygon" v="0"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="penstyle" v="solid"/>
+              <prop k="use_custom_dash" v="0"/>
+              <prop k="width" v="0.26"/>
+              <prop k="width_unit" v="MM"/>
+            </layer>
+          </symbol>
+        </layer>
       </symbol>
       <symbol alpha="1" type="fill" name="3">
         <layer pass="0" class="SimpleFill" locked="0">
@@ -116,6 +200,34 @@
           <prop k="style" v="solid"/>
           <prop k="style_border" v="solid"/>
           <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SVGFill" locked="0">
+          <prop k="angle" v="0"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="pattern_width_unit" v="MM"/>
+          <prop k="svgFile" v="concotto.svg"/>
+          <prop k="svgFillColor" v="#000000"/>
+          <prop k="svgOutlineColor" v="#000000"/>
+          <prop k="svgOutlineWidth" v="1"/>
+          <prop k="svgOutlineWidth_expression" v="svgOutlineWidth_expression"/>
+          <prop k="svg_outline_width_unit" v="MM"/>
+          <prop k="width" v="20"/>
+          <symbol alpha="1" type="line" name="@3@1">
+            <layer pass="0" class="SimpleLine" locked="0">
+              <prop k="capstyle" v="square"/>
+              <prop k="color" v="0,0,0,255"/>
+              <prop k="customdash" v="5;2"/>
+              <prop k="customdash_unit" v="MM"/>
+              <prop k="draw_inside_polygon" v="0"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="penstyle" v="solid"/>
+              <prop k="use_custom_dash" v="0"/>
+              <prop k="width" v="0.26"/>
+              <prop k="width_unit" v="MM"/>
+            </layer>
+          </symbol>
         </layer>
       </symbol>
       <symbol alpha="1" type="fill" name="4">
@@ -153,6 +265,34 @@
           <prop k="style_border" v="solid"/>
           <prop k="width_border" v="0.26"/>
         </layer>
+        <layer pass="0" class="SVGFill" locked="0">
+          <prop k="angle" v="0"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="pattern_width_unit" v="MM"/>
+          <prop k="svgFile" v="argilla.svg"/>
+          <prop k="svgFillColor" v="#000000"/>
+          <prop k="svgOutlineColor" v="#000000"/>
+          <prop k="svgOutlineWidth" v="1"/>
+          <prop k="svgOutlineWidth_expression" v="svgOutlineWidth_expression"/>
+          <prop k="svg_outline_width_unit" v="MM"/>
+          <prop k="width" v="20"/>
+          <symbol alpha="1" type="line" name="@6@1">
+            <layer pass="0" class="SimpleLine" locked="0">
+              <prop k="capstyle" v="square"/>
+              <prop k="color" v="0,0,0,255"/>
+              <prop k="customdash" v="5;2"/>
+              <prop k="customdash_unit" v="MM"/>
+              <prop k="draw_inside_polygon" v="0"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="penstyle" v="solid"/>
+              <prop k="use_custom_dash" v="0"/>
+              <prop k="width" v="0.26"/>
+              <prop k="width_unit" v="MM"/>
+            </layer>
+          </symbol>
+        </layer>
       </symbol>
       <symbol alpha="1" type="fill" name="7">
         <layer pass="0" class="SimpleFill" locked="0">
@@ -164,6 +304,34 @@
           <prop k="style" v="solid"/>
           <prop k="style_border" v="solid"/>
           <prop k="width_border" v="0.26"/>
+        </layer>
+        <layer pass="0" class="SVGFill" locked="0">
+          <prop k="angle" v="0"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="pattern_width_unit" v="MM"/>
+          <prop k="svgFile" v="argilla.svg"/>
+          <prop k="svgFillColor" v="#000000"/>
+          <prop k="svgOutlineColor" v="#000000"/>
+          <prop k="svgOutlineWidth" v="1"/>
+          <prop k="svgOutlineWidth_expression" v="svgOutlineWidth_expression"/>
+          <prop k="svg_outline_width_unit" v="MM"/>
+          <prop k="width" v="20"/>
+          <symbol alpha="1" type="line" name="@7@1">
+            <layer pass="0" class="SimpleLine" locked="0">
+              <prop k="capstyle" v="square"/>
+              <prop k="color" v="0,0,0,255"/>
+              <prop k="customdash" v="5;2"/>
+              <prop k="customdash_unit" v="MM"/>
+              <prop k="draw_inside_polygon" v="0"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="offset" v="0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="penstyle" v="solid"/>
+              <prop k="use_custom_dash" v="0"/>
+              <prop k="width" v="0.26"/>
+              <prop k="width_unit" v="MM"/>
+            </layer>
+          </symbol>
         </layer>
       </symbol>
       <symbol alpha="1" type="fill" name="8">
@@ -177,15 +345,23 @@
           <prop k="style_border" v="dash"/>
           <prop k="width_border" v="0.5"/>
         </layer>
-        <layer pass="0" class="SimpleFill" locked="0">
-          <prop k="border_width_unit" v="MM"/>
-          <prop k="color" v="166,170,150,255"/>
-          <prop k="color_border" v="0,0,0,255"/>
+        <layer pass="0" class="GradientFill" locked="0">
+          <prop k="angle" v="0"/>
+          <prop k="color1" v="255,155,41,255"/>
+          <prop k="color2" v="119,103,53,255"/>
+          <prop k="color_type" v="1"/>
+          <prop k="coordinate_mode" v="0"/>
+          <prop k="discrete" v="0"/>
+          <prop k="gradient_color" v="0,0,255,255"/>
+          <prop k="gradient_color2" v="255,255,255,255"/>
           <prop k="offset" v="0,0"/>
           <prop k="offset_unit" v="MM"/>
-          <prop k="style" v="solid"/>
-          <prop k="style_border" v="no"/>
-          <prop k="width_border" v="0.26"/>
+          <prop k="reference_point1" v="5.55112e-17,0"/>
+          <prop k="reference_point1_iscentroid" v="0"/>
+          <prop k="reference_point2" v="1,1"/>
+          <prop k="reference_point2_iscentroid" v="0"/>
+          <prop k="spread" v="0"/>
+          <prop k="type" v="1"/>
         </layer>
       </symbol>
       <symbol alpha="1" type="fill" name="9">
@@ -234,7 +410,7 @@
     <property key="labeling/dist" value="0"/>
     <property key="labeling/distInMapUnits" value="false"/>
     <property key="labeling/enabled" value="false"/>
-    <property key="labeling/fieldName" value="us_s"/>
+    <property key="labeling/fieldName" value=""/>
     <property key="labeling/fontBold" value="false"/>
     <property key="labeling/fontCapitals" value="0"/>
     <property key="labeling/fontFamily" value="MS Shell Dlg 2"/>
@@ -399,6 +575,7 @@
   </edittypes>
   <editform>.</editform>
   <editforminit></editforminit>
+  <featformsuppress>0</featformsuppress>
   <annotationform>.</annotationform>
   <editorlayout>generatedlayout</editorlayout>
   <excludeAttributesWMS/>

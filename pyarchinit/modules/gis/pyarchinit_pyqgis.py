@@ -195,7 +195,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				QMessageBox.warning(self, "TESTER", "OK Layer US valido",QMessageBox.Ok)
 
 				#self.USLayerId = layerUS.getLayerID()
-				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view_splite.qml')
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
 			else:
@@ -289,8 +289,8 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				QMessageBox.warning(self, "TESTER", "OK Layer US valido",QMessageBox.Ok)
 
 				#self.USLayerId = layerUS.getLayerID()
-				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
-				style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view_splite.qml')
+				#style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
 
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
@@ -385,7 +385,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				QMessageBox.warning(self, "TESTER", "OK Layer US valido",QMessageBox.Ok)
 
 				#self.USLayerId = layerUS.getLayerID()
-				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view_splite.qml')
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
 			else:
@@ -510,7 +510,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 
 			if layerUS.isValid() == True:
 				#QMessageBox.warning(self, "TESTER", "OK ayer US valido",	 #QMessageBox.Ok)
-				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view_splite.qml')
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayers([layerUS], False)
 				layerToSet.append(QgsMapCanvasLayer(layerUS, True, False))
