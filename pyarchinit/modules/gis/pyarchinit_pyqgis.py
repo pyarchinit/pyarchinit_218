@@ -294,6 +294,10 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
+				#originalSubsetString = layerUS.subsetString() 4D dimension
+				#newSubSetString = "%s OR id_us = '0'" % (originalSubsetString) 4D dimension
+
+				#layerUS.setSubsetString(newSubSetString)
 			else:
 				QMessageBox.warning(self, "TESTER", "Layer US non valido",QMessageBox.Ok)
 

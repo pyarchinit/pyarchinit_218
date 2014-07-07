@@ -1867,13 +1867,13 @@ p, li { white-space: pre-wrap; }
           <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="page">
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-4</y>
             <width>479</width>
             <height>226</height>
            </rect>
@@ -2140,7 +2140,7 @@ p, li { white-space: pre-wrap; }
               <string/>
              </property>
              <property name="text">
-              <string>GIS wiever</string>
+              <string>GIS Data Visualizer</string>
              </property>
              <property name="icon">
               <iconset resource="resources.qrc">
