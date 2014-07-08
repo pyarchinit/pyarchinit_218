@@ -339,14 +339,12 @@ class single_US_pdf_sheet:
 		#16
 		sing_doc = self.documentazione_print
 		self.documentazione_print = Paragraph("<b>Documentazione</b><br/>"  + sing_doc, styNormal) 
-		
-		
-		
-		
+
 		#schema
-		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
+		cell_schema =  [
+						#00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
 						[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'], #0 row ok
-		 				[sito, '01', '02', '03', '04', area, '06', '07', us, '09'], #1 row ok
+						[sito, '01', '02', '03', '04', area, '06', '07', us, '09'], #1 row ok
 						[d_stratigrafica, '01', '02','03','04', d_interpretativa,'06', '07', '08', '09'], #2 row ok
 						[stato_conservazione, '01', '02', consistenza,'04', '05', colore, '07', '08', '09'], #3 row ok
 						[inclusi, '01', '02', '03', campioni, '05', '06', '07', formazione, '09'], #4 row ok
@@ -627,20 +625,39 @@ class generate_US_pdf:
 			single_us_sheet = single_US_pdf_sheet(records[i])
 			elements.append(single_us_sheet.create_sheet())
 			elements.append(PageBreak())
+
 		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'scheda_US.pdf')
 		f = open(filename, "wb")
+
 		doc = SimpleDocTemplate(f, pagesize=A4)
 		doc.build(elements, canvasmaker=NumberedCanvas_USsheet)
+
 		f.close()
 
 	def build_index_US(self, records, sito):
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
+
+		logo = Image(logo_path)
+		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
+		logo.drawWidth = 1.5*inch
+		logo.hAlign = "LEFT"
+
 		styleSheet = getSampleStyleSheet()
 		styNormal = styleSheet['Normal']
 		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
-		styH1 = styleSheet['Heading2']
+		styH1 = styleSheet['Heading3']
+
 		data = self.datestrfdate()
+
 		lst = []
-		lst.append(Paragraph("<b>ELENCO UNITA' STRATIGRAFICHE</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta Esecutrice: Ad Arte srl</b>" % (sito, data), styH1))
+		lst.append(logo)
+		lst.append(Paragraph("<b>ELENCO UNITA' STRATIGRAFICHE</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
 
 		table_data = []
 		for i in range(len(records)):
@@ -648,8 +665,10 @@ class generate_US_pdf:
 			table_data.append(exp_index.getTable())
 
 		styles = exp_index.makeStyles()
+
 		table_data_formatted = Table(table_data,  colWidths=60)
 		table_data_formatted.setStyle(styles)
+		table_data_formatted.hAlign = "LEFT"
 
 		lst.append(table_data_formatted)
 		lst.append(Spacer(0,2))
