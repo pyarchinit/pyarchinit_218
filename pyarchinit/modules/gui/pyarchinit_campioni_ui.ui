@@ -857,7 +857,7 @@
         <x>0</x>
         <y>0</y>
         <width>522</width>
-        <height>146</height>
+        <height>116</height>
        </rect>
       </property>
       <attribute name="label">
@@ -877,12 +877,12 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="pushButton_draw">
+          <widget class="QPushButton" name="pushButton_index_pdf">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="text">
-            <string>Carica</string>
+            <string>Esporta elenco campioni PDF</string>
            </property>
           </widget>
          </item>

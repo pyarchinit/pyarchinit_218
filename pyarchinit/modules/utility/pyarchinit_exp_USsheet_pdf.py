@@ -665,15 +665,15 @@ class generate_US_pdf:
 			table_data.append(exp_index.getTable())
 
 		styles = exp_index.makeStyles()
+		colWidths=[28,28,120,45,58,45,58,55,64,64,52,52,52]
 
-		table_data_formatted = Table(table_data,  colWidths=60)
-		table_data_formatted.setStyle(styles)
+		table_data_formatted = Table(table_data, colWidths, style=styles)
 		table_data_formatted.hAlign = "LEFT"
 
 		lst.append(table_data_formatted)
 		lst.append(Spacer(0,2))
 
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'indice_us.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_us.pdf')
 		f = open(filename, "wb")
 
 		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)

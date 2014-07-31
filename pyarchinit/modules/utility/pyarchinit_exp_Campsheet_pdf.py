@@ -14,7 +14,7 @@ from datetime import date, time
 from pyarchinit_OS_utility import *
 
 
-class NumberedCanvas_Findssheet(canvas.Canvas):
+class NumberedCanvas_Campionisheet(canvas.Canvas):
 	def __init__(self, *args, **kwargs):
 		canvas.Canvas.__init__(self, *args, **kwargs)
 		self._saved_page_states = []
@@ -39,7 +39,7 @@ class NumberedCanvas_Findssheet(canvas.Canvas):
 		self.setFont("Helvetica", 8)
 		self.drawRightString(200*mm, 20*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
 
-class NumberedCanvas_FINDSindex(canvas.Canvas):
+class NumberedCanvas_Campioniindex(canvas.Canvas):
 	def __init__(self, *args, **kwargs):
 		canvas.Canvas.__init__(self, *args, **kwargs)
 		self._saved_page_states = []
@@ -91,7 +91,7 @@ class NumberedCanvas_CASSEindex(canvas.Canvas):
 		self.drawRightString(270*mm, 10*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
 
 
-class single_Finds_pdf_sheet:
+class single_Campioni_pdf_sheet:
 
 	def __init__(self, data):
 		self.id_invmat = data[0]
@@ -112,6 +112,72 @@ class single_Finds_pdf_sheet:
 		self.misurazioni = data[15]
 		self.rif_biblio = data[16]
 		self.tecnologie = data[17]
+
+	"""
+	def unzip_rapporti_stratigrafici(self):
+		rapporti = eval(self.rapporti)
+
+		for rapporto in rapporti:
+			if len(rapporto) == 2:
+				if rapporto[0] == 'Si lega a' or rapporto[0] == 'si lega a':
+					if self.si_lega_a == '':
+						self.si_lega_a += str(rapporto[1])
+					else:
+						self.si_lega_a += ', ' + str(rapporto[1])
+
+				if rapporto[0] == 'Uguale a' or rapporto[0] == 'uguale a':
+					if self.uguale_a == '':
+						self.uguale_a += str(rapporto[1])
+					else:
+						self.uguale_a += ', ' + str(rapporto[1])
+
+				if rapporto[0] == 'Copre' or rapporto[0] == 'copre':
+					if self.copre == '':
+						self.copre += str(rapporto[1])
+					else:
+						self.copre += ', ' + str(rapporto[1])
+
+				if rapporto[0] == 'Coperto da' or rapporto[0] == 'coperto da':
+					if self.coperto_da == '':
+						self.coperto_da += str(rapporto[1])
+					else:
+						self.coperto_da += ', ' + str(rapporto[1])
+
+				if rapporto[0] == 'Riempie' or rapporto[0] == 'riempie':
+					if self.riempie == '':
+						self.riempie += str(rapporto[1])
+					else:
+						self.riempie += ', ' + str(rapporto[1])
+
+				if rapporto[0] == 'Riempito da' or rapporto[0] == 'riempito da':
+					if self.riempito_da == '':
+						self.riempito_da += str(rapporto[1])
+					else:
+						self.riempito_da += ', ' + str(rapporto[1])
+				if rapporto[0] == 'Taglia' or rapporto[0] == 'taglia':
+					if self.taglia == '':
+						self.taglia += str(rapporto[1])
+					else:
+						self.taglia += ', ' + str(rapporto[1])
+
+				if rapporto[0] == 'Tagliato da' or rapporto[0] == 'tagliato da':
+					if self.tagliato_da == '':
+						self.tagliato_da += str(rapporto[1])
+					else:
+						self.tagliato_da += ', ' + str(rapporto[1])
+
+				if rapporto[0] == 'Si appoggia a' or rapporto[0] == 'si appoggia a':
+					if self.si_appoggia_a == '':
+						self.si_appoggia_a+= str(rapporto[1])
+					else:
+						self.si_appoggia_a += ', ' + str(rapporto[1])
+
+				if rapporto[0] == 'Gli si appoggia' or rapporto[0] == 'gli si appoggia a':
+					if self.gli_si_appoggia == '':
+						self.gli_si_appoggia += str(rapporto[1])
+					else:
+						self.gli_si_appoggia += ', ' + str(rapporto[1])
+	"""
 
 	def datestrfdate(self):
 		now = date.today()
@@ -169,7 +235,7 @@ class single_Finds_pdf_sheet:
 		#4 row
 		descrizione = ''
 		try:
-			descrizione = Paragraph("<b>Descrizione</b><br/>" + unicode(self.descrizione), styDescrizione)
+			descrizione = Paragraph("<b>Descrizione</b><br/>" + str(self.descrizione), styDescrizione)
 		except:
 			pass
 
@@ -295,7 +361,7 @@ class single_Finds_pdf_sheet:
 					#3 row
 					('SPAN', (0,3),(4,3)), #datazione
 					('SPAN', (5,3),(9,3)),  #conservazione
-					
+
 					#4 row
 					('SPAN', (0,4),(9,4)),  #descrizione
 
@@ -335,7 +401,7 @@ class single_Finds_pdf_sheet:
 		return t
 
 
-class Box_labels_Finds_pdf_sheet:
+class Box_labels_Campioni_pdf_sheet:
 
 	def __init__(self, data, sito):
 		self.sito = sito #Sito
@@ -416,6 +482,7 @@ class Box_labels_Finds_pdf_sheet:
 
 
 
+
 class CASSE_index_pdf_sheet:
 
 	def __init__(self, data):
@@ -448,6 +515,7 @@ class CASSE_index_pdf_sheet:
 
 		luogo_conservazione = Paragraph("<b>Luogo di conservazione</b><br/>" + str(self.luogo_conservazione),styNormal)
 
+
 		data = [num_cassa,
 					elenco_inv_tip_rep,
 					elenco_us,
@@ -461,18 +529,18 @@ class CASSE_index_pdf_sheet:
 		return styles
 
 
-class FINDS_index_pdf_sheet:
+class Campioni_index_pdf_sheet:
 
 	def __init__(self, data):
-		self.sito = data[1] #1 - sito
-		self.num_inventario = data[2] #2- numero_inventario
-		self.tipo_reperto = data[3] #3 - tipo_reperto
-		self.criterio_schedatura = data[4 ]#4 - criterio_schedatura
-		self.definizione = data[5 ]#5 - definizione
-		self.area = data[7] # 7 - area
-		self.us = data[8] #8- us
-		self.lavato = data[9] #9 - lavato
-		self.numero_cassa = data[10] #10 - numero cassa
+		self.sito = data[0] 									#1 - sito
+		self.numero_campione = data[1] 				#2- numero campione
+		self.tipo_campione = data[2]						#3 - Tipo campione
+		self.descrizione = data[3]							#4 - descrizione
+		self.area = data[4 ]									#5 - area
+		self.us = data[5 ]									#6 - us
+		self.numero_inventario_materiale = data[6]	#7 - numero inventario materiale
+		self.luogo_conservazione = data[7]				#8 - conservazione
+		self.nr_cassa = data[8]							#9 - nr_cassa
 
 	def getTable(self):
 		styleSheet = getSampleStyleSheet()
@@ -484,22 +552,12 @@ class FINDS_index_pdf_sheet:
 
 		#self.unzip_rapporti_stratigrafici()
 
-		num_inventario = Paragraph("<b>N. Inv.</b><br/>" + str(self.num_inventario),styNormal)
+		num_campione = Paragraph("<b>N. Camp.</b><br/>" + str(self.numero_campione),styNormal)
 
-		if self.tipo_reperto == None:
-			tipo_reperto = Paragraph("<b>Tipo reperto</b><br/>",styNormal)
+		if self.tipo_campione == None:
+			tipo_campione = Paragraph("<b>Tipo campione</b><br/>",styNormal)
 		else:
-			tipo_reperto = Paragraph("<b>Tipo reperto</b><br/>" + str(self.tipo_reperto),styNormal)
-	
-		if self.criterio_schedatura == None:
-			classe_materiale = Paragraph("<b>Classe materiale</b><br/>",styNormal)
-		else:
-			classe_materiale = Paragraph("<b>Classe materiale</b><br/>" + str(self.criterio_schedatura),styNormal)
-
-		if self.definizione == None:
-			definizione = Paragraph("<b>Definizione</b><br/>" ,styNormal)
-		else:
-			definizione = Paragraph("<b>Definizione</b><br/>" + str(self.definizione),styNormal)
+			tipo_campione = Paragraph("<b>Tipo campione</b><br/>" + str(self.tipo_campione),styNormal)
 
 		if str(self.area) == "None":
 			area = Paragraph("<b>Area</b><br/>",styNormal)
@@ -511,24 +569,27 @@ class FINDS_index_pdf_sheet:
 		else:
 			us = Paragraph("<b>US</b><br/>" + str(self.us),styNormal)
 
-		if self.lavato == None:
-			lavato = Paragraph("<b>Lavato</b><br/>",styNormal)
+		if self.numero_inventario_materiale == None:
+			numero_inventario_materiale = Paragraph("<b>N. Inv. Materiale</b><br/>",styNormal)
 		else:
-			lavato = Paragraph("<b>Lavato</b><br/>" + str(self.lavato),styNormal)
+			numero_inventario_materiale = Paragraph("<b>N. Inv. Materiale</b><br/>" + str(self.numero_inventario_materiale),styNormal)
 
-		if str(self.numero_cassa) == "None":
+		if self.luogo_conservazione == None:
+			luogo_conservazione = Paragraph("<b>Luogo Conservazione</b><br/>",styNormal)
+		else:
+			luogo_conservazione = Paragraph("<b>Luogo Conservazione</b><br/>" + str(self.luogo_conservazione),styNormal)
+
+		if self.nr_cassa == None:
 			nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>",styNormal)
 		else:
-			nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>" + str(self.numero_cassa),styNormal)
+			nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>" + str(self.nr_cassa),styNormal)
 
-
-		data = [num_inventario,
-				tipo_reperto,
-				classe_materiale,
-				definizione,
+		data = [num_campione,
+				tipo_campione,
 				area,
 				us,
-				lavato,
+				numero_inventario_materiale,
+				luogo_conservazione,
 				nr_cassa]
 
 		return data
@@ -539,7 +600,7 @@ class FINDS_index_pdf_sheet:
 
 		return styles
 
-class generate_reperti_pdf:
+class generate_campioni_pdf:
 	if os.name == 'posix':
 		HOME = os.environ['HOME']
 	elif os.name == 'nt':
@@ -552,19 +613,19 @@ class generate_reperti_pdf:
 		today = now.strftime("%d-%m-%Y")
 		return today
 
-	def build_Finds_sheets(self, records):
+	def build_Campioni_sheets(self, records):
 		elements = []
 		for i in range(len(records)):
-			single_finds_sheet = single_Finds_pdf_sheet(records[i])
-			elements.append(single_finds_sheet.create_sheet())
+			single_Campioni_sheet = single_Campioni_pdf_sheet(records[i])
+			elements.append(single_Campioni_sheet.create_sheet())
 			elements.append(PageBreak())
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'scheda_Finds.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'scheda_Campioni.pdf')
 		f = open(filename, "wb")
 		doc = SimpleDocTemplate(f)
-		doc.build(elements, canvasmaker=NumberedCanvas_Findssheet)
+		doc.build(elements, canvasmaker=NumberedCanvas_Campionisheet)
 		f.close()
 
-	def build_index_Finds(self, records, sito):
+	def build_index_Campioni(self, records, sito):
 		if os.name == 'posix':
 			home = os.environ['HOME']
 		elif os.name == 'nt':
@@ -573,7 +634,7 @@ class generate_reperti_pdf:
 		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
 		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
 
-		logo = Image(logo_path)
+		logo = Image(logo_path) 
 		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
 		logo.drawWidth = 1.5*inch
 		logo.hAlign = "LEFT"
@@ -587,27 +648,27 @@ class generate_reperti_pdf:
 
 		lst = []
 		lst.append(logo)
-		lst.append(Paragraph("<b>ELENCO MATERIALI</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
+		lst.append(Paragraph("<b>ELENCO CAMPIONI</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
 
 		table_data = []
 		for i in range(len(records)):
-			exp_index = FINDS_index_pdf_sheet(records[i])
+			exp_index = Campioni_index_pdf_sheet(records[i])
 			table_data.append(exp_index.getTable())
-
+		
 		styles = exp_index.makeStyles()
-		colWidths=[70,120,120,120, 35, 35, 70, 70]
+		colWidths=[60,150,60, 60,60, 250, 60]
 
 		table_data_formatted = Table(table_data, colWidths, style=styles)
 		table_data_formatted.hAlign = "LEFT"
 
 		lst.append(table_data_formatted)
-		lst.append(Spacer(0,2))
+		#lst.append(Spacer(0,2))
 
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_materiali.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_campioni.pdf')
 		f = open(filename, "wb")
 
 		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
-		doc.build(lst, canvasmaker=NumberedCanvas_FINDSindex)
+		doc.build(lst, canvasmaker=NumberedCanvas_Campioniindex)
 
 		f.close()
 
@@ -627,7 +688,6 @@ class generate_reperti_pdf:
 
 		styles = exp_index.makeStyles()
 		colWidths=[60,150,100, 120]
-
 		table_data_formatted = Table(table_data, colWidths, style=styles)
 		table_data_formatted.hAlign = "LEFT"
 
@@ -639,17 +699,17 @@ class generate_reperti_pdf:
 		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_casse.pdf')
 		f = open(filename, "wb")
 
-		doc = SimpleDocTemplate(f, pagesize=(21*cm, 29*cm), showBoundary=0)
-		doc.build(lst, canvasmaker=NumberedCanvas_FINDSindex)
+		doc = SimpleDocTemplate(f, pagesize=(21*cm, 29*cm), showBoundary=1)
+		doc.build(lst, canvasmaker=NumberedCanvas_Campioniindex)
 
 		f.close()
 
 
-	def build_box_labels_Finds(self, records, sito):
+	def build_box_labels_Campioni(self, records, sito):
 		elements = []
 		for i in range(len(records)):
-			single_finds_sheet = Box_labels_Finds_pdf_sheet(records[i], sito)
-			elements.append(single_finds_sheet.create_sheet())
+			single_Campioni_sheet = Box_labels_Campioni_pdf_sheet(records[i], sito)
+			elements.append(single_Campioni_sheet.create_sheet())
 			elements.append(PageBreak())
 		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'etichette_casse.pdf')
 		f = open(filename, "wb")

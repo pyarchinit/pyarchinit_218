@@ -44,6 +44,8 @@ from  pyarchinit_error_check import *
 from  pyarchinit_pyqgis import Pyarchinit_pyqgis
 from  sortpanelmain import SortPanelMain
 
+from  pyarchinit_exp_Campsheet_pdf import *
+
 ##from 
 
 class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
@@ -76,7 +78,7 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 	"Nr Cassa":"nr_cassa",
 	"Luogo di conservazione":"luogo_conservazione"
 	}
-	
+
 	SORT_ITEMS = [
 				ID_TABLE,
 				"Sito",
@@ -134,7 +136,7 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 		self.pushButton_new_search.setEnabled(n)
 
 		self.pushButton_search_go.setEnabled(n)
-		
+
 		self.pushButton_sort.setEnabled(n)
 
 	def enable_button_search(self, n):
@@ -496,7 +498,6 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 		else:
 			self.enable_button_search(0)
 
-
 			#set the GUI for a new search
 			if self.BROWSE_STATUS != "f":
 				self.BROWSE_STATUS = "f"
@@ -612,10 +613,52 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 		self.pyQGIS.charge_sites_geometry(["1", "2", "3", "4", "8"], "sito", sito)
 
 	def on_pushButton_rel_pdf_pressed(self):
-		check=QMessageBox.warning(self, "Attention", "Under testing: this method can contains some bugs. Do you want proceed?",QMessageBox.Cancel,1)
+		check=QMessageBox.warning(self, "Attention", "Under testing: this method can contains some bugs. Do you want proceed?", QMessageBox.Cancel,1)
 		if check == 1:
 			erp = exp_rel_pdf(unicode(self.comboBox_sito.currentText()))
 			erp.export_rel_pdf()
+
+	def on_pushButton_index_pdf_pressed(self):
+		Camp_index_pdf = generate_campioni_pdf()
+		data_list = self.generate_list_pdf()
+		Camp_index_pdf.build_index_Campioni(data_list, data_list[0][0])
+
+	def generate_list_pdf(self):
+		data_list = []
+		for i in range(len(self.DATA_LIST)):
+			if str(self.DATA_LIST[i].nr_campione) == 'None':
+				numero_campione = ''
+			else:
+				numero_campione = str(self.DATA_LIST[i].nr_campione)
+
+			if str(self.DATA_LIST[i].us) == 'None':
+				us = ''
+			else:
+				us = str(self.DATA_LIST[i].us)
+
+			if str(self.DATA_LIST[i].numero_inventario_materiale) == 'None':
+				numero_inventario_materiale = ''
+			else:
+				numero_inventario_materiale = str(self.DATA_LIST[i].numero_inventario_materiale)
+
+			if str(self.DATA_LIST[i].nr_cassa) == 'None':
+				nr_cassa = ''
+			else:
+				nr_cassa = str(self.DATA_LIST[i].nr_cassa)
+
+			data_list.append([
+			unicode(self.DATA_LIST[i].sito),														#1 - Sito
+			unicode(numero_campione),																			#2 - Numero campione
+			unicode(self.DATA_LIST[i].tipo_campione),									#3 - Tipo campione
+			unicode(self.DATA_LIST[i].descrizione),											#4 - Descrizione
+			unicode(self.DATA_LIST[i].area),													#5 - Area
+			unicode(us),																								#6 - us
+			unicode(numero_inventario_materiale),																#7 - numero inventario materiale
+			unicode(self.DATA_LIST[i].luogo_conservazione),								#8 - luogo_conservazione
+			unicode(nr_cassa)																						#9 - nr cassa
+			])
+
+		return data_list
 
 	def update_if(self, msg):
 		rec_corr = self.REC_CORR
@@ -707,6 +750,7 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 			nr_cassa = ''
 		else:
 			nr_cassa = str(self.DATA_LIST[self.rec_num].nr_cassa)
+
 
 		unicode(self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito))											#1 - Sito
 		unicode(self.lineEdit_nr_campione.setText(numero_campione))																#2 - Numero campione
