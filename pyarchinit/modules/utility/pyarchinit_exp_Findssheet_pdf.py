@@ -612,13 +612,27 @@ class generate_reperti_pdf:
 		f.close()
 
 	def build_index_Casse(self, records, sito):
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
+
+		logo = Image(logo_path)
+		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
+		logo.drawWidth = 1.5*inch
+		logo.hAlign = "LEFT"
+
 		styleSheet = getSampleStyleSheet()
 		styNormal = styleSheet['Normal']
 		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
-		styH3 = styleSheet['Heading3']
+		styH1 = styleSheet['Heading3']
+
 		data = self.datestrfdate()
-		lst = []
-		lst.append(Paragraph("<b>ELENCO CASSE</b><br/><b>Sito: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH3))
+		lst = [logo]
+		lst.append(Paragraph("<b>ELENCO CASSE</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
 
 		table_data = []
 		for i in range(len(records)):
@@ -639,8 +653,8 @@ class generate_reperti_pdf:
 		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_casse.pdf')
 		f = open(filename, "wb")
 
-		doc = SimpleDocTemplate(f, pagesize=(21*cm, 29*cm), showBoundary=0)
-		doc.build(lst, canvasmaker=NumberedCanvas_FINDSindex)
+		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
+		doc.build(lst, canvasmaker=NumberedCanvas_Sindex)
 
 		f.close()
 
