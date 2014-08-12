@@ -119,7 +119,7 @@ class PyArchInitPlugin:
 		self.actionStruttura = QAction(QIcon(icon_Struttura), "Scheda struttura", self.iface.mainWindow())
 		QObject.connect(self.actionStruttura, SIGNAL("triggered()"), self.runStruttura)
 
-		icon_US = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconsus.png'))
+		icon_US = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconSus.png'))
 		self.actionUS = QAction(QIcon((icon_US)), u"Scheda unità stratigrafica - US", self.iface.mainWindow())
 		self.actionUS.setWhatsThis(u"Scheda di unità stratigrafica - US")
 		QObject.connect(self.actionUS, SIGNAL("triggered()"), self.runUS)

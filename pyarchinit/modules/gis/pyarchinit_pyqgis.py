@@ -298,6 +298,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				#newSubSetString = "%s OR id_us = '0'" % (originalSubsetString) 4D dimension
 
 				#layerUS.setSubsetString(newSubSetString)
+
 			else:
 				QMessageBox.warning(self, "TESTER", "Layer US non valido",QMessageBox.Ok)
 
@@ -995,6 +996,11 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
 			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
 
+##			for i in data
+##			
+##			if len(data) == 1:
+##				gidstr = "id_struttura = '" + str(data.id_struttura) +"'"
+##			else:
 			gidstr = "id_struttura = '" + str(data[0].id_struttura) +"'"
 			if len(data) > 1:
 				for i in range(len(data)):

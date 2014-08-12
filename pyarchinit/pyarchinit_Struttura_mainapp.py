@@ -943,7 +943,7 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 	def on_pushButton_draw_struttura_pressed(self):
 		QMessageBox.warning(self, "Messaggio", " DA DEBUGGARE", QMessageBox.Ok)
 
-		sing_layer = self.DATA_LIST[self.REC_CORR]
+		sing_layer = [self.DATA_LIST[self.REC_CORR]]
 		self.pyQGIS.charge_structure_from_research(sing_layer)
 
 
