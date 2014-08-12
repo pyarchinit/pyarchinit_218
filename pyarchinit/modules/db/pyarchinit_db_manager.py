@@ -770,6 +770,7 @@ class Pyarchinit_db_management:
 		else:
 			return int(res_max_num_id)
 
+
 	def dir_query(self):
 		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
 		session = Session()

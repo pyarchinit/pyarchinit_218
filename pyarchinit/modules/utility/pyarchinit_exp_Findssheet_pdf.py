@@ -91,9 +91,6 @@ class NumberedCanvas_CASSEindex(canvas.Canvas):
 		self.drawRightString(270*mm, 10*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
 
 
-
-
-
 class single_Finds_pdf_sheet:
 
 	def __init__(self, data):
@@ -115,72 +112,6 @@ class single_Finds_pdf_sheet:
 		self.misurazioni = data[15]
 		self.rif_biblio = data[16]
 		self.tecnologie = data[17]
-
-	"""
-	def unzip_rapporti_stratigrafici(self):
-		rapporti = eval(self.rapporti)
-
-		for rapporto in rapporti:
-			if len(rapporto) == 2:
-				if rapporto[0] == 'Si lega a' or rapporto[0] == 'si lega a':
-					if self.si_lega_a == '':
-						self.si_lega_a += str(rapporto[1])
-					else:
-						self.si_lega_a += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Uguale a' or rapporto[0] == 'uguale a':
-					if self.uguale_a == '':
-						self.uguale_a += str(rapporto[1])
-					else:
-						self.uguale_a += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Copre' or rapporto[0] == 'copre':
-					if self.copre == '':
-						self.copre += str(rapporto[1])
-					else:
-						self.copre += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Coperto da' or rapporto[0] == 'coperto da':
-					if self.coperto_da == '':
-						self.coperto_da += str(rapporto[1])
-					else:
-						self.coperto_da += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Riempie' or rapporto[0] == 'riempie':
-					if self.riempie == '':
-						self.riempie += str(rapporto[1])
-					else:
-						self.riempie += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Riempito da' or rapporto[0] == 'riempito da':
-					if self.riempito_da == '':
-						self.riempito_da += str(rapporto[1])
-					else:
-						self.riempito_da += ', ' + str(rapporto[1])
-				if rapporto[0] == 'Taglia' or rapporto[0] == 'taglia':
-					if self.taglia == '':
-						self.taglia += str(rapporto[1])
-					else:
-						self.taglia += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Tagliato da' or rapporto[0] == 'tagliato da':
-					if self.tagliato_da == '':
-						self.tagliato_da += str(rapporto[1])
-					else:
-						self.tagliato_da += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Si appoggia a' or rapporto[0] == 'si appoggia a':
-					if self.si_appoggia_a == '':
-						self.si_appoggia_a+= str(rapporto[1])
-					else:
-						self.si_appoggia_a += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Gli si appoggia' or rapporto[0] == 'gli si appoggia a':
-					if self.gli_si_appoggia == '':
-						self.gli_si_appoggia += str(rapporto[1])
-					else:
-						self.gli_si_appoggia += ', ' + str(rapporto[1])
-	"""
 
 	def datestrfdate(self):
 		now = date.today()
@@ -238,7 +169,7 @@ class single_Finds_pdf_sheet:
 		#4 row
 		descrizione = ''
 		try:
-			descrizione = Paragraph("<b>Descrizione</b><br/>" + str(self.descrizione), styDescrizione)
+			descrizione = Paragraph("<b>Descrizione</b><br/>" + unicode(self.descrizione), styDescrizione)
 		except:
 			pass
 
@@ -485,7 +416,6 @@ class Box_labels_Finds_pdf_sheet:
 
 
 
-
 class CASSE_index_pdf_sheet:
 
 	def __init__(self, data):
@@ -517,7 +447,6 @@ class CASSE_index_pdf_sheet:
 			elenco_us = Paragraph("<b>Elenco US/(Struttura)</b><br/>" + str(self.elenco_us),styNormal)
 
 		luogo_conservazione = Paragraph("<b>Luogo di conservazione</b><br/>" + str(self.luogo_conservazione),styNormal)
-
 
 		data = [num_cassa,
 					elenco_inv_tip_rep,
@@ -636,27 +565,45 @@ class generate_reperti_pdf:
 		f.close()
 
 	def build_index_Finds(self, records, sito):
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
+
+		logo = Image(logo_path)
+		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
+		logo.drawWidth = 1.5*inch
+		logo.hAlign = "LEFT"
+
 		styleSheet = getSampleStyleSheet()
 		styNormal = styleSheet['Normal']
 		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
-		styH1 = styleSheet['Heading1']
+		styH1 = styleSheet['Heading3']
+
 		data = self.datestrfdate()
+
 		lst = []
-		lst.append(Paragraph("<b>ELENCO MATERIALI</b><br/><b>Sito: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH1))
+		lst.append(logo)
+		lst.append(Paragraph("<b>ELENCO MATERIALI</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
 
 		table_data = []
 		for i in range(len(records)):
 			exp_index = FINDS_index_pdf_sheet(records[i])
 			table_data.append(exp_index.getTable())
-		
+
 		styles = exp_index.makeStyles()
-		table_data_formatted = Table(table_data,  colWidths=89)
-		table_data_formatted.setStyle(styles)
+		colWidths=[70,120,120,120, 35, 35, 70, 70]
+
+		table_data_formatted = Table(table_data, colWidths, style=styles)
+		table_data_formatted.hAlign = "LEFT"
 
 		lst.append(table_data_formatted)
 		lst.append(Spacer(0,2))
 
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'indice_materiali.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_materiali.pdf')
 		f = open(filename, "wb")
 
 		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
@@ -665,13 +612,27 @@ class generate_reperti_pdf:
 		f.close()
 
 	def build_index_Casse(self, records, sito):
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
+
+		logo = Image(logo_path)
+		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
+		logo.drawWidth = 1.5*inch
+		logo.hAlign = "LEFT"
+
 		styleSheet = getSampleStyleSheet()
 		styNormal = styleSheet['Normal']
 		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
-		styH3 = styleSheet['Heading3']
+		styH1 = styleSheet['Heading3']
+
 		data = self.datestrfdate()
-		lst = []
-		lst.append(Paragraph("<b>ELENCO CASSE</b><br/><b>Sito: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH3))
+		lst = [logo]
+		lst.append(Paragraph("<b>ELENCO CASSE</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
 
 		table_data = []
 		for i in range(len(records)):
@@ -680,6 +641,7 @@ class generate_reperti_pdf:
 
 		styles = exp_index.makeStyles()
 		colWidths=[60,150,100, 120]
+
 		table_data_formatted = Table(table_data, colWidths, style=styles)
 		table_data_formatted.hAlign = "LEFT"
 
@@ -691,8 +653,8 @@ class generate_reperti_pdf:
 		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_casse.pdf')
 		f = open(filename, "wb")
 
-		doc = SimpleDocTemplate(f, pagesize=(21*cm, 29*cm), showBoundary=1)
-		doc.build(lst, canvasmaker=NumberedCanvas_FINDSindex)
+		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
+		doc.build(lst, canvasmaker=NumberedCanvas_Sindex)
 
 		f.close()
 

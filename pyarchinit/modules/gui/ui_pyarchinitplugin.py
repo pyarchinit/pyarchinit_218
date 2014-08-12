@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_pyarchinitplugin.ui'
 #
-# Created: Wed Jan 23 18:36:05 2013
+# Created: Thu Aug 07 23:17:03 2014
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -191,7 +191,7 @@ class Ui_PyarchinitPlugin(object):
         icon4 = QtGui.QIcon()
         icon4.addPixmap(QtGui.QPixmap(_fromUtf8(":/images/iconSite.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btnSitotable.setIcon(icon4)
-        self.btnSitotable.setIconSize(QtCore.QSize(100, 100))
+        self.btnSitotable.setIconSize(QtCore.QSize(20, 100))
         self.btnSitotable.setObjectName(_fromUtf8("btnSitotable"))
         self.btnPeriodotable = QtGui.QPushButton(self.services)
         self.btnPeriodotable.setGeometry(QtCore.QRect(166, 45, 91, 31))
@@ -267,7 +267,7 @@ class Ui_PyarchinitPlugin(object):
         self.btnSitotable_2.setMaximumSize(QtCore.QSize(16777215, 80))
         self.btnSitotable_2.setBaseSize(QtCore.QSize(0, 0))
         self.btnSitotable_2.setIcon(icon4)
-        self.btnSitotable_2.setIconSize(QtCore.QSize(100, 100))
+        self.btnSitotable_2.setIconSize(QtCore.QSize(20, 100))
         self.btnSitotable_2.setObjectName(_fromUtf8("btnSitotable_2"))
         self.line_22 = QtGui.QFrame(self.tab)
         self.line_22.setGeometry(QtCore.QRect(85, 102, 31, 16))
@@ -366,7 +366,7 @@ class Ui_PyarchinitPlugin(object):
         self.btnPDFmen.setGeometry(QtCore.QRect(90, 10, 81, 31))
         self.btnPDFmen.setStyleSheet(_fromUtf8("background-color: rgb(170, 170, 127);"))
         icon9 = QtGui.QIcon()
-        icon9.addPixmap(QtGui.QPixmap(_fromUtf8(":/images/pdf-icon.jpg")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon9.addPixmap(QtGui.QPixmap(_fromUtf8(":/images/pdf-icon.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.btnPDFmen.setIcon(icon9)
         self.btnPDFmen.setIconSize(QtCore.QSize(25, 25))
         self.btnPDFmen.setObjectName(_fromUtf8("btnPDFmen"))
@@ -374,7 +374,7 @@ class Ui_PyarchinitPlugin(object):
         self.account = QtGui.QWidget()
         self.account.setObjectName(_fromUtf8("account"))
         self.label_7 = QtGui.QLabel(self.account)
-        self.label_7.setGeometry(QtCore.QRect(20, 70, 221, 261))
+        self.label_7.setGeometry(QtCore.QRect(20, 70, 221, 311))
         self.label_7.setAlignment(QtCore.Qt.AlignCenter)
         self.label_7.setOpenExternalLinks(True)
         self.label_7.setObjectName(_fromUtf8("label_7"))
@@ -432,17 +432,24 @@ class Ui_PyarchinitPlugin(object):
         self.label_7.setText(QtGui.QApplication.translate("PyarchinitPlugin", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:\'MS Shell Dlg 2\'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Sans Serif\'; font-size:11pt; font-weight:600; color:#aa0000;\">pyArchInit Support</span></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'Sans Serif\'; font-size:9pt;\"><br /></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:\'Sans Serif\'; font-size:9pt;\"></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Sans Serif\'; font-size:9pt;\"><br /></span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Sans Serif\'; font-size:9pt;\">Sito ufficiale</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"https://sites.google.com/site/pyarchinit/\"><span style=\" text-decoration: underline; color:#0000ff;\">https://sites.google.com/site/pyarchinit/</span></a></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#0000ff;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"https://sites.google.com/site/pyarchinit/\"><span style=\" font-size:8pt; text-decoration: underline; color:#0000ff;\">https://sites.google.com/site/pyarchinit/</span></a></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; text-decoration: underline; color:#0000ff;\"></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; text-decoration: underline; color:#0000ff;\"><br /></span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Sans Serif\'; font-size:9pt;\">Blog</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://pyarchinit.blogspot.it/\"><span style=\" text-decoration: underline; color:#0000ff;\">http://pyarchinit.blogspot.it/</span></a></p>\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; text-decoration: underline; color:#0000ff;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"http://pyarchinit.blogspot.it/\"><span style=\" font-size:8pt; text-decoration: underline; color:#0000ff;\">http://pyarchinit.blogspot.it/</span></a></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; text-decoration: underline; color:#0000ff;\"></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt; text-decoration: underline; color:#0000ff;\"><br /></span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Sans Serif\'; font-size:9pt;\">Github repository</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"https://github.com/pyarchinit/\"><span style=\" text-decoration: underline; color:#0000ff;\">https://github.com/pyarchinit/</span></a></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"https://github.com/pyarchinit/\"><span style=\" font-size:8pt; text-decoration: underline; color:#0000ff;\">https://github.com/pyarchinit/</span></a></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; text-decoration: underline; color:#0000ff;\"></p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt; text-decoration: underline; color:#0000ff;\"></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'Sans Serif\'; font-size:9pt;\">Online mailing list</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><a href=\"pyarchinit-users@googlegroups.com\"><span style=\" text-decoration: underline; color:#0000ff;\">pyarchinit-users@googlegroups.com</span></a></p></body></html>", None, QtGui.QApplication.UnicodeUTF8))
         self.label_13.setText(QtGui.QApplication.translate("PyarchinitPlugin", "Supporto online", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.account), QtGui.QApplication.translate("PyarchinitPlugin", "Supporto online", None, QtGui.QApplication.UnicodeUTF8))
 

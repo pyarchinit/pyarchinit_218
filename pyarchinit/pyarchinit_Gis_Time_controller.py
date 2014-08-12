@@ -46,6 +46,8 @@ from  sortpanelmain import SortPanelMain
 class pyarchinit_Gis_Time_Controller(QDialog, Ui_DialogGisTimeController):
 	MSG_BOX_TITLE = "PyArchInit - Gis Time Management"
 	DB_MANAGER = ""
+	ORDER_LAYER_VALUE = ""
+	MAPPER_TABLE_CLASS = "US"
 
 	def __init__(self, iface):
 		self.iface = iface
@@ -58,6 +60,15 @@ class pyarchinit_Gis_Time_Controller(QDialog, Ui_DialogGisTimeController):
 			self.connect()
 		except:
 			pass
+
+		QObject.connect(self.dial_relative_cronology, SIGNAL("valueChanged(int)"),self.set_max_num)
+		QObject.connect(self.spinBox_relative_cronology, SIGNAL("valueChanged(int)"),self.set_max_num)
+
+		QObject.connect(self.dial_relative_cronology, SIGNAL("valueChanged(int)"),self.define_order_layer_value)
+		QObject.connect(self.dial_relative_cronology, SIGNAL("valueChanged(int)"),self.spinBox_relative_cronology.setValue)
+
+		QObject.connect(self.spinBox_relative_cronology, SIGNAL("valueChanged(int)"),self.define_order_layer_value)
+		QObject.connect(self.spinBox_relative_cronology, SIGNAL("valueChanged(int)"),self.dial_relative_cronology.setValue)
 
 	def connect(self):
 		from pyarchinit_conn_strings import *
@@ -73,11 +84,36 @@ class pyarchinit_Gis_Time_Controller(QDialog, Ui_DialogGisTimeController):
 			else:
 				QMessageBox.warning(self, "Alert", "Attenzione rilevato bug! Segnalarlo allo sviluppatore<br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
 
+	def set_max_num(self):
+		max_num_order_layer = self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, "order_layer")+1,
+		self.dial_relative_cronology.setMaximum(max_num_order_layer[0])
+		self.spinBox_relative_cronology.setMaximum(max_num_order_layer[0])
+
+	def define_order_layer_value(self,v):
+		try:
+			self.ORDER_LAYER_VALUE= v
+			layer = self.iface.mapCanvas().currentLayer().dataProvider()
+			originalSubsetString = layer.subsetString()
+			#if originalSubsetString != "":
+			newSubSetString = "order_layer <= %s" % (self.ORDER_LAYER_VALUE) #4D dimension
+			layer.setSubsetString(newSubSetString)
+			self.iface.mapCanvas().refresh()
+		except:
+			QgsMessageLog.logMessage("You must to load pyarchinit_us_view and/or select it from pyarchinit GeoDatabase")
+			#QMessageBox.warning(self.iface.mainWindow(), "Help", "You must to load pyarchinit_us_view from pyarchinit GeoDatabase")
+			self.iface.messageBar().pushMessage("Help", "You must to load pyarchinit_us_view and/or select it from pyarchinit GeoDatabase", level=QgsMessageBar.WARNING)
+
+##		f = open("C:/test_dial.txt", "w")
+##		f.write(str(self.ORDER_LAYER_VALUE))
+##		f.close()
+
+	def reset_query(self):
+		self.ORDER_LAYER_VALUE = v
+
 	def on_pushButton_visualize_pressed(self):
-		
 		op_cron_iniz = '<='
 		op_cron_fin = '>='
-			
+
 		per_res = self.DB_MANAGER.query_operator(
 								[
 								['cron_finale', op_cron_fin, int(self.spinBox_cron_iniz.text())],
@@ -93,9 +129,9 @@ class pyarchinit_Gis_Time_Controller(QDialog, Ui_DialogGisTimeController):
 						'periodo_iniziale' : "'" + str(per_res[sing_per].periodo) + "'",
 						'fase_iniziale' : "'" + str(per_res[sing_per].fase) + "'"}
 				us_res.append(self.DB_MANAGER.query_bool(params, 'US'))
-		
+
 			us_res_dep = []
-		
+
 			for i in us_res:
 				for n in i:
 					us_res_dep.append(n)

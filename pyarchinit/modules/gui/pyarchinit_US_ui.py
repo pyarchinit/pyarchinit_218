@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_US_ui.ui'
 #
-# Created: Wed Feb 19 19:47:03 2014
+# Created: Mon Aug 11 17:44:01 2014
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -1014,7 +1014,7 @@ class Ui_DialogUS(object):
         self.gridLayout_21.addWidget(self.pushButton_showLayer, 1, 2, 1, 1)
         self.toolBox.addItem(self.page_2, _fromUtf8(""))
         self.page_3 = QtGui.QWidget()
-        self.page_3.setGeometry(QtCore.QRect(0, 0, 98, 28))
+        self.page_3.setGeometry(QtCore.QRect(0, 0, 496, 222))
         self.page_3.setObjectName(_fromUtf8("page_3"))
         self.pushButton_exp_index_us = QtGui.QPushButton(self.page_3)
         self.pushButton_exp_index_us.setGeometry(QtCore.QRect(191, 20, 150, 24))
@@ -1197,11 +1197,11 @@ class Ui_DialogUS(object):
         self.toolBox.setItemText(self.toolBox.indexOf(self.page), QtGui.QApplication.translate("DialogUS", "Sistemi di controllo", None, QtGui.QApplication.UnicodeUTF8))
         self.label_38.setText(QtGui.QApplication.translate("DialogUS", "Visualizzazione GIS", None, QtGui.QApplication.UnicodeUTF8))
         self.label_46.setText(QtGui.QApplication.translate("DialogUS", "Disegna US", None, QtGui.QApplication.UnicodeUTF8))
-        self.toolButtonGis.setText(QtGui.QApplication.translate("DialogUS", "GIS wiever", None, QtGui.QApplication.UnicodeUTF8))
+        self.toolButtonGis.setText(QtGui.QApplication.translate("DialogUS", "GIS Data Visualizer", None, QtGui.QApplication.UnicodeUTF8))
         self.toolButtonGis.setShortcut(QtGui.QApplication.translate("DialogUS", "Ctrl+G", None, QtGui.QApplication.UnicodeUTF8))
         self.label_40.setText(QtGui.QApplication.translate("DialogUS", "Apri schede US selezionate", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_showSelectedFeatures.setToolTip(QtGui.QApplication.translate("DialogUS", "Show Selcted Features", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_showSelectedFeatures.setText(QtGui.QApplication.translate("DialogUS", "apri schede US", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_showSelectedFeatures.setText(QtGui.QApplication.translate("DialogUS", "Apri schede US", None, QtGui.QApplication.UnicodeUTF8))
         self.label_39.setText(QtGui.QApplication.translate("DialogUS", "Attivazione Preview pianta US", None, QtGui.QApplication.UnicodeUTF8))
         self.toolButtonPreview.setText(QtGui.QApplication.translate("DialogUS", "Preview pianta US", None, QtGui.QApplication.UnicodeUTF8))
         self.toolButtonPreview.setShortcut(QtGui.QApplication.translate("DialogUS", "Ctrl+G", None, QtGui.QApplication.UnicodeUTF8))
