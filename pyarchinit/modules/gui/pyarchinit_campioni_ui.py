@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_campioni_ui.ui'
 #
-# Created: Wed Jul 30 13:18:26 2014
+# Created: Mon Aug 18 16:20:16 2014
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -409,9 +409,9 @@ class Ui_DialogCampioni(object):
         self.formLayout.setObjectName(_fromUtf8("formLayout"))
         self.horizontalLayout_2 = QtGui.QHBoxLayout()
         self.horizontalLayout_2.setObjectName(_fromUtf8("horizontalLayout_2"))
-        self.label_3 = QtGui.QLabel(self.page_3)
-        self.label_3.setObjectName(_fromUtf8("label_3"))
-        self.horizontalLayout_2.addWidget(self.label_3)
+        self.pushButton_exp_champ_sheet_pdf = QtGui.QPushButton(self.page_3)
+        self.pushButton_exp_champ_sheet_pdf.setObjectName(_fromUtf8("pushButton_exp_champ_sheet_pdf"))
+        self.horizontalLayout_2.addWidget(self.pushButton_exp_champ_sheet_pdf)
         self.pushButton_index_pdf = QtGui.QPushButton(self.page_3)
         self.pushButton_index_pdf.setEnabled(True)
         self.pushButton_index_pdf.setObjectName(_fromUtf8("pushButton_index_pdf"))
@@ -504,8 +504,7 @@ class Ui_DialogCampioni(object):
         self.label_4.setText(QtGui.QApplication.translate("DialogCampioni", "Area", None, QtGui.QApplication.UnicodeUTF8))
         self.label_5.setText(QtGui.QApplication.translate("DialogCampioni", "US", None, QtGui.QApplication.UnicodeUTF8))
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_4), QtGui.QApplication.translate("DialogCampioni", "Dati stratigrafici e collocazione", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setToolTip(QtGui.QApplication.translate("DialogCampioni", "Carica tutti i layer per poter inserire nuove geometrie", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("DialogCampioni", "..", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_exp_champ_sheet_pdf.setText(QtGui.QApplication.translate("DialogCampioni", "Esporta scheda campioni", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_index_pdf.setText(QtGui.QApplication.translate("DialogCampioni", "Esporta elenco campioni PDF", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setToolTip(QtGui.QApplication.translate("DialogCampioni", "Carica tutti layer che contengono geometrie relative a questo sito", None, QtGui.QApplication.UnicodeUTF8))
         self.label_8.setText(QtGui.QApplication.translate("DialogCampioni", "..", None, QtGui.QApplication.UnicodeUTF8))

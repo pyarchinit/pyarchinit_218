@@ -857,7 +857,7 @@
         <x>0</x>
         <y>0</y>
         <width>522</width>
-        <height>116</height>
+        <height>146</height>
        </rect>
       </property>
       <attribute name="label">
@@ -867,12 +867,9 @@
        <item row="0" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QLabel" name="label_3">
-           <property name="toolTip">
-            <string>Carica tutti i layer per poter inserire nuove geometrie</string>
-           </property>
+          <widget class="QPushButton" name="pushButton_exp_champ_sheet_pdf">
            <property name="text">
-            <string>..</string>
+            <string>Esporta scheda campioni</string>
            </property>
           </widget>
          </item>

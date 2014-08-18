@@ -603,25 +603,34 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 ##
 ##		test = Test_area(data)
 ##		test.run_test()
+##
+##	def on_pushButton_draw_pressed(self):
+##		self.pyQGIS.charge_layers_for_draw(["1", "2", "3", "4", "5", "7", "8", "9", "10", "12"])
+##
+##
+##	def on_pushButton_sites_geometry_pressed(self):
+##		sito = unicode(self.comboBox_sito.currentText())
+##		self.pyQGIS.charge_sites_geometry(["1", "2", "3", "4", "8"], "sito", sito)
 
-	def on_pushButton_draw_pressed(self):
-		self.pyQGIS.charge_layers_for_draw(["1", "2", "3", "4", "5", "7", "8", "9", "10", "12"])
-
-
-	def on_pushButton_sites_geometry_pressed(self):
-		sito = unicode(self.comboBox_sito.currentText())
-		self.pyQGIS.charge_sites_geometry(["1", "2", "3", "4", "8"], "sito", sito)
-
-	def on_pushButton_rel_pdf_pressed(self):
-		check=QMessageBox.warning(self, "Attention", "Under testing: this method can contains some bugs. Do you want proceed?", QMessageBox.Cancel,1)
-		if check == 1:
-			erp = exp_rel_pdf(unicode(self.comboBox_sito.currentText()))
-			erp.export_rel_pdf()
+##	def on_pushButton_rel_pdf_pressed(self):
+##		check=QMessageBox.warning(self, "Attention", "Under testing: this method can contains some bugs. Do you want proceed?", QMessageBox.Cancel,1)
+##		if check == 1:
+##			erp = exp_rel_pdf(unicode(self.comboBox_sito.currentText()))
+##			erp.export_rel_pdf()
 
 	def on_pushButton_index_pdf_pressed(self):
 		Camp_index_pdf = generate_campioni_pdf()
 		data_list = self.generate_list_pdf()
 		Camp_index_pdf.build_index_Campioni(data_list, data_list[0][0])
+
+
+	def on_pushButton_exp_champ_sheet_pdf_pressed(self):
+		if self.records_equal_check() == 1:
+			self.update_if(QMessageBox.warning(self,'Errore',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+
+		Champ_pdf_sheet = generate_campioni_pdf()
+		data_list =  self.generate_list_pdf()
+		Champ_pdf_sheet.build_Champ_sheets(data_list)
 
 	def generate_list_pdf(self):
 		data_list = []

@@ -367,7 +367,7 @@ class Box_labels_Finds_pdf_sheet:
 
 		#format labels
 
-		num_cassa = Paragraph("<b>N. Cassa</b>" + str(self.cassa),styCassaLabel)
+		num_cassa = Paragraph("<b>N. Cassa </b>" + str(self.cassa),styCassaLabel)
 		sito = Paragraph("<b>Sito: </b>" + str(self.sito),styCassaLabel)
 
 		if self.elenco_inv_tip_rep == None:
@@ -654,7 +654,8 @@ class generate_reperti_pdf:
 		f = open(filename, "wb")
 
 		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
-		doc.build(lst, canvasmaker=NumberedCanvas_Sindex)
+		#doc.build(lst, canvasmaker=NumberedCanvas_Sindex)
+		doc.build(lst)
 
 		f.close()
 

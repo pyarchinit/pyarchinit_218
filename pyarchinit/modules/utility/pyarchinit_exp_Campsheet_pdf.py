@@ -94,90 +94,15 @@ class NumberedCanvas_CASSEindex(canvas.Canvas):
 class single_Campioni_pdf_sheet:
 
 	def __init__(self, data):
-		self.id_invmat = data[0]
-		self.sito = data[1]
-		self.numero_inventario = data[2]
-		self.tipo_reperto = data[3]
-		self.criterio_schedatura = data[4]
-		self.definizione = data[5]
-		self.descrizione = data[6]
-		self.area = data[7]
-		self.us = data[8]
-		self.lavato =  data[9]
-		self.nr_cassa = data[10]
-		self.luogo_conservazione = data[11]
-		self.stato_conservazione = data[12]
-		self.datazione_reperto = data[13]
-		self.elementi_reperto = data[14]
-		self.misurazioni = data[15]
-		self.rif_biblio = data[16]
-		self.tecnologie = data[17]
-
-	"""
-	def unzip_rapporti_stratigrafici(self):
-		rapporti = eval(self.rapporti)
-
-		for rapporto in rapporti:
-			if len(rapporto) == 2:
-				if rapporto[0] == 'Si lega a' or rapporto[0] == 'si lega a':
-					if self.si_lega_a == '':
-						self.si_lega_a += str(rapporto[1])
-					else:
-						self.si_lega_a += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Uguale a' or rapporto[0] == 'uguale a':
-					if self.uguale_a == '':
-						self.uguale_a += str(rapporto[1])
-					else:
-						self.uguale_a += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Copre' or rapporto[0] == 'copre':
-					if self.copre == '':
-						self.copre += str(rapporto[1])
-					else:
-						self.copre += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Coperto da' or rapporto[0] == 'coperto da':
-					if self.coperto_da == '':
-						self.coperto_da += str(rapporto[1])
-					else:
-						self.coperto_da += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Riempie' or rapporto[0] == 'riempie':
-					if self.riempie == '':
-						self.riempie += str(rapporto[1])
-					else:
-						self.riempie += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Riempito da' or rapporto[0] == 'riempito da':
-					if self.riempito_da == '':
-						self.riempito_da += str(rapporto[1])
-					else:
-						self.riempito_da += ', ' + str(rapporto[1])
-				if rapporto[0] == 'Taglia' or rapporto[0] == 'taglia':
-					if self.taglia == '':
-						self.taglia += str(rapporto[1])
-					else:
-						self.taglia += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Tagliato da' or rapporto[0] == 'tagliato da':
-					if self.tagliato_da == '':
-						self.tagliato_da += str(rapporto[1])
-					else:
-						self.tagliato_da += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Si appoggia a' or rapporto[0] == 'si appoggia a':
-					if self.si_appoggia_a == '':
-						self.si_appoggia_a+= str(rapporto[1])
-					else:
-						self.si_appoggia_a += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Gli si appoggia' or rapporto[0] == 'gli si appoggia a':
-					if self.gli_si_appoggia == '':
-						self.gli_si_appoggia += str(rapporto[1])
-					else:
-						self.gli_si_appoggia += ', ' + str(rapporto[1])
-	"""
+		self.sito = data[0]											#1 - Sito
+		self.numero_campione = data[1]						#2 - Numero campione
+		self.tipo_campione = data[2]								#3 - Tipo campione
+		self.descrizione = data[3]									#4 - Descrizione
+		self.area = data[4]											#5 - Area
+		self.us = data[5]												#6 - us
+		self.numero_inventario =  data[6]					#7 - numero inventario materiale
+		self.luogo_conservazione = data[7]						#8 - luogo_conservazione
+		self.nr_cassa = data[8]									#9 - nr cassa
 
 	def datestrfdate(self):
 		now = date.today()
@@ -200,8 +125,7 @@ class single_Campioni_pdf_sheet:
 		#format labels
 
 		#0 row
-		intestazione = Paragraph("<b>SCHEDA INVENTARIO REPERTI<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
-		#intestazione2 = Paragraph("<b>pyArchInit</b>", styNormal)
+		intestazione = Paragraph("<b>SCHEDA CAMPIONI<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
 
 		if os.name == 'posix':
 			home = os.environ['HOME']
@@ -219,123 +143,29 @@ class single_Campioni_pdf_sheet:
 
 		#1 row
 		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
+		tipo_campione = Paragraph("<b>Tipo Campione</b><br/>"  + str(self.tipo_campione), styNormal)
+		nr_campione = Paragraph("<b>Nr. Campione</b><br/>"  + str(self.numero_campione), styNormal)
+
+		#2 row
 		area = Paragraph("<b>Area</b><br/>"  + str(self.area), styNormal)
 		us = Paragraph("<b>US</b><br/>"  + str(self.us), styNormal)
 		nr_inventario = Paragraph("<b>Nr. Inventario</b><br/>"  + str(self.numero_inventario), styNormal)
-
-		#2 row
-		criterio_schedatura = Paragraph("<b>Criterio schedatura</b><br/>"  + self.criterio_schedatura, styNormal)
-		tipo_reperto = Paragraph("<b>Tipo reperto</b><br/>"  + self.tipo_reperto, styNormal)
-		definizione = Paragraph("<b>Definizione</b><br/>"  + self.definizione, styNormal)
-
-		#3 row
-		stato_conservazione = Paragraph("<b>Stato Conservazione</b><br/>"  + self.stato_conservazione, styNormal)
-		datazione = Paragraph("<b>Datazione</b><br/>"  + self.datazione_reperto, styNormal)
 		
 		#4 row
-		descrizione = ''
-		try:
-			descrizione = Paragraph("<b>Descrizione</b><br/>" + str(self.descrizione), styDescrizione)
-		except:
-			pass
+		descrizione = Paragraph("<b>Descrizione</b><br/>" + unicode(self.descrizione), styDescrizione)
 
-		#5 row
-		elementi_reperto = ''
-		if eval(self.elementi_reperto) > 0 :
-			for i in eval(self.elementi_reperto):
-				if elementi_reperto == '':
-					try:
-						elementi_reperto += ("Elemento rinvenuto: %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
-					except:
-						pass
-				else:
-					try:
-						elementi_reperto += ("<br/>Elemento rinvenuto: %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
-					except:
-						pass
-
-		elementi_reperto = Paragraph("<b>Elementi reperto</b><br/>"  + elementi_reperto, styNormal)
-
-		#6 row
-		misurazioni = ''
-		if eval(self.misurazioni) > 0:
-			for i in eval(self.misurazioni):
-				if misurazioni == '':
-					try:
-						misurazioni += ("<b>Tipo di misura: %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[2]), str(i[1]))
-					except:
-						pass
-				else:
-					try:
-						misurazioni += ("<br/><b>Tipo di misura: %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[2]), str(i[1]))
-					except:
-						pass
-		misurazioni = Paragraph("<b>Misurazioni</b><br/>"  + misurazioni, styNormal)
-
-		#7 row
-		tecnologie = ''
-		if eval(self.tecnologie) > 0:
-			for i in eval(self.tecnologie):
-				if tecnologie == '':
-					try:
-						tecnologie += ("<b>Tipo tecnologia: %s, Posizione: %s, Tipo quantita': %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
-					except:
-						pass
-				else:
-					try:
-						tecnologie += ("<br/><b>Tipo tecnologia: %s, Posizione: %s, Tipo quantita': %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
-					except:
-						pass
-		tecnologie = Paragraph("<b>Tecnologie</b><br/>"  + tecnologie, styNormal)
-
-		#8 row
-		rif_biblio = ''
-		if eval(self.rif_biblio) > 0:
-			for i in eval(self.rif_biblio): #gigi
-				if rif_biblio == '':
-					try:
-						rif_biblio += ("<b>Autore: %s, Anno: %s, Titolo: %s, Pag.: %s, Fig.: %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
-					except:
-						pass
-				else:
-					try:
-						rif_biblio += ("<b>Autore: %s, Anno: %s, Titolo: %s, Pag.: %s, Fig.: %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
-					except:
-						pass
-
-		rif_biblio = Paragraph("<b>Riferimenti bibliografici</b><br/>"  + rif_biblio, styNormal)
-
-		#9 row
-		riferimenti_stratigrafici = Paragraph("<b>Riferimenti stratigrafici</b>",styNormal)
-
-		#10 row
-		area = Paragraph("<b>Area</b><br/>" + self.area,styNormal)
-		us = Paragraph("<b>US</b><br/>" + self.us,styNormal)
-
-		#11 row
-		riferimenti_magazzino = Paragraph("<b>Riferimenti magazzino</b>",styNormal)
-
-		#12 row
-		lavato  = Paragraph("<b>Lavato</b><br/>" + self.lavato,styNormal)
-		nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>" + self.nr_cassa,styNormal)
-		luogo_conservazione = Paragraph("<b>Luogo di conservazione</b><br/>" + self.luogo_conservazione,styNormal)
+		#4 row
+		luogo_conservazione = Paragraph("<b>Luogo conservazione</b><br/>" + unicode(self.luogo_conservazione), styNormal)
+		nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>" + unicode(self.nr_cassa), styNormal)
 
 		#schema
-		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
-						[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'],
-						[sito, '01', '02', area, '04', us,'06', '07', nr_inventario, '09'], #1 row ok
-						[tipo_reperto, '01', '02', criterio_schedatura,'04', '05',definizione, '07', '08', '09'], #2 row ok
-						[datazione, '01', '02', '03', '04', stato_conservazione, '06', '07', '08', '09'], #3 row ok
-						[descrizione, '01','02', '03', '04', '05','06', '07', '08', '09'], #4 row ok
-						[elementi_reperto, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #5 row ok
-						[misurazioni, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #6 row ok
-						[tecnologie, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #7 row ok
-						[rif_biblio, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #8 row ok
-						[riferimenti_stratigrafici, '02', '03', '04', '05', '06', '07', '08', '09'], #9 row ok
-						[area, '01', '02', us,'04', '05', '06', '07', '08', '09'], #10 row ok
-						[riferimenti_magazzino, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #11 row ok
-						[lavato, '01', '02', nr_cassa, '04', '05', luogo_conservazione, '07', '08', '09'] #12 row ok
-						]
+		cell_schema = [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
+							[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'],					#0 row ok
+							[sito, '01', '02', '03', '04',tipo_campione,'06', '07', nr_campione, '09'],		#1 row ok
+							[area, '01', '02', us,'04', '05',nr_inventario, '07', '08', '09'], 					#2 row ok
+							[descrizione, '01','02', '03', '04', '05','06', '07', '08', '09'],						#3 row ok
+							[nr_cassa,'01', '02', '03', '04', '05', luogo_conservazione, '07', '08', '09']	#4 row ok
+							]
 
 
 		#table style
@@ -347,8 +177,7 @@ class single_Campioni_pdf_sheet:
 					('SPAN', (7,0),(9,0)), #intestazione
 
 					#1 row
-					('SPAN', (0,1),(2,1)),  #dati identificativi
-					('SPAN', (3,1),(4,1)),  #dati identificativi
+					('SPAN', (0,1),(4,1)),  #dati identificativi
 					('SPAN', (5,1),(7,1)),  #dati identificativi
 					('SPAN', (8,1),(9,1)),   #dati identificativi
 
@@ -359,44 +188,17 @@ class single_Campioni_pdf_sheet:
 					('VALIGN',(0,2),(9,2),'TOP'), 
 
 					#3 row
-					('SPAN', (0,3),(4,3)), #datazione
-					('SPAN', (5,3),(9,3)),  #conservazione
-
-					#4 row
-					('SPAN', (0,4),(9,4)),  #descrizione
+					('SPAN', (0,3),(9,3)),  #descrizione
 
 					#5 row
-					('SPAN', (0,5),(9,5)),  #elementi_reperto
-
-					#6 row
-					('SPAN', (0,6),(9,6)),  #misurazioni
-					
-					#7 row
-					('SPAN', (0,7),(9,7)),  #tecnologie
-
-					#8 row
-					('SPAN', (0,8),(9,8)),  #bibliografia
-					
-					#9 row
-					('SPAN', (0,9),(9,9)),  #Riferimenti stratigrafici - Titolo
-
-					#10 row
-					('SPAN', (0,10),(2,10)),  #Riferimenti stratigrafici - area
-					('SPAN', (3,10),(9,10)),  #Riferimenti stratigrafici - us
-
-					#11 row
-					('SPAN', (0,11),(9,11)),  #Riferimenti magazzino - Titolo
-
-					#12 row
-					('SPAN', (0,12),(2,12)),  #Riferimenti magazzino - lavato
-					('SPAN', (3,12),(5,12)),  #Riferimenti magazzino - nr_cassa
-					('SPAN', (6,12),(9,12)),   #Riferimenti magazzino - luogo conservazione
+					('SPAN', (0,4),(5,4)),  #elementi_reperto	
+					('SPAN', (6,4),(9,4)),  #elementi_reperto
 
 					('VALIGN',(0,0),(-1,-1),'TOP')
 
 					]
 
-		t=Table(cell_schema, colWidths=50, rowHeights=None,style= table_style)
+		t=Table(cell_schema, colWidths=None, rowHeights=None,style= table_style)
 
 		return t
 
@@ -430,9 +232,7 @@ class Box_labels_Campioni_pdf_sheet:
 		styCassaLabel.spaceAfter = 20
 		styCassaLabel.alignment = 0 #LEFT
 
-
 		#format labels
-
 		num_cassa = Paragraph("<b>N. Cassa</b>" + str(self.cassa),styCassaLabel)
 		sito = Paragraph("<b>Sito: </b>" + str(self.sito),styCassaLabel)
 
@@ -613,7 +413,7 @@ class generate_campioni_pdf:
 		today = now.strftime("%d-%m-%Y")
 		return today
 
-	def build_Campioni_sheets(self, records):
+	def build_Champ_sheets(self, records):
 		elements = []
 		for i in range(len(records)):
 			single_Campioni_sheet = single_Campioni_pdf_sheet(records[i])
