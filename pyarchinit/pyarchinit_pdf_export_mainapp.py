@@ -36,7 +36,7 @@ from  pyarchinit_exp_Periodizzazionesheet_pdf import *
 from  pyarchinit_exp_Strutturasheet_pdf import *
 from  pyarchinit_exp_Findssheet_pdf import *
 from  pyarchinit_exp_Tafonomiasheet_pdf import *
-from pyarchinit_exp_Individui_pdf import *
+from  pyarchinit_exp_Individui_pdf import *
 
 import os
 import platform
