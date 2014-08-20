@@ -194,7 +194,6 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 
 	def charge_list_sito(self):
 		sito_vl = self.UTILITY.tup_2_list_III(self.DB_MANAGER.group_by('site_table', 'sito', 'SITE'))
-
 		try:
 			sito_vl.remove('')
 		except:
@@ -203,10 +202,16 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 		sito_vl.sort()
 		self.comboBox_sito.addItems(sito_vl)
 
-	def on_pushButton_pdf_exp_pressed(self):
+	def on_pushButton_pdf_scheda_exp_pressed(self):
 		Periodizzazione_pdf_sheet = generate_Periodizzazione_pdf() #deve essere importata la classe
 		data_list = self.generate_list_pdf() #deve essere aggiunta la funzione
 		Periodizzazione_pdf_sheet.build_Periodizzazione_sheets(data_list) #deve essere aggiunto il file per generare i pdf
+
+	def on_pushButton_pdf_lista_exp_pressed(self):
+		Periodizzazione_pdf_list = generate_Periodizzazione_pdf() #deve essere importata la classe
+		data_list = self.generate_list_pdf() #deve essere aggiunta la funzione
+		Periodizzazione_pdf_list.build_index_Periodizzazione(data_list, data_list[0][0]) #deve essere aggiunto il file per generare i pdf
+
 		#codice per l'esportazione sperimentale dei PDF #
 		"""
 		dlg = pyarchinit_PDFAdministrator()

@@ -13,6 +13,30 @@ from datetime import date, time
 
 from pyarchinit_OS_utility import *
 
+class NumberedCanvas_Periodizzazioneindex(canvas.Canvas):
+	def __init__(self, *args, **kwargs):
+		canvas.Canvas.__init__(self, *args, **kwargs)
+		self._saved_page_states = []
+
+	def define_position(self, pos):
+		self.page_position(pos)
+
+	def showPage(self):
+		self._saved_page_states.append(dict(self.__dict__))
+		self._startPage()
+
+	def save(self):
+		"""add page info to each page (page x of y)"""
+		num_pages = len(self._saved_page_states)
+		for state in self._saved_page_states:
+			self.__dict__.update(state)
+			self.draw_page_number(num_pages)
+			canvas.Canvas.showPage(self)
+		canvas.Canvas.save(self)
+
+	def draw_page_number(self, page_count):
+		self.setFont("Helvetica", 8)
+		self.drawRightString(270*mm, 10*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
 
 class NumberedCanvas_Periodizzazionesheet(canvas.Canvas):
 	def __init__(self, *args, **kwargs):
@@ -38,6 +62,58 @@ class NumberedCanvas_Periodizzazionesheet(canvas.Canvas):
 	def draw_page_number(self, page_count):
 		self.setFont("Helvetica", 8)
 		self.drawRightString(200*mm, 20*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
+
+
+class Periodizzazione_index_pdf_sheet:
+
+	def __init__(self, data):
+		self.periodo = 				data[1]			#1 - periodo
+		self.fase = 					data[2]			#2 - fase
+		self.cron_iniziale =		data[3]			#3 - cron_iniziale
+		self.cron_finale =			data[4]			#4 - cron_finale
+		self.datazione_estesa =	data[5]			#5 - datazione_estesa
+
+
+	def getTable(self):
+		styleSheet = getSampleStyleSheet()
+		styNormal = styleSheet['Normal']
+		styNormal.spaceBefore = 20
+		styNormal.spaceAfter = 20
+		styNormal.alignment = 0 #LEFT
+		styNormal.fontSize = 9
+
+		#self.unzip_rapporti_stratigrafici()
+
+		periodo = Paragraph("<b>Periodo</b><br/>" + str(self.periodo),styNormal)
+
+		fase = Paragraph("<b>Fase</b><br/>" + str(self.fase),styNormal)
+
+		if str(self.cron_iniziale) == "None":
+			cron_iniziale = Paragraph("<b>Cronologia iniziale</b><br/>" + str(self.cron_iniziale),styNormal)
+		else:
+			cron_iniziale = Paragraph("<b>Cronologia iniziale</b><br/>",styNormal)
+
+		if str(self.cron_finale) == "None":
+			cron_finale = Paragraph("<b>Cronologia finale</b><br/>" + str(self.cron_finale),styNormal)
+		else:
+			cron_finale = Paragraph("<b>Cronologia finale</b><br/>",styNormal)
+
+		datazione_estesa = Paragraph("<b>Datazione estesa</b><br/>" + str(self.datazione_estesa),styNormal)
+
+		data = [periodo,
+					fase,
+					cron_iniziale,
+					cron_finale,
+					datazione_estesa
+					]
+
+		return data
+
+	def makeStyles(self):
+		styles =TableStyle([('GRID',(0,0),(-1,-1),0.0,colors.black),('VALIGN', (0,0), (-1,-1), 'TOP')
+		])  #finale
+
+		return styles
 
 
 class single_Periodizzazione_pdf_sheet:
@@ -178,4 +254,52 @@ class generate_Periodizzazione_pdf:
 		f = open(filename, "wb")
 		doc = SimpleDocTemplate(f)
 		doc.build(elements, canvasmaker=NumberedCanvas_Periodizzazionesheet)
+		f.close()
+
+
+	def build_index_Periodizzazione(self, records, sito):
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
+
+		logo = Image(logo_path) 
+		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
+		logo.drawWidth = 1.5*inch
+		logo.hAlign = "LEFT"
+
+		styleSheet = getSampleStyleSheet()
+		styNormal = styleSheet['Normal']
+		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
+		styH1 = styleSheet['Heading3']
+
+		data = self.datestrfdate()
+
+		lst = []
+		lst.append(logo)
+		lst.append(Paragraph("<b>ELENCO PERIODIZZAZIONI</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
+
+		table_data = []
+		for i in range(len(records)):
+			exp_index = Periodizzazione_index_pdf_sheet(records[i])
+			table_data.append(exp_index.getTable())
+		
+		styles = exp_index.makeStyles()
+		colWidths=[60,60,150,150,300]
+
+		table_data_formatted = Table(table_data, colWidths, style=styles)
+		table_data_formatted.hAlign = "LEFT"
+
+		lst.append(table_data_formatted)
+		#lst.append(Spacer(0,2))
+
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_periodizzazione.pdf')
+		f = open(filename, "wb")
+
+		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
+		doc.build(lst, canvasmaker=NumberedCanvas_Periodizzazioneindex)
+
 		f.close()
