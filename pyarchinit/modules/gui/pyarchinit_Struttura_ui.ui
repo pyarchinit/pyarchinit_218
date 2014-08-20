@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>540</width>
-    <height>533</height>
+    <height>519</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -700,7 +700,7 @@
       </font>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -1247,14 +1247,14 @@ p, li { white-space: pre-wrap; }
        <string>Tools</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_13">
-       <item row="0" column="0" colspan="2">
+       <item row="0" column="0">
         <widget class="QPushButton" name="pushButton_pdf_exp">
          <property name="text">
-          <string>PDF exp</string>
+          <string>PDF scheda exp</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0" colspan="2">
+       <item row="2" column="0" colspan="2">
         <widget class="QLabel" name="label_18">
          <property name="toolTip">
           <string>Carica tutti i layer per poter inserire nuove geometrie</string>
@@ -1264,14 +1264,54 @@ p, li { white-space: pre-wrap; }
          </property>
         </widget>
        </item>
-       <item row="1" column="2" colspan="2">
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_20">
+         <property name="toolTip">
+          <string>Carica tutti i layer per poter inserire nuove geometrie</string>
+         </property>
+         <property name="text">
+          <string>Gis viewer</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="pushButton_pdf_index_exp">
+         <property name="text">
+          <string>PDF indice exp</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
         <widget class="QPushButton" name="pushButton_draw_struttura">
          <property name="text">
           <string>Carica</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="4">
+       <item row="5" column="0">
+        <widget class="QToolButton" name="toolButton_draw_strutture">
+         <property name="text">
+          <string>Abilita il caricamento delle ricerche</string>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>136</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="0" column="3">
         <spacer name="horizontalSpacer_3">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -1284,27 +1324,7 @@ p, li { white-space: pre-wrap; }
          </property>
         </spacer>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_20">
-         <property name="toolTip">
-          <string>Carica tutti i layer per poter inserire nuove geometrie</string>
-         </property>
-         <property name="text">
-          <string>Gis viewer</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1" colspan="2">
-        <widget class="QToolButton" name="toolButton_draw_strutture">
-         <property name="text">
-          <string>Abilita il caricamento delle ricerche</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="3" colspan="2">
+       <item row="3" column="2" colspan="2">
         <spacer name="horizontalSpacer_4">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -1313,19 +1333,6 @@ p, li { white-space: pre-wrap; }
           <size>
            <width>312</width>
            <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="3" column="2">
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>136</height>
           </size>
          </property>
         </spacer>

@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_Struttura_ui.ui'
 #
-# Created: Wed Feb 05 18:24:23 2014
+# Created: Wed Aug 20 15:48:32 2014
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_DialogStruttura(object):
     def setupUi(self, DialogStruttura):
         DialogStruttura.setObjectName(_fromUtf8("DialogStruttura"))
-        DialogStruttura.resize(540, 533)
+        DialogStruttura.resize(540, 519)
         DialogStruttura.setMinimumSize(QtCore.QSize(540, 400))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/images/iconStrutt.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -630,26 +630,29 @@ class Ui_DialogStruttura(object):
         self.gridLayout_13.setObjectName(_fromUtf8("gridLayout_13"))
         self.pushButton_pdf_exp = QtGui.QPushButton(self.tab_4)
         self.pushButton_pdf_exp.setObjectName(_fromUtf8("pushButton_pdf_exp"))
-        self.gridLayout_13.addWidget(self.pushButton_pdf_exp, 0, 0, 1, 2)
+        self.gridLayout_13.addWidget(self.pushButton_pdf_exp, 0, 0, 1, 1)
         self.label_18 = QtGui.QLabel(self.tab_4)
         self.label_18.setObjectName(_fromUtf8("label_18"))
-        self.gridLayout_13.addWidget(self.label_18, 1, 0, 1, 2)
-        self.pushButton_draw_struttura = QtGui.QPushButton(self.tab_4)
-        self.pushButton_draw_struttura.setObjectName(_fromUtf8("pushButton_draw_struttura"))
-        self.gridLayout_13.addWidget(self.pushButton_draw_struttura, 1, 2, 1, 2)
-        spacerItem1 = QtGui.QSpacerItem(272, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.gridLayout_13.addItem(spacerItem1, 1, 4, 1, 1)
+        self.gridLayout_13.addWidget(self.label_18, 2, 0, 1, 2)
         self.label_20 = QtGui.QLabel(self.tab_4)
         self.label_20.setObjectName(_fromUtf8("label_20"))
-        self.gridLayout_13.addWidget(self.label_20, 2, 0, 1, 1)
+        self.gridLayout_13.addWidget(self.label_20, 4, 0, 1, 1)
+        self.pushButton_pdf_index_exp = QtGui.QPushButton(self.tab_4)
+        self.pushButton_pdf_index_exp.setObjectName(_fromUtf8("pushButton_pdf_index_exp"))
+        self.gridLayout_13.addWidget(self.pushButton_pdf_index_exp, 0, 1, 1, 1)
+        self.pushButton_draw_struttura = QtGui.QPushButton(self.tab_4)
+        self.pushButton_draw_struttura.setObjectName(_fromUtf8("pushButton_draw_struttura"))
+        self.gridLayout_13.addWidget(self.pushButton_draw_struttura, 3, 0, 1, 1)
         self.toolButton_draw_strutture = QtGui.QToolButton(self.tab_4)
         self.toolButton_draw_strutture.setCheckable(True)
         self.toolButton_draw_strutture.setObjectName(_fromUtf8("toolButton_draw_strutture"))
-        self.gridLayout_13.addWidget(self.toolButton_draw_strutture, 2, 1, 1, 2)
-        spacerItem2 = QtGui.QSpacerItem(312, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.gridLayout_13.addItem(spacerItem2, 2, 3, 1, 2)
-        spacerItem3 = QtGui.QSpacerItem(20, 136, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.gridLayout_13.addItem(spacerItem3, 3, 2, 1, 1)
+        self.gridLayout_13.addWidget(self.toolButton_draw_strutture, 5, 0, 1, 1)
+        spacerItem1 = QtGui.QSpacerItem(20, 136, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.gridLayout_13.addItem(spacerItem1, 6, 0, 1, 1)
+        spacerItem2 = QtGui.QSpacerItem(272, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.gridLayout_13.addItem(spacerItem2, 0, 3, 1, 1)
+        spacerItem3 = QtGui.QSpacerItem(312, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.gridLayout_13.addItem(spacerItem3, 3, 2, 1, 2)
         self.tabWidget.addTab(self.tab_4, _fromUtf8(""))
         self.gridLayout_8.addWidget(self.tabWidget, 3, 0, 1, 1)
 
@@ -730,12 +733,13 @@ class Ui_DialogStruttura(object):
         self.tableWidget_misurazioni.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("DialogStruttura", "Unita\' di misura", None, QtGui.QApplication.UnicodeUTF8))
         self.tableWidget_misurazioni.horizontalHeaderItem(2).setText(QtGui.QApplication.translate("DialogStruttura", "Valore", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_6), QtGui.QApplication.translate("DialogStruttura", "Misure", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_pdf_exp.setText(QtGui.QApplication.translate("DialogStruttura", "PDF exp", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_pdf_exp.setText(QtGui.QApplication.translate("DialogStruttura", "PDF scheda exp", None, QtGui.QApplication.UnicodeUTF8))
         self.label_18.setToolTip(QtGui.QApplication.translate("DialogStruttura", "Carica tutti i layer per poter inserire nuove geometrie", None, QtGui.QApplication.UnicodeUTF8))
         self.label_18.setText(QtGui.QApplication.translate("DialogStruttura", "Carica i poligoni di struttura", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_draw_struttura.setText(QtGui.QApplication.translate("DialogStruttura", "Carica", None, QtGui.QApplication.UnicodeUTF8))
         self.label_20.setToolTip(QtGui.QApplication.translate("DialogStruttura", "Carica tutti i layer per poter inserire nuove geometrie", None, QtGui.QApplication.UnicodeUTF8))
         self.label_20.setText(QtGui.QApplication.translate("DialogStruttura", "Gis viewer", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_pdf_index_exp.setText(QtGui.QApplication.translate("DialogStruttura", "PDF indice exp", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_draw_struttura.setText(QtGui.QApplication.translate("DialogStruttura", "Carica", None, QtGui.QApplication.UnicodeUTF8))
         self.toolButton_draw_strutture.setText(QtGui.QApplication.translate("DialogStruttura", "Abilita il caricamento delle ricerche", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QtGui.QApplication.translate("DialogStruttura", "Tools", None, QtGui.QApplication.UnicodeUTF8))
 

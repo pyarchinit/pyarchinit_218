@@ -125,7 +125,7 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 	def on_pushButton_exp_pdf_pressed(self):
 		sito = str(self.comboBox_sito.currentText())
 
-		#Esportazione della Scheda US
+		####Esportazione della Scheda e indice US
 		if self.checkBox_US.isChecked() == True:
 
 			us_res = self.db_search_DB('US','sito', sito)
@@ -139,12 +139,16 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 				for i in temp_data_list:
 					self.DATA_LIST.append(i)
 				
+
 				US_pdf_sheet = generate_US_pdf()
 				data_list = self.generate_list_US_pdf()
-				US_pdf_sheet.build_US_sheets(data_list)
+				US_pdf_sheet.build_US_sheets(data_list)							#export sheet
+				US_pdf_sheet.build_index_US(data_list, data_list[0][0])		#export list
+
 
 			self.DATA_LIST = []
 
+		####Esportazione della Scheda e indice Periodizzazione
 		if self.checkBox_periodo.isChecked() == True:
 			
 			periodizzazione_res = self.db_search_DB('PERIODIZZAZIONE','sito', sito)
@@ -162,9 +166,11 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 				Periodizzazione_pdf_sheet = generate_Periodizzazione_pdf() #deve essere importata la classe
 				data_list = self.generate_list_periodizzazione_pdf() #deve essere aggiunta la funzione
 				Periodizzazione_pdf_sheet.build_Periodizzazione_sheets(data_list) #deve essere aggiunto il file per generare i pdf
+				Periodizzazione_pdf_sheet.build_index_Periodizzazione(data_list, data_list[0][0]) #deve essere aggiunto il file per generare i pdf
 
 			self.DATA_LIST = []
 
+		####Esportazione della Scheda e indice Struttura
 		if self.checkBox_struttura.isChecked() == True:
 			struttura_res = self.db_search_DB('STRUTTURA','sito', sito)
 

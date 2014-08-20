@@ -869,6 +869,11 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings,  QMessageBox.Ok)
 		self.enable_button_search(1)
 
+	def on_pushButton_pdf_index_exp_pressed(self):
+		Struttura_index_pdf = generate_struttura_pdf()
+		data_list = self.generate_list_pdf()
+		Struttura_index_pdf.build_index_Struttura(data_list, data_list[0][0])
+
 	def on_pushButton_pdf_exp_pressed(self):
 		Struttura_pdf_sheet = generate_struttura_pdf() #deve essere importata la classe
 		data_list = self.generate_list_pdf() #deve essere aggiunta la funzione

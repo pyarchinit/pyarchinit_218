@@ -14,6 +14,31 @@ from datetime import date, time
 from pyarchinit_OS_utility import *
 
 
+class NumberedCanvas_STRUTTURAindex(canvas.Canvas):
+	def __init__(self, *args, **kwargs):
+		canvas.Canvas.__init__(self, *args, **kwargs)
+		self._saved_page_states = []
+
+	def define_position(self, pos):
+		self.page_position(pos)
+
+	def showPage(self):
+		self._saved_page_states.append(dict(self.__dict__))
+		self._startPage()
+
+	def save(self):
+		"""add page info to each page (page x of y)"""
+		num_pages = len(self._saved_page_states)
+		for state in self._saved_page_states:
+			self.__dict__.update(state)
+			self.draw_page_number(num_pages)
+			canvas.Canvas.showPage(self)
+		canvas.Canvas.save(self)
+
+	def draw_page_number(self, page_count):
+		self.setFont("Helvetica", 8)
+		self.drawRightString(270*mm, 10*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
+
 class NumberedCanvas_STRUTTURAsheet(canvas.Canvas):
 	def __init__(self, *args, **kwargs):
 		canvas.Canvas.__init__(self, *args, **kwargs)
@@ -38,6 +63,73 @@ class NumberedCanvas_STRUTTURAsheet(canvas.Canvas):
 	def draw_page_number(self, page_count):
 		self.setFont("Helvetica", 8)
 		self.drawRightString(200*mm, 20*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
+
+
+
+class Struttura_index_pdf_sheet:
+
+	def __init__(self, data):
+		self.sigla_struttura = 			data[1]
+		self.numero_struttura = 		data[2]
+		self.categoria_struttura = 		data[3]
+		self.tipologia_struttura = 		data[4]
+		self.definizione_struttura = 	data[5]
+		self.periodo_iniziale = 			data[8]
+		self.fase_iniziale = 				data[9]
+		self.periodo_finale = 				data[10]
+		self.fase_finale = 				data[11]
+		self.datazione_estesa = 		data[12]
+
+	def getTable(self):
+		styleSheet = getSampleStyleSheet()
+		styNormal = styleSheet['Normal']
+		styNormal.spaceBefore = 20
+		styNormal.spaceAfter = 20
+		styNormal.alignment = 0 #LEFT
+		styNormal.fontSize = 9
+
+		#self.unzip_rapporti_stratigrafici()
+
+		sigla = Paragraph("<b>Sigla</b><br/>" + str(self.sigla_struttura),styNormal)
+
+		nr_struttura = Paragraph("<b>Nr. struttura</b><br/>" + str(self.numero_struttura),styNormal)
+
+		categoria_struttura = Paragraph("<b>Categoria</b><br/>" + str(self.categoria_struttura),styNormal)
+
+		tipologia_struttura = Paragraph("<b>Tipologia</b><br/>" + str(self.tipologia_struttura),styNormal)
+
+		definizione_struttura = Paragraph("<b>Definizione</b><br/>" + str(self.definizione_struttura),styNormal)
+
+		periodo_iniziale = Paragraph("<b>Periodo iniziale</b><br/>" + str(self.periodo_iniziale),styNormal)
+
+		fase_iniziale = Paragraph("<b>Fase iniziale</b><br/>" + str(self.fase_iniziale),styNormal)
+
+		periodo_finale = Paragraph("<b>Periodo finale</b><br/>" + str(self.periodo_finale),styNormal)
+
+		fase_finale = Paragraph("<b>Fase finale</b><br/>" + str(self.fase_finale),styNormal)
+
+		datazione_estesa = Paragraph("<b>Datazione estesa</b><br/>" + str(self.datazione_estesa),styNormal)
+
+		data = [sigla,
+					nr_struttura,
+					categoria_struttura,
+					tipologia_struttura,
+					definizione_struttura,
+					periodo_iniziale,
+					fase_iniziale,
+					periodo_finale,
+					fase_finale,
+					datazione_estesa
+					]
+
+		return data
+
+	def makeStyles(self):
+		styles =TableStyle([('GRID',(0,0),(-1,-1),0.0,colors.black),('VALIGN', (0,0), (-1,-1), 'TOP')
+		])  #finale
+
+		return styles
+
 
 
 class single_Struttura_pdf_sheet:
@@ -336,4 +428,51 @@ class generate_struttura_pdf:
 		f = open(filename, "wb")
 		doc = SimpleDocTemplate(f)
 		doc.build(elements, canvasmaker=NumberedCanvas_STRUTTURAsheet)
+		f.close()
+
+	def build_index_Struttura(self, records, sito):
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
+
+		logo = Image(logo_path) 
+		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
+		logo.drawWidth = 1.5*inch
+		logo.hAlign = "LEFT"
+
+		styleSheet = getSampleStyleSheet()
+		styNormal = styleSheet['Normal']
+		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
+		styH1 = styleSheet['Heading3']
+
+		data = self.datestrfdate()
+
+		lst = []
+		lst.append(logo)
+		lst.append(Paragraph("<b>ELENCO STRUTTURE</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
+
+		table_data = []
+		for i in range(len(records)):
+			exp_index = Struttura_index_pdf_sheet(records[i])
+			table_data.append(exp_index.getTable())
+		
+		styles = exp_index.makeStyles()
+		colWidths=[60,60,80, 80, 80, 50, 50, 50, 50, 100]
+
+		table_data_formatted = Table(table_data, colWidths, style=styles)
+		table_data_formatted.hAlign = "LEFT"
+
+		lst.append(table_data_formatted)
+		#lst.append(Spacer(0,2))
+
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_strutture.pdf')
+		f = open(filename, "wb")
+
+		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
+		doc.build(lst, canvasmaker=NumberedCanvas_STRUTTURAindex)
+
 		f.close()

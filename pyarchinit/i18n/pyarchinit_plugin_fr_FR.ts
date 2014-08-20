@@ -1600,51 +1600,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="466"/>
-        <source>Apri Immagini</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="430"/>
-        <source>Carica le immagini nel DB</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="447"/>
-        <source>Tags manager</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="448"/>
-        <source>+</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="449"/>
-        <source>-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="450"/>
-        <source>Sito</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="443"/>
-        <source>Area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="444"/>
-        <source>US</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="452"/>
-        <source>Assegna i tags</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="415"/>
         <source>Numero Totale Immagini</source>
         <translation type="unfinished"></translation>
@@ -1720,6 +1675,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="466"/>
+        <source>Apri Immagini</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="430"/>
+        <source>Carica le immagini nel DB</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="431"/>
         <source>Tags</source>
         <translation type="unfinished"></translation>
@@ -1757,6 +1722,41 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="446"/>
         <source>Tags Unita&apos; Stratigrafiche</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="447"/>
+        <source>Tags manager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="448"/>
+        <source>+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="449"/>
+        <source>-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="450"/>
+        <source>Sito</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="443"/>
+        <source>Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="444"/>
+        <source>US</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_image_viewer_dialog.py" line="452"/>
+        <source>Assegna i tags</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2143,11 +2143,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="230"/>
-        <source>Prev rec</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="63"/>
         <source>Next rec</source>
         <translation type="unfinished"></translation>
@@ -2168,11 +2163,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="216"/>
-        <source>Delete record</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="137"/>
         <source>new search</source>
         <translation type="unfinished"></translation>
@@ -2190,6 +2180,21 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="194"/>
         <source>View alls records</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="216"/>
+        <source>Delete record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="230"/>
+        <source>Prev rec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="246"/>
+        <source>Connection test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2235,6 +2240,16 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="564"/>
         <source>Sito</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="589"/>
+        <source>N° Inventario</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="601"/>
+        <source>Tipo reperto</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2308,11 +2323,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="601"/>
-        <source>Tipo reperto</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="776"/>
         <source>Bicchiere</source>
         <translation type="unfinished"></translation>
@@ -2338,6 +2348,16 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="809"/>
+        <source>Definizione reperto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="821"/>
+        <source>Classe materiale</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="839"/>
         <source>Dati descrittivi</source>
         <translation type="unfinished"></translation>
@@ -2345,6 +2365,26 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="850"/>
         <source>Descrizione </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1849"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1844"/>
+        <source>Si</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="890"/>
+        <source>Repertato</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="919"/>
+        <source>Diagnostico</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2375,6 +2415,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="968"/>
         <source>Stato di conservazione</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="987"/>
+        <source>Tipo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2415,171 +2460,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1355"/>
         <source>Quantita&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1279"/>
-        <source>Misurazioni</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1345"/>
-        <source>Tipo di misura</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1378"/>
-        <source>Tecnologie</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1477"/>
-        <source>Tipo tecnologia</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1482"/>
-        <source>Posizione</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1487"/>
-        <source>Tipo quantità</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1492"/>
-        <source>Unità di misura</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1497"/>
-        <source>Qtà</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1536"/>
-        <source>Rif Biblio</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1544"/>
-        <source>Rif. Bibliografici</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1609"/>
-        <source>Autore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1614"/>
-        <source>Anno</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1619"/>
-        <source>Titolo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1624"/>
-        <source>Pag.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1629"/>
-        <source>Fig.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1658"/>
-        <source>Dati stratigrafici</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1706"/>
-        <source>Area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1747"/>
-        <source>US</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1779"/>
-        <source>Dati magazzino</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1808"/>
-        <source>Nr. Cassa</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1867"/>
-        <source>Lavato</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1883"/>
-        <source>Luogo di conservazione</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1962"/>
-        <source>Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1977"/>
-        <source>Exp schede Pdf </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="246"/>
-        <source>Connection test</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message encoding="UTF-8">
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="589"/>
-        <source>N° Inventario</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="809"/>
-        <source>Definizione reperto</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="821"/>
-        <source>Classe materiale</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1849"/>
-        <source>No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1844"/>
-        <source>Si</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="890"/>
-        <source>Repertato</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="919"/>
-        <source>Diagnostico</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="987"/>
-        <source>Tipo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2633,6 +2513,46 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1279"/>
+        <source>Misurazioni</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1345"/>
+        <source>Tipo di misura</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1378"/>
+        <source>Tecnologie</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1477"/>
+        <source>Tipo tecnologia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1482"/>
+        <source>Posizione</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1487"/>
+        <source>Tipo quantità</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1492"/>
+        <source>Unità di misura</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message encoding="UTF-8">
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1497"/>
+        <source>Qtà</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1505"/>
         <source>Corpo ceramico</source>
         <translation type="unfinished"></translation>
@@ -2643,8 +2563,78 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1536"/>
+        <source>Rif Biblio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1544"/>
+        <source>Rif. Bibliografici</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1609"/>
+        <source>Autore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1614"/>
+        <source>Anno</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1619"/>
+        <source>Titolo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1624"/>
+        <source>Pag.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1629"/>
+        <source>Fig.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1640"/>
         <source>Rif. stratigrafici</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1658"/>
+        <source>Dati stratigrafici</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1706"/>
+        <source>Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1747"/>
+        <source>US</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1779"/>
+        <source>Dati magazzino</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1808"/>
+        <source>Nr. Cassa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1867"/>
+        <source>Lavato</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1883"/>
+        <source>Luogo di conservazione</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2655,6 +2645,16 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1935"/>
         <source>Impostazione quantificazione</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1962"/>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_inventario_reperti_ui.ui" line="1977"/>
+        <source>Exp schede Pdf </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2691,11 +2691,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="487"/>
-        <source>Prev rec</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="478"/>
         <source>Next rec</source>
         <translation type="unfinished"></translation>
@@ -2716,11 +2711,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="486"/>
-        <source>Delete record</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="482"/>
         <source>new search</source>
         <translation type="unfinished"></translation>
@@ -2738,6 +2728,21 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="485"/>
         <source>View alls records</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="486"/>
+        <source>Delete record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="487"/>
+        <source>Prev rec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="488"/>
+        <source>Connection test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2866,6 +2871,21 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="529"/>
+        <source>Visualizza il periodo sul GIS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="530"/>
+        <source>Elenco PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="531"/>
+        <source>Scheda PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="532"/>
         <source>Descrizione </source>
         <translation type="unfinished"></translation>
@@ -2900,26 +2920,6 @@ p, li { white-space: pre-wrap; }
         <source>Estesa letterale </source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="488"/>
-        <source>Connection test</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="529"/>
-        <source>Visualizza il periodo sul GIS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="530"/>
-        <source>Elenco PDF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_Periodo_fase_ui.py" line="531"/>
-        <source>Scheda PDF</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>DialogSite</name>
@@ -2931,6 +2931,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="modules/gui/pyarchinit_Site_ui.py" line="484"/>
         <source>DBMS Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_Site_ui.py" line="485"/>
+        <source>First rec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2974,18 +2979,18 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="modules/gui/pyarchinit_Site_ui.py" line="494"/>
+        <source>Delete record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="modules/gui/pyarchinit_Site_ui.py" line="495"/>
         <source>Prev rec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="modules/gui/pyarchinit_Site_ui.py" line="485"/>
-        <source>First rec</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_Site_ui.py" line="494"/>
-        <source>Delete record</source>
+        <location filename="modules/gui/pyarchinit_Site_ui.py" line="496"/>
+        <source>Connection test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3061,11 +3066,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="modules/gui/pyarchinit_Site_ui.py" line="512"/>
         <source>Regione</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_Site_ui.py" line="496"/>
-        <source>Connection test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3170,11 +3170,6 @@ Step 3 - Riavviare Qgis e cliccare sul pulsante Run Test per verificare l&apos;o
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="676"/>
-        <source>Prev rec</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="667"/>
         <source>Next rec</source>
         <translation type="unfinished"></translation>
@@ -3195,11 +3190,6 @@ Step 3 - Riavviare Qgis e cliccare sul pulsante Run Test per verificare l&apos;o
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="675"/>
-        <source>Delete record</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="671"/>
         <source>new search</source>
         <translation type="unfinished"></translation>
@@ -3217,6 +3207,21 @@ Step 3 - Riavviare Qgis e cliccare sul pulsante Run Test per verificare l&apos;o
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="674"/>
         <source>View alls records</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="675"/>
+        <source>Delete record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="676"/>
+        <source>Prev rec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="677"/>
+        <source>Connection test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3295,13 +3300,27 @@ Step 3 - Riavviare Qgis e cliccare sul pulsante Run Test per verificare l&apos;o
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="700"/>
-        <source>Descrizione </source>
+        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="694"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="699"/>
         <source>Interpretazione </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="700"/>
+        <source>Descrizione </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="710"/>
+        <source>Periodizzazione</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3335,6 +3354,11 @@ Step 3 - Riavviare Qgis e cliccare sul pulsante Run Test per verificare l&apos;o
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="718"/>
+        <source>Rapporti</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="711"/>
         <source>Rapporti struttura</source>
         <translation type="unfinished"></translation>
@@ -3342,6 +3366,11 @@ Step 3 - Riavviare Qgis e cliccare sul pulsante Run Test per verificare l&apos;o
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="730"/>
         <source>inserisci riga</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="731"/>
+        <source>rimuovi riga</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3370,13 +3399,33 @@ Step 3 - Riavviare Qgis e cliccare sul pulsante Run Test per verificare l&apos;o
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="719"/>
+        <source>Materiali impiegati</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="720"/>
         <source>Elementi strutturali</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="721"/>
+        <source>Materiali</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="722"/>
+        <source>Tipologia elemento</source>
         <translation type="unfinished"></translation>
     </message>
     <message encoding="UTF-8">
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="723"/>
         <source>Quantità</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="735"/>
+        <source>Misure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3397,55 +3446,6 @@ Step 3 - Riavviare Qgis e cliccare sul pulsante Run Test per verificare l&apos;o
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="734"/>
         <source>Valore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="721"/>
-        <source>Materiali</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="719"/>
-        <source>Materiali impiegati</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="677"/>
-        <source>Connection test</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="694"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="710"/>
-        <source>Periodizzazione</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="718"/>
-        <source>Rapporti</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="731"/>
-        <source>rimuovi riga</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="722"/>
-        <source>Tipologia elemento</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="735"/>
-        <source>Misure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3690,61 +3690,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1072"/>
-        <source>First rec</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1071"/>
-        <source>Prev rec</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1070"/>
-        <source>Next rec</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1063"/>
-        <source>Last rec</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1064"/>
-        <source>New record</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1065"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1073"/>
-        <source>Delete record</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1066"/>
-        <source>new search</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1067"/>
-        <source>search !!!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1068"/>
-        <source>Order by</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1069"/>
-        <source>View alls records</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="modules/gui/pyarchinit_US_ui.py" line="1056"/>
         <source>DB Info</source>
         <translation type="unfinished"></translation>
@@ -3772,6 +3717,66 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="modules/gui/pyarchinit_US_ui.py" line="1061"/>
         <source>record tot.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1063"/>
+        <source>Last rec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1064"/>
+        <source>New record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1065"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1066"/>
+        <source>new search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1067"/>
+        <source>search !!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1068"/>
+        <source>Order by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1069"/>
+        <source>View alls records</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1070"/>
+        <source>Next rec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1071"/>
+        <source>Prev rec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1072"/>
+        <source>First rec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1073"/>
+        <source>Delete record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1074"/>
+        <source>Connection test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3955,6 +3960,15 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1112"/>
+        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="modules/gui/pyarchinit_US_ui.py" line="1117"/>
         <source>Descrizione </source>
         <translation type="unfinished"></translation>
@@ -4057,6 +4071,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="modules/gui/pyarchinit_US_ui.py" line="1139"/>
         <source>Tipo di rapporto</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1141"/>
+        <source>Vai all&apos;US</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4200,115 +4219,6 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1222"/>
-        <source>Tools</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1190"/>
-        <source>Crea Codice Periodo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1193"/>
-        <source>Esporta Matrix</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1213"/>
-        <source>Show Selcted Features</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1192"/>
-        <source>Crea codice periodo</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1196"/>
-        <source>Ordine Stratigrafico</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1218"/>
-        <source>Export PDF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1195"/>
-        <source>export Matrix</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1198"/>
-        <source>Visualizzazione GIS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1205"/>
-        <source>Attivazione Preview pianta US</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1210"/>
-        <source>Ctrl+G</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1206"/>
-        <source>Preview pianta US</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1208"/>
-        <source>Pan tool</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1202"/>
-        <source>Apri schede US selezionate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1219"/>
-        <source>Singole schede US</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1216"/>
-        <source>Elenco US</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1212"/>
-        <source>Mostra immagini</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1189"/>
-        <source>Check, go!!!!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1074"/>
-        <source>Connection test</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1112"/>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;MS Shell Dlg 2&apos;; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Lucida Grande&apos;; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="modules/gui/pyarchinit_US_ui.py" line="1141"/>
-        <source>Vai all&apos;US</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="modules/gui/pyarchinit_US_ui.py" line="1183"/>
         <source>Documentazione</source>
         <translation type="unfinished"></translation>
@@ -4321,6 +4231,11 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="modules/gui/pyarchinit_US_ui.py" line="1182"/>
         <source>Riferimenti</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1222"/>
+        <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4344,8 +4259,53 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1218"/>
+        <source>Export PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1189"/>
+        <source>Check, go!!!!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1190"/>
+        <source>Crea Codice Periodo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1213"/>
+        <source>Show Selcted Features</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1192"/>
+        <source>Crea codice periodo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1193"/>
+        <source>Esporta Matrix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1195"/>
+        <source>export Matrix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1196"/>
+        <source>Ordine Stratigrafico</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="modules/gui/pyarchinit_US_ui.py" line="1215"/>
         <source>Funzioni di controllo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1198"/>
+        <source>Visualizzazione GIS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4359,8 +4319,33 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1210"/>
+        <source>Ctrl+G</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1202"/>
+        <source>Apri schede US selezionate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="modules/gui/pyarchinit_US_ui.py" line="1204"/>
         <source>Apri schede US</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1205"/>
+        <source>Attivazione Preview pianta US</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1206"/>
+        <source>Preview pianta US</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1208"/>
+        <source>Pan tool</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4369,13 +4354,28 @@ p, li { white-space: pre-wrap; }
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1212"/>
+        <source>Mostra immagini</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="modules/gui/pyarchinit_US_ui.py" line="1221"/>
         <source>Esportazioni</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1216"/>
+        <source>Elenco US</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="modules/gui/pyarchinit_US_ui.py" line="1217"/>
         <source>Esportazioni PDF/PNG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="modules/gui/pyarchinit_US_ui.py" line="1219"/>
+        <source>Singole schede US</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
