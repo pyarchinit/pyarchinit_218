@@ -45,6 +45,165 @@ class NumberedCanvas_TAFONOMIAsheet(canvas.Canvas):
 		self.drawRightString(200*mm, 20*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
 
 
+
+class NumberedCanvas_TAFONOMIAindex(canvas.Canvas):
+	def __init__(self, *args, **kwargs):
+		canvas.Canvas.__init__(self, *args, **kwargs)
+		self._saved_page_states = []
+
+	def define_position(self, pos):
+		self.page_position(pos)
+
+	def showPage(self):
+		self._saved_page_states.append(dict(self.__dict__))
+		self._startPage()
+
+	def save(self):
+		"""add page info to each page (page x of y)"""
+		num_pages = len(self._saved_page_states)
+		for state in self._saved_page_states:
+			self.__dict__.update(state)
+			self.draw_page_number(num_pages)
+			canvas.Canvas.showPage(self)
+		canvas.Canvas.save(self)
+
+	def draw_page_number(self, page_count):
+		self.setFont("Helvetica", 8)
+		self.drawRightString(270*mm, 10*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
+
+
+class Tafonomia_index_pdf_sheet:
+
+	def __init__(self, data):
+		self.nr_scheda_taf =  				data[1]
+		self.sigla_struttura =  				data[2]
+		self.nr_struttura =  					data[3]
+		self.nr_individuo =  					data[4]
+		self.rito =  								data[5]
+		self.tipo_contenitore_resti = 		data[13]
+		self.orientamento_asse = 			data[14]
+		self.orientamento_azimut = 		data[15]
+		self.corredo_presenza = 			data[16]
+		self.completo_si_no =  				data[24]
+		self.disturbato_si_no =  			data[25]
+		self.in_connessione_si_no = 	 	data[26]
+		self.periodo_iniziale = 				data[28]
+		self.fase_iniziale =	 				data[29]
+		self.periodo_finale = 					data[30]
+		self.fase_finale = 					data[31]
+		self.datazione_estesa = 			data[32]
+
+	def getTable(self):
+		styleSheet = getSampleStyleSheet()
+		styNormal = styleSheet['Normal']
+		styNormal.spaceBefore = 20
+		styNormal.spaceAfter = 20
+		styNormal.alignment = 0 #LEFT
+		styNormal.fontSize = 9
+
+		#self.unzip_rapporti_stratigrafici()
+
+		num_scheda = Paragraph("<b>Nr. Scheda</b><br/>" + str(self.nr_scheda_taf),styNormal)
+
+		sigla_struttura = Paragraph("<b>Sigla Struttura</b><br/>" + str(self.sigla_struttura),styNormal)
+
+		numero_struttura = Paragraph("<b>Nr. Struttura</b><br/>" + str(self.nr_struttura),styNormal)
+
+		numero_individuo = Paragraph("<b>Nr. Individuo</b><br/>" + str(self.nr_individuo),styNormal)
+
+		if self.rito == None:
+			rito = Paragraph("<b>Rito</b><br/>",styNormal)
+		else:
+			rito = Paragraph("<b>Rito</b><br/>" + str(self.rito),styNormal)
+
+		if self.tipo_contenitore_resti == None:
+			tipo_contenitore_resti = Paragraph("<b>Tipo contenitore resti</b><br/>",styNormal)
+		else:
+			tipo_contenitore_resti = Paragraph("<b>Tipo contenitore resti</b><br/>" + str(self.tipo_contenitore_resti),styNormal)
+
+		if self.orientamento_asse == None:
+			orientamento_asse = Paragraph("<b>Orientamento asse</b><br/>",styNormal)
+		else:
+			orientamento_asse = Paragraph("<b>Orientamento asse</b><br/>" + str(self.orientamento_asse),styNormal)
+
+		if self.orientamento_azimut == None:
+			orientamento_azimut = Paragraph("<b>Azimut</b><br/>",styNormal)
+		else:
+			orientamento_azimut = Paragraph("<b>Azimut</b><br/>" + str(self.orientamento_azimut),styNormal)
+
+		if self.corredo_presenza == None:
+			corredo_presenza = Paragraph("<b>Corredo</b><br/>",styNormal)
+		else:
+			corredo_presenza = Paragraph("<b>Corredo</b><br/>" + str(self.corredo_presenza),styNormal)
+
+		if self.completo_si_no == None:
+			completo_si_no = Paragraph("<b>Completo</b><br/>",styNormal)
+		else:
+			completo_si_no = Paragraph("<b>Completo</b><br/>" + str(self.completo_si_no),styNormal)
+
+		if self.disturbato_si_no == None:
+			disturbato_si_no = Paragraph("<b>Disturbato</b><br/>",styNormal)
+		else:
+			disturbato_si_no = Paragraph("<b>Disturbato</b><br/>" + str(self.disturbato_si_no),styNormal)
+
+		if self.in_connessione_si_no == None:
+			connessione_si_no = Paragraph("<b>Connessione</b><br/>",styNormal)
+		else:
+			connessione_si_no = Paragraph("<b>Connessione</b><br/>" + str(self.in_connessione_si_no),styNormal)
+
+		if self.periodo_iniziale == None:
+			periodo_iniziale = Paragraph("<b>Periodo iniziale</b><br/>",styNormal)
+		else:
+			periodo_iniziale = Paragraph("<b>Periodo iniziale</b><br/>" + str(self.periodo_iniziale),styNormal)
+
+		if self.fase_iniziale == None:
+			fase_iniziale = Paragraph("<b>Fase inziale</b><br/>",styNormal)
+		else:
+			fase_iniziale = Paragraph("<b>Fase iniziale</b><br/>" + str(self.fase_iniziale),styNormal)
+
+		if self.periodo_finale == None:
+			periodo_finale = Paragraph("<b>Periodo finale</b><br/>",styNormal)
+		else:
+			periodo_finale = Paragraph("<b>Periodo finale</b><br/>" + str(self.periodo_finale),styNormal)
+
+		if self.fase_finale == None:
+			fase_finale = Paragraph("<b>Fase finale</b><br/>",styNormal)
+		else:
+			fase_finale = Paragraph("<b>Fase finale</b><br/>" + str(self.fase_finale),styNormal)
+
+		if self.datazione_estesa == None:
+			datazione_estesa = Paragraph("<b>Datazione</b><br/>",styNormal)
+		else:
+			datazione_estesa = Paragraph("<b>Datazione estesa</b><br/>" + str(self.datazione_estesa),styNormal)
+
+		data = [num_scheda,
+		sigla_struttura,
+		numero_struttura,
+		numero_individuo,
+		rito,
+		tipo_contenitore_resti,
+		orientamento_asse,
+		orientamento_azimut,
+		corredo_presenza,
+		completo_si_no,
+		disturbato_si_no,
+		connessione_si_no,
+		periodo_iniziale,
+		fase_iniziale,
+		periodo_finale,
+		fase_finale,
+		datazione_estesa]
+
+		return data
+
+	def makeStyles(self):
+		styles =TableStyle([('GRID',(0,0),(-1,-1),0.0,colors.black),('VALIGN', (0,0), (-1,-1), 'TOP')
+		])  #finale
+
+		return styles
+
+
+
 class single_Tafonomia_pdf_sheet:
 	PU = Utility()
 	#rapporti stratigrafici
@@ -431,4 +590,52 @@ class generate_tafonomia_pdf:
 		f = open(filename, "wb")
 		doc = SimpleDocTemplate(f)
 		doc.build(elements, canvasmaker=NumberedCanvas_TAFONOMIAsheet)
+		f.close()
+
+
+	def build_index_Campioni(self, records, sito):
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
+
+		logo = Image(logo_path) 
+		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
+		logo.drawWidth = 1.5*inch
+		logo.hAlign = "LEFT"
+
+		styleSheet = getSampleStyleSheet()
+		styNormal = styleSheet['Normal']
+		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
+		styH1 = styleSheet['Heading3']
+
+		data = self.datestrfdate()
+
+		lst = []
+		lst.append(logo)
+		lst.append(Paragraph("<b>ELENCO SCHEDE TAFONOMICHE</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
+
+		table_data = []
+		for i in range(len(records)):
+			exp_index = Tafonomia_index_pdf_sheet(records[i])
+			table_data.append(exp_index.getTable())
+		
+		styles = exp_index.makeStyles()
+		colWidths=[60,60,60, 60,60, 60, 60, 60, 60,60,60,60, 60,60, 60, 60, 60]
+
+		table_data_formatted = Table(table_data, colWidths, style=styles)
+		table_data_formatted.hAlign = "LEFT"
+
+		lst.append(table_data_formatted)
+		#lst.append(Spacer(0,2))
+
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_campioni.pdf')
+		f = open(filename, "wb")
+
+		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
+		doc.build(lst, canvasmaker=NumberedCanvas_Campioniindex)
+
 		f.close()
