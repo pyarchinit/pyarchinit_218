@@ -96,7 +96,7 @@ FORMS =   modules/gui/info.ui \
           modules/gui/ui_pyarchinitplugin.ui \
           modules/gui/Ui_UpdValues.ui
 
-TRANSLATIONS = i18n/pyarchinit_plugin_fr_FR.ts \
-               i18n/pyarchinit_plugin_it_IT.ts \
+TRANSLATIONS = i18n/pyarchinit_plugin_it_IT.ts \
+               i18n/pyarchinit_plugin_fr_FR.ts \
                i18n/pyarchinit_plugin_en_US.ts
 

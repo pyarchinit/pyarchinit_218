@@ -637,7 +637,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 	#buttons functions
 
 
-	def on_pushButton_exp_index_us_pressed(self):
+	def on_pushButton_exp_index_pressed(self):
 		US_index_pdf = generate_tafonomia_pdf()
 		data_list = self.generate_list_pdf()
 		US_index_pdf.build_index_US(data_list, data_list[0][0])

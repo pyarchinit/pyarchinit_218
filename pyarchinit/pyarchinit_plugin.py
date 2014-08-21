@@ -89,6 +89,7 @@ class PyArchInitPlugin:
 		else:
 			translationPath = systemPluginPath + "/i18n/pyarchinit_plugin_" + localeFullName + ".qm"
 
+
 		self.localePath = translationPath
 		if QFileInfo( self.localePath ).exists():
 			self.translator = QTranslator()

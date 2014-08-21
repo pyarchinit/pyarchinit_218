@@ -3415,7 +3415,7 @@ p, li { white-space: pre-wrap; }
     <message>
         <location filename="modules/gui/pyarchinit_Site_ui.py" line="483"/>
         <source>pyArchInit Gestione Scavi - Scheda Sito</source>
-        <translation type="unfinished">pyArchInit Managment Site Form</translation>
+        <translation>pyArchInit Managment Site Form</translation>
     </message>
     <message>
         <location filename="modules/gui/pyarchinit_Site_ui.py" line="484"/>
@@ -3689,7 +3689,7 @@ Step 3 - Riavviare Qgis e cliccare sul pulsante Run Test per verificare l&apos;o
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="664"/>
         <source>pyArchInit Gestione Scavi - Scheda Struttura</source>
-        <translation type="unfinished">pyArchInit Managment framework form</translation>
+        <translation>pyArchInit Managment framework form</translation>
     </message>
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="665"/>
@@ -3699,52 +3699,52 @@ Step 3 - Riavviare Qgis e cliccare sul pulsante Run Test per verificare l&apos;o
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="666"/>
         <source>First rec</source>
-        <translation type="unfinished">First rec</translation>
+        <translation>First rec</translation>
     </message>
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="676"/>
         <source>Prev rec</source>
-        <translation type="unfinished">Prev rec</translation>
+        <translation>Prev rec</translation>
     </message>
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="667"/>
         <source>Next rec</source>
-        <translation type="unfinished">Next rec</translation>
+        <translation>Next rec</translation>
     </message>
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="668"/>
         <source>Last rec</source>
-        <translation type="unfinished">Last Rec</translation>
+        <translation>Last Rec</translation>
     </message>
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="669"/>
         <source>New record</source>
-        <translation type="unfinished">New record</translation>
+        <translation>New record</translation>
     </message>
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="670"/>
         <source>Save</source>
-        <translation type="unfinished">Save</translation>
+        <translation>Save</translation>
     </message>
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="675"/>
         <source>Delete record</source>
-        <translation type="unfinished">Delete one record</translation>
+        <translation>Delete one record</translation>
     </message>
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="671"/>
         <source>new search</source>
-        <translation type="unfinished">New Search</translation>
+        <translation>New Search</translation>
     </message>
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="672"/>
         <source>search !!!</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="673"/>
         <source>Order by</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="modules/gui/pyarchinit_Struttura_ui.py" line="674"/>

@@ -142,8 +142,8 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 
 				US_pdf_sheet = generate_US_pdf()
 				data_list = self.generate_list_US_pdf()
-				US_pdf_sheet.build_US_sheets(data_list)							#export sheet
-				US_pdf_sheet.build_index_US(data_list, data_list[0][0])		#export list
+				US_pdf_sheet.build_US_sheets(self.DATA_LIST)							#export sheet
+				US_pdf_sheet.build_index_US(self.DATA_LIST, self.DATA_LIST[0][0])		#export list
 
 
 			self.DATA_LIST = []
@@ -165,8 +165,8 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 			
 				Periodizzazione_pdf_sheet = generate_Periodizzazione_pdf() #deve essere importata la classe
 				data_list = self.generate_list_periodizzazione_pdf() #deve essere aggiunta la funzione
-				Periodizzazione_pdf_sheet.build_Periodizzazione_sheets(data_list) #deve essere aggiunto il file per generare i pdf
-				Periodizzazione_pdf_sheet.build_index_Periodizzazione(data_list, data_list[0][0]) #deve essere aggiunto il file per generare i pdf
+				Periodizzazione_pdf_sheet.build_Periodizzazione_sheets(self.DATA_LIST) #deve essere aggiunto il file per generare i pdf
+				Periodizzazione_pdf_sheet.build_index_Periodizzazione(self.DATA_LIST, self.DATA_LIST[0][0]) #deve essere aggiunto il file per generare i pdf
 
 			self.DATA_LIST = []
 
@@ -186,7 +186,8 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 
 				Struttura_pdf_sheet = generate_struttura_pdf() #deve essere importata la classe
 				data_list = self.generate_list_struttura_pdf() #deve essere aggiunta la funzione
-				Struttura_pdf_sheet.build_Struttura_sheets(data_list) #deve essere aggiunto il file per generare i pdf
+				Struttura_pdf_sheet.build_Struttura_sheets(self.DATA_LIST) #deve essere aggiunto il file per generare i pdf
+				Struttura_pdf_sheet.build_index_Struttura(self.DATA_LIST, self.DATA_LIST[0][0])
 
 			self.DATA_LIST = []
 
@@ -205,8 +206,8 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 
 				Finds_pdf_sheet = generate_reperti_pdf()
 				data_list = self.generate_list_reperti_pdf()
-				Finds_pdf_sheet.build_Finds_sheets(data_list)
-
+				Finds_pdf_sheet.build_Finds_sheets(self.DATA_LIST)
+				Finds_pdf_sheet.build_index_Finds(self.DATA_LIST, self.DATA_LIST[0][1])
 
 			self.DATA_LIST = []
 
@@ -223,9 +224,10 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 				for i in temp_data_list:
 					self.DATA_LIST.append(i)
 
-				Tafonomia_pdf_sheet = generate_tafonomia_pdf()
-				data_list = self.generate_list_tafonomia_pdf()
-				Tafonomia_pdf_sheet.build_Tafonomia_sheets(data_list)
+				Tafonomia_pdf_sheet = generate_tafonomia_pdf() 
+				data_list = self.generate_list_pdf() 
+				Tafonomia_pdf_sheet.build_Tafonomia_sheets(self.DATA_LIST)
+				Tafonomia_pdf_sheet.build_Tafonomia_sheets(self.DATA_LIST, self.DATA_LIST[0][0])
 
 			self.DATA_LIST = []
 

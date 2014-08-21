@@ -2038,19 +2038,6 @@ p, li { white-space: pre-wrap; }
          <string>Tools</string>
         </attribute>
         <layout class="QGridLayout" name="gridLayout_8">
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_36">
-           <property name="font">
-            <font>
-             <weight>75</weight>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>GIS Toolbar</string>
-           </property>
-          </widget>
-         </item>
          <item row="1" column="1">
           <layout class="QHBoxLayout" name="horizontalLayout_6">
            <item>
@@ -2310,9 +2297,9 @@ p, li { white-space: pre-wrap; }
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_exp_index_us">
+            <widget class="QPushButton" name="pushButton_exp_index">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="font">
               <font>
@@ -2320,7 +2307,7 @@ p, li { white-space: pre-wrap; }
               </font>
              </property>
              <property name="text">
-              <string>Elenco US</string>
+              <string>Elenco </string>
              </property>
              <property name="icon">
               <iconset resource="resources.qrc">
@@ -2394,6 +2381,19 @@ p, li { white-space: pre-wrap; }
             </spacer>
            </item>
           </layout>
+         </item>
+         <item row="6" column="1">
+          <spacer name="verticalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>20</width>
+             <height>40</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </widget>
