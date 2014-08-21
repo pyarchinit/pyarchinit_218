@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_Tafonomia_ui.ui'
 #
-# Created: Thu Mar 27 10:43:45 2014
+# Created: Thu Aug 21 15:06:33 2014
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_Dialog_tafonomia(object):
     def setupUi(self, Dialog_tafonomia):
         Dialog_tafonomia.setObjectName(_fromUtf8("Dialog_tafonomia"))
-        Dialog_tafonomia.resize(576, 623)
+        Dialog_tafonomia.resize(576, 604)
         Dialog_tafonomia.setMinimumSize(QtCore.QSize(540, 400))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/images/iconGrave.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -867,13 +867,6 @@ class Ui_Dialog_tafonomia(object):
         self.tab_4.setObjectName(_fromUtf8("tab_4"))
         self.gridLayout_8 = QtGui.QGridLayout(self.tab_4)
         self.gridLayout_8.setObjectName(_fromUtf8("gridLayout_8"))
-        self.label_36 = QtGui.QLabel(self.tab_4)
-        font = QtGui.QFont()
-        font.setWeight(75)
-        font.setBold(True)
-        self.label_36.setFont(font)
-        self.label_36.setObjectName(_fromUtf8("label_36"))
-        self.gridLayout_8.addWidget(self.label_36, 0, 0, 1, 1)
         self.horizontalLayout_6 = QtGui.QHBoxLayout()
         self.horizontalLayout_6.setObjectName(_fromUtf8("horizontalLayout_6"))
         self.label_38 = QtGui.QLabel(self.tab_4)
@@ -975,14 +968,14 @@ class Ui_Dialog_tafonomia(object):
         self.pushButton_pdf_exp.setIcon(icon15)
         self.pushButton_pdf_exp.setObjectName(_fromUtf8("pushButton_pdf_exp"))
         self.horizontalLayout_9.addWidget(self.pushButton_pdf_exp)
-        self.pushButton_exp_index_us = QtGui.QPushButton(self.tab_4)
-        self.pushButton_exp_index_us.setEnabled(False)
+        self.pushButton_exp_index = QtGui.QPushButton(self.tab_4)
+        self.pushButton_exp_index.setEnabled(True)
         font = QtGui.QFont()
         font.setPointSize(9)
-        self.pushButton_exp_index_us.setFont(font)
-        self.pushButton_exp_index_us.setIcon(icon15)
-        self.pushButton_exp_index_us.setObjectName(_fromUtf8("pushButton_exp_index_us"))
-        self.horizontalLayout_9.addWidget(self.pushButton_exp_index_us)
+        self.pushButton_exp_index.setFont(font)
+        self.pushButton_exp_index.setIcon(icon15)
+        self.pushButton_exp_index.setObjectName(_fromUtf8("pushButton_exp_index"))
+        self.horizontalLayout_9.addWidget(self.pushButton_exp_index)
         spacerItem9 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_9.addItem(spacerItem9)
         self.gridLayout_8.addLayout(self.horizontalLayout_9, 0, 1, 1, 1)
@@ -1006,6 +999,8 @@ class Ui_Dialog_tafonomia(object):
         spacerItem10 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_8.addItem(spacerItem10)
         self.gridLayout_8.addLayout(self.horizontalLayout_8, 3, 1, 1, 1)
+        spacerItem11 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.gridLayout_8.addItem(spacerItem11, 6, 1, 1, 1)
         self.tabWidget.addTab(self.tab_4, _fromUtf8(""))
         self.gridLayout_6.addWidget(self.tabWidget, 0, 0, 1, 1)
         self.gridLayout.addLayout(self.gridLayout_6, 7, 0, 1, 3)
@@ -1183,7 +1178,6 @@ class Ui_Dialog_tafonomia(object):
         self.tableWidget_caratteristiche.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("Dialog_tafonomia", "Tipo caratteristica", None, QtGui.QApplication.UnicodeUTF8))
         self.tableWidget_caratteristiche.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("Dialog_tafonomia", "Posizione", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QtGui.QApplication.translate("Dialog_tafonomia", "Caratteristiche", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_36.setText(QtGui.QApplication.translate("Dialog_tafonomia", "GIS Toolbar", None, QtGui.QApplication.UnicodeUTF8))
         self.label_38.setText(QtGui.QApplication.translate("Dialog_tafonomia", "Visualizzazione GIS", None, QtGui.QApplication.UnicodeUTF8))
         self.toolButtonGis.setShortcut(QtGui.QApplication.translate("Dialog_tafonomia", "Ctrl+G", None, QtGui.QApplication.UnicodeUTF8))
         self.label_39.setText(QtGui.QApplication.translate("Dialog_tafonomia", "Attivazione Preview pianta US", None, QtGui.QApplication.UnicodeUTF8))
@@ -1196,7 +1190,7 @@ class Ui_Dialog_tafonomia(object):
         self.label_41.setText(QtGui.QApplication.translate("Dialog_tafonomia", "Esporta schede Tafonomiche in formato PDF", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_pdf_exp.setToolTip(QtGui.QApplication.translate("Dialog_tafonomia", "Export PDF", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_pdf_exp.setText(QtGui.QApplication.translate("Dialog_tafonomia", "Singole schede", None, QtGui.QApplication.UnicodeUTF8))
-        self.pushButton_exp_index_us.setText(QtGui.QApplication.translate("Dialog_tafonomia", "Elenco US", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_exp_index.setText(QtGui.QApplication.translate("Dialog_tafonomia", "Elenco ", None, QtGui.QApplication.UnicodeUTF8))
         self.label_40.setText(QtGui.QApplication.translate("Dialog_tafonomia", "Apri schede US selezionate", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_showSelectedFeatures.setToolTip(QtGui.QApplication.translate("Dialog_tafonomia", "Show Selcted Features", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_showSelectedFeatures.setText(QtGui.QApplication.translate("Dialog_tafonomia", "apri schede US", None, QtGui.QApplication.UnicodeUTF8))

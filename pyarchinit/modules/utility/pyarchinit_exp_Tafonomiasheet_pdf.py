@@ -181,18 +181,12 @@ class Tafonomia_index_pdf_sheet:
 		numero_struttura,
 		numero_individuo,
 		rito,
-		tipo_contenitore_resti,
-		orientamento_asse,
-		orientamento_azimut,
 		corredo_presenza,
 		completo_si_no,
-		disturbato_si_no,
-		connessione_si_no,
 		periodo_iniziale,
 		fase_iniziale,
 		periodo_finale,
-		fase_finale,
-		datazione_estesa]
+		fase_finale]
 
 		return data
 
@@ -593,7 +587,7 @@ class generate_tafonomia_pdf:
 		f.close()
 
 
-	def build_index_Campioni(self, records, sito):
+	def build_index_Tafonomia(self, records, sito):
 		if os.name == 'posix':
 			home = os.environ['HOME']
 		elif os.name == 'nt':
@@ -622,9 +616,9 @@ class generate_tafonomia_pdf:
 		for i in range(len(records)):
 			exp_index = Tafonomia_index_pdf_sheet(records[i])
 			table_data.append(exp_index.getTable())
-		
+
 		styles = exp_index.makeStyles()
-		colWidths=[60,60,60, 60,60, 60, 60, 60, 60,60,60,60, 60,60, 60, 60, 60]
+		colWidths=[50,80,80,80,100,60,50,60,60,60,60,150]
 
 		table_data_formatted = Table(table_data, colWidths, style=styles)
 		table_data_formatted.hAlign = "LEFT"
@@ -632,10 +626,10 @@ class generate_tafonomia_pdf:
 		lst.append(table_data_formatted)
 		#lst.append(Spacer(0,2))
 
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_campioni.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_tafonomia.pdf')
 		f = open(filename, "wb")
 
 		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
-		doc.build(lst, canvasmaker=NumberedCanvas_Campioniindex)
+		doc.build(lst, canvasmaker=NumberedCanvas_TAFONOMIAindex)
 
 		f.close()

@@ -638,10 +638,9 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 
 
 	def on_pushButton_exp_index_pressed(self):
-		US_index_pdf = generate_tafonomia_pdf()
+		Tafonomia_index_pdf = generate_tafonomia_pdf()
 		data_list = self.generate_list_pdf()
-		US_index_pdf.build_index_US(data_list, data_list[0][0])
-
+		Tafonomia_index_pdf.build_index_Tafonomia(data_list, data_list[0][0])
 
 	def on_toolButtonPan_toggled(self):
 		self.toolPan = QgsMapToolPan(self.mapPreview)

@@ -1,3 +1,25 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+/***************************************************************************
+        pyArchInit Plugin  - A QGIS plugin to manage archaeological dataset
+                             -------------------
+    begin                : 2007-12-01
+    copyright            : (C) 2008 by Luca Mandolesi
+    email                : mandoluca at gmail.com
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         										   *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+"""
+
+
 import os
 import copy
 from reportlab.lib.testutils import makeSuiteForClasses, outputfile, printLocation
@@ -38,7 +60,7 @@ class NumberedCanvas_Individuisheet(canvas.Canvas):
 	def draw_page_number(self, page_count):
 		self.setFont("Helvetica", 8)
 		self.drawRightString(200*mm, 20*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
-"""
+
 class NumberedCanvas_Individuiindex(canvas.Canvas):
 	def __init__(self, *args, **kwargs):
 		canvas.Canvas.__init__(self, *args, **kwargs)
@@ -63,7 +85,72 @@ class NumberedCanvas_Individuiindex(canvas.Canvas):
 	def draw_page_number(self, page_count):
 		self.setFont("Helvetica", 8)
 		self.drawRightString(270*mm, 10*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
-	"""
+
+class Individui_index_pdf_sheet:
+
+	def __init__(self, data):
+		self.area = data[1]
+		self.us = data[2]
+		self.nr_individuo = data[3]
+		self.sesso = data[6]
+		self.eta_min = data[7]
+		self.eta_max =  data[8]
+		self.classi_eta = data[9]
+
+	def getTable(self):
+		styleSheet = getSampleStyleSheet()
+		styNormal = styleSheet['Normal']
+		styNormal.spaceBefore = 20
+		styNormal.spaceAfter = 20
+		styNormal.alignment = 0 #LEFT
+		styNormal.fontSize = 9
+
+		#self.unzip_rapporti_stratigrafici()
+
+		individuo = Paragraph("<b>Nr Individuo</b><br/>" + str(self.nr_individuo),styNormal)
+
+		if self.area == None:
+			area = Paragraph("<b>Area</b><br/>",styNormal)
+		else:
+			area = Paragraph("<b>Area</b><br/>" + str(self.area),styNormal)
+
+		if str(self.us) == "None":
+			us = Paragraph("<b>US</b><br/>",styNormal)
+		else:
+			us = Paragraph("<b>US</b><br/>" + str(self.us),styNormal)
+
+		if self.eta_min == "None":
+			eta_min = Paragraph("<b>Età min.</b><br/>",styNormal)
+		else:
+			eta_min = Paragraph("<b>Età min.</b><br/>" + str(self.eta_min),styNormal)
+
+		if self.eta_max == "None":
+			eta_max = Paragraph("<b>Età max.</b><br/>",styNormal)
+		else:
+			eta_max = Paragraph("<b>Età max.</b><br/>" + str(self.eta_max),styNormal)
+
+		if self.classi_eta == None:
+			classi_eta = Paragraph("<b>Classi età</b><br/>",styNormal)
+		else:
+			classi_eta = Paragraph("<b>Classi età</b><br/>" + str(self.classi_eta),styNormal)
+
+
+		data = [individuo,
+					area,
+					us,
+					eta_min,
+					eta_max,
+					classi_eta]
+
+		return data
+
+	def makeStyles(self):
+		styles =TableStyle([('GRID',(0,0),(-1,-1),0.0,colors.black),('VALIGN', (0,0), (-1,-1), 'TOP')
+		])  #finale
+
+		return styles
+
+
 class single_Individui_pdf_sheet:
 	def __init__(self, data):
 		self.sito = data[0]
@@ -77,72 +164,6 @@ class single_Individui_pdf_sheet:
 		self.eta_max =  data[8]
 		self.classi_eta = data[9]
 		self.osservazioni = data[10]
-
-	"""
-	def unzip_rapporti_stratigrafici(self):
-		rapporti = eval(self.rapporti)
-
-		for rapporto in rapporti:
-			if len(rapporto) == 2:
-				if rapporto[0] == 'Si lega a' or rapporto[0] == 'si lega a':
-					if self.si_lega_a == '':
-						self.si_lega_a += str(rapporto[1])
-					else:
-						self.si_lega_a += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Uguale a' or rapporto[0] == 'uguale a':
-					if self.uguale_a == '':
-						self.uguale_a += str(rapporto[1])
-					else:
-						self.uguale_a += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Copre' or rapporto[0] == 'copre':
-					if self.copre == '':
-						self.copre += str(rapporto[1])
-					else:
-						self.copre += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Coperto da' or rapporto[0] == 'coperto da':
-					if self.coperto_da == '':
-						self.coperto_da += str(rapporto[1])
-					else:
-						self.coperto_da += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Riempie' or rapporto[0] == 'riempie':
-					if self.riempie == '':
-						self.riempie += str(rapporto[1])
-					else:
-						self.riempie += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Riempito da' or rapporto[0] == 'riempito da':
-					if self.riempito_da == '':
-						self.riempito_da += str(rapporto[1])
-					else:
-						self.riempito_da += ', ' + str(rapporto[1])
-				if rapporto[0] == 'Taglia' or rapporto[0] == 'taglia':
-					if self.taglia == '':
-						self.taglia += str(rapporto[1])
-					else:
-						self.taglia += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Tagliato da' or rapporto[0] == 'tagliato da':
-					if self.tagliato_da == '':
-						self.tagliato_da += str(rapporto[1])
-					else:
-						self.tagliato_da += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Si appoggia a' or rapporto[0] == 'si appoggia a':
-					if self.si_appoggia_a == '':
-						self.si_appoggia_a+= str(rapporto[1])
-					else:
-						self.si_appoggia_a += ', ' + str(rapporto[1])
-
-				if rapporto[0] == 'Gli si appoggia' or rapporto[0] == 'gli si appoggia a':
-					if self.gli_si_appoggia == '':
-						self.gli_si_appoggia += str(rapporto[1])
-					else:
-						self.gli_si_appoggia += ', ' + str(rapporto[1])
-	"""
 
 	def datestrfdate(self):
 		now = date.today()
@@ -181,7 +202,6 @@ class single_Individui_pdf_sheet:
 		intestazione = Paragraph("<b>SCHEDA INDIVIDUI<br/>" + unicode(self.datestrfdate()) + "</b>", styNormal)
 		#intestazione2 = Paragraph("<b>pyArchInit</b>", styNormal)
 
-
 		if os.name == 'posix':
 			home = os.environ['HOME']
 		elif os.name == 'nt':
@@ -195,7 +215,6 @@ class single_Individui_pdf_sheet:
 
 		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
 		logo.drawWidth = 1.5*inch
-
 
 		#1 row
 		sito = Paragraph("<b>Sito</b><br/>"  + unicode(self.sito), styNormal)
@@ -227,74 +246,6 @@ class single_Individui_pdf_sheet:
 			osservazioni = Paragraph("<b>Osservazioni</b><br/>" + str(self.osservazioni), styDescrizione)
 		except:
 			pass
-		
-		"""
-		#5 row
-		elementi_reperto = ''
-		if eval(self.elementi_reperto) > 0 :
-			for i in eval(self.elementi_reperto):
-				if elementi_reperto == '':
-					try:
-						elementi_reperto += ("Elemento rinvenuto: %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
-					except:
-						pass
-				else:
-					try:
-						elementi_reperto += ("<br/>Elemento rinvenuto: %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]))
-					except:
-						pass
-
-		elementi_reperto = Paragraph("<b>Elementi reperto</b><br/>"  + elementi_reperto, styNormal)
-
-		#6 row
-		misurazioni = ''
-		if eval(self.misurazioni) > 0:
-			for i in eval(self.misurazioni):
-				if misurazioni == '':
-					try:
-						misurazioni += ("<b>Tipo di misura: %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[2]), str(i[1]))
-					except:
-						pass
-				else:
-					try:
-						misurazioni += ("<br/><b>Tipo di misura: %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[2]), str(i[1]))
-					except:
-						pass
-		misurazioni = Paragraph("<b>Misurazioni</b><br/>"  + misurazioni, styNormal)
-
-		#7 row
-		tecnologie = ''
-		if eval(self.tecnologie) > 0:
-			for i in eval(self.tecnologie):
-				if tecnologie == '':
-					try:
-						tecnologie += ("<b>Tipo tecnologia: %s, Posizione: %s, Tipo quantita': %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
-					except:
-						pass
-				else:
-					try:
-						tecnologie += ("<br/><b>Tipo tecnologia: %s, Posizione: %s, Tipo quantita': %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
-					except:
-						pass
-		tecnologie = Paragraph("<b>Tecnologie</b><br/>"  + tecnologie, styNormal)
-
-		#8 row
-		rif_biblio = ''
-		if eval(self.rif_biblio) > 0:
-			for i in eval(self.rif_biblio): #gigi
-				if rif_biblio == '':
-					try:
-						rif_biblio += ("<b>Autore: %s, Anno: %s, Titolo: %s, Pag.: %s, Fig.: %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
-					except:
-						pass
-				else:
-					try:
-						rif_biblio += ("<br/><b>Tipo tecnologia: %s, Posizione: %s, Tipo quantita': %s, Unita' di musura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
-					except:
-						pass
-
-		rif_biblio = Paragraph("<b>Riferimenti bibliografici</b><br/>"  + rif_biblio, styNormal)
-		"""
 
 		#12 row
 		data_schedatura  = Paragraph("<b>Data schedatura</b><br/>" + self.data_schedatura,styNormal)
@@ -310,7 +261,6 @@ class single_Individui_pdf_sheet:
 						[data_schedatura, '01', '02', '03', '04', '05', schedatore, '07', '08', '09'] #5 row ok
 						#['https://sites.google.com/site/pyarchinit/', '01', '02', '03', '04','05', '06', '07','08', '09'] #6 row
 						]
-
 
 		#table style
 		table_style=[
@@ -373,35 +323,51 @@ class generate_pdf:
 		doc = SimpleDocTemplate(f)
 		doc.build(elements, canvasmaker=NumberedCanvas_Individuisheet)
 		f.close()
-		
-		
-	"""
-	def build_index_US(self, records, sito):
+
+	def build_index_individui(self, records, sito):
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
+
+		logo = Image(logo_path) 
+		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
+		logo.drawWidth = 1.5*inch
+		logo.hAlign = "LEFT"
+
 		styleSheet = getSampleStyleSheet()
 		styNormal = styleSheet['Normal']
 		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
-		styH1 = styleSheet['Heading1']
+		styH1 = styleSheet['Heading3']
+
 		data = self.datestrfdate()
+
 		lst = []
-		lst.append(Paragraph("<b>ELENCO INDIVIDUI'</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH1))
+		lst.append(logo)
+		lst.append(Paragraph("<b>ELENCO INDIVIDUI</b><br/><b>Scavo: %s, Data: %s</b>" % (sito, data), styH1))
 
 		table_data = []
 		for i in range(len(records)):
-			exp_index = US_index_pdf_sheet(records[i])
+			exp_index = Individui_index_pdf_sheet(records[i])
 			table_data.append(exp_index.getTable())
 		
 		styles = exp_index.makeStyles()
-		table_data_formatted = Table(table_data,  colWidths=55.5)
-		table_data_formatted.setStyle(styles)
+		colWidths=[60,60,60, 60,60, 250]
+
+		table_data_formatted = Table(table_data, colWidths, style=styles)
+		table_data_formatted.hAlign = "LEFT"
 
 		lst.append(table_data_formatted)
-		lst.append(Spacer(0,12))
+		#lst.append(Spacer(0,2))
 
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'indice_us.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_individui.pdf')
 		f = open(filename, "wb")
 
 		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
-		doc.build(lst, canvasmaker=NumberedCanvas_USindex)
+		doc.build(lst, canvasmaker=NumberedCanvas_Individuiindex)
 
 		f.close()
-	"""
+

@@ -227,7 +227,7 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 				Tafonomia_pdf_sheet = generate_tafonomia_pdf() 
 				data_list = self.generate_list_pdf() 
 				Tafonomia_pdf_sheet.build_Tafonomia_sheets(self.DATA_LIST)
-				Tafonomia_pdf_sheet.build_Tafonomia_sheets(self.DATA_LIST, self.DATA_LIST[0][0])
+				Tafonomia_pdf_sheet.build_index_Tafonomia(self.DATA_LIST, self.DATA_LIST[0][0])
 
 			self.DATA_LIST = []
 
@@ -246,7 +246,8 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 
 				Individui_pdf_sheet = generate_pdf()
 				data_list = self.generate_list_individui_pdf()
-				Individui_pdf_sheet.build_Individui_sheets(data_list)
+				Individui_pdf_sheet.build_Individui_sheets(self.DATA_LIST)
+				Individui_pdf_sheet.build_index_individui(self.DATA_LIST, self.DATA_LIST[0][0])
 
 			self.DATA_LIST = []
 

@@ -256,6 +256,11 @@ class pyarchinit_Schedaind(QDialog, Ui_DialogInd):
 		data_list = self.generate_list_pdf()
 		Individui_pdf_sheet.build_Individui_sheets(data_list)
 
+	def on_pushButton_exp_index_ind_pressed(self):
+		Individui_pdf_index = generate_pdf()
+		data_list = self.generate_list_pdf()
+		Individui_pdf_index.build_index_individui(data_list, data_list[0][0])
+
 	"""
 	def on_toolButtonPan_toggled(self):
 		self.toolPan = QgsMapToolPan(self.mapPreview)
