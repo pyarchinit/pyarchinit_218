@@ -112,6 +112,8 @@ class single_Finds_pdf_sheet:
 		self.misurazioni = data[15]
 		self.rif_biblio = data[16]
 		self.tecnologie = data[17]
+		self.repertato = data[21]
+		self.diagnostico = data[22]
 
 	def datestrfdate(self):
 		now = date.today()
@@ -196,12 +198,12 @@ class single_Finds_pdf_sheet:
 			for i in eval(self.misurazioni):
 				if misurazioni == '':
 					try:
-						misurazioni += ("<b>Tipo di misura: %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[2]), str(i[1]))
+						misurazioni += ("%s: %s %s") % (str(i[0]), str(i[1]), str(i[2]))
 					except:
 						pass
 				else:
 					try:
-						misurazioni += ("<br/><b>Tipo di misura: %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[2]), str(i[1]))
+						misurazioni += ("<br/>%s: %s %s") % (str(i[0]), str(i[1]), str(i[2]))
 					except:
 						pass
 		misurazioni = Paragraph("<b>Misurazioni</b><br/>"  + misurazioni, styNormal)
@@ -212,12 +214,12 @@ class single_Finds_pdf_sheet:
 			for i in eval(self.tecnologie):
 				if tecnologie == '':
 					try:
-						tecnologie += ("<b>Tipo tecnologia: %s, Posizione: %s, Tipo quantita': %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
+						tecnologie += ("Tipo tecnologia: %s, Posizione: %s, Tipo quantita': %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
 					except:
 						pass
 				else:
 					try:
-						tecnologie += ("<br/><b>Tipo tecnologia: %s, Posizione: %s, Tipo quantita': %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
+						tecnologie += ("<br/>Tipo tecnologia: %s, Posizione: %s, Tipo quantita': %s, Unita' di misura: %s, Quantita': %s") % (str(i[0]), str(i[1]), str(i[2]), str(i[3]),str(i[4]))
 					except:
 						pass
 		tecnologie = Paragraph("<b>Tecnologie</b><br/>"  + tecnologie, styNormal)
@@ -243,8 +245,8 @@ class single_Finds_pdf_sheet:
 		riferimenti_stratigrafici = Paragraph("<b>Riferimenti stratigrafici</b>",styNormal)
 
 		#10 row
-		area = Paragraph("<b>Area</b><br/>" + self.area,styNormal)
-		us = Paragraph("<b>US</b><br/>" + self.us,styNormal)
+		repertato = Paragraph("<b>Repertato</b><br/>" + self.repertato,styNormal)
+		diagnostico = Paragraph("<b>Diagnostico</b><br/>" + self.diagnostico,styNormal)
 
 		#11 row
 		riferimenti_magazzino = Paragraph("<b>Riferimenti magazzino</b>",styNormal)
@@ -266,7 +268,7 @@ class single_Finds_pdf_sheet:
 						[tecnologie, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #7 row ok
 						[rif_biblio, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #8 row ok
 						[riferimenti_stratigrafici, '02', '03', '04', '05', '06', '07', '08', '09'], #9 row ok
-						[area, '01', '02', us,'04', '05', '06', '07', '08', '09'], #10 row ok
+						[repertato, '01', '02', diagnostico,'04', '05', '06', '07', '08', '09'], #10 row ok
 						[riferimenti_magazzino, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #11 row ok
 						[lavato, '01', '02', nr_cassa, '04', '05', luogo_conservazione, '07', '08', '09'] #12 row ok
 						]
@@ -378,7 +380,7 @@ class Box_labels_Finds_pdf_sheet:
 		if self.elenco_us == None:
 			elenco_us = Paragraph("<b>Elenco US/(Struttura)</b>",styNormal)
 		else:
-			elenco_us = Paragraph("<b>Elenco US/(Struttura)</b>" + str(self.elenco_us),styNormal)
+			elenco_us = Paragraph("<b>Elenco US/(Struttura)</b><br/>" + str(self.elenco_us),styNormal)
 
 		luogo_conservazione = Paragraph("<b>Luogo di conservazione</b><br/>" + str(self.luogo_conservazione),styNormal)
 
@@ -464,15 +466,18 @@ class CASSE_index_pdf_sheet:
 class FINDS_index_pdf_sheet:
 
 	def __init__(self, data):
-		self.sito = data[1] #1 - sito
-		self.num_inventario = data[2] #2- numero_inventario
-		self.tipo_reperto = data[3] #3 - tipo_reperto
-		self.criterio_schedatura = data[4 ]#4 - criterio_schedatura
-		self.definizione = data[5 ]#5 - definizione
-		self.area = data[7] # 7 - area
-		self.us = data[8] #8- us
-		self.lavato = data[9] #9 - lavato
-		self.numero_cassa = data[10] #10 - numero cassa
+		self.sito = data[1]							#1 - sito
+		self.num_inventario = data[2]			 #2- numero_inventario
+		self.tipo_reperto = data[3] 				#3 - tipo_reperto
+		self.criterio_schedatura = data[4 ]		#4 - criterio_schedatura
+		self.definizione = data[5 ]					#5 - definizione
+		self.area = data[7] 							# 7 - area
+		self.us = data[8] 							#8 - us
+		self.lavato = data[9] 						#9 - lavato
+		self.numero_cassa = data[10] 			#10 - numero cassa
+		self.repertato = data[21]					#22 - repertato
+		self.diagnostico = data[22]				#23 - diagnostico
+
 
 	def getTable(self):
 		styleSheet = getSampleStyleSheet()
@@ -516,6 +521,16 @@ class FINDS_index_pdf_sheet:
 		else:
 			lavato = Paragraph("<b>Lavato</b><br/>" + str(self.lavato),styNormal)
 
+		if self.repertato == None:
+			repertato = Paragraph("<b>Repertato</b><br/>",styNormal)
+		else:
+			repertato = Paragraph("<b>Repertato</b><br/>" + str(self.repertato),styNormal)
+
+		if self.diagnostico == None:
+			diagnostico = Paragraph("<b>Diagnostico</b><br/>",styNormal)
+		else:
+			diagnostico = Paragraph("<b>Diagnostico</b><br/>" + str(self.diagnostico),styNormal)
+
 		if str(self.numero_cassa) == "None":
 			nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>",styNormal)
 		else:
@@ -529,6 +544,8 @@ class FINDS_index_pdf_sheet:
 				area,
 				us,
 				lavato,
+				repertato,
+				diagnostico,
 				nr_cassa]
 
 		return data
@@ -595,7 +612,7 @@ class generate_reperti_pdf:
 			table_data.append(exp_index.getTable())
 
 		styles = exp_index.makeStyles()
-		colWidths=[70,120,120,120, 35, 35, 70, 70]
+		colWidths=[70,110,110,110, 35, 35, 60, 60, 60,60]
 
 		table_data_formatted = Table(table_data, colWidths, style=styles)
 		table_data_formatted.hAlign = "LEFT"

@@ -721,7 +721,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			unicode(self.DATA_LIST[i].tecnologie),						#18 - misurazioni
 			unicode(self.DATA_LIST[i].tipo),								#19 - tipo
 			unicode(self.DATA_LIST[i].corpo_ceramico),				#20 - corpo_ceramico
-			unicode(self.DATA_LIST[i].rivestimento)					#21- rivestimento
+			unicode(self.DATA_LIST[i].rivestimento),					#21 - rivestimento
+			unicode(self.DATA_LIST[i].repertato),						#22 - repertato
+			unicode(self.DATA_LIST[i].diagnostico)					#23 - diagnostico
 		])
 		return data_list
 
@@ -742,10 +744,10 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		sito_ec = unicode(self.comboBox_sito.currentText())
 		Mat_casse_pdf = generate_reperti_pdf()
 		data_list = self.generate_el_casse_pdf(sito_ec)
+
 		Mat_casse_pdf.build_index_Casse(data_list, sito_ec)
-		
 		Mat_casse_pdf.build_box_labels_Finds(data_list, sito_ec)
-	
+
 #********************************************************************************
 	def generate_el_casse_pdf(self, sito):
 		self.sito_ec = sito
@@ -770,7 +772,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 			n_inv_res_list = ""
 			for i in res_inv:
-				n_inv_res_list += "N.inv: " + str(i.numero_inventario) + "/"+ str(i.tipo_reperto) + "<br/>"
+				n_inv_res_list += "N.inv: " + str(i.numero_inventario) + "/"+ str(i.tipo_reperto) + ", "
 			#inserisce l'elenco degli inventari
 			single_cassa.append(n_inv_res_list)
 
@@ -789,7 +791,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 						structure_string += str(sing_us.struttura) + '/'
 					structure_string += ")" 
 				
-				us_res_list += "Area:"+str(i.area) + ",US:"+str(i.us)+structure_string+"<br/>"  #.append("Area:"+str(i.area) + ",US:"+str(i.us))
+				us_res_list += "Area:"+str(i.area) + ",US:"+str(i.us)+structure_string+", "  #.append("Area:"+str(i.area) + ",US:"+str(i.us))
 			#us_res_list.sort()
 			#inserisce l'elenco delle us
 			single_cassa.append(us_res_list)
@@ -880,7 +882,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 				for sing_str in strutt_list:
 					 strutt_text += "," + str(sing_str[1])
 				strutt_text =")"
-				us_field += "US"+str(us[1]) + strutt_text + "<br/>"
+				us_field += "US"+str(us[1]) + strutt_text + ", "
 
 		QMessageBox.warning(self,'us_field',str(us_field), QMessageBox.Ok)
 
