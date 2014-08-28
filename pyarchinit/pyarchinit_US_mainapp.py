@@ -904,7 +904,83 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			self.testing(filename_us_mancanti, str(msg_us_mancanti))
 			QMessageBox.warning(self,u'ATTENZIONE',u"Sistema di ordinamento Terminato", QMessageBox.Ok)
 		else:
-			QMessageBox.warning(self,u'ATTENZIONE',u"Sistema di ordinamento US abortito", QMessageBox.Ok)
+
+			#report errori rapporti stratigrafici
+			msg_tipo_rapp = "Manca il tipo di rapporto nell'US: \n"
+			msg_nr_rapp = "Manca il numero del rapporto nell'US: \n"
+			msg_paradx_rapp = "Paradosso nei rapporti: \n"
+			msg_us_mancanti = "Mancano le seguenti schede US presenti nei rapporti: \n"
+			#report errori rapporti stratigrafici
+
+			data = []
+			for sing_rec in self.DATA_LIST:
+				us = sing_rec.us
+				rapporti_stratigrafici = eval(sing_rec.rapporti)
+				for sing_rapp in rapporti_stratigrafici:
+					if len(sing_rapp) != 2:
+						msg_nr_rapp = msg_nr_rapp + str(sing_rapp) + "relativo a: " + str(us) + " \n"
+
+					try:
+						if sing_rapp[0] == 'Taglia' or  sing_rapp[0] == 'Copre' or  sing_rapp[0] == 'Si appoggia a' or  sing_rapp[0] == 'Riempie':  #or sing_rapp[0] == 'Si lega a' or  sing_rapp[0] == 'Uguale a'
+							try:
+								if sing_rapp[1] != '':
+									harris_rapp = (int(us), int(sing_rapp[1]))
+##									if harris_rapp== (1, 67):
+##										QMessageBox.warning(self, "Messaggio", "Magagna", QMessageBox.Ok)
+									data.append(harris_rapp)
+							except:
+								msg_nr_rapp = msg_nr_rapp + str(us) + " \n"
+					except:
+						msg_tipo_rapp = msg_tipo_rapp + str(us) + " \n"
+
+			for i in data:
+				temp_tup = (i[1],i[0]) #controlla che nn vi siano rapporti inversi dentro la lista DA PROBLEMI CON GLI UGUALE A E I SI LEGA A
+				#QMessageBox.warning(self, "Messaggio", "Temp_tup" + str(temp_tup), QMessageBox.Ok)
+				if data.count(temp_tup) != 0:
+					msg_paradx_rapp = msg_paradx_rapp + '\n'+str(i) + '\n' + str(temp_tup)
+					data.remove(i)
+			#OK
+##			QMessageBox.warning(self, "Messaggio", "DATA LIST" + str(data), QMessageBox.Ok)
+			#Blocca il sistema di ordinamento su un sito ed area specifci in base alla ricerca eseguita sulla scheda US
+			sito = self.DATA_LIST[0].sito #self.comboBox_sito_rappcheck.currentText()
+			area = self.DATA_LIST[0].area #self.comboBox_area.currentText()
+			#script order layer from pyqgis
+			OL = Order_layer_v2(self.DB_MANAGER,sito,area)
+			order_layer_dict = OL.main_order_layer()
+			#script order layer from pyqgis
+
+##			if order_layer_dict == "error":
+##				QMessageBox.warning(self, "Messaggio", "Errore nei rapporti stratigrafici", QMessageBox.Ok)
+##			else:
+
+			order_number = ""
+			us = ""
+			for k,v in order_layer_dict.items():
+				order_number = str(k)
+				us = v
+				for sing_us in v:
+					search_dict = {'sito' : "'"+unicode(sito)+"'", 'area':"'"+unicode(area)+"'", 'us' : int(sing_us)}
+					try:
+						records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS) #carica tutti i dati di uno scavo ordinati per numero di US
+
+						self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, self.ID_TABLE, [int(records[0].id_us)], ['order_layer'], [order_number])
+						self.on_pushButton_view_all_pressed()
+					except Exception, e:
+						msg_us_mancanti = str(e)#msg_us_mancanti + "\n"+str(sito) + "area: " + str(area) + " us: " + (us)
+
+			#blocco output errori
+			filename_tipo_rapporti_mancanti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'tipo_rapporti_mancanti.txt')
+			filename_nr_rapporti_mancanti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'nr_rapporti_mancanti.txt')
+			filename_paradosso_rapporti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'paradosso_rapporti.txt')
+			filename_us_mancanti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'us_mancanti.txt')
+
+			self.testing(filename_tipo_rapporti_mancanti, str(msg_tipo_rapp))
+			self.testing(filename_nr_rapporti_mancanti, str(msg_nr_rapp))
+			self.testing(filename_paradosso_rapporti, str(msg_paradx_rapp))
+			self.testing(filename_us_mancanti, str(msg_us_mancanti))
+			QMessageBox.warning(self,u'ATTENZIONE',u"Sistema di ordinamento Terminato", QMessageBox.Ok)
+
+			#QMessageBox.warning(self,u'ATTENZIONE',u"Sistema di ordinamento US abortito", QMessageBox.Ok)
 		#blocco output errori
 ##
 	def on_toolButtonPan_toggled(self):
