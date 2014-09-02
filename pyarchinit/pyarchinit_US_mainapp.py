@@ -1164,7 +1164,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 	def on_pushButton_rapp_check_pressed(self):
 		sito_check = unicode(self.comboBox_sito_rappcheck.currentText())
-		self.rapporti_stratigrafici_check(sito_check)
+		area_check = unicode(self.comboBox_area_rappcheck.currentText())
+		self.rapporti_stratigrafici_check(sito_check, area_check)
 		QMessageBox.warning(self, "Messaggio", "Controllo Rapporti Stratigrafici. \n Controllo eseguito con successo",  QMessageBox.Ok)
 
 	def data_error_check(self):
@@ -1292,7 +1293,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		"""
 		return test
 
-	def rapporti_stratigrafici_check(self, sito_check):
+	def rapporti_stratigrafici_check(self, sito_check, area_check):
 		conversion_dict = {'Copre':'Coperto da',
 						   'Coperto da': 'Copre',
 						   'Riempie': 'Riempito da',
@@ -1300,11 +1301,12 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 						   'Taglia': 'Tagliato da',
 						   'Tagliato da': 'Taglia',
 						   'Si appoggia a': 'Gli si appoggia',
+						   'Gli si appoggia': 'Si appoggia a',
 						   'Si lega a': 'Si lega a',
 						   'Uguale a':'Uguale a'
 						   }
 
-		search_dict = {'sito' : "'"+unicode(sito_check)+"'"}
+		search_dict = {'sito' : "'"+unicode(sito_check)+"'", 'area' : "'"+unicode(area_check)+"'"}
 
 		records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS) #carica tutti i dati di uno scavo ordinati per numero di US
 
@@ -1331,12 +1333,13 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 							rapporti_check = eval(us_rapp[0].rapporti)
 							us_rapp_check = ('%s') % str(us)
 							if rapporti_check.count([rapp_converted, us_rapp_check]) == 1:
-								report = "Errore generico. Probabile presenza di rapporti vuoti o scritti non correttamente: "
+								report = "" #"Errore generico. Probabile presenza di rapporti vuoti o scritti non correttamente: " + str([rapp_converted, us_rapp_check])
 							else:
 								report = '\bSito: %s, \bArea: %s, \bUS: %d %s \bUS: %d: Rapporto non verificato' % (sito, area, int(us), sing_rapp[0], int(sing_rapp[1]))
 					except Exception, e:
 						report = "Problema di conversione rapporto: " + str(e)
-					report_rapporti = report_rapporti + report + '\n'
+					if report != "":
+						report_rapporti = report_rapporti + report + '\n'
 		if os.name == 'posix':
 			HOME = os.environ['HOME']
 		elif os.name == 'nt':
