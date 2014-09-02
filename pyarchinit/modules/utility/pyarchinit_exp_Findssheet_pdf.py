@@ -360,18 +360,40 @@ class Box_labels_Finds_pdf_sheet:
 		styNormal.spaceBefore = 20
 		styNormal.spaceAfter = 20
 		styNormal.alignment = 0 #LEFT
-		styNormal.fontSize = 8
+		styNormal.fontSize = 14
+		styNormal.leading = 15
 
 		styCassaLabel = styleSheet['Cassa Label']
 		styCassaLabel.spaceBefore = 20
 		styCassaLabel.spaceAfter = 20
 		styCassaLabel.alignment = 0 #LEFT
-		styCassaLabel.fontSize = 30
+		styCassaLabel.fontSize = 200
+
+		stySitoLabel = styleSheet['Cassa Label']
+		stySitoLabel.spaceBefore = 20
+		stySitoLabel.spaceAfter = 20
+		stySitoLabel.alignment = 0 #LEFT
+		stySitoLabel.fontSize = 20
+
 
 		#format labels
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
+		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
+		logo = Image(logo_path)
+
+		##		if test_image.drawWidth < 800:
+
+		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
+		logo.drawWidth = 1.5*inch
+		
 
 		num_cassa = Paragraph("<b>N. Cassa </b>" + str(self.cassa),styCassaLabel)
-		sito = Paragraph("<b>Sito: </b>" + str(self.sito),styCassaLabel)
+		sito = Paragraph("<b>Sito: </b><br/>" + str(self.sito),stySitoLabel)
 
 		if self.elenco_inv_tip_rep == None:
 			elenco_inv_tip_rep = Paragraph("<b>Elenco N. Inv. / Tipo materiale</b><br/>",styNormal)
@@ -383,14 +405,18 @@ class Box_labels_Finds_pdf_sheet:
 		else:
 			elenco_us = Paragraph("<b>Elenco US/(Struttura)</b><br/>" + str(self.elenco_us),styNormal)
 
-		luogo_conservazione = Paragraph("<b>Luogo di conservazione</b><br/>" + str(self.luogo_conservazione),styNormal)
+		#luogo_conservazione = Paragraph("<b>Luogo di conservazione</b><br/>" + str(self.luogo_conservazione),styNormal)
 
 		#schema
 		cell_schema =	[ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
-							[sito, '01', '02', '03', '04','05', '06', '07', num_cassa, '09'],
+							[logo, '01', '02', '03', '04','05', '06', '07', '08', '09'],
+							[num_cassa, '01', '02', '03', '04','05', '06', '07', '08', '09'],
+							[sito, '01', '02', '03', '04','05', '06', '07', '08', '09'],
 							[elenco_us, '01', '02', '03','04', '05','06', '07', '08', '09'],
-							[elenco_inv_tip_rep, '01', '02','03', '04', '05','06', '07', '08', '09'], #1 row ok
-							[luogo_conservazione, '01', '02','03', '04', '05', '06' , '07', '08', '09']]
+							[elenco_inv_tip_rep, '01', '02','03', '04', '05','06', '07', '08', '09']
+
+						]
+
 
 
 		#table style
@@ -398,22 +424,24 @@ class Box_labels_Finds_pdf_sheet:
 
 					('GRID',(0,0),(-1,-1),0,colors.white),#,0.0,colors.black
 					#0 row
-					('SPAN', (0,0),(7,0)),  #intestazione
-					('SPAN', (8,0),(9,0)), #intestazione
-					('VALIGN',(0,0),(9,0),'TOP'), 
-					#1 row
-					('SPAN', (0,1),(9,1)),  #elenco US
-					('VALIGN',(0,1),(9,1),'TOP'), 
-					#2 row
-					('SPAN', (0,2),(9,2)),  #elenco_inv_tip_rep
-					('VALIGN',(0,2),(9,2),'TOP'), 
+					('SPAN', (0,0),(9,0)),  #elenco US
+					('HALIGN',(0,0),(9,0),'LEFT'),
 
-					#3 row
-					('SPAN', (0,3),(9,3)), #luogo conservazione
-					('VALIGN',(0,3),(9,3),'TOP')
+					('SPAN', (0,1),(9,1)),  #elenco US
+					('HALIGN',(0,1),(9,1),'LEFT'),
+
+					('SPAN', (0,2),(9,2)),  #intestazione
+					('VALIGN',(0,2),(9,2),'TOP'), 
+					#1 row
+					('SPAN', (0,3),(9,3)),  #elenco US
+					('VALIGN',(0,3),(9,3),'TOP'), 
+					#2 row
+					('SPAN', (0,4),(9,4)),  #elenco_inv_tip_rep
+					('VALIGN',(0,4),(9,4),'TOP'), 
+
 					]
-		colWidths=[80,80,80, 80,80, 80,80,80,80, 60]
-		t=Table(cell_schema, colWidths, rowHeights=80,style= table_style)
+		colWidths=[80,80,80, 80,80, 80,80,80,80, 80]
+		t=Table(cell_schema,style= table_style)
 
 		return t
 
@@ -433,7 +461,7 @@ class CASSE_index_pdf_sheet:
 		styNormal.spaceBefore = 20
 		styNormal.spaceAfter = 20
 		styNormal.alignment = 0 #LEFT
-		styNormal.fontSize = 5
+		styNormal.fontSize = 10
 
 		#self.unzip_rapporti_stratigrafici()
 
@@ -445,9 +473,9 @@ class CASSE_index_pdf_sheet:
 			elenco_inv_tip_rep = Paragraph("<b>N. Inv./Tipo materiale</b><br/>" + str(self.elenco_inv_tip_rep ),styNormal)
 
 		if self.elenco_us == None:
-			elenco_us = Paragraph("<b>US/(Struttura)</b><br/>",styNormal)
+			elenco_us = Paragraph("<b>US(Struttura)</b><br/>",styNormal)
 		else:
-			elenco_us = Paragraph("<b>US/(Struttura)</b><br/>" + str(self.elenco_us),styNormal)
+			elenco_us = Paragraph("<b>US(Struttura)</b><br/>" + str(self.elenco_us),styNormal)
 
 		luogo_conservazione = Paragraph("<b>Luogo di conservazione</b><br/>" + str(self.luogo_conservazione),styNormal)
 
@@ -658,7 +686,7 @@ class generate_reperti_pdf:
 			table_data.append(exp_index.getTable())
 
 		styles = exp_index.makeStyles()
-		colWidths=[20,300,300, 100]
+		colWidths=[20,350,250,100]
 
 		table_data_formatted = Table(table_data, colWidths, style=styles)
 		table_data_formatted.hAlign = "LEFT"
