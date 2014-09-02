@@ -360,12 +360,13 @@ class Box_labels_Finds_pdf_sheet:
 		styNormal.spaceBefore = 20
 		styNormal.spaceAfter = 20
 		styNormal.alignment = 0 #LEFT
+		styNormal.fontSize = 8
 
 		styCassaLabel = styleSheet['Cassa Label']
 		styCassaLabel.spaceBefore = 20
 		styCassaLabel.spaceAfter = 20
 		styCassaLabel.alignment = 0 #LEFT
-
+		styCassaLabel.fontSize = 30
 
 		#format labels
 
@@ -432,21 +433,21 @@ class CASSE_index_pdf_sheet:
 		styNormal.spaceBefore = 20
 		styNormal.spaceAfter = 20
 		styNormal.alignment = 0 #LEFT
-		styNormal.fontSize = 9
+		styNormal.fontSize = 5
 
 		#self.unzip_rapporti_stratigrafici()
 
-		num_cassa = Paragraph("<b>N. Cassa</b><br/>" + str(self.cassa),styNormal)
+		num_cassa = Paragraph("<b>Nr.</b><br/>" + str(self.cassa),styNormal)
 
 		if self.elenco_inv_tip_rep == None:
-			elenco_inv_tip_rep = Paragraph("<b>Elenco N. Inv. / Tipo materiale</b><br/>",styNormal)
+			elenco_inv_tip_rep = Paragraph("<b>N. Inv./Tipo materiale</b><br/>",styNormal)
 		else:
-			elenco_inv_tip_rep = Paragraph("<b>Elenco N. Inv. / Tipo materiale</b><br/>" + str(self.elenco_inv_tip_rep ),styNormal)
+			elenco_inv_tip_rep = Paragraph("<b>N. Inv./Tipo materiale</b><br/>" + str(self.elenco_inv_tip_rep ),styNormal)
 
 		if self.elenco_us == None:
-			elenco_us = Paragraph("<b>Elenco US/(Struttura)</b><br/>",styNormal)
+			elenco_us = Paragraph("<b>US/(Struttura)</b><br/>",styNormal)
 		else:
-			elenco_us = Paragraph("<b>Elenco US/(Struttura)</b><br/>" + str(self.elenco_us),styNormal)
+			elenco_us = Paragraph("<b>US/(Struttura)</b><br/>" + str(self.elenco_us),styNormal)
 
 		luogo_conservazione = Paragraph("<b>Luogo di conservazione</b><br/>" + str(self.luogo_conservazione),styNormal)
 
@@ -657,7 +658,7 @@ class generate_reperti_pdf:
 			table_data.append(exp_index.getTable())
 
 		styles = exp_index.makeStyles()
-		colWidths=[60,150,100, 120]
+		colWidths=[20,300,300, 100]
 
 		table_data_formatted = Table(table_data, colWidths, style=styles)
 		table_data_formatted.hAlign = "LEFT"
