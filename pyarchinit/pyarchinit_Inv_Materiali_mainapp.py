@@ -769,29 +769,52 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 			###cerca le singole area/us presenti in quella cassa
 			res_inv = self.DB_MANAGER.query_distinct('INVENTARIO_MATERIALI',[['sito','"' + str(self.sito_ec)+'"'], ['nr_cassa',cassa]], ['numero_inventario', 'tipo_reperto'])
-
-			n_inv_res_list = ""
+			
+			res_inv_list = []
 			for i in res_inv:
-				n_inv_res_list += "N.inv: " + str(i.numero_inventario) + "/"+ str(i.tipo_reperto) + ", "
+				res_inv_list.append(i)
+			
+			n_inv_res_list = ""
+			for i in range(len(res_inv_list)):
+				if i != len(res_inv_list)-1:
+					n_inv_res_list += "N.inv:" + str(res_inv_list[i].numero_inventario) + "/"+ str(res_inv_list[i].tipo_reperto)+","
+				else:
+					n_inv_res_list += "N.inv:" + str(res_inv_list[i].numero_inventario) + "/"+ str(res_inv_list[i].tipo_reperto)
+					
 			#inserisce l'elenco degli inventari
 			single_cassa.append(n_inv_res_list)
 
 
 			###cerca le singole area/us presenti in quella cassa
 			res_us = self.DB_MANAGER.query_distinct('INVENTARIO_MATERIALI',[['sito','"' + str(self.sito_ec)+'"'], ['nr_cassa',cassa]], ['area', 'us'])
-
-			us_res_list = ""#[] #accoglie l'elenco delle US presenti in quella cassa
+			
+			res_us_list = []
 			for i in res_us:
-				params_dict = {'sito':'"'+str(self.sito_ec)+'"', 'area': '"'+str(i.area)+'"', 'us':'"'+str(i.us)+'"'}
+				res_us_list.append(i)
+			
+			us_res_list = ""#[] #accoglie l'elenco delle US presenti in quella cassa
+			for i in range(len(res_us_list)):
+				params_dict = {'sito':'"'+str(self.sito_ec)+'"', 'area': '"'+str(res_us_list[i].area)+'"', 'us':'"'+str(res_us_list[i].us)+'"'}
 				res_struct = self.DB_MANAGER.query_bool(params_dict, 'US')
-				structure_string = ""
-				if bool(res_struct) == True:
-					structure_string += "(" 
-					for sing_us in res_struct:
-						structure_string += str(sing_us.struttura) + '/'
-					structure_string += ")" 
 				
-				us_res_list += "Area:"+str(i.area) + ",US:"+str(i.us)+structure_string+", "  #.append("Area:"+str(i.area) + ",US:"+str(i.us))
+				res_struct_list = []
+				for s_strutt in res_struct:
+					res_struct_list.append(s_strutt)
+
+				structure_string = ""
+				if len(res_struct_list) > 0:
+					for sing_us in res_struct_list:
+						if sing_us.struttura != u'':
+							structure_string += "(" + str(sing_us.struttura) + '/'
+					
+					if structure_string != "":
+						structure_string += ")"
+
+				if i != len(res_us_list)-1:
+					us_res_list += "Area:"+str(res_us_list[i].area) + ",US:"+str(res_us_list[i].us)+structure_string+", "  #.append("Area:"+str(i.area) + ",US:"+str(i.us))
+				else:
+					us_res_list += "Area:"+str(res_us_list[i].area) + ",US:"+str(res_us_list[i].us)+structure_string #.append("Area:"+str(i.area) + ",US:"+str(i.us))
+
 			#us_res_list.sort()
 			#inserisce l'elenco delle us
 			single_cassa.append(us_res_list)
