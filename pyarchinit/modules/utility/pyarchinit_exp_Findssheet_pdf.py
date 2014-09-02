@@ -369,7 +369,7 @@ class Box_labels_Finds_pdf_sheet:
 
 		#format labels
 
-		num_cassa = Paragraph("<b>N. Cassa </b>" + str(self.cassa),styCassaLabel)
+		num_cassa = Paragraph("<b>N372. Cassa </b>" + str(self.cassa),styCassaLabel)
 		sito = Paragraph("<b>Sito: </b>" + str(self.sito),styCassaLabel)
 
 		if self.elenco_inv_tip_rep == None:
@@ -436,7 +436,7 @@ class CASSE_index_pdf_sheet:
 
 		#self.unzip_rapporti_stratigrafici()
 
-		num_cassa = Paragraph("<b>N. Cassa</b><br/>" + str(self.cassa),styNormal)
+		num_cassa = Paragraph("<b>N439. Cassa</b><br/>" + str(self.cassa),styNormal)
 
 		if self.elenco_inv_tip_rep == None:
 			elenco_inv_tip_rep = Paragraph("<b>Elenco N. Inv. / Tipo materiale</b><br/>",styNormal)
@@ -532,9 +532,9 @@ class FINDS_index_pdf_sheet:
 			diagnostico = Paragraph("<b>Diagnostico</b><br/>" + str(self.diagnostico),styNormal)
 
 		if str(self.numero_cassa) == "None":
-			nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>",styNormal)
+			nr_cassa = Paragraph("<b>Nr535. Cassa</b><br/>",styNormal)
 		else:
-			nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>" + str(self.numero_cassa),styNormal)
+			nr_cassa = Paragraph("<b>Nr535. Cassa</b><br/>" + str(self.numero_cassa),styNormal)
 
 
 		data = [num_inventario,
@@ -657,7 +657,7 @@ class generate_reperti_pdf:
 			table_data.append(exp_index.getTable())
 
 		styles = exp_index.makeStyles()
-		colWidths=[60,150,100, 120]
+		colWidths=[100,150,100,120]
 
 		table_data_formatted = Table(table_data, colWidths, style=styles)
 		table_data_formatted.hAlign = "LEFT"
