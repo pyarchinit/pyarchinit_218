@@ -354,26 +354,30 @@ class Box_labels_Finds_pdf_sheet:
 	def create_sheet(self):
 		styleSheet = getSampleStyleSheet()
 		
-		styleSheet.add(ParagraphStyle(name='Cassa Label', fontName ='Helvetica',fontSize=22, textColor=colors.black, alignment=TA_LEFT))
+		styleSheet.add(ParagraphStyle(name='Cassa Label'))
+		styleSheet.add(ParagraphStyle(name='Sito Label'))
+
+		styCassaLabel = styleSheet['Cassa Label']
+		styCassaLabel.spaceBefore = 0
+		styCassaLabel.spaceAfter = 0
+		styCassaLabel.alignment = 2 #RIGHT
+		styCassaLabel.leading = 25
+		styCassaLabel.fontSize = 30
+
+		stySitoLabel = styleSheet['Sito Label']
+		stySitoLabel.spaceBefore = 0
+		stySitoLabel.spaceAfter = 0
+		stySitoLabel.alignment = 0 #LEFT
+		stySitoLabel.leading = 25
+		stySitoLabel.fontSize = 18
+		stySitoLabel.fontStyle = 'bold'
 
 		styNormal = styleSheet['Normal']
-		styNormal.spaceBefore = 20
-		styNormal.spaceAfter = 20
+		styNormal.spaceBefore = 10
+		styNormal.spaceAfter = 10
 		styNormal.alignment = 0 #LEFT
 		styNormal.fontSize = 14
 		styNormal.leading = 15
-
-		styCassaLabel = styleSheet['Cassa Label']
-		styCassaLabel.spaceBefore = 20
-		styCassaLabel.spaceAfter = 20
-		styCassaLabel.alignment = 0 #LEFT
-		styCassaLabel.fontSize = 200
-
-		stySitoLabel = styleSheet['Cassa Label']
-		stySitoLabel.spaceBefore = 20
-		stySitoLabel.spaceAfter = 20
-		stySitoLabel.alignment = 0 #LEFT
-		stySitoLabel.fontSize = 20
 
 
 		#format labels
@@ -393,7 +397,7 @@ class Box_labels_Finds_pdf_sheet:
 		
 
 		num_cassa = Paragraph("<b>N. Cassa </b>" + str(self.cassa),styCassaLabel)
-		sito = Paragraph("<b>Sito: </b><br/>" + str(self.sito),stySitoLabel)
+		sito = Paragraph("<b>Sito: </b>" + str(self.sito),stySitoLabel)
 
 		if self.elenco_inv_tip_rep == None:
 			elenco_inv_tip_rep = Paragraph("<b>Elenco N. Inv. / Tipo materiale</b><br/>",styNormal)
@@ -409,8 +413,7 @@ class Box_labels_Finds_pdf_sheet:
 
 		#schema
 		cell_schema =	[ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
-							[logo, '01', '02', '03', '04','05', '06', '07', '08', '09'],
-							[num_cassa, '01', '02', '03', '04','05', '06', '07', '08', '09'],
+							[logo, '01', '02', '03', '04','05', num_cassa, '07', '08', '09'],
 							[sito, '01', '02', '03', '04','05', '06', '07', '08', '09'],
 							[elenco_us, '01', '02', '03','04', '05','06', '07', '08', '09'],
 							[elenco_inv_tip_rep, '01', '02','03', '04', '05','06', '07', '08', '09']
@@ -424,8 +427,11 @@ class Box_labels_Finds_pdf_sheet:
 
 					('GRID',(0,0),(-1,-1),0,colors.white),#,0.0,colors.black
 					#0 row
-					('SPAN', (0,0),(9,0)),  #elenco US
+					('SPAN', (0,0),(5,0)),  #elenco US
+					('SPAN', (6,0),(9,0)),  #elenco US
 					('HALIGN',(0,0),(9,0),'LEFT'),
+					('VALIGN',(6,0),(9,0),'TOP'),
+					('HALIGN',(6,0),(9,0),'RIGHT'),
 
 					('SPAN', (0,1),(9,1)),  #elenco US
 					('HALIGN',(0,1),(9,1),'LEFT'),
@@ -434,14 +440,15 @@ class Box_labels_Finds_pdf_sheet:
 					('VALIGN',(0,2),(9,2),'TOP'), 
 					#1 row
 					('SPAN', (0,3),(9,3)),  #elenco US
-					('VALIGN',(0,3),(9,3),'TOP'), 
-					#2 row
-					('SPAN', (0,4),(9,4)),  #elenco_inv_tip_rep
-					('VALIGN',(0,4),(9,4),'TOP'), 
+					('VALIGN',(0,3),(9,3),'TOP')
 
 					]
-		colWidths=[80,80,80, 80,80, 80,80,80,80, 80]
-		t=Table(cell_schema,style= table_style)
+
+
+		colWidths=None
+		rowHeights=None
+		#colWidths=[80,80,80, 80,80, 80,80,80,80, 80]
+		t=Table(cell_schema,colWidths,rowHeights, style= table_style)
 
 		return t
 
@@ -647,12 +654,12 @@ class generate_reperti_pdf:
 		table_data_formatted.hAlign = "LEFT"
 
 		lst.append(table_data_formatted)
-		lst.append(Spacer(0,2))
+		lst.append(Spacer(0,0))
 
 		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_materiali.pdf')
 		f = open(filename, "wb")
 
-		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
+		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0, topMargin = 15, bottomMargin = 40, leftMargin = 30, rightMargin = 30)
 		doc.build(lst, canvasmaker=NumberedCanvas_FINDSindex)
 
 		f.close()
@@ -699,7 +706,7 @@ class generate_reperti_pdf:
 		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_casse.pdf')
 		f = open(filename, "wb")
 
-		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
+		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0, topMargin = 15, bottomMargin = 40, leftMargin = 30, rightMargin = 30)
 		#doc.build(lst, canvasmaker=NumberedCanvas_Sindex)
 		doc.build(lst)
 
@@ -714,7 +721,7 @@ class generate_reperti_pdf:
 			elements.append(PageBreak())
 		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'etichette_casse.pdf')
 		f = open(filename, "wb")
-		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
+		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0.0, topMargin = 20, bottomMargin = 20, leftMargin = 20, rightMargin = 20)
 		doc.build(elements)
 		f.close()
 
