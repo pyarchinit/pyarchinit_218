@@ -685,7 +685,7 @@ class generate_reperti_pdf:
 
 		data = self.datestrfdate()
 		lst = [logo]
-		lst.append(Paragraph("<b>ELENCO CASSE</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
+		lst.append(Paragraph("<b>ELENCO CASSE MATERIALI</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
 
 		table_data = []
 		for i in range(len(records)):
@@ -719,7 +719,7 @@ class generate_reperti_pdf:
 			single_finds_sheet = Box_labels_Finds_pdf_sheet(records[i], sito)
 			elements.append(single_finds_sheet.create_sheet())
 			elements.append(PageBreak())
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'etichette_casse.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'etichette_casse_materiali.pdf')
 		f = open(filename, "wb")
 		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0.0, topMargin = 20, bottomMargin = 20, leftMargin = 20, rightMargin = 20)
 		doc.build(elements)

@@ -623,6 +623,11 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 		data_list = self.generate_list_pdf()
 		Camp_index_pdf.build_index_Campioni(data_list, data_list[0][0])
 
+		sito_ec = unicode(self.comboBox_sito.currentText())
+		Mat_casse_pdf = generate_campioni_pdf()
+		data_list = self.generate_el_casse_pdf(sito_ec)
+		Mat_casse_pdf.build_index_Casse(data_list, sito_ec)
+		Mat_casse_pdf.build_box_labels_Campioni(data_list, sito_ec)
 
 	def on_pushButton_exp_champ_sheet_pdf_pressed(self):
 		if self.records_equal_check() == 1:
@@ -631,6 +636,102 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 		Champ_pdf_sheet = generate_campioni_pdf()
 		data_list =  self.generate_list_pdf()
 		Champ_pdf_sheet.build_Champ_sheets(data_list)
+
+##	def on_pushButton_elenco_casse_pressed(self):
+##		if self.records_equal_check() == 1:
+##			self.update_if(QMessageBox.warning(self,'Errore',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+##
+##		sito_ec = unicode(self.comboBox_sito.currentText())
+##		Mat_casse_pdf = generate_reperti_pdf()
+##		data_list = self.generate_el_casse_pdf(sito_ec)
+##
+##		Mat_casse_pdf.build_index_Casse(data_list, sito_ec)
+##		Mat_casse_pdf.build_box_labels_Finds(data_list, sito_ec)
+
+#********************************************************************************
+	def generate_el_casse_pdf(self, sito):
+		self.sito_ec = sito
+		elenco_casse_res = self.DB_MANAGER.query_distinct('CAMPIONI',[['sito','"' + str(self.sito_ec)+'"']], ['nr_cassa'])
+
+		elenco_casse_list  = [] #accoglie la sigla numerica delle casse presenti per un determinato sito.
+		for i in elenco_casse_res:
+			elenco_casse_list.append(i.nr_cassa)
+
+		data_for_pdf = [] #contiene i singoli dati per l'esportazione dell'elenco casse
+
+		#QMessageBox.warning(self,'elenco casse',str(elenco_casse_list), QMessageBox.Ok)
+		elenco_casse_list.sort()
+		for cassa in elenco_casse_list:
+			single_cassa = [] #contiene i dati della singola cassa
+
+			str_cassa = "<b>"+str(cassa)+"</b>"
+			single_cassa.append(str_cassa) #inserisce la sigla di cassa
+
+			###cerca le singole area/us presenti in quella cassa
+			res_inv = self.DB_MANAGER.query_distinct('CAMPIONI',[['sito','"' + str(self.sito_ec)+'"'], ['nr_cassa',cassa]], ['nr_campione', 'tipo_campione'])
+			
+			res_inv_list = []
+			for i in res_inv:
+				res_inv_list.append(i)
+			
+			n_inv_res_list = ""
+			for i in range(len(res_inv_list)):
+				if i != len(res_inv_list)-1:
+					n_inv_res_list += "N.inv:" + str(res_inv_list[i].nr_campione) + "/"+ str(res_inv_list[i].tipo_campione)+","
+				else:
+					n_inv_res_list += "N.inv:" + str(res_inv_list[i].nr_campione) + "/"+ str(res_inv_list[i].tipo_campione)
+					
+			#inserisce l'elenco degli inventari
+			single_cassa.append(n_inv_res_list)
+
+
+			###cerca le singole area/us presenti in quella cassa
+			res_us = self.DB_MANAGER.query_distinct('CAMPIONI',[['sito','"' + str(self.sito_ec)+'"'], ['nr_cassa',cassa]], ['area', 'us'])
+			
+			res_us_list = []
+			for i in res_us:
+				res_us_list.append(i)
+			
+			us_res_list = ""#[] #accoglie l'elenco delle US presenti in quella cassa
+			for i in range(len(res_us_list)):
+				params_dict = {'sito':'"'+str(self.sito_ec)+'"', 'area': '"'+str(res_us_list[i].area)+'"', 'us':'"'+str(res_us_list[i].us)+'"'}
+				res_struct = self.DB_MANAGER.query_bool(params_dict, 'US')
+				
+				res_struct_list = []
+				for s_strutt in res_struct:
+					res_struct_list.append(s_strutt)
+
+				structure_string = ""
+				if len(res_struct_list) > 0:
+					for sing_us in res_struct_list:
+						if sing_us.struttura != u'':
+							structure_string += "(" + str(sing_us.struttura) + '/'
+					
+					if structure_string != "":
+						structure_string += ")"
+
+				if i != len(res_us_list)-1:
+					us_res_list += "Area:"+str(res_us_list[i].area) + ",US:"+str(res_us_list[i].us)+structure_string+", "  #.append("Area:"+str(i.area) + ",US:"+str(i.us))
+				else:
+					us_res_list += "Area:"+str(res_us_list[i].area) + ",US:"+str(res_us_list[i].us)+structure_string #.append("Area:"+str(i.area) + ",US:"+str(i.us))
+
+			#us_res_list.sort()
+			#inserisce l'elenco delle us
+			single_cassa.append(us_res_list)
+
+
+			###cerca il luogo di conservazione della cassa
+			params_dict = {'sito':'"'+str(self.sito_ec)+'"', 'nr_cassa': '"'+str(cassa)+'"'}
+			res_luogo_conservazione = self.DB_MANAGER.query_bool(params_dict, 'CAMPIONI')
+			luogo_conservazione = res_luogo_conservazione[0].luogo_conservazione
+			single_cassa.append(luogo_conservazione) #inserisce la sigla di cassa
+
+			data_for_pdf.append(single_cassa)
+
+		#QMessageBox.warning(self,'tk',str(data_for_pdf), QMessageBox.Ok)
+		return data_for_pdf
+
+
 
 	def generate_list_pdf(self):
 		data_list = []
