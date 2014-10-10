@@ -196,6 +196,7 @@ class Site_table:
 	Column('descrizione', Text),
 	Column('provincia', Text),
 	Column('definizione_sito', Text),
+	Column('find_check', Integer),
 
 	# explicit/composite unique constraint.  'name' is optional.
 	UniqueConstraint('sito', name='ID_sito_unico')
@@ -227,7 +228,7 @@ class Periodizzazione_table:
 	Column('cont_per', Integer),
 
 	# explicit/composite unique constraint.  'name' is optional.
-    UniqueConstraint('sito', 'periodo', 'fase', name='ID_perfas_unico')
+	UniqueConstraint('sito', 'periodo', 'fase', name='ID_perfas_unico')
 	)
 
 	metadata.create_all(engine)

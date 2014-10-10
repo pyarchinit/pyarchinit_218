@@ -219,10 +219,10 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.setupUi(self)
 		self.customize_gui()
 		self.currentLayerId = None
-		try:
-			self.on_pushButton_connect_pressed()
-		except:
-			pass
+		#try:
+		self.on_pushButton_connect_pressed()
+		#except:
+		#pass
 
 	def on_pushButtonQuant_pressed(self):
 		dlg = QuantPanelMain(self)

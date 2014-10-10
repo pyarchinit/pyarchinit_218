@@ -535,9 +535,12 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 
 					for i in res:
 						self.DATA_LIST.append(i)
+					
+					for i in self.DATA_LIST:
+						self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, self.ID_TABLE, [i.id_sito], ['find_check'], [1])
 
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
-					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
+					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0] ####darivedere
 					self.fill_fields()
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
@@ -551,6 +554,8 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 					else:
 						strings = ("Sono stati trovati", self.REC_TOT, "records")
 						self.pyQGIS.charge_sites_from_research(self.DATA_LIST)
+					
+					
 
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
 					self.setComboBoxEnable(["self.comboBox_definizione_sito"],"True")
@@ -635,7 +640,9 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		id_list = []
 		for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
 			id_list.append(eval("i."+ self.ID_TABLE))
+
 		temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+
 		for i in temp_data_list:
 			self.DATA_LIST.append(i)
 

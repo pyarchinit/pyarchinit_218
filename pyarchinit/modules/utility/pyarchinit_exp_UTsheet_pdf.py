@@ -218,8 +218,6 @@ class single_UT_pdf_sheet:
 						[interpretazione_I, '01', periodo_II, '03', datazione_II, '05', interpretazione_II, '08', '09'],#9
 						[documentazione, '01','02',enti_tutela_vincoli,'03','04', indagini_preliminari,'09']#10 row ok
 						]
-						
-						
 
 		#table style
 		table_style=[
@@ -281,9 +279,9 @@ class single_UT_pdf_sheet:
 					('SPAN', (0,12),(2,12)),  #conservazione - consistenza - colore
 					('SPAN', (3,12),(5,12)),  #conservazione - consistenza - colore
 					('SPAN', (6,12),(9,12)),  #conservazione - consistenza - colore
-					
+
 					('VALIGN',(0,0),(-1,-1),'TOP')
-					
+
 											]
 
 					#4 row

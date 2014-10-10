@@ -798,23 +798,65 @@ class Pyarchinit_db_management:
 
 
 	def query_sort(self,id_list, op, to, tc, idn):
-		self.order_params = op
-		self.type_order = to
-		self.table_class = tc
-		self.id_name = idn
-
+		self.id_list = id_list
+		self.order_params = op #sorting parameters
+		self.type_order = to #asc or desc
+		self.table_class = tc #the name of the mapper class
+		self.id_name = idn #the name of the id
+		
 		filter_params = self.type_order + "(" + self.table_class + "." + self.order_params[0] + ")"
 		for i in self.order_params[1:]:
 			filter_temp = self.type_order + "(" + self.table_class + "." + i + ")"
 
-			filter_params = filter_params + ", "+ filter_temp
+			filter_params += ", "+ filter_temp
 
 		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
 		session = Session()
-
-		cmd_str = "session.query(" + self.table_class + ").filter(" + self.table_class + "." + self.id_name + ".in_(id_list)).order_by(" + filter_params + ").all()"
-
-		return eval(cmd_str)
+		
+		if len(self.id_list) > 50:
+			args = self.id_list
+			or_args = []
+			s = 0
+			e = 50
+			cont = 0
+			while cont <= len(self.id_list):
+				chunk = args[s:e]
+				s +=e
+				e +=e
+				cont+=1
+				or_args.append(INVENTARIO_MATERIALI.id_invmat.in_(chunk))
+			res =  session.query(INVENTARIO_MATERIALI).filter(or_(*or_args)).all()
+			res.order_by('id_invmat')
+			return res
+			
+			# Expression tree is too large (maximum depth 1000)
+			
+##			#riceve errore dei too mani
+##			s = 0
+##			e = 300
+##
+##			list_to_batch = id_list
+##			cmd_str_or = ""
+##			while list_to_batch:
+##				sliced_list = list_to_batch[s:e]
+##				if cmd_str_or == "":
+##					cmd_str_or = "or_("+self.table_class + "." + self.id_name + ".in_(" + str(sliced_list)+")"
+##				else:
+##					cmd_str_or += "," + self.table_class + "." + self.id_name +".in_(" + str(sliced_list)+")"
+####				temp_list = []
+####				for i in sliced_list:
+####					print i
+##				s +=e
+##				e +=e
+##			cmd_str = "session.query(" + self.table_class + ").filter(" + cmd_str_or + ")).order_by(" + filter_params + ").all()"
+			#corretta ma riceeve errore dei too many args cmd_str = "session.query(INVENTARIO_MATERIALI).filter(or_(INVENTARIO_MATERIALI.id_invmat.in_([1, 2, 3, 4]), INVENTARIO_MATERIALI.id_invmat.in_([5, 6, 7, 8]))).order_by(asc(INVENTARIO_MATERIALI.id_invmat)).all()"
+		else:
+			cmd_str = "session.query(" + self.table_class + ").filter(" + self.table_class + "." + self.id_name + ".in_(id_list)).order_by(" + filter_params + ").all()"
+##		f = open("test_cmd_or_err.txt", "w")
+##		f.write(cmd_str)
+##		f.close()
+			res = eval(cmd_str)
+			return res
 
 
 	def run(self, stmt):
@@ -993,6 +1035,22 @@ class Pyarchinit_db_management:
 ##	##			res_list.extend(area for area, in session.query(US.area).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
 
 ##		return res_list
+
+
+
+def main():
+	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
+	db.connection()
+	res = db.query_sort([1, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67],['id_invmat'],'asc', 'INVENTARIO_MATERIALI', 'id_invmat')
+	#res = db.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"']], ['area', 'us'])
+	print len(res)
+	for i in res:
+		print "record: ", str(i.sito)
+
+if __name__ == '__main__':
+	main()
+
+
 """
 def main():
 	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')

@@ -45,6 +45,10 @@ class DB_update:
 		if table_column_names_list.__contains__('definizione_sito') == False:
 			self.engine.execute("ALTER TABLE site_table ADD COLUMN definizione_sito varchar DEFAULT 'inserici un valore' ")
 
+
+		if table_column_names_list.__contains__('find_check') == False:
+			self.engine.execute("ALTER TABLE site_table ADD COLUMN find_check INTEGER DEFAULT 0")
+
 		####US_table
 		table = Table("us_table", self.metadata, autoload=True)
 		table_column_names_list = []

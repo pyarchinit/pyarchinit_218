@@ -391,7 +391,7 @@ class generate_pdf:
 		styleSheet = getSampleStyleSheet()
 		styNormal = styleSheet['Normal']
 		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
-		styH1 = styleSheet['Heading1']
+		styH1 = styleSheet['Heading3']
 		data = self.datestrfdate()
 		lst = []
 		lst.append(Paragraph("<b>ELENCO UNITA' STRATIGRAFICHE</b><br/><b>Scavo: %s <br/>Data: %s <br/>Ditta esecutrice: adArte snc, Rimini</b>" % (sito, data), styH1))
