@@ -514,6 +514,21 @@ class Pyarchinit_db_management:
 
 		return archeozoology
 
+	def insert_values_documentazione(self, *arg):
+		"""Istanzia la classe DOCUMENTAZIONE da pyarchinit_db_mapper"""
+
+		documentazione = DOCUMENTAZIONE(arg[0],
+								arg[1],
+								arg[2],
+								arg[3],
+								arg[4],
+								arg[5],
+								arg[6],
+								arg[7],
+								arg[8])
+
+		return documentazione
+
 
 	def insert_pdf_administrator_values(self, *arg):
 		"""Istanzia la classe PDF_ADMINISTRATOR da pyarchinit_db_mapper"""

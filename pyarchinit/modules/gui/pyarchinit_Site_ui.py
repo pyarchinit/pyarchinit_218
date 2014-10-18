@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_Site_ui.ui'
 #
-# Created: Mon Feb 17 12:03:52 2014
+# Created: Fri Oct 17 13:29:48 2014
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -459,7 +459,7 @@ class Ui_DialogSite(object):
         self.gridLayout_10.addItem(spacerItem1, 5, 1, 1, 2)
         self.toolBox.addItem(self.page_3, _fromUtf8(""))
         self.page_2 = QtGui.QWidget()
-        self.page_2.setGeometry(QtCore.QRect(0, 0, 98, 118))
+        self.page_2.setGeometry(QtCore.QRect(0, 0, 518, 171))
         self.page_2.setObjectName(_fromUtf8("page_2"))
         self.gridLayout_9 = QtGui.QGridLayout(self.page_2)
         self.gridLayout_9.setObjectName(_fromUtf8("gridLayout_9"))
@@ -476,7 +476,7 @@ class Ui_DialogSite(object):
         self.gridLayout_7.addLayout(self.verticalLayout_2, 0, 0, 1, 1)
 
         self.retranslateUi(DialogSite)
-        self.toolBox.setCurrentIndex(0)
+        self.toolBox.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(DialogSite)
 
     def retranslateUi(self, DialogSite):
