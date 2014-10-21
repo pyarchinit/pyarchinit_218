@@ -514,6 +514,21 @@ class Pyarchinit_db_management:
 
 		return archeozoology
 
+	def insert_values_documentazione(self, *arg):
+		"""Istanzia la classe DOCUMENTAZIONE da pyarchinit_db_mapper"""
+
+		documentazione = DOCUMENTAZIONE(arg[0],
+								arg[1],
+								arg[2],
+								arg[3],
+								arg[4],
+								arg[5],
+								arg[6],
+								arg[7],
+								arg[8])
+
+		return documentazione
+
 
 	def insert_pdf_administrator_values(self, *arg):
 		"""Istanzia la classe PDF_ADMINISTRATOR da pyarchinit_db_mapper"""
@@ -796,7 +811,27 @@ class Pyarchinit_db_management:
 		session = Session()
 		return session.query(US).filter(US.id_us.in_(id_list)).all()
 
+	def query_sort(self,id_list, op, to, tc, idn):
+		self.order_params = op
+		self.type_order = to
+		self.table_class = tc
+		self.id_name = idn
 
+		filter_params = self.type_order + "(" + self.table_class + "." + self.order_params[0] + ")"
+
+		for i in self.order_params[1:]:
+			filter_temp = self.type_order + "(" + self.table_class + "." + i + ")"
+
+			filter_params = filter_params + ", "+ filter_temp
+
+		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
+		session = Session()
+
+		cmd_str = "session.query(" + self.table_class + ").filter(" + self.table_class + "." + self.id_name + ".in_(id_list)).order_by(" + filter_params + ").all()"
+
+		return eval(cmd_str)
+
+	"""
 	def query_sort(self,id_list, op, to, tc, idn):
 		self.id_list = id_list
 		self.order_params = op #sorting parameters
@@ -857,7 +892,7 @@ class Pyarchinit_db_management:
 ##		f.close()
 			res = eval(cmd_str)
 			return res
-
+	"""
 
 	def run(self, stmt):
 		rs = stmt.execute()
@@ -867,7 +902,6 @@ class Pyarchinit_db_management:
 
 		return res_list
 
-	
 	def update_for(self):
 		"""
 		table = Table('us_table_toimp', self.metadata, autoload=True)

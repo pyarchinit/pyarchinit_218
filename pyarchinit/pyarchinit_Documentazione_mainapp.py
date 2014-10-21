@@ -36,20 +36,20 @@ from datetime import date
 from psycopg2 import *
 
 #--import pyArchInit modules--#
-from  pyarchinit_Site_ui import Ui_DialogSite
-from  pyarchinit_Site_ui import *
+from  pyarchinit_documentazione_ui import Ui_DialogDocumentazione_tipo_doc
+from  pyarchinit_documentazione_ui import *
 from  pyarchinit_utility import *
 from  pyarchinit_error_check import *
 
 from  pyarchinit_pyqgis import Pyarchinit_pyqgis
 from  sortpanelmain import SortPanelMain
-from print_relazione_pdf import exp_rel_pdf
-from test_area import Test_area
+
+#from  pyarchinit_exp_Campsheet_pdf import *
 
 ##from 
 
-class pyarchinit_Site(QDialog, Ui_DialogSite):
-	MSG_BOX_TITLE = "PyArchInit - Scheda Sito vv"
+class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
+	MSG_BOX_TITLE = "PyArchInit - pyarchinit_version 0.4 - Scheda Documentazione"
 	DATA_LIST = []
 	DATA_LIST_REC_CORR = []
 	DATA_LIST_REC_TEMP = []
@@ -62,39 +62,43 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 	SORT_STATUS = "n"
 	UTILITY = Utility()
 	DB_MANAGER = ""
-	TABLE_NAME = 'site_table'
-	MAPPER_TABLE_CLASS = "SITE"
-	NOME_SCHEDA = "Scheda Sito"
-	ID_TABLE = "id_sito"
+	TABLE_NAME = 'documentazione_table'
+	MAPPER_TABLE_CLASS = "DOCUMENTAZIONE"
+	NOME_SCHEDA = "Scheda Documentazione"
+	ID_TABLE = "id_documentazione"
 	CONVERSION_DICT = {
 	ID_TABLE:ID_TABLE, 
 	"Sito":"sito",
-	"Nazione":"nazione",
-	"Regione":"regione",
-	"Descrizione":"descrizione",
-	"Comune":"comune",
-	"Provincia":"provincia",
-	"Definizione sito":"definizione_sito"
+	"Nome documentazione":"nome_doc",
+	"Data":"data",
+	"Tipo documentazione":"tipo_documentazione",
+	"Sorgente":"sorgente",
+	"Scala":"scala",
+	"Disegnatore":"disegnatore",
+	"Note":"note",
 	}
+
 	SORT_ITEMS = [
 				ID_TABLE,
 				"Sito",
-				"Descrizione",
-				"Nazione",
-				"Regione",
-				"Comune",
-				"Provincia",
-				"Definizione sito"
+				"Nome documentazione",
+				"Data",
+				"Tipo documentazione",
+				"Sorgente",
+				"Scala",
+				"Disegnatore",
+				"Note",
 				]
 
 	TABLE_FIELDS = [
 				"sito",
-				"nazione",
-				"regione",
-				"comune",
-				"descrizione",
-				"provincia",
-				"definizione_sito"
+				"nome_doc",
+				"data",
+				"tipo_documentazione",
+				"sorgente",
+				"scala",
+				"disegnatore",
+				"note",
 				]
 
 	def __init__(self, iface):
@@ -129,7 +133,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		self.pushButton_new_search.setEnabled(n)
 
 		self.pushButton_search_go.setEnabled(n)
-		
+
 		self.pushButton_sort.setEnabled(n)
 
 	def enable_button_search(self, n):
@@ -171,7 +175,6 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 				self.charge_list()
 				self.fill_fields()
-
 			else:
 				QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + ". Il database e' vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
 				self.charge_list()
@@ -180,10 +183,11 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		except Exception, e:
 			e = str(e)
 			if e.find("no such table"):
-				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br><br> Tabella non presente. E' NECESSARIO RIAVVIARE QGIS"+str(e) ,  QMessageBox.Ok)
+				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br><br> Tabella non presente. E' NECESSARIO RIAVVIARE QGIS" + str(e) ,  QMessageBox.Ok)
 			else:
 				QMessageBox.warning(self, "Alert", "Attenzione rilevato bug! Segnalarlo allo sviluppatore<br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
 
+####################################
 
 	def charge_list(self):
 		sito_vl = self.UTILITY.tup_2_list_III(self.DB_MANAGER.group_by('site_table', 'sito', 'SITE'))
@@ -192,33 +196,11 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 			sito_vl.remove('')
 		except:
 			pass
-		self.comboBox_sito.clear()
+		self.comboBox_sito_doc.clear()
 		sito_vl.sort()
-		self.comboBox_sito.addItems(sito_vl)
+		self.comboBox_sito_doc.addItems(sito_vl)
 
-		regioni_list = ['Abruzzo','Basilicata','Calabria','Campania','Emilia-Romagna','Friuli Venezia Giulia','Lazio','Liguria','Lombardia','Marche','Molise','Piemonte','Puglia','Sardegna','Sicilia','Toscana','Trentino Alto Adige','Umbria','Valle d\'Aosta','Veneto']
-		self.comboBox_regione.addItems(regioni_list)
-
-		province_list = ['Agrigento', 'Alessandria', 'Ancona', 'Aosta', 'Arezzo', 'Ascoli Piceno', 'Asti', 'Avellino', 'Bari', 'Barletta-Andria-Trani', 'Basilicata', 'Belluno', 'Benevento', 'Bergamo', 'Biella', 'Bologna', 'Bolzano', 'Brescia', 'Brindisi', 'Cagliari', 'Calabria', 'Caltanissetta', 'Campania', 'Campobasso', 'Carbonia-Iglesias', 'Caserta', 'Catania', 'Catanzaro', 'Chieti', 'Como', 'Cosenza', 'Cremona', 'Crotone', 'Cuneo', 'Emilia-Romagna', 'Enna', 'Fermo', 'Ferrara', 'Firenze', 'Foggia', "Forl'-Cesena", 'Frosinone', 'Genova', 'Gorizia', 'Grosseto', 'Imperia', 'Isernia', "L'Aquila", 'La Spezia', 'Latina', 'Lecce', 'Lecco', 'Livorno', 'Lodi', 'Lucca', 'Macerata', 'Mantova', 'Massa e Carrara', 'Matera', 'Medio Campidano', 'Messina', 'Milano', 'Modena', 'Monza e Brianza', 'Napoli', 'Novara', 'Nuoro', 'Ogliastra', 'Olbia-Tempio', 'Oristano', 'Padova', 'Palermo', 'Parma', 'Pavia', 'Perugia', 'Pesaro e Urbino', 'Pescara', 'Piacenza', 'Pisa', 'Pistoia', 'Pordenone', 'Potenza', 'Prato', 'Ragusa', 'Ravenna', 'Reggio Calabria', 'Reggio Emilia', 'Rieti', 'Rimini', 'Roma', 'Rovigo', 'Salerno', 'Sassari', 'Savona', 'Siena', 'Siracusa', 'Sondrio', 'Taranto', 'Teramo', 'Terni', 'Torino', 'Trapani', 'Trento', 'Treviso', 'Trieste', 'Udine', 'Varese', 'Venezia', 'Verbano-Cusio-Ossola', 'Vercelli', 'Verona', 'Vibo Valentia', 'Vicenza', 'Viterbo']
-
-		self.comboBox_provincia.addItems(province_list)
-
-		#lista definizione_sito
-		search_dict = {
-		'nome_tabella'  : "'"+'site_table'+"'",
-		'tipologia_sigla' : "'"+'definizione sito'+"'"
-		}
-
-		d_sito = self.DB_MANAGER.query_bool(search_dict, 'PYARCHINIT_THESAURUS_SIGLE')
-
-		d_sito_vl = [ ]
-
-		for i in range(len(d_sito)):
-			d_sito_vl.append(d_sito[i].sigla_estesa)
-
-		d_sito_vl.sort()
-		self.comboBox_definizione_sito.addItems(d_sito_vl)
-
+###################################
 
 
 	#buttons functions
@@ -274,20 +256,30 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 					if bool(self.DATA_LIST) == True:
 						if self.records_equal_check() == 1:
 							msg = self.update_if(QMessageBox.warning(self,'Errore',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+
+
+##########################################
+
+
 		#set the GUI for a new record
 		if self.BROWSE_STATUS != "n":
 			self.BROWSE_STATUS = "n"
 			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			self.empty_fields()
 			self.label_sort.setText(self.SORTED_ITEMS["n"])
+
+			self.setComboBoxEditable(["self.comboBox_sito_doc"],1)
 			
-			self.setComboBoxEnable(["self.comboBox_sito"],"True")
-			self.setComboBoxEditable(["self.comboBox_sito"],1)
-			self.setComboBoxEnable(["self.comboBox_definizione_sito"],"True")
-			self.setComboBoxEditable(["self.comboBox_definizione_sito"],1)
+			self.setComboBoxEnable(["self.comboBox_sito_doc"],"True")
+			self.setComboBoxEnable(["self.lineEdit_nome_doc"],"True")
 			
 			self.set_rec_counter('', '')
 			self.enable_button(0)
+
+
+###########################################
+
+
 
 	def on_pushButton_save_pressed(self):
 		#save record
@@ -295,8 +287,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 			if self.data_error_check() == 0:
 				if self.records_equal_check() == 1:
 					self.update_if(QMessageBox.warning(self,'ATTENZIONE',"Il record e' stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
-					self.SORT_STATUS = "n"
-					self.label_sort.setText(self.SORTED_ITEMS[self.SORT_STATUS])
+					self.label_sort.setText(self.SORTED_ITEMS["n"])
 					self.enable_button(1)
 					self.fill_fields(self.REC_CORR)
 				else:
@@ -313,33 +304,67 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), len(self.DATA_LIST)-1
 					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
-					self.setComboBoxEnable(["self.comboBox_sito"],"False")
+
+##################################################
+
+					self.setComboBoxEditable(["self.comboBox_sito_doc"],1)
+					self.setComboBoxEnable(["self.comboBox_sito_doc"],"False")
+					self.setComboBoxEnable(["self.lineEdit_nome_doc"],"False")
 					self.fill_fields(self.REC_CORR)
 					self.enable_button(1)
 				else:
 					pass
 
+##################################################
+
 	def data_error_check(self):
 		test = 0
 		EC = Error_check()
 
-		if EC.data_is_empty(unicode(self.comboBox_sito.currentText())) == 0:
+		if EC.data_is_empty(unicode(self.comboBox_sito_doc.currentText())) == 0:
 			QMessageBox.warning(self, "ATTENZIONE", "Campo Sito. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
 			test = 1
+
+		if EC.data_is_empty(unicode(self.lineEdit_nome_doc.text())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo nome_doc \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			test = 1
+
 
 		return test
 
 	def insert_new_rec(self):
 		try:
-			data = self.DB_MANAGER.insert_site_values(
+##			if self.lineEdit_nr_campione.text() == "":
+##				nr_campione = None
+##			else:
+##				nr_campione = int(self.lineEdit_nr_campione.text())
+##
+##			if self.lineEdit_us.text() == "":
+##				us = None
+##			else:
+##				us = int(self.lineEdit_us.text())
+##
+##			if self.lineEdit_cassa.text() == "":
+##				nr_cassa = None
+##			else:
+##				nr_cassa = int(self.lineEdit_cassa.text())
+##
+##			if self.lineEdit_n_inv_mat.text() == "":
+##				numero_inventario_materiale = None
+##			else:
+##				numero_inventario_materiale = int(self.lineEdit_n_inv_mat.text())
+
+			data = self.DB_MANAGER.insert_values_documentazione(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
-			unicode(self.comboBox_sito.currentText()), 					#1 - Sito
-			unicode(self.comboBox_nazione.currentText()), 			#2 - nazione
-			unicode(self.comboBox_regione.currentText()), 			#3 - regione
-			unicode(self.comboBox_comune.currentText()), 			#4 - comune
-			unicode(self.textEdit_descrizione_site.toPlainText()),		#5 - descrizione
-			unicode(self.comboBox_provincia.currentText()), 			#6 - comune
-			unicode(self.comboBox_definizione_sito.currentText())) 	#7 - definizione sito
+			unicode(self.comboBox_sito_doc.currentText()), 						#1 - Sito
+			unicode(self.lineEdit_nome_doc.text()),								#2 - Nome Documentazione
+			unicode(self.lineEdit_data_doc.text()),								#3 - Data
+			unicode(self.comboBox_tipo_doc.currentText()),							#4 - Tipo Documentazione
+			unicode(self.comboBox_sorgente_doc.currentText()),						#5 - Sorgente
+			unicode(self.comboBox_scala_doc.currentText()),						#6 - Scala
+			unicode(self.lineEdit_disegnatore_doc.text()),							#7 - Disegnatore
+			unicode(self.textEdit_note_doc.toPlainText()))							#8 - Note
+
 
 			try:
 				self.DB_MANAGER.insert_data_session(data)
@@ -355,7 +380,6 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		except Exception, e:
 			QMessageBox.warning(self, "Errore", "Attenzione 2 ! \n"+str(e),  QMessageBox.Ok)
 			return 0
-
 
 	def check_record_state(self):
 		ec = self.data_error_check()
@@ -441,11 +465,10 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 				except Exception, e:
 					QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
 
-
 	def on_pushButton_delete_pressed(self):
 		msg = QMessageBox.warning(self,"Attenzione!!!",u"Vuoi veramente eliminare il record? \n L'azione è irreversibile", QMessageBox.Cancel,1)
 		if msg != 1:
-			QMessageBox.warning(self,"Messagio!!!","Azione Annullata!")
+			QMessageBox.warning(self,"Messaggio!!!","Azione Annullata!")
 		else:
 			try:
 				id_to_delete = eval("self.DATA_LIST[self.REC_CORR]." + self.ID_TABLE)
@@ -481,14 +504,17 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 			pass
 		else:
 			self.enable_button_search(0)
+
+################################################
+
 			#set the GUI for a new search
 			if self.BROWSE_STATUS != "f":
 				self.BROWSE_STATUS = "f"
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				###
-				self.setComboBoxEnable(["self.comboBox_sito"],"True")
-				self.setComboBoxEnable(["self.comboBox_definizione_sito"],"True")
-				self.setComboBoxEnable(["self.textEdit_descrizione_site"],"False")
+				#self.setComboBoxEnable(["self.comboBox_sito_doc"],"True")
+				#self.setComboBoxEnable(["self.lineEdit_nome_doc"],"True")
+				self.setComboBoxEnable(["self.textEdit_note_doc"],"False")
 				###
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.set_rec_counter('','')
@@ -496,18 +522,42 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 				self.charge_list()
 				self.empty_fields()
 
+################################################
+
+
 	def on_pushButton_search_go_pressed(self):
 		if self.BROWSE_STATUS != "f":
 			QMessageBox.warning(self, "ATTENZIONE", "Per eseguire una nuova ricerca clicca sul pulsante 'new search' ",  QMessageBox.Ok)
 		else:
+
+##			if self.lineEdit_nr_campione.text() == "":
+##				nr_campione = None
+##			else:
+##				nr_campione = int(self.lineEdit_nr_campione.text())
+##
+##			if self.lineEdit_us.text() == "":
+##				us = None
+##			else:
+##				us = int(self.lineEdit_us.text())
+##
+##			if self.lineEdit_cassa.text() == "":
+##				nr_cassa = None
+##			else:
+##				nr_cassa = int(self.lineEdit_cassa.text())
+##
+##			if self.lineEdit_n_inv_mat.text() == "":
+##				numero_inventario_materiale = None
+##			else:
+##				numero_inventario_materiale = int(self.lineEdit_n_inv_mat.text())
+
 			search_dict = {
-			'sito' : "'"+unicode(self.comboBox_sito.currentText())+"'",					#1 - Sito
-			'nazione': "'"+unicode(self.comboBox_nazione.currentText())+"'",			#2 - Nazione
-			'regione': "'" + unicode(self.comboBox_regione.currentText())+"'",		#3 - Regione
-			'comune': "'" + unicode(self.comboBox_comune.currentText())+"'",		#4 - Comune
-			'descrizione': unicode(self.textEdit_descrizione_site.toPlainText()),			#5 - Descrizione
-			'provincia': "'" + unicode(self.comboBox_provincia.currentText())+"'",		#6 - Provincia
-			'definizione_sito': "'" + unicode(self.comboBox_definizione_sito.currentText())+"'"		#67- definizione_sito
+			self.TABLE_FIELDS[0] : "'"+str(self.comboBox_sito_doc.currentText())+"'",				#1 - Sito
+			self.TABLE_FIELDS[1] : "'"+str(self.lineEdit_nome_doc.text())+"'" , 					#2 - Nome Documentazione
+			self.TABLE_FIELDS[2] : "'"+str(self.lineEdit_data_doc.text())+"'" ,					#3 - Data
+			self.TABLE_FIELDS[3] : "'"+str(self.comboBox_tipo_doc.currentText())+"'", 				#4 - Tipo Documentazione
+			self.TABLE_FIELDS[4] : "'"+str(self.comboBox_sorgente_doc.currentText())+"'",			#5 - Sorgente
+			self.TABLE_FIELDS[5] : "'"+str(self.comboBox_scala_doc.currentText())+"'",				#6 - Scala
+			self.TABLE_FIELDS[6] : "'"+str(self.lineEdit_disegnatore_doc.text())+"'"				#7 - Disegnatore
 			}
 
 			u = Utility()
@@ -527,21 +577,18 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 
-					self.setComboBoxEnable(["self.comboBox_sito"],"False")
-					self.setComboBoxEnable(["self.comboBox_definizione_sito"],"True")
-					self.setComboBoxEnable(["self.textEdit_descrizione_site"],"True")
+					self.setComboBoxEnable(["self.comboBox_sito_doc"],"False")
+					self.setComboBoxEnable(["self.lineEdit_nome_doc"],"False")
+					self.setComboBoxEnable(["self.textEdit_note_doc"],"True")
 
 				else:
 					self.DATA_LIST = []
 
 					for i in res:
 						self.DATA_LIST.append(i)
-					
-					for i in self.DATA_LIST:
-						self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, self.ID_TABLE, [i.id_sito], ['find_check'], [1])
 
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
-					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0] ####darivedere
+					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
 					self.fill_fields()
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
@@ -549,18 +596,12 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 
 					if self.REC_TOT == 1:
 						strings = ("E' stato trovato", self.REC_TOT, "record")
-						if self.toolButton_draw_siti.isChecked() == True:
-							sing_layer = [self.DATA_LIST[self.REC_CORR]]
-							self.pyQGIS.charge_sites_from_research(sing_layer)
 					else:
 						strings = ("Sono stati trovati", self.REC_TOT, "records")
-						self.pyQGIS.charge_sites_from_research(self.DATA_LIST)
-					
-					
 
-					self.setComboBoxEnable(["self.comboBox_sito"],"False")
-					self.setComboBoxEnable(["self.comboBox_definizione_sito"],"True")
-					self.setComboBoxEnable(["self.textEdit_descrizione_site"],"True")
+					self.setComboBoxEnable(["self.comboBox_sito_doc"],"False")
+					self.setComboBoxEnable(["self.lineEdit_nome_doc"],"False")
+					self.setComboBoxEnable(["self.textEdit_note_doc"],"True")
 
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings, QMessageBox.Ok)
 
@@ -568,45 +609,40 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 
 
 	def on_pushButton_test_pressed(self):
+		pass
+##		data = "Sito: " + str(self.comboBox_sito.currentText())
+##
+##		test = Test_area(data)
+##		test.run_test()
+##
+##	def on_pushButton_draw_pressed(self):
+##		self.pyQGIS.charge_layers_for_draw(["1", "2", "3", "4", "5", "7", "8", "9", "10", "12"])
+##
+##
+##	def on_pushButton_sites_geometry_pressed(self):
+##		sito = unicode(self.comboBox_sito.currentText())
+##		self.pyQGIS.charge_sites_geometry(["1", "2", "3", "4", "8"], "sito", sito)
 
-		data = "Sito: " + str(self.comboBox_sito.currentText())
+##	def on_pushButton_rel_pdf_pressed(self):
+##		check=QMessageBox.warning(self, "Attention", "Under testing: this method can contains some bugs. Do you want proceed?", QMessageBox.Cancel,1)
+##		if check == 1:
+##			erp = exp_rel_pdf(unicode(self.comboBox_sito.currentText()))
+##			erp.export_rel_pdf()
 
-##		data = [
-##		unicode(self.comboBox_sito.currentText()), 								#1 - Sito
-##		unicode(self.comboBox_nazione.currentText()), 						#2 - Nazione
-##		unicode(self.comboBox_regione.currentText()), 						#3 - Regione
-##		unicode(self.comboBox_comune.currentText()), 						#4 - Comune
-##		unicode(self.textEdit_descrizione_site.toPlainText()),    				#5 - Descrizione
-##		unicode(self.comboBox_provincia.currentText())]                     	#6 - Provincia
+#********************************************************************************
 
-		test = Test_area(data)
-		test.run_test()
+##	def on_pushButton_elenco_casse_pressed(self):
+##		if self.records_equal_check() == 1:
+##			self.update_if(QMessageBox.warning(self,'Errore',u"Il record è stato modificato. Vuoi salvare le modifiche?", QMessageBox.Cancel,1))
+##
+##		sito_ec = unicode(self.comboBox_sito.currentText())
+##		Mat_casse_pdf = generate_reperti_pdf()
+##		data_list = self.generate_el_casse_pdf(sito_ec)
+##
+##		Mat_casse_pdf.build_index_Casse(data_list, sito_ec)
+##		Mat_casse_pdf.build_box_labels_Finds(data_list, sito_ec)
 
-	def on_pushButton_draw_pressed(self):
-		self.pyQGIS.charge_layers_for_draw(["1", "2", "3", "4", "5", "7", "8", "9", "10", "12"])
-
-	def on_pushButton_sites_geometry_pressed(self):
-		sito = unicode(self.comboBox_sito.currentText())
-		self.pyQGIS.charge_sites_geometry(["1", "2", "3", "4", "8"], "sito", sito)
-
-	def on_pushButton_draw_sito_pressed(self):
-		sing_layer = [self.DATA_LIST[self.REC_CORR]]
-		self.pyQGIS.charge_sites_from_research(sing_layer)
-
-	def on_pushButton_rel_pdf_pressed(self):
-		check=QMessageBox.warning(self, "Attention", "Under testing: this method can contains some bugs. Do you want proceed?",QMessageBox.Cancel,1)
-		if check == 1:
-			erp = exp_rel_pdf(unicode(self.comboBox_sito.currentText()))
-			erp.export_rel_pdf()
-			
-
-	def on_toolButton_draw_siti_toggled(self):
-		if self.toolButton_draw_siti.isChecked() == True:
-			QMessageBox.warning(self, "Messaggio", "Modalita' GIS attiva. Da ora le tue ricerche verranno visualizzate sul GIS", QMessageBox.Ok)
-		else:
-			QMessageBox.warning(self, "Messaggio", "Modalita' GIS disattivata. Da ora le tue ricerche non verranno piu' visualizzate sul GIS", QMessageBox.Ok)
-
-
+#********************************************************************************
 
 	def update_if(self, msg):
 		rec_corr = self.REC_CORR
@@ -641,9 +677,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		id_list = []
 		for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
 			id_list.append(eval("i."+ self.ID_TABLE))
-
 		temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
-
 		for i in temp_data_list:
 			self.DATA_LIST.append(i)
 
@@ -668,24 +702,47 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		return lista
 
 	def empty_fields(self):
-		self.comboBox_sito.setEditText("")  						#1 - Sito
-		self.comboBox_nazione.setEditText("") 					#2 - Nazione
-		self.comboBox_regione.setEditText("") 					#3 - Regione
-		self.comboBox_comune.setEditText("") 					#4 - Comune
-		self.textEdit_descrizione_site.clear()							#5 - Descrizione
-		self.comboBox_provincia.setEditText("") 					#6 - Provincia
-		self.comboBox_definizione_sito.setEditText("") 			#7 - definizione_sito
+		self.comboBox_sito_doc.setEditText("")				#1 - Sito
+		self.lineEdit_nome_doc.clear()						#2 - Nome Dcumentazione
+		self.lineEdit_data_doc.clear()						#3 - Data
+		self.comboBox_tipo_doc.setEditText("")						#4 - Tipo Documentazione
+		self.comboBox_sorgente_doc.setEditText("")					#5 - Sorgente
+		self.comboBox_scala_doc.setEditText("")						#6 - Scala
+		self.lineEdit_disegnatore_doc.clear()				#7 - Dsegnatore
+		self.textEdit_note_doc.clear()						#8 - Note
 
 	def fill_fields(self, n=0):
 		self.rec_num = n
+##		if str(self.DATA_LIST[self.rec_num].nr_campione) == 'None':
+##			numero_campione = ''
+##		else:
+##			numero_campione = str(self.DATA_LIST[self.rec_num].nr_campione)
+##
+##		if str(self.DATA_LIST[self.rec_num].us) == 'None':
+##			us = ''
+##		else:
+##			us = str(self.DATA_LIST[self.rec_num].us)
+##
+##		if str(self.DATA_LIST[self.rec_num].numero_inventario_materiale) == 'None':
+##			numero_inventario_materiale = ''
+##		else:
+##			numero_inventario_materiale = str(self.DATA_LIST[self.rec_num].numero_inventario_materiale)
+##
+##		if str(self.DATA_LIST[self.rec_num].nr_cassa) == 'None':
+##			nr_cassa = ''
+##		else:
+##			nr_cassa = str(self.DATA_LIST[self.rec_num].nr_cassa)
 
-		unicode(self.comboBox_sito.setEditText(self.DATA_LIST[self.rec_num].sito))								#1 - Sito
-		unicode(self.comboBox_nazione.setEditText(self.DATA_LIST[self.rec_num].nazione))					#2 - Nazione
-		unicode(self.comboBox_regione.setEditText(self.DATA_LIST[self.rec_num].regione))					#3 - Regione
-		unicode(self.comboBox_comune.setEditText(self.DATA_LIST[self.rec_num].comune))					#4 - Comune
-		unicode(self.textEdit_descrizione_site.setText(self.DATA_LIST[self.rec_num].descrizione))				#5 - Descrizione
-		unicode(self.comboBox_provincia.setEditText(self.DATA_LIST[self.rec_num].provincia))				#6 - Provincia
-		unicode(self.comboBox_definizione_sito.setEditText(self.DATA_LIST[self.rec_num].definizione_sito))#7 - definizione_sito
+
+		unicode(self.comboBox_sito_doc.setEditText(self.DATA_LIST[self.rec_num].sito))										#1 - Sito
+		unicode(self.lineEdit_nome_doc.setText(self.DATA_LIST[self.rec_num].nome_doc))										#2 - Nome Dcumentazione
+		unicode(self.lineEdit_data_doc.setText(self.DATA_LIST[self.rec_num].data))									#3 - Data
+		unicode(self.comboBox_tipo_doc.setEditText(self.DATA_LIST[self.rec_num].tipo_documentazione))		#4 - Tipo Documentazione
+		unicode(self.comboBox_sorgente_doc.setEditText(self.DATA_LIST[self.rec_num].sorgente))								#5 - Sorgente
+		unicode(self.comboBox_scala_doc.setEditText(self.DATA_LIST[self.rec_num].scala))																#6 - Scala
+		unicode(self.lineEdit_disegnatore_doc.setText(self.DATA_LIST[self.rec_num].disegnatore))														#7 - Dsegnatore
+		unicode(self.textEdit_note_doc.setText(self.DATA_LIST[self.rec_num].note))										#8 - Note
+
 
 	def set_rec_counter(self, t, c):
 		self.rec_tot = t
@@ -694,15 +751,38 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		self.label_rec_corrente.setText(str(self.rec_corr))
 
 	def set_LIST_REC_TEMP(self):
+
+##		if self.lineEdit_nr_campione.text() == "":
+##			nr_campione = None
+##		else:
+##			nr_campione = int(self.lineEdit_nr_campione.text())
+##
+##		if self.lineEdit_us.text() == "":
+##			us = None
+##		else:
+##			us = int(self.lineEdit_us.text())
+##
+##		if self.lineEdit_cassa.text() == "":
+##			nr_cassa = None
+##		else:
+##			nr_cassa = int(self.lineEdit_cassa.text())
+##
+##		if self.lineEdit_n_inv_mat.text() == "":
+##			numero_inventario_materiale = None
+##		else:
+##			numero_inventario_materiale = int(self.lineEdit_n_inv_mat.text())
+
 		#data
 		self.DATA_LIST_REC_TEMP = [
-		unicode(self.comboBox_sito.currentText()), 								#1 - Sito
-		unicode(self.comboBox_nazione.currentText()), 						#2 - Nazione
-		unicode(self.comboBox_regione.currentText()), 						#3 - Regione
-		unicode(self.comboBox_comune.currentText()), 						#4 - Comune
-		unicode(self.textEdit_descrizione_site.toPlainText()),    				#5 - Descrizione
-		unicode(self.comboBox_provincia.currentText()),						#6 - Provincia
-		unicode(self.comboBox_definizione_sito.currentText())]				#7 - Definizione sito
+		unicode(self.comboBox_sito_doc.currentText()), 						#1 - Sito
+		unicode(self.lineEdit_nome_doc.text), 					#2 - Nome Documentazione
+		unicode(self.lineEdit_data_doc.text()), 				#3 - Data
+		unicode(self.comboBox_tipo_doc.currentText()), 					#4 - Tipo Documentazione
+		unicode(self.comboBox_sorgente_doc.currentText()),					#5 - Sorgente
+		unicode(self.comboBox_scala_doc.currentText()),					#6 - Scala
+		unicode(self.lineEdit_disegnatore_doc.text()),						#7 - Disegnatore
+		unicode(self.textEdit_note_doc.toPlainText())								#8 - Note
+		]
 
 
 	def set_LIST_REC_CORR(self):

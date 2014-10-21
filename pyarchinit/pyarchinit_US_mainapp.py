@@ -174,7 +174,6 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_iniz_list)
 		self.connect(self.comboBox_sito, SIGNAL("editTextChanged (const QString&)"), self.charge_periodo_fin_list)
 
-
 		self.connect(self.comboBox_sito, SIGNAL("currentIndexChanged(int)"), self.charge_periodo_iniz_list)
 		self.connect(self.comboBox_sito, SIGNAL("currentIndexChanged(int)"), self.charge_periodo_fin_list)
 
