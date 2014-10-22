@@ -248,6 +248,27 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				except:
 					pass
 
+	def on_pushButton_draw_doc_pressed(self):
+		sito = unicode(self.comboBox_sito.currentText())
+		area = unicode(self.comboBox_area.currentText())
+		us = str(self.lineEdit_us.text())
+
+		table_name = "self.tableWidget_documentazione"
+		rowSelected_cmd = ("%s.selectedIndexes()") % (table_name)
+		rowSelected = eval(rowSelected_cmd)
+		rowIndex = (rowSelected[0].row())
+
+
+		tipo_doc_item = self.tableWidget_documentazione.item(rowIndex,0)
+		nome_doc_item = self.tableWidget_documentazione.item(rowIndex,1)
+		
+
+		tipo_doc = unicode(tipo_doc_item.text())
+		nome_doc = unicode(nome_doc_item.text())
+		
+		lista_draw_doc = [sito,area,us,tipo_doc,nome_doc]
+
+		self.pyQGIS.charge_vector_layers_doc_from_scheda_US(lista_draw_doc)
 
 	def on_pushButton_go_to_us_pressed(self):
 		try:

@@ -408,6 +408,21 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 			self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0]
 			self.label_sort.setText(self.SORTED_ITEMS["n"])
 
+
+
+
+	def on_pushButton_disegno_doc_pressed(self):
+		"""
+		for sing_us in range(len(self.DATA_LIST)):
+			sing_layer = [self.DATA_LIST[sing_us]]
+			self.pyQGIS.charge_vector_layers(sing_layer)
+		"""
+
+		sing_layer = [self.DATA_LIST[self.REC_CORR]]
+		self.pyQGIS.charge_vector_layers_doc(sing_layer)
+
+
+
 	#records surf functions
 	def on_pushButton_first_rec_pressed(self):
 		if self.check_record_state() == 1:
@@ -511,11 +526,10 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 			if self.BROWSE_STATUS != "f":
 				self.BROWSE_STATUS = "f"
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
-				###
-				#self.setComboBoxEnable(["self.comboBox_sito_doc"],"True")
-				#self.setComboBoxEnable(["self.lineEdit_nome_doc"],"True")
+				self.setComboBoxEnable(["self.comboBox_sito_doc"],"True")
+				self.setComboBoxEnable(["self.lineEdit_nome_doc"],"True")
 				self.setComboBoxEnable(["self.textEdit_note_doc"],"False")
-				###
+				self.setComboBoxEditable(["self.comboBox_sito_doc"],1)
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.set_rec_counter('','')
 				self.label_sort.setText(self.SORTED_ITEMS["n"])
@@ -577,8 +591,8 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 
-					self.setComboBoxEnable(["self.comboBox_sito_doc"],"False")
-					self.setComboBoxEnable(["self.lineEdit_nome_doc"],"False")
+					self.setComboBoxEnable(["self.comboBox_sito_doc"],"True")
+					self.setComboBoxEnable(["self.lineEdit_nome_doc"],"True")
 					self.setComboBoxEnable(["self.textEdit_note_doc"],"True")
 
 				else:
@@ -599,8 +613,8 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 					else:
 						strings = ("Sono stati trovati", self.REC_TOT, "records")
 
-					self.setComboBoxEnable(["self.comboBox_sito_doc"],"False")
-					self.setComboBoxEnable(["self.lineEdit_nome_doc"],"False")
+					self.setComboBoxEnable(["self.comboBox_sito_doc"],"True")
+					self.setComboBoxEnable(["self.lineEdit_nome_doc"],"True")
 					self.setComboBoxEnable(["self.textEdit_note_doc"],"True")
 
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings, QMessageBox.Ok)

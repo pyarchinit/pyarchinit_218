@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_US_ui.ui'
 #
-# Created: Sun Aug 31 21:29:35 2014
+# Created: Wed Oct 22 12:57:33 2014
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_DialogUS(object):
     def setupUi(self, DialogUS):
         DialogUS.setObjectName(_fromUtf8("DialogUS"))
-        DialogUS.resize(559, 618)
+        DialogUS.resize(738, 775)
         DialogUS.setMinimumSize(QtCore.QSize(540, 400))
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(_fromUtf8(":/images/iconPAI.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -792,8 +792,6 @@ class Ui_DialogUS(object):
         self.pushButton_remove_row_documentazione.setObjectName(_fromUtf8("pushButton_remove_row_documentazione"))
         self.horizontalLayout_5.addWidget(self.pushButton_remove_row_documentazione)
         self.gridLayout_9.addLayout(self.horizontalLayout_5, 0, 0, 1, 1)
-        spacerItem7 = QtGui.QSpacerItem(305, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
-        self.gridLayout_9.addItem(spacerItem7, 0, 1, 1, 1)
         self.tableWidget_documentazione = QtGui.QTableWidget(self.tab_5)
         self.tableWidget_documentazione.setFrameShape(QtGui.QFrame.StyledPanel)
         self.tableWidget_documentazione.setFrameShadow(QtGui.QFrame.Raised)
@@ -811,7 +809,12 @@ class Ui_DialogUS(object):
         self.tableWidget_documentazione.setHorizontalHeaderItem(0, item)
         item = QtGui.QTableWidgetItem()
         self.tableWidget_documentazione.setHorizontalHeaderItem(1, item)
-        self.gridLayout_9.addWidget(self.tableWidget_documentazione, 1, 0, 1, 2)
+        self.gridLayout_9.addWidget(self.tableWidget_documentazione, 3, 0, 1, 3)
+        self.pushButton_draw_doc = QtGui.QPushButton(self.tab_5)
+        self.pushButton_draw_doc.setObjectName(_fromUtf8("pushButton_draw_doc"))
+        self.gridLayout_9.addWidget(self.pushButton_draw_doc, 0, 2, 1, 1)
+        spacerItem7 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.gridLayout_9.addItem(spacerItem7, 0, 1, 1, 1)
         self.tabWidget.addTab(self.tab_5, _fromUtf8(""))
         self.tab_4 = QtGui.QWidget()
         self.tab_4.setObjectName(_fromUtf8("tab_4"))
@@ -830,7 +833,7 @@ class Ui_DialogUS(object):
         self.toolBox.setFrameShape(QtGui.QFrame.StyledPanel)
         self.toolBox.setObjectName(_fromUtf8("toolBox"))
         self.page = QtGui.QWidget()
-        self.page.setGeometry(QtCore.QRect(0, 0, 480, 235))
+        self.page.setGeometry(QtCore.QRect(0, 0, 419, 235))
         self.page.setObjectName(_fromUtf8("page"))
         self.gridLayout_20 = QtGui.QGridLayout(self.page)
         self.gridLayout_20.setObjectName(_fromUtf8("gridLayout_20"))
@@ -942,7 +945,7 @@ class Ui_DialogUS(object):
         self.gridLayout_20.addWidget(self.line, 4, 0, 1, 4)
         self.toolBox.addItem(self.page, _fromUtf8(""))
         self.page_2 = QtGui.QWidget()
-        self.page_2.setGeometry(QtCore.QRect(0, 0, 314, 222))
+        self.page_2.setGeometry(QtCore.QRect(0, 0, 676, 336))
         self.page_2.setObjectName(_fromUtf8("page_2"))
         self.gridLayout_21 = QtGui.QGridLayout(self.page_2)
         self.gridLayout_21.setObjectName(_fromUtf8("gridLayout_21"))
@@ -1041,7 +1044,7 @@ class Ui_DialogUS(object):
         self.gridLayout_21.addWidget(self.pushButton_showLayer, 1, 2, 1, 1)
         self.toolBox.addItem(self.page_2, _fromUtf8(""))
         self.page_3 = QtGui.QWidget()
-        self.page_3.setGeometry(QtCore.QRect(0, 0, 98, 28))
+        self.page_3.setGeometry(QtCore.QRect(0, 0, 100, 30))
         self.page_3.setObjectName(_fromUtf8("page_3"))
         self.pushButton_exp_index_us = QtGui.QPushButton(self.page_3)
         self.pushButton_exp_index_us.setGeometry(QtCore.QRect(191, 20, 150, 24))
@@ -1075,8 +1078,8 @@ class Ui_DialogUS(object):
         self.gridLayout_10.addWidget(self.tabWidget, 4, 0, 1, 2)
 
         self.retranslateUi(DialogUS)
-        self.tabWidget.setCurrentIndex(0)
-        self.toolBox.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(3)
+        self.toolBox.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(DialogUS)
 
     def retranslateUi(self, DialogUS):
@@ -1209,6 +1212,7 @@ class Ui_DialogUS(object):
         self.pushButton_remove_row_documentazione.setText(QtGui.QApplication.translate("DialogUS", "rimuovi riga", None, QtGui.QApplication.UnicodeUTF8))
         self.tableWidget_documentazione.horizontalHeaderItem(0).setText(QtGui.QApplication.translate("DialogUS", "Tipo documentazione", None, QtGui.QApplication.UnicodeUTF8))
         self.tableWidget_documentazione.horizontalHeaderItem(1).setText(QtGui.QApplication.translate("DialogUS", "Riferimenti", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_draw_doc.setText(QtGui.QApplication.translate("DialogUS", "Visualizza documentazione", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_5), QtGui.QApplication.translate("DialogUS", "Documentazione", None, QtGui.QApplication.UnicodeUTF8))
         self.label_36.setText(QtGui.QApplication.translate("DialogUS", "TOOLS", None, QtGui.QApplication.UnicodeUTF8))
         self.label_9.setText(QtGui.QApplication.translate("DialogUS", "Selezione del sito per i controlli", None, QtGui.QApplication.UnicodeUTF8))
