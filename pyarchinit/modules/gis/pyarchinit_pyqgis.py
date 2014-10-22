@@ -254,6 +254,270 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			else:
 				QMessageBox.warning(self, "TESTER", "OK Layer Quote non valido",QMessageBox.Ok)
 
+	def charge_vector_layers_doc(self, data):
+		#Clean Qgis Map Later Registry
+		#QgsMapLayerRegistry.instance().removeAllMapLayers()
+		# Get the user input, starting with the table name
+		
+		#self.find_us_cutted(data)
+
+		cfg_rel_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'config.cfg')
+		file_path = ('%s%s') % (self.HOME, cfg_rel_path)
+		conf = open(file_path, "r")
+		con_sett = conf.read()
+		conf.close()
+
+		settings = Settings(con_sett)
+		settings.set_configuration()
+		
+		
+		#("sito" = 'Scavo esame' AND "tipo_doc" =  'Sezione'  AND "nome_doc" = 'AA1')  OR ("sito" = 'Scavo esame' AND "tipo_doc" =  'Sezione'  AND "nome_doc" = 'AA1') 
+		
+		
+		
+		if settings.SERVER == 'sqlite':
+			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
+			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
+
+			docstr =  "(sito = '" + str(data[0].sito) + "AND nome_doc = '" + str(data[0].nome_doc) + "AND tipo_documentazione = '" + str(data[0].tipo_documentazione) + ")"
+			if len(data) > 1:
+				for i in range(len(data)):
+					docstr += " OR (sito = '" + str(data[i].sito) +" AND tipo_documentazione = '" + str(data[i].tipo_documentazione) +" AND nome_doc = '"+ str(data[i].nome_doc)
+					
+			uri = QgsDataSourceURI()
+			uri.setDatabase(db_file_path)
+
+			uri.setDataSource('','pyarchinit_doc_view', 'the_geom', docstr, "ROWID")
+			layerUS=QgsVectorLayer(uri.uri(), 'pyarchinit_doc_view', 'spatialite')
+
+			if  layerUS.isValid() == True:
+				QMessageBox.warning(self, "TESTER", "OK Layer US valido",QMessageBox.Ok)
+
+				#self.USLayerId = layerUS.getLayerID()
+				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view_splite.qml')
+				#style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
+
+				layerUS.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
+				#originalSubsetString = layerUS.subsetString() 4D dimension
+				#newSubSetString = "%s OR id_us = '0'" % (originalSubsetString) 4D dimension
+
+				#layerUS.setSubsetString(newSubSetString)
+
+			else:
+				QMessageBox.warning(self, "TESTER", "Layer US non valido",QMessageBox.Ok)
+
+			#implementare sistema per quote se si vogliono visualizzare sulle piante
+			"""
+			uri.setDataSource('','pyarchinit_quote_view', 'the_geom', gidstr.tipodoc(pianta), "ROWID")
+			layerQUOTE=QgsVectorLayer(uri.uri(), 'pyarchinit_quote_view', 'spatialite')
+			
+			if  layerQUOTE.isValid() == True:
+				#self.USLayerId = layerUS.getLayerID()
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'quote_us_view.qml')
+				layerQUOTE.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layerQUOTE], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "OK Layer Quote non valido",QMessageBox.Ok)
+			"""
+
+		elif settings.SERVER == 'postgres':
+			pass
+			#implementare il sistema per postgres
+			"""
+			uri = QgsDataSourceURI()
+			# set host name, port, database name, username and password
+		
+			uri.setConnection(settings.HOST, settings.PORT, settings.DATABASE, settings.USER, settings.PASSWORD)
+
+			gidstr =  sito =  "sito = '" + str(data[0].sito) + nome_doc = "AND nome_doc = '" + str(data[0].nome_doc) + tipo_doc = "AND tipo_doc = '" + str(data[0].tipo_doc)
+			if len(data) > 1:
+				for i in range(len(data)):
+					gidstr += " OR sito = '" + str(data[i].sito) +" OR nome_doc = '" + str(data[i].nome_doc) +" OR tipo_doc = '"+ str(data[i].tipo_doc)
+
+			srs = QgsCoordinateReferenceSystem(self.SRS, QgsCoordinateReferenceSystem.PostgisCrsId)
+
+			uri.setDataSource("public", "pyarchinit_us_view", "the_geom", gidstr, "gid")
+			layerUS = QgsVectorLayer(uri.uri(), "Unita' Stratigrafiche", "postgres")
+		
+			if  layerUS.isValid() == True:
+				layerUS.setCrs(srs)
+				#self.USLayerId = layerUS.getLayersID()
+				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
+				style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
+				layerUS.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "OK Layer US non valido",QMessageBox.Ok)
+
+			uri.setDataSource("public", "pyarchinit_quote_view", "the_geom", gidstr.tipodoc(pianta), "gid")
+			layerQUOTE = QgsVectorLayer(uri.uri(), "Quote Unita' Stratigrafiche", "postgres")
+
+			if layerQUOTE.isValid() == True:
+				layerQUOTE.setCrs(srs)
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'stile_quote.qml')
+				layerQUOTE.loadNamedStyle(style_path)
+				try:
+					QgsMapLayerRegistry.instance().addMapLayers([layerQUOTE], True)
+				except Exception, e:
+					pass
+					#f = open('/test_ok.txt','w')
+					#f.write(str(e))
+					#f.close()
+			else:
+				QMessageBox.warning(self, "TESTER", "OK Layer Quote non valido",QMessageBox.Ok)
+				"""
+
+
+	def charge_vector_layers_doc_from_scheda_US(self, lista_draw_doc):
+		#data riceve 5 valori che saranno: sito, area, US, nome_doc e tipo_doc
+		#Clean Qgis Map Later Registry
+		#QgsMapLayerRegistry.instance().removeAllMapLayers()
+		# Get the user input, starting with the table name
+		
+		#self.find_us_cutted(data)
+		sito = lista_draw_doc[0]
+		area = lista_draw_doc[1]
+		us = lista_draw_doc[2]
+		tipo_documentazione = lista_draw_doc[3]
+		nome_doc = lista_draw_doc[4]
+
+		cfg_rel_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'config.cfg')
+		file_path = ('%s%s') % (self.HOME, cfg_rel_path)
+		conf = open(file_path, "r")
+		con_sett = conf.read()
+		conf.close()
+
+		settings = Settings(con_sett)
+		settings.set_configuration()
+		
+		
+		#("sito" = 'Scavo esame' AND "tipo_doc" =  'Sezione'  AND "nome_doc" = 'AA1')  OR ("sito" = 'Scavo esame' AND "tipo_doc" =  'Sezione'  AND "nome_doc" = 'AA1') 
+		
+		
+		
+		if settings.SERVER == 'sqlite':
+			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
+			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
+
+
+			
+			doc_from_us_str = "sito = '" + sito + "' AND area = '" + area + "' AND us = '" + us + "' AND tipo_doc = '" + tipo_documentazione + "' AND nome_doc = '" + nome_doc + "'"
+			#if len(data) > 1:
+				#for i in range(len(data)):
+					#doc_from_us_str += " OR (sito = '" + str(data[i].sito) +" AND tipo_documentazione = '" + str(data[i].tipo_documentazione) +" AND nome_doc = '"+ str(data[i].nome_doc)
+					
+			uri = QgsDataSourceURI()
+			uri.setDatabase(db_file_path)
+
+			uri.setDataSource('','pyarchinit_us_view', 'the_geom', doc_from_us_str, "ROWID")
+			layerUS=QgsVectorLayer(uri.uri(), 'US in doc', 'spatialite')
+
+			if  layerUS.isValid() == True:
+				QMessageBox.warning(self, "TESTER", "OK Layer US valido",QMessageBox.Ok)
+
+				#self.USLayerId = layerUS.getLayerID()
+				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view_splite.qml')
+				#style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
+
+				#layerUS.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
+				#originalSubsetString = layerUS.subsetString() 4D dimension
+				#newSubSetString = "%s OR id_us = '0'" % (originalSubsetString) 4D dimension
+
+				#layerUS.setSubsetString(newSubSetString)
+
+			
+			doc_from_us_str = "sito = '" + sito + "' AND tipo_doc = '" + tipo_documentazione + "' AND nome_doc = '" + nome_doc + "'"
+			#if len(data) > 1:
+				#for i in range(len(data)):
+					#doc_from_us_str += " OR (sito = '" + str(data[i].sito) +" AND tipo_documentazione = '" + str(data[i].tipo_documentazione) +" AND nome_doc = '"+ str(data[i].nome_doc)
+					
+			uri = QgsDataSourceURI()
+			uri.setDatabase(db_file_path)
+
+			uri.setDataSource('','pyarchinit_us_view', 'the_geom', doc_from_us_str, "ROWID")
+			layerUS=QgsVectorLayer(uri.uri(), 'Documentazione intera', 'spatialite')
+
+			if  layerUS.isValid() == True:
+				QMessageBox.warning(self, "TESTER", "OK Layer US valido",QMessageBox.Ok)
+
+				#self.USLayerId = layerUS.getLayerID()
+				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view_splite.qml')
+				#style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
+
+				#layerUS.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
+				#originalSubsetString = layerUS.subsetString() 4D dimension
+				#newSubSetString = "%s OR id_us = '0'" % (originalSubsetString) 4D dimension
+
+				#layerUS.setSubsetString(newSubSetString)
+
+			else:
+				QMessageBox.warning(self, "TESTER", "Layer US non valido",QMessageBox.Ok)
+
+			#implementare sistema per quote se si vogliono visualizzare sulle piante
+			"""
+			uri.setDataSource('','pyarchinit_quote_view', 'the_geom', gidstr.tipodoc(pianta), "ROWID")
+			layerQUOTE=QgsVectorLayer(uri.uri(), 'pyarchinit_quote_view', 'spatialite')
+			
+			if  layerQUOTE.isValid() == True:
+				#self.USLayerId = layerUS.getLayerID()
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'quote_us_view.qml')
+				layerQUOTE.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layerQUOTE], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "OK Layer Quote non valido",QMessageBox.Ok)
+			"""
+
+		elif settings.SERVER == 'postgres':
+			pass
+			#implementare il sistema per postgres
+			"""
+			uri = QgsDataSourceURI()
+			# set host name, port, database name, username and password
+		
+			uri.setConnection(settings.HOST, settings.PORT, settings.DATABASE, settings.USER, settings.PASSWORD)
+
+			gidstr =  sito =  "sito = '" + str(data[0].sito) + nome_doc = "AND nome_doc = '" + str(data[0].nome_doc) + tipo_doc = "AND tipo_doc = '" + str(data[0].tipo_doc)
+			if len(data) > 1:
+				for i in range(len(data)):
+					gidstr += " OR sito = '" + str(data[i].sito) +" OR nome_doc = '" + str(data[i].nome_doc) +" OR tipo_doc = '"+ str(data[i].tipo_doc)
+
+			srs = QgsCoordinateReferenceSystem(self.SRS, QgsCoordinateReferenceSystem.PostgisCrsId)
+
+			uri.setDataSource("public", "pyarchinit_us_view", "the_geom", gidstr, "gid")
+			layerUS = QgsVectorLayer(uri.uri(), "Unita' Stratigrafiche", "postgres")
+		
+			if  layerUS.isValid() == True:
+				layerUS.setCrs(srs)
+				#self.USLayerId = layerUS.getLayersID()
+				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'us_caratterizzazioni.qml')
+				style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
+				layerUS.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "OK Layer US non valido",QMessageBox.Ok)
+
+			uri.setDataSource("public", "pyarchinit_quote_view", "the_geom", gidstr.tipodoc(pianta), "gid")
+			layerQUOTE = QgsVectorLayer(uri.uri(), "Quote Unita' Stratigrafiche", "postgres")
+
+			if layerQUOTE.isValid() == True:
+				layerQUOTE.setCrs(srs)
+				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'stile_quote.qml')
+				layerQUOTE.loadNamedStyle(style_path)
+				try:
+					QgsMapLayerRegistry.instance().addMapLayers([layerQUOTE], True)
+				except Exception, e:
+					pass
+					#f = open('/test_ok.txt','w')
+					#f.write(str(e))
+					#f.close()
+			else:
+				QMessageBox.warning(self, "TESTER", "OK Layer Quote non valido",QMessageBox.Ok)
+				"""
+
+
 	def charge_vector_layers(self, data):
 		#Clean Qgis Map Later Registry
 		#QgsMapLayerRegistry.instance().removeAllMapLayers()
