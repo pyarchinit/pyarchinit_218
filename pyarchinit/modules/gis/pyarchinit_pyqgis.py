@@ -279,16 +279,18 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
 			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
 
-			docstr =  "(sito = '" + str(data[0].sito) + "AND nome_doc = '" + str(data[0].nome_doc) + "AND tipo_documentazione = '" + str(data[0].tipo_documentazione) + ")"
+			docstr =  "(sito = '" + str(data[0].sito) + "' AND nome_doc = '" + str(data[0].nome_doc) + "' AND tipo_doc = '" + str(data[0].tipo_documentazione) + "')"
 			if len(data) > 1:
 				for i in range(len(data)):
-					docstr += " OR (sito = '" + str(data[i].sito) +" AND tipo_documentazione = '" + str(data[i].tipo_documentazione) +" AND nome_doc = '"+ str(data[i].nome_doc)
+					docstr += " OR (sito = '" + str(data[i].sito) +"' AND tipo_doc = '" + str(data[i].tipo_documentazione) +" AND nome_doc = '"+ str(data[i].nome_doc)+ "')"
 					
 			uri = QgsDataSourceURI()
 			uri.setDatabase(db_file_path)
+			
+			layer_name = str(data[0].tipo_documentazione) + ": " + str(data[0].nome_doc)
 
-			uri.setDataSource('','pyarchinit_doc_view', 'the_geom', docstr, "ROWID")
-			layerUS=QgsVectorLayer(uri.uri(), 'pyarchinit_doc_view', 'spatialite')
+			uri.setDataSource('','pyarchinit_us_view', 'the_geom', docstr, "ROWID")
+			layerUS=QgsVectorLayer(uri.uri(), layer_name, 'spatialite')
 
 			if  layerUS.isValid() == True:
 				QMessageBox.warning(self, "TESTER", "OK Layer US valido",QMessageBox.Ok)
@@ -297,7 +299,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view_splite.qml')
 				#style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
 
-				layerUS.loadNamedStyle(style_path)
+				#layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
 				#originalSubsetString = layerUS.subsetString() 4D dimension
 				#newSubSetString = "%s OR id_us = '0'" % (originalSubsetString) 4D dimension
