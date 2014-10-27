@@ -518,14 +518,14 @@ class Pyarchinit_db_management:
 		"""Istanzia la classe DOCUMENTAZIONE da pyarchinit_db_mapper"""
 
 		documentazione = DOCUMENTAZIONE(arg[0],
-								arg[1],
-								arg[2],
-								arg[3],
-								arg[4],
-								arg[5],
-								arg[6],
-								arg[7],
-								arg[8])
+																arg[1],
+																arg[2],
+																arg[3],
+																arg[4],
+																arg[5],
+																arg[6],
+																arg[7],
+																arg[8])
 
 		return documentazione
 
@@ -1073,6 +1073,8 @@ class Pyarchinit_db_management:
 
 
 def main():
+	pass
+	"""
 	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
 	db.connection()
 	res = db.query_sort([1, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67],['id_invmat'],'asc', 'INVENTARIO_MATERIALI', 'id_invmat')
@@ -1083,6 +1085,7 @@ def main():
 
 if __name__ == '__main__':
 	main()
+	"""
 
 
 """

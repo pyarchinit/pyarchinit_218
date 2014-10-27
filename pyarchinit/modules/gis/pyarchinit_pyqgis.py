@@ -1572,7 +1572,7 @@ class Order_layer_v2:
 			if bool(matrix_us_level) == False:
 				test = 1
 				return self.order_dict
-			elif self.order_count >= 30:
+			elif self.order_count >= 100000:
 				test = 1
 				return "error"
 			else:
