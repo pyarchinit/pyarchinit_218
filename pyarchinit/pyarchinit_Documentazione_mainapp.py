@@ -111,7 +111,7 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 			self.on_pushButton_connect_pressed()
 		except:
 			pass
-			
+
 
 	def enable_button(self, n):
 		self.pushButton_connect.setEnabled(n)
@@ -269,10 +269,10 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 			self.label_sort.setText(self.SORTED_ITEMS["n"])
 
 			self.setComboBoxEditable(["self.comboBox_sito_doc"],1)
-			
 			self.setComboBoxEnable(["self.comboBox_sito_doc"],"True")
+			self.setComboBoxEnable(["self.comboBox_tipo_doc"], "True")
 			self.setComboBoxEnable(["self.lineEdit_nome_doc"],"True")
-			
+
 			self.set_rec_counter('', '')
 			self.enable_button(0)
 
@@ -309,7 +309,9 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 
 					self.setComboBoxEditable(["self.comboBox_sito_doc"],1)
 					self.setComboBoxEnable(["self.comboBox_sito_doc"],"False")
+					self.setComboBoxEnable(["self.comboBox_tipo_doc"], "False")
 					self.setComboBoxEnable(["self.lineEdit_nome_doc"],"False")
+
 					self.fill_fields(self.REC_CORR)
 					self.enable_button(1)
 				else:
@@ -325,8 +327,12 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 			QMessageBox.warning(self, "ATTENZIONE", "Campo Sito. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
 			test = 1
 
+		if EC.data_is_empty(unicode(self.comboBox_tipo_doc.currentText())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo Tipo documentazione \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			test = 1
+
 		if EC.data_is_empty(unicode(self.lineEdit_nome_doc.text())) == 0:
-			QMessageBox.warning(self, "ATTENZIONE", "Campo nome_doc \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			QMessageBox.warning(self, "ATTENZIONE", "Campo Nome documentazione \n Il campo non deve essere vuoto",  QMessageBox.Ok)
 			test = 1
 
 
@@ -357,14 +363,13 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 			data = self.DB_MANAGER.insert_values_documentazione(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
 			unicode(self.comboBox_sito_doc.currentText()), 						#1 - Sito
-			unicode(self.lineEdit_nome_doc.text()),								#2 - Nome Documentazione
-			unicode(self.lineEdit_data_doc.text()),								#3 - Data
-			unicode(self.comboBox_tipo_doc.currentText()),							#4 - Tipo Documentazione
-			unicode(self.comboBox_sorgente_doc.currentText()),						#5 - Sorgente
+			unicode(self.lineEdit_nome_doc.text()),									#2 - Nome Documentazione
+			unicode(self.lineEdit_data_doc.text()),										#3 - Data
+			unicode(self.comboBox_tipo_doc.currentText()),						#4 - Tipo Documentazione
+			unicode(self.comboBox_sorgente_doc.currentText()),					#5 - Sorgente
 			unicode(self.comboBox_scala_doc.currentText()),						#6 - Scala
-			unicode(self.lineEdit_disegnatore_doc.text()),							#7 - Disegnatore
+			unicode(self.lineEdit_disegnatore_doc.text()),								#7 - Disegnatore
 			unicode(self.textEdit_note_doc.toPlainText()))							#8 - Note
-
 
 			try:
 				self.DB_MANAGER.insert_data_session(data)
@@ -528,6 +533,7 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.setComboBoxEnable(["self.comboBox_sito_doc"],"True")
 				self.setComboBoxEnable(["self.lineEdit_nome_doc"],"True")
+				self.setComboBoxEnable(["self.comboBox_tipo_doc"],"True")
 				self.setComboBoxEnable(["self.textEdit_note_doc"],"False")
 				self.setComboBoxEditable(["self.comboBox_sito_doc"],1)
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
@@ -591,9 +597,11 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 					self.BROWSE_STATUS = "b"
 					self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 
-					self.setComboBoxEnable(["self.comboBox_sito_doc"],"True")
-					self.setComboBoxEnable(["self.lineEdit_nome_doc"],"True")
+					self.setComboBoxEnable(["self.comboBox_sito_doc"],"False")
+					self.setComboBoxEnable(["self.lineEdit_nome_doc"],"False")
+					self.setComboBoxEnable(["self.comboBox_tipo_doc"],"False")
 					self.setComboBoxEnable(["self.textEdit_note_doc"],"True")
+					self.setComboBoxEditable(["self.comboBox_sito_doc"],1)
 
 				else:
 					self.DATA_LIST = []
@@ -613,9 +621,11 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 					else:
 						strings = ("Sono stati trovati", self.REC_TOT, "records")
 
-					self.setComboBoxEnable(["self.comboBox_sito_doc"],"True")
-					self.setComboBoxEnable(["self.lineEdit_nome_doc"],"True")
+					self.setComboBoxEnable(["self.comboBox_sito_doc"],"False")
+					self.setComboBoxEnable(["self.lineEdit_nome_doc"],"False")
+					self.setComboBoxEnable(["self.comboBox_tipo_doc"],"False")
 					self.setComboBoxEnable(["self.textEdit_note_doc"],"True")
+					self.setComboBoxEditable(["self.comboBox_sito_doc"],1)
 
 					QMessageBox.warning(self, "Messaggio", "%s %d %s" % strings, QMessageBox.Ok)
 
@@ -789,7 +799,7 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 		#data
 		self.DATA_LIST_REC_TEMP = [
 		unicode(self.comboBox_sito_doc.currentText()), 						#1 - Sito
-		unicode(self.lineEdit_nome_doc.text), 					#2 - Nome Documentazione
+		unicode(self.lineEdit_nome_doc.text()), 					#2 - Nome Documentazione
 		unicode(self.lineEdit_data_doc.text()), 				#3 - Data
 		unicode(self.comboBox_tipo_doc.currentText()), 					#4 - Tipo Documentazione
 		unicode(self.comboBox_sorgente_doc.currentText()),					#5 - Sorgente

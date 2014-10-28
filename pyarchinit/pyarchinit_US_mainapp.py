@@ -899,29 +899,44 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 			order_number = ""
 			us = ""
-			for k,v in order_layer_dict.items():
-				order_number = str(k)
-				us = v
-				for sing_us in v:
-					search_dict = {'sito' : "'"+unicode(sito)+"'", 'area':"'"+unicode(area)+"'", 'us' : int(sing_us)}
-					try:
-						records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS) #carica tutti i dati di uno scavo ordinati per numero di US
+			try:
+				for k,v in order_layer_dict.items():
+					order_number = str(k)
+					us = v
+					for sing_us in v:
+						search_dict = {'sito' : "'"+unicode(sito)+"'", 'area':"'"+unicode(area)+"'", 'us' : int(sing_us)}
+						try:
+							records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS) #carica tutti i dati di uno scavo ordinati per numero di US
 
-						self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, self.ID_TABLE, [int(records[0].id_us)], ['order_layer'], [order_number])
-						self.on_pushButton_view_all_pressed()
-					except Exception, e:
-						msg_us_mancanti = str(e)#msg_us_mancanti + "\n"+str(sito) + "area: " + str(area) + " us: " + (us)
+							self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, self.ID_TABLE, [int(records[0].id_us)], ['order_layer'], [order_number])
+							self.on_pushButton_view_all_pressed()
+						except Exception, e:
+							msg_us_mancanti = str(e)#msg_us_mancanti + "\n"+str(sito) + "area: " + str(area) + " us: " + (us)
+			except:
+				pass
 			
 			#blocco output errori
 			filename_tipo_rapporti_mancanti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'tipo_rapporti_mancanti.txt')
 			filename_nr_rapporti_mancanti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'nr_rapporti_mancanti.txt')
 			filename_paradosso_rapporti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'paradosso_rapporti.txt')
 			filename_us_mancanti = ('%s%s%s') % (self.REPORT_PATH, os.sep, 'us_mancanti.txt')
-
-			self.testing(filename_tipo_rapporti_mancanti, str(msg_tipo_rapp))
-			self.testing(filename_nr_rapporti_mancanti, str(msg_nr_rapp))
-			self.testing(filename_paradosso_rapporti, str(msg_paradx_rapp))
-			self.testing(filename_us_mancanti, str(msg_us_mancanti))
+			
+			try:
+				self.testing(filename_tipo_rapporti_mancanti, str(msg_tipo_rapp))
+			except:
+				pass
+			try:
+				self.testing(filename_nr_rapporti_mancanti, str(msg_nr_rapp))
+			except:
+				pass
+			try:
+				self.testing(filename_paradosso_rapporti, str(msg_paradx_rapp))
+			except:
+				pass
+			try:
+				self.testing(filename_us_mancanti, str(msg_us_mancanti))
+			except:
+				pass
 			QMessageBox.warning(self,u'ATTENZIONE',u"Sistema di ordinamento Terminato", QMessageBox.Ok)
 		else:
 

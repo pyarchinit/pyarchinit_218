@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>724</width>
-    <height>625</height>
+    <width>540</width>
+    <height>573</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>pyArchInit Gestione Scavi - Scheda Campioni</string>
+   <string>pyArchInit Gestione Scavi - Scheda Documentazione</string>
   </property>
   <property name="windowIcon">
    <iconset resource="resources.qrc">
@@ -66,207 +66,6 @@
      <property name="text">
       <string>Sito</string>
      </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QTabWidget" name="tabWidget_tab_doc">
-     <property name="currentIndex">
-      <number>0</number>
-     </property>
-     <widget class="QWidget" name="tab_1_doc">
-      <attribute name="title">
-       <string>Dati generali</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_6">
-       <item row="0" column="0" colspan="3">
-        <widget class="QComboBox" name="comboBox_tipo_doc">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="editable">
-          <bool>true</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string>Pianta</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Sezione</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Prospetto</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_2_tipo_doc">
-         <property name="text">
-          <string>Tipo documentazione</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0" colspan="3">
-        <widget class="QComboBox" name="comboBox_sorgente_doc">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="editable">
-          <bool>true</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string>Lucido</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Foto</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Rilievo diretto (tablet)</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_2_sorgente_doc">
-         <property name="text">
-          <string>Sorgente</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0" colspan="3">
-        <widget class="QComboBox" name="comboBox_scala_doc">
-         <property name="editable">
-          <bool>true</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string>1 : 1</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>1 : 2</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>1 : 10</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>1 : 20</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>1 : 30</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>1 : 50</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>1 : 100</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_2_scala_doc">
-         <property name="text">
-          <string>Scala</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0" colspan="3">
-        <widget class="QLineEdit" name="lineEdit_disegnatore_doc"/>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_2_disegnatore_doc">
-         <property name="text">
-          <string>Disegnatore</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0" colspan="3">
-        <widget class="QLineEdit" name="lineEdit_data_doc"/>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_2_data_doc">
-         <property name="text">
-          <string>Data</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1" rowspan="2">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="9" column="2" rowspan="2">
-        <widget class="QPushButton" name="pushButton_disegno_doc">
-         <property name="text">
-          <string>Visualizza documentazione</string>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>16</width>
-           <height>16</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_2_doc">
-      <attribute name="title">
-       <string>Note</string>
-      </attribute>
-      <widget class="QTextEdit" name="textEdit_note_doc">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>491</width>
-         <height>191</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_2_note_doc">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>220</y>
-         <width>46</width>
-         <height>13</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Note</string>
-       </property>
-      </widget>
-     </widget>
     </widget>
    </item>
    <item row="0" column="0">
@@ -729,14 +528,14 @@
      </item>
     </layout>
    </item>
-   <item row="4" column="0">
+   <item row="6" column="0">
     <widget class="QLineEdit" name="lineEdit_nome_doc">
      <property name="enabled">
       <bool>false</bool>
      </property>
     </widget>
    </item>
-   <item row="5" column="0">
+   <item row="7" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>Nome documentazione</string>
@@ -754,6 +553,230 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_2_tipo_doc">
+     <property name="text">
+      <string>Tipo documentazione</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QComboBox" name="comboBox_tipo_doc">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="editable">
+      <bool>true</bool>
+     </property>
+     <item>
+      <property name="text">
+       <string>Fotopiano</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Pianta</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Prospetto</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Sezione</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="8" column="0">
+    <widget class="QTabWidget" name="tabWidget_tab_doc">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab_1_doc">
+      <attribute name="title">
+       <string>Dati generali</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="2" column="0" colspan="3">
+        <widget class="QComboBox" name="comboBox_sorgente_doc">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>Foto</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Fotomosaico</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Lucido</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Rilievo diretto (tablet)</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_2_sorgente_doc">
+         <property name="text">
+          <string>Sorgente</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0" colspan="3">
+        <widget class="QComboBox" name="comboBox_scala_doc">
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string>1 : 1</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>1 : 2</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>1 : 10</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>1 : 20</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>1 : 30</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>1 : 50</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>1 : 100</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_2_scala_doc">
+         <property name="text">
+          <string>Scala</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0" colspan="3">
+        <widget class="QLineEdit" name="lineEdit_disegnatore_doc"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_2_disegnatore_doc">
+         <property name="text">
+          <string>Disegnatore</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0" colspan="3">
+        <widget class="QLineEdit" name="lineEdit_data_doc"/>
+       </item>
+       <item row="11" column="0">
+        <widget class="QLabel" name="label_2_data_doc">
+         <property name="text">
+          <string>Data</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="2">
+        <widget class="QPushButton" name="pushButton_disegno_doc">
+         <property name="text">
+          <string>Visualizza documentazione</string>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>16</width>
+           <height>16</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="2">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="12" column="0">
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>200</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2_doc">
+      <attribute name="title">
+       <string>Note</string>
+      </attribute>
+      <widget class="QTextEdit" name="textEdit_note_doc">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>491</width>
+         <height>191</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2_note_doc">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>220</y>
+         <width>46</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Note</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
    </item>
   </layout>
