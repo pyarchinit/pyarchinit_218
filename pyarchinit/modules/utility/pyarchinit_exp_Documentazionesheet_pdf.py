@@ -14,7 +14,7 @@ from datetime import date, time
 from pyarchinit_OS_utility import *
 
 
-class NumberedCanvas_Campionisheet(canvas.Canvas):
+class NumberedCanvas_Documentazionesheet(canvas.Canvas):
 	def __init__(self, *args, **kwargs):
 		canvas.Canvas.__init__(self, *args, **kwargs)
 		self._saved_page_states = []
@@ -39,7 +39,7 @@ class NumberedCanvas_Campionisheet(canvas.Canvas):
 		self.setFont("Helvetica", 8)
 		self.drawRightString(200*mm, 20*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
 
-class NumberedCanvas_Campioniindex(canvas.Canvas):
+class NumberedCanvas_Documentazioneindex(canvas.Canvas):
 	def __init__(self, *args, **kwargs):
 		canvas.Canvas.__init__(self, *args, **kwargs)
 		self._saved_page_states = []
@@ -64,7 +64,7 @@ class NumberedCanvas_Campioniindex(canvas.Canvas):
 		self.setFont("Helvetica", 8)
 		self.drawRightString(270*mm, 10*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
 
-
+'''
 class NumberedCanvas_CASSEindex(canvas.Canvas):
 	def __init__(self, *args, **kwargs):
 		canvas.Canvas.__init__(self, *args, **kwargs)
@@ -90,19 +90,19 @@ class NumberedCanvas_CASSEindex(canvas.Canvas):
 		self.setFont("Helvetica", 8)
 		self.drawRightString(270*mm, 10*mm, "Pag. %d di %d" % (self._pageNumber, page_count)) #scheda us verticale 200mm x 20 mm
 
-
-class single_Campioni_pdf_sheet:
+'''
+class single_Documentazione_pdf_sheet:
 
 	def __init__(self, data):
 		self.sito = data[0]											#1 - Sito
-		self.numero_campione = data[1]						#2 - Numero campione
-		self.tipo_campione = data[2]								#3 - Tipo campione
-		self.descrizione = data[3]									#4 - Descrizione
-		self.area = data[4]											#5 - Area
-		self.us = data[5]												#6 - us
-		self.numero_inventario =  data[6]					#7 - numero inventario materiale
-		self.luogo_conservazione = data[7]						#8 - luogo_conservazione
-		self.nr_cassa = data[8]									#9 - nr cassa
+		self.nome_doc = data[1]										#2 - Numero campione
+		self.data = data[2]											#3 - Tipo campione
+		self.tipo_documentazione = data[3]							#4 - Descrizione
+		self.sorgente = data[4]										#5 - Area
+		self.scala = data[5]										#6 - us
+		self.disegnatore =  data[6]									#7 - numero inventario materiale
+		self.note = data[7]											#8 - luogo_conservazione
+#		self.nr_cassa = data[8]									#9 - nr cassa
 
 	def datestrfdate(self):
 		now = date.today()
@@ -125,7 +125,7 @@ class single_Campioni_pdf_sheet:
 		#format labels
 
 		#0 row
-		intestazione = Paragraph("<b>SCHEDA CAMPIONI<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
+		intestazione = Paragraph("<b>SCHEDA DOCUMENTAZIONE<br/>" + str(self.datestrfdate()) + "</b>", styNormal)
 
 		if os.name == 'posix':
 			home = os.environ['HOME']
@@ -143,28 +143,28 @@ class single_Campioni_pdf_sheet:
 
 		#1 row
 		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
-		tipo_campione = Paragraph("<b>Tipo Campione</b><br/>"  + str(self.tipo_campione), styNormal)
-		nr_campione = Paragraph("<b>Nr. Campione</b><br/>"  + str(self.numero_campione), styNormal)
+		nome_doc = Paragraph("<b>Nome documentazione</b><br/>"  + str(self.nome_doc), styNormal)
+		data = Paragraph("<b>Data</b><br/>"  + str(self.data), styNormal)
 
 		#2 row
-		area = Paragraph("<b>Area</b><br/>"  + str(self.area), styNormal)
-		us = Paragraph("<b>US</b><br/>"  + str(self.us), styNormal)
-		nr_inventario = Paragraph("<b>Nr. Inventario</b><br/>"  + str(self.numero_inventario), styNormal)
+		tipo_documentazione = Paragraph("<b>Tipo documentazione</b><br/>"  + str(self.tipo_documentazione), styNormal)
+		sorgente = Paragraph("<b>Sorgente</b><br/>"  + str(self.sorgente), styNormal)
+		scala = Paragraph("<b>Scala</b><br/>"  + str(self.scala), styNormal)
 		
 		#4 row
-		descrizione = Paragraph("<b>Descrizione</b><br/>" + unicode(self.descrizione), styDescrizione)
+		disegnatore = Paragraph("<b>Disegnatore</b><br/>" + unicode(self.disegnatore), styNormal)
 
 		#4 row
-		luogo_conservazione = Paragraph("<b>Luogo conservazione</b><br/>" + unicode(self.luogo_conservazione), styNormal)
-		nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>" + unicode(self.nr_cassa), styNormal)
+		note = Paragraph("<b>Note</b><br/>" + unicode(self.note), styDescrizione)
+#		nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>" + unicode(self.nr_cassa), styNormal)
 
 		#schema
 		cell_schema = [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
 							[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'],					#0 row ok
-							[sito, '01', '02', '03', '04',tipo_campione,'06', '07', nr_campione, '09'],		#1 row ok
-							[area, '01', '02', us,'04', '05',nr_inventario, '07', '08', '09'], 					#2 row ok
-							[descrizione, '01','02', '03', '04', '05','06', '07', '08', '09'],						#3 row ok
-							[nr_cassa,'01', '02', '03', '04', '05', luogo_conservazione, '07', '08', '09']	#4 row ok
+							[sito, '01', '02', '03', '04','05','06', '07', '08', '09'],		#1 row ok
+							[tipo_documentazione, '01', '02',nome_doc, '04','05','06',scala, '08', '09'], 					#2 row ok
+							[note, '01','02', '03', '04', '05','06', '07', '08', '09'],						#3 row ok
+							[data,'01', '02', '03', '04', disegnatore, '06', '07', '08', '09']	#4 row ok
 							]
 
 
@@ -174,25 +174,25 @@ class single_Campioni_pdf_sheet:
 					('GRID',(0,0),(-1,-1),0.5,colors.black),
 					#0 row
 					('SPAN', (0,0),(6,0)),  #intestazione
-					('SPAN', (7,0),(9,0)), #intestazione
+					('SPAN', (7,0),(9,0)),  #logo
 
 					#1 row
-					('SPAN', (0,1),(4,1)),  #dati identificativi
-					('SPAN', (5,1),(7,1)),  #dati identificativi
-					('SPAN', (8,1),(9,1)),   #dati identificativi
+					('SPAN', (0,1),(9,1)),   #sito
+#					('SPAN', (7,1),(9,1)),   #data
 
 					#2 row
-					('SPAN', (0,2),(2,2)),  #definizione
-					('SPAN', (3,2),(5,2)),  #definizione
-					('SPAN', (6,2),(9,2)),  #definizione
-					('VALIGN',(0,2),(9,2),'TOP'), 
+					('SPAN', (0,2),(2,2)),  #tipo_documentazione
+					('SPAN', (3,2),(6,2)),  #nome_doc
+					('SPAN', (7,2),(9,2)),  #scala
+#					('VALIGN',(0,2),(9,2),'TOP'), 
 
 					#3 row
-					('SPAN', (0,3),(9,3)),  #descrizione
+					('SPAN', (0,3),(9,3)),  #note
+					('VALIGN',(0,3),(9,3),'TOP'),
 
 					#5 row
-					('SPAN', (0,4),(5,4)),  #elementi_reperto	
-					('SPAN', (6,4),(9,4)),  #elementi_reperto
+					('SPAN', (0,4),(4,4)),  #data
+					('SPAN', (5,4),(9,4)),  #disegnatore
 
 					('VALIGN',(0,0),(-1,-1),'TOP')
 
@@ -201,7 +201,7 @@ class single_Campioni_pdf_sheet:
 		t=Table(cell_schema, colWidths=50, rowHeights=None,style= table_style)
 
 		return t
-
+'''
 
 class Box_labels_Campioni_pdf_sheet:
 
@@ -317,15 +317,16 @@ class Box_labels_Campioni_pdf_sheet:
 		t=Table(cell_schema,colWidths,rowHeights, style= table_style)
 
 		return t
-
-
+'''
+'''
 class CASSE_index_pdf_sheet:
 
 	def __init__(self, data):
-		self.cassa= data[0] #1 - Cassa
-		self.elenco_inv_tip_camp = data[1] #2-  elenco US
-		self.elenco_us = data[2] #3 - elenco Inventari
-		self.luogo_conservazione = data[3]#4 - luogo conservazione
+		self.tipo_documentazione= data[0] #1 - Tipo documentazione
+		self.nome_doc = data[1] #2-  Nome documentazione
+		self.data = data[2] #3 - Data
+		self.scala = data[3]#4 - Scala
+		self.disegnatore = data[3]#4 - Disegnatore
 
 	def getTable(self):
 		styleSheet = getSampleStyleSheet()
@@ -363,19 +364,19 @@ class CASSE_index_pdf_sheet:
 
 		return styles
 
-
-class Campioni_index_pdf_sheet:
+'''
+class Documentazione_index_pdf_sheet:
 
 	def __init__(self, data):
-		self.sito = data[0] 									#1 - sito
-		self.numero_campione = data[1] 				#2- numero campione
-		self.tipo_campione = data[2]						#3 - Tipo campione
-		self.descrizione = data[3]							#4 - descrizione
-		self.area = data[4 ]									#5 - area
-		self.us = data[5 ]									#6 - us
-		self.numero_inventario_materiale = data[6]	#7 - numero inventario materiale
-		self.luogo_conservazione = data[7]				#8 - conservazione
-		self.nr_cassa = data[8]							#9 - nr_cassa
+		self.sito = data[0]											#1 - Sito
+		self.nome_doc = data[1]										#2 - Nome documentazione
+		self.data = data[2]											#3 - Data
+		self.tipo_documentazione = data[3]							#4 - Tipo documentazione
+		self.sorgente = data[4]										#5 - Sorgente
+		self.scala = data[5]										#6 - Scala
+		self.disegnatore =  data[6]									#7 - Disegnatore
+		self.note = data[7]											#8 - Note
+#		self.nr_cassa = data[8]									#9 - nr cassa
 
 	def getTable(self):
 		styleSheet = getSampleStyleSheet()
@@ -387,45 +388,51 @@ class Campioni_index_pdf_sheet:
 
 		#self.unzip_rapporti_stratigrafici()
 
-		num_campione = Paragraph("<b>N. Camp.</b><br/>" + str(self.numero_campione),styNormal)
+#		num_campione = Paragraph("<b>N. Camp.</b><br/>" + str(self.numero_campione),styNormal)
 
-		if self.tipo_campione == None:
-			tipo_campione = Paragraph("<b>Tipo campione</b><br/>",styNormal)
+
+		if self.tipo_documentazione == None:
+			tipo_documentazione = Paragraph("<b>N. Tipo documentazione</b><br/>",styNormal)
 		else:
-			tipo_campione = Paragraph("<b>Tipo campione</b><br/>" + str(self.tipo_campione),styNormal)
+			tipo_documentazione = Paragraph("<b>N. Tipo documentazione</b><br/>" + str(self.tipo_documentazione),styNormal)
 
-		if str(self.area) == "None":
-			area = Paragraph("<b>Area</b><br/>",styNormal)
+		if self.nome_doc == "None":
+			nome_doc = Paragraph("<b>Nome documentazione</b><br/>",styNormal)
 		else:
-			area = Paragraph("<b>Area</b><br/>" + str(self.area),styNormal)
+			nome_doc = Paragraph("<b>Nome documentazione</b><br/>" + str(self.nome_doc),styNormal)
 
-		if str(self.us) == "None":
-			us = Paragraph("<b>US</b><br/>",styNormal)
+		if self.scala == None:
+			scala = Paragraph("<b>Scala</b><br/>",styNormal)
 		else:
-			us = Paragraph("<b>US</b><br/>" + str(self.us),styNormal)
+			scala = Paragraph("<b>Scala</b><br/>" + str(self.scala),styNormal)
 
-		if self.numero_inventario_materiale == None:
-			numero_inventario_materiale = Paragraph("<b>N. Inv. Materiale</b><br/>",styNormal)
+		if self.sorgente == None:
+			sorgente = Paragraph("<b>Sorgente</b><br/>",styNormal)
 		else:
-			numero_inventario_materiale = Paragraph("<b>N. Inv. Materiale</b><br/>" + str(self.numero_inventario_materiale),styNormal)
+			sorgente = Paragraph("<b>Sorgente</b><br/>" + str(self.sorgente),styNormal)
 
-		if self.luogo_conservazione == None:
-			luogo_conservazione = Paragraph("<b>Luogo Conservazione</b><br/>",styNormal)
+		if self.data == "None":
+			data = Paragraph("<b>Data</b><br/>",styNormal)
 		else:
-			luogo_conservazione = Paragraph("<b>Luogo Conservazione</b><br/>" + str(self.luogo_conservazione),styNormal)
+			data = Paragraph("<b>Data</b><br/>" + str(self.data),styNormal)
 
-		if self.nr_cassa == None:
-			nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>",styNormal)
+		if self.disegnatore == None:
+			disegnatore = Paragraph("<b>Disegnatore</b><br/>",styNormal)
 		else:
-			nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>" + str(self.nr_cassa),styNormal)
+			disegnatore = Paragraph("<b>Disegnatore</b><br/>" + str(self.disegnatore),styNormal)
 
-		data = [num_campione,
-				tipo_campione,
-				area,
-				us,
-				numero_inventario_materiale,
-				luogo_conservazione,
-				nr_cassa]
+		if self.note == None:
+			note = Paragraph("<b>Note</b><br/>",styNormal)
+		else:
+			note = Paragraph("<b>Note</b><br/>" + str(self.note),styNormal)
+
+		data = [tipo_documentazione,
+				nome_doc,
+				scala,
+				sorgente,
+				data,
+				disegnatore,
+				note]
 
 		return data
 
@@ -435,7 +442,7 @@ class Campioni_index_pdf_sheet:
 
 		return styles
 
-class generate_campioni_pdf:
+class generate_documentazione_pdf:
 	if os.name == 'posix':
 		HOME = os.environ['HOME']
 	elif os.name == 'nt':
@@ -448,19 +455,19 @@ class generate_campioni_pdf:
 		today = now.strftime("%d-%m-%Y")
 		return today
 
-	def build_Champ_sheets(self, records):
+	def build_Documentazione_sheets(self, records):
 		elements = []
 		for i in range(len(records)):
-			single_Campioni_sheet = single_Campioni_pdf_sheet(records[i])
-			elements.append(single_Campioni_sheet.create_sheet())
+			single_Documentazione_sheet = single_Documentazione_pdf_sheet(records[i])
+			elements.append(single_Documentazione_sheet.create_sheet())
 			elements.append(PageBreak())
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'scheda_Campioni.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'scheda_Documentazione.pdf')
 		f = open(filename, "wb")
 		doc = SimpleDocTemplate(f)
-		doc.build(elements, canvasmaker=NumberedCanvas_Campionisheet)
+		doc.build(elements, canvasmaker=NumberedCanvas_Documentazionesheet)
 		f.close()
 
-	def build_index_Campioni(self, records, sito):
+	def build_index_Documentazione(self, records, sito):
 		if os.name == 'posix':
 			home = os.environ['HOME']
 		elif os.name == 'nt':
@@ -483,15 +490,15 @@ class generate_campioni_pdf:
 
 		lst = []
 		lst.append(logo)
-		lst.append(Paragraph("<b>ELENCO CAMPIONI</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
+		lst.append(Paragraph("<b>ELENCO DOCUMENTAZIONE</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
 
 		table_data = []
 		for i in range(len(records)):
-			exp_index = Campioni_index_pdf_sheet(records[i])
+			exp_index = Documentazione_index_pdf_sheet(records[i])
 			table_data.append(exp_index.getTable())
 		
 		styles = exp_index.makeStyles()
-		colWidths=[60,150,60, 60,60, 250, 60]
+		colWidths=[100, 100, 60, 60, 60, 150]
 
 		table_data_formatted = Table(table_data, colWidths, style=styles)
 		table_data_formatted.hAlign = "LEFT"
@@ -499,72 +506,11 @@ class generate_campioni_pdf:
 		lst.append(table_data_formatted)
 		#lst.append(Spacer(0,2))
 
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_campioni.pdf')
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_documentazione.pdf')
 		f = open(filename, "wb")
 
 		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
-		doc.build(lst, canvasmaker=NumberedCanvas_Campioniindex)
+		doc.build(lst, canvasmaker=NumberedCanvas_Documentazioneindex)
 
-		f.close()
-
-	def build_index_Casse(self, records, sito):
-		if os.name == 'posix':
-			home = os.environ['HOME']
-		elif os.name == 'nt':
-			home = os.environ['HOMEPATH']
-
-		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')
-		logo_path = ('%s%s%s') % (home_DB_path, os.sep, 'logo.jpg')
-
-		logo = Image(logo_path)
-		logo.drawHeight = 1.5*inch*logo.drawHeight / logo.drawWidth
-		logo.drawWidth = 1.5*inch
-		logo.hAlign = "LEFT"
-
-		styleSheet = getSampleStyleSheet()
-		styNormal = styleSheet['Normal']
-		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
-		styH1 = styleSheet['Heading3']
-
-		data = self.datestrfdate()
-		lst = [logo]
-		lst.append(Paragraph("<b>ELENCO CASSE CAMPIONI</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
-
-		table_data = []
-		for i in range(len(records)):
-			exp_index = CASSE_index_pdf_sheet(records[i])
-			table_data.append(exp_index.getTable())
-
-		styles = exp_index.makeStyles()
-		colWidths=[20,350,250,100]
-
-		table_data_formatted = Table(table_data, colWidths, style=styles)
-		table_data_formatted.hAlign = "LEFT"
-
-		#table_data_formatted.setStyle(styles)
-
-		lst.append(table_data_formatted)
-		lst.append(Spacer(0,0))
-
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_casse_campioni.pdf')
-		f = open(filename, "wb")
-
-		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0, topMargin = 15, bottomMargin = 40, leftMargin = 30, rightMargin = 30)
-		#doc.build(lst, canvasmaker=NumberedCanvas_Sindex)
-		doc.build(lst)
-
-		f.close()
-
-
-	def build_box_labels_Campioni(self, records, sito):
-		elements = []
-		for i in range(len(records)):
-			single_finds_sheet = Box_labels_Campioni_pdf_sheet(records[i], sito)
-			elements.append(single_finds_sheet.create_sheet())
-			elements.append(PageBreak())
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'etichette_casse_campioni.pdf')
-		f = open(filename, "wb")
-		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0.0, topMargin = 20, bottomMargin = 20, leftMargin = 20, rightMargin = 20)
-		doc.build(elements)
 		f.close()
 

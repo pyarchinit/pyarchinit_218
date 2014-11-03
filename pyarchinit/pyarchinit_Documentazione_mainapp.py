@@ -41,7 +41,7 @@ from  pyarchinit_documentazione_ui import *
 from  pyarchinit_utility import *
 from  pyarchinit_error_check import *
 
-from  pyarchinit_pyqgis import Pyarchinit_pyqgis
+rfrom  pyarchinit_pyqgis import Pyarchinit_pyqgis
 from  sortpanelmain import SortPanelMain
 
 #from  pyarchinit_exp_Campsheet_pdf import *
@@ -204,9 +204,12 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 
 
 	#buttons functions
-	def on_pushButton_pdf_pressed(self):
-		pass
-	
+
+
+
+
+
+
 	def on_pushButton_sort_pressed(self):
 		if self.check_record_state() == 1:
 			pass
@@ -416,15 +419,15 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 
 
 
-	def on_pushButton_disegno_doc_pressed(self):
-		"""
-		for sing_us in range(len(self.DATA_LIST)):
-			sing_layer = [self.DATA_LIST[sing_us]]
-			self.pyQGIS.charge_vector_layers(sing_layer)
-		"""
-
-		sing_layer = [self.DATA_LIST[self.REC_CORR]]
-		self.pyQGIS.charge_vector_layers_doc(sing_layer)
+##	def on_pushButton_disegno_doc_pressed(self):
+##		"""
+##		for sing_us in range(len(self.DATA_LIST)):
+##			sing_layer = [self.DATA_LIST[sing_us]]
+##			self.pyQGIS.charge_vector_layers(sing_layer)
+##		"""
+##
+##		sing_layer = [self.DATA_LIST[self.REC_CORR]]
+##		self.pyQGIS.charge_vector_layers_doc(sing_layer)
 
 
 
