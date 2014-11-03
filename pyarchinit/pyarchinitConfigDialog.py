@@ -19,11 +19,16 @@
  *                                                                         *
  ***************************************************************************/
 """
-
+from sqlalchemy.orm import sessionmaker
 from Ui_pyarchinitConfig import Ui_Dialog_Config
 from Ui_pyarchinitConfig import *
+
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
+
+from pyarchinit_db_manager import *
+from pyarchinit_db_mapper import *
+from pyarchinit_db_structure import *
 
 from pyarchinit_OS_utility import *
 
@@ -124,14 +129,11 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 		from pyarchinit_OS_utility import *
 		import time
 
-
 		if os.name == 'posix':
 			home = os.environ['HOME']
 		elif os.name == 'nt':
 			home = os.environ['HOMEPATH']
-		
-		
-		
+
 		try:
 			module_path_rel = os.path.join(os.sep, '.qgis2', 'python','plugins', 'pyarchinit', 'modules', 'utility','DBfiles', 'pyarchinit_postgis15_empty.dump')
 			module_path = ('%s%s') % (home, module_path_rel)
@@ -150,16 +152,12 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 	def on_pushButton_crea_layer_2_pressed(self):
 		from pyarchinit_OS_utility import *
 		import time
-	     
-		
 
 		if os.name == 'posix':
 			home = os.environ['HOME']
 		elif os.name == 'nt':
 			home = os.environ['HOMEPATH']
-		
-		
-		
+
 		try:
 			module_path_rel = os.path.join(os.sep, '.qgis2', 'python','plugins', 'pyarchinit', 'modules', 'utility','DBfiles', 'pyarchinit_postgis20_empty.dump')
 			module_path = ('%s%s') % (home, module_path_rel)
@@ -173,9 +171,7 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 			QMessageBox.warning(self, "ok","Installazione avvenuta con successo",  QMessageBox.Ok)
 		except Exception,e:
 			QMessageBox.warning(self, "opss", u"qualcosa non va" + str(e),  QMessageBox.Ok)
-			
-	
-	
+
 	def on_pushButton_crea_db_sqlite_pressed(self):
 		try:
 			from pyarchinit_conn_strings import *
@@ -194,8 +190,10 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 		from pyarchinit_conn_strings import *
 		conn = Connection()
 		conn_str = conn.conn_str()
+
 		from  pyarchinit_db_manager import *
-		self.DB_MANAGER = Pyarchinit_db_management(conn_str)
+		self.DB_MANAGER = Pyarchinit_db_management(conn_str)  #sqlite:///\Users\Windows\pyarchinit_DB_folder\pyarchinit_db.sqlite 
+
 		test = self.DB_MANAGER.connection()
 		test = str(test)
 		if test == "":
@@ -204,7 +202,6 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 			QMessageBox.warning(self, "Alert", "Verifica i parametri di connessione. <br> Se sono corretti RIAVVIA QGIS" ,  QMessageBox.Ok)
 		else:
 			QMessageBox.warning(self, "Alert", "Errore di connessione: <br>" + str(test) ,  QMessageBox.Ok)
-
 
 	def charge_data(self):
 		#load data from config.cfg file
@@ -216,6 +213,133 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 		self.lineEdit_Port.setText(self.PARAMS_DICT['PORT'])
 		self.lineEdit_User.setText(self.PARAMS_DICT['USER'])
 		self.lineEdit_Thumb_path.setText(self.PARAMS_DICT['THUMB_PATH'])
+
+	def on_pushButton_import_pressed(self):
+		id_table_class_mapper_conv_dict = {
+		'US' : 'id_us',
+		'UT':'id_ut',
+		'SITE':'id_sito',
+		'PERIODIZZAZIONE':'id_perfas',
+		'INVENTARIO_MATERIALI':'id_invmat',
+		'STRUTTURA':'id_struttura',
+		'TAFONOMIA':'id_tafonomia',
+		'SCHEDAIND':'id_scheda_ind',
+		'CAMPIONE':'id_campione',
+		'DOCUMENTAZIONE':'id_documentazione'
+		}
+
+		#creazione del cursore di lettura
+		if os.name == 'posix':
+			home = os.environ['HOME']
+		elif os.name == 'nt':
+			home = os.environ['HOMEPATH']
+
+		####RICAVA I DATI IN LETTURA PER LA CONNESSIONE DALLA GUI
+		conn_str_dict_read = {
+								"server": str(self.comboBox_server_read.currentText()),
+								"user": str(self.lineEdit_username_read.text()),
+								"password" : str(self.lineEdit_pass_read.text()),
+								"host": str(self.lineEdit_host_read.text()),
+								"port": str(self.lineEdit_port_read.text()),
+								"db_name": str(self.lineEdit_database_read.text())
+								}
+
+		####CREA LA STRINGA DI CONNESSIONE IN LETTURA
+		
+		if conn_str_dict_read["server"] == 'postgres':
+			try:
+				conn_str_read = "%s://%s:%s@%s:%s/%s%s?charset=utf8" % ("postgresql", conn_str_dict_read["user"],conn_str_dict_read["password"], conn_str_dict_read["host"], conn_str_dict_read["port"], conn_str_dict_read["db_name"], "?sslmode=allow")
+			except:
+				conn_str_read = "%s://%s:%s@%s:%d/%s" % ("postgresql", conn_str_dict_read["user"],conn_str_dict_read["password"], conn_str_dict_read["host"], conn_str_dict_read["port"], conn_str_dict_read["db_name"])
+
+		elif conn_str_dict_read["server"] == 'sqlite':
+			sqlite_DB_path = ('%s%s%s') % (home, os.sep, "pyarchinit_DB_folder") #"C:\\Users\\Windows\\Dropbox\\pyarchinit_san_marco\\" fare modifiche anche in pyarchinit_pyqgis
+			
+			dbname_abs = sqlite_DB_path + os.sep + conn_str_dict_read["db_name"]
+
+			conn_str_read = "%s:///%s" % (conn_str_dict_read["server"], dbname_abs)
+
+			QMessageBox.warning(self, "Alert", str(conn_str_dict_read["db_name"]),  QMessageBox.Ok)
+
+		####SI CONNETTE AL DATABASE
+		self.DB_MANAGER_read = Pyarchinit_db_management(conn_str_read)
+		test =self.DB_MANAGER_read.connection()
+		test = str(test)
+		if test == "":
+			QMessageBox.warning(self, "Messaggio", "Connessione avvenuta con successo",  QMessageBox.Ok)
+		elif test.find("create_engine") != -1:
+			QMessageBox.warning(self, "Alert", "Verifica i parametri di connessione. <br> Se sono corretti RIAVVIA QGIS" ,  QMessageBox.Ok)
+		else:
+			QMessageBox.warning(self, "Alert", "Errore di connessione: <br>" + str(test) ,  QMessageBox.Ok)
+
+		####LEGGE I RECORD IN BASE AL PARAMETRO CAMPO=VALORE
+		search_dict = {
+			self.lineEdit_field_read.text() : "'"+str(self.lineEdit_value_read.text())+"'"
+			}
+
+		mapper_class_read = str(self.comboBox_mapper_read.currentText())
+		res_read =self.DB_MANAGER_read.query_bool(search_dict,mapper_class_read)
+
+		####INSERISCE I DATI DA UPLOADARE DENTRO ALLA LISTA DATA_LIST_TOIMP
+		data_list_toimp = []
+
+		for i in res_read:
+			data_list_toimp.append(i)
+
+		#creazione del cursore di scrittura
+
+		####RICAVA I DATI IN LETTURA PER LA CONNESSIONE DALLA GUI
+		conn_str_dict_write = {
+										"server": str(self.comboBox_server_write.currentText()),
+										"user": str(self.lineEdit_username_write.text()),
+										"password" : str(self.lineEdit_pass_write.text()),
+										"host": str(self.lineEdit_host_write.text()),
+										"port": str(self.lineEdit_port_write.text()),
+										"db_name": str(self.lineEdit_database_write.text())
+										}
+
+		####CREA LA STRINGA DI CONNESSIONE IN LETTURA
+		
+		if conn_str_dict_write["server"] == 'postgres':
+			try:
+				conn_str_write = "%s://%s:%s@%s:%s/%s%s?charset=utf8" % ("postgresql", conn_str_dict_writed["user"],conn_str_dict_write["password"], conn_str_dict_write["host"], conn_str_dict_write["port"], conn_str_dict_write["db_name"], "?sslmode=allow")
+			except:
+				conn_str_write = "%s://%s:%s@%s:%d/%s" % ("postgresql", conn_str_dict_write["user"],conn_str_dict_write["password"], conn_str_dict_write["host"], conn_str_dict_write["port"], conn_str_dict_write["db_name"])
+
+		elif conn_str_dict_write["server"] == 'sqlite':
+			sqlite_DB_path = ('%s%s%s') % (home, os.sep, "pyarchinit_DB_folder") #"C:\\Users\\Windows\\Dropbox\\pyarchinit_san_marco\\" fare modifiche anche in pyarchinit_pyqgis
+			
+			dbname_abs = sqlite_DB_path + os.sep + conn_str_dict_write["db_name"]
+
+			conn_str_write = "%s:///%s" % (conn_str_dict_write["server"], dbname_abs)
+
+			QMessageBox.warning(self, "Alert", str(conn_str_dict_write["db_name"]),  QMessageBox.Ok)
+
+		####SI CONNETTE AL DATABASE
+		self.DB_MANAGER_write = Pyarchinit_db_management(conn_str_write)
+		test =self.DB_MANAGER_write.connection()
+		test = str(test)
+		if test == "":
+			QMessageBox.warning(self, "Messaggio", "Connessione avvenuta con successo",  QMessageBox.Ok)
+		elif test.find("create_engine") != -1:
+			QMessageBox.warning(self, "Alert", "Verifica i parametri di connessione. <br> Se sono corretti RIAVVIA QGIS" ,  QMessageBox.Ok)
+		else:
+			QMessageBox.warning(self, "Alert", "Errore di connessione: <br>" + str(test) ,  QMessageBox.Ok)
+
+		####inserisce i dati dentro al database
+		data = self.DB_MANAGER_write.insert_values(
+		self.DB_MANAGER_write.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
+		unicode(self.comboBox_sito_doc.currentText()), 						#1 - Sito
+		unicode(self.lineEdit_nome_doc.text()),									#2 - Nome Documentazione
+		unicode(self.lineEdit_data_doc.text()),										#3 - Data
+		unicode(self.comboBox_tipo_doc.currentText()),						#4 - Tipo Documentazione
+		unicode(self.comboBox_sorgente_doc.currentText()),					#5 - Sorgente
+		unicode(self.comboBox_scala_doc.currentText()),						#6 - Scala
+		unicode(self.lineEdit_disegnatore_doc.text()),								#7 - Disegnatore
+		unicode(self.textEdit_note_doc.toPlainText()))							#8 - Note
+
+
+
 
 
 if __name__ == '__main__':

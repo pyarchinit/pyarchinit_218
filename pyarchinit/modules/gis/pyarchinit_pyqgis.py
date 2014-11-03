@@ -1574,8 +1574,10 @@ class Order_layer_v2:
 			if bool(matrix_us_level) == False:
 				test = 1
 				return self.order_dict
-			elif self.order_count >= 100000:
+			elif self.order_count >= 500:
 				test = 1
+				QMessageBox.warning(self, "Errore",str(self.order_count), QMessageBox.Ok)
+
 				return "error"
 			else:
 				self.insert_into_dict(matrix_us_level,1)

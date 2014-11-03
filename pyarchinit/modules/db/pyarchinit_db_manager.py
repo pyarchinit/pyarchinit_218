@@ -610,11 +610,11 @@ class Pyarchinit_db_management:
 	def query_bool(self,params, table):
 		u = Utility()
 		params = u.remove_empty_items_fr_dict(params)
-		
+
 		list_keys_values = params.items()
-		
+
 		field_value_string = ""
-		
+
 		for sing_couple_n in range(len(list_keys_values)):
 			if sing_couple_n == 0:
 				if type(list_keys_values[sing_couple_n][1]) != '<str>':
@@ -626,21 +626,23 @@ class Pyarchinit_db_management:
 					field_value_string = field_value_string + "," + table + ".%s == %s" % (list_keys_values[sing_couple_n][0], list_keys_values[sing_couple_n][1])
 				else:
 					field_value_string = field_value_string + "," + table + u".%s == %s" % (list_keys_values[sing_couple_n][0], list_keys_values[sing_couple_n][1])
-		
+
 		#field_value_string = ", ".join([table + ".%s == u%s" % (k, v) for k, v in params.items()])
-		
+
 		"""
 		Per poter utilizzare l'operatore LIKE è necessario fare una iterazione attraverso il dizionario per discriminare tra
 		stringhe e numeri
 		#field_value_string = ", ".join([table + ".%s.like(%s)" % (k, v) for k, v in params.items()])
-		
 		"""
 
-		
 		query_str = "session.query(" + table + ").filter(and_(" + field_value_string + ")).all()"
 		#self.connection()
 		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
 		session = Session()
+		
+		t = open("/test_import.txt", "w")
+		t.write(str(query_str))
+		t.close()
 
 		return eval(query_str)
 
@@ -1070,8 +1072,6 @@ class Pyarchinit_db_management:
 
 ##		return res_list
 
-
-
 def main():
 	pass
 	"""
@@ -1097,6 +1097,7 @@ def main():
 	print len(res)
 	for i in res:
 		print "record: ", str(i.sito), str(i.area), str(i.us)
+
 
 if __name__ == '__main__':
 	main()
