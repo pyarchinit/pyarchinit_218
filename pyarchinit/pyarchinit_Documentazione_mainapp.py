@@ -41,7 +41,7 @@ from  pyarchinit_documentazione_ui import *
 from  pyarchinit_utility import *
 from  pyarchinit_error_check import *
 
-rfrom  pyarchinit_pyqgis import Pyarchinit_pyqgis
+from  pyarchinit_pyqgis import Pyarchinit_pyqgis
 from  sortpanelmain import SortPanelMain
 
 #from  pyarchinit_exp_Campsheet_pdf import *
@@ -763,12 +763,12 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 
 		unicode(self.comboBox_sito_doc.setEditText(self.DATA_LIST[self.rec_num].sito))										#1 - Sito
 		unicode(self.lineEdit_nome_doc.setText(self.DATA_LIST[self.rec_num].nome_doc))										#2 - Nome Dcumentazione
-		unicode(self.lineEdit_data_doc.setText(self.DATA_LIST[self.rec_num].data))									#3 - Data
-		unicode(self.comboBox_tipo_doc.setEditText(self.DATA_LIST[self.rec_num].tipo_documentazione))		#4 - Tipo Documentazione
-		unicode(self.comboBox_sorgente_doc.setEditText(self.DATA_LIST[self.rec_num].sorgente))								#5 - Sorgente
-		unicode(self.comboBox_scala_doc.setEditText(self.DATA_LIST[self.rec_num].scala))																#6 - Scala
-		unicode(self.lineEdit_disegnatore_doc.setText(self.DATA_LIST[self.rec_num].disegnatore))														#7 - Dsegnatore
-		unicode(self.textEdit_note_doc.setText(self.DATA_LIST[self.rec_num].note))										#8 - Note
+		unicode(self.lineEdit_data_doc.setText(self.DATA_LIST[self.rec_num].data))												#3 - Data
+		unicode(self.comboBox_tipo_doc.setEditText(self.DATA_LIST[self.rec_num].tipo_documentazione))				#4 - Tipo Documentazione
+		unicode(self.comboBox_sorgente_doc.setEditText(self.DATA_LIST[self.rec_num].sorgente))							#5 - Sorgente
+		unicode(self.comboBox_scala_doc.setEditText(self.DATA_LIST[self.rec_num].scala))									#6 - Scala
+		unicode(self.lineEdit_disegnatore_doc.setText(self.DATA_LIST[self.rec_num].disegnatore))							#7 - Dsegnatore
+		unicode(self.textEdit_note_doc.setText(self.DATA_LIST[self.rec_num].note))												#8 - Note
 
 
 	def set_rec_counter(self, t, c):
