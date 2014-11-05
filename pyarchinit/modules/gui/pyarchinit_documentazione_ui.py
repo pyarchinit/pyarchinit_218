@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_documentazione_ui.ui'
 #
-# Created: Mon Oct 27 14:50:05 2014
+# Created: Mon Nov 03 14:59:06 2014
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -341,14 +341,14 @@ class Ui_DialogDocumentazione_tipo_doc(object):
         self.label_2_data_doc = QtGui.QLabel(self.tab_1_doc)
         self.label_2_data_doc.setObjectName(_fromUtf8("label_2_data_doc"))
         self.gridLayout_6.addWidget(self.label_2_data_doc, 11, 0, 1, 1)
-        spacerItem = QtGui.QSpacerItem(20, 200, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem, 12, 0, 1, 1)
         self.pushButton_disegno_doc = QtGui.QPushButton(self.tab_1_doc)
         self.pushButton_disegno_doc.setIconSize(QtCore.QSize(16, 16))
         self.pushButton_disegno_doc.setObjectName(_fromUtf8("pushButton_disegno_doc"))
         self.gridLayout_6.addWidget(self.pushButton_disegno_doc, 12, 2, 1, 1)
-        spacerItem1 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
-        self.gridLayout_6.addItem(spacerItem1, 13, 2, 1, 1)
+        spacerItem = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem, 13, 2, 1, 1)
+        spacerItem1 = QtGui.QSpacerItem(20, 200, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.gridLayout_6.addItem(spacerItem1, 12, 0, 1, 1)
         self.tabWidget_tab_doc.addTab(self.tab_1_doc, _fromUtf8(""))
         self.tab_2_doc = QtGui.QWidget()
         self.tab_2_doc.setObjectName(_fromUtf8("tab_2_doc"))
@@ -359,10 +359,19 @@ class Ui_DialogDocumentazione_tipo_doc(object):
         self.label_2_note_doc.setGeometry(QtCore.QRect(10, 220, 46, 13))
         self.label_2_note_doc.setObjectName(_fromUtf8("label_2_note_doc"))
         self.tabWidget_tab_doc.addTab(self.tab_2_doc, _fromUtf8(""))
+        self.tab = QtGui.QWidget()
+        self.tab.setObjectName(_fromUtf8("tab"))
+        self.pushButton_exp_elenco_doc = QtGui.QPushButton(self.tab)
+        self.pushButton_exp_elenco_doc.setGeometry(QtCore.QRect(30, 20, 171, 21))
+        self.pushButton_exp_elenco_doc.setObjectName(_fromUtf8("pushButton_exp_elenco_doc"))
+        self.pushButton_exp_scheda_doc = QtGui.QPushButton(self.tab)
+        self.pushButton_exp_scheda_doc.setGeometry(QtCore.QRect(310, 20, 171, 21))
+        self.pushButton_exp_scheda_doc.setObjectName(_fromUtf8("pushButton_exp_scheda_doc"))
+        self.tabWidget_tab_doc.addTab(self.tab, _fromUtf8(""))
         self.gridLayout_7.addWidget(self.tabWidget_tab_doc, 8, 0, 1, 1)
 
         self.retranslateUi(DialogDocumentazione_tipo_doc)
-        self.tabWidget_tab_doc.setCurrentIndex(0)
+        self.tabWidget_tab_doc.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(DialogDocumentazione_tipo_doc)
 
     def retranslateUi(self, DialogDocumentazione_tipo_doc):
@@ -414,5 +423,8 @@ class Ui_DialogDocumentazione_tipo_doc(object):
         self.tabWidget_tab_doc.setTabText(self.tabWidget_tab_doc.indexOf(self.tab_1_doc), QtGui.QApplication.translate("DialogDocumentazione_tipo_doc", "Dati generali", None, QtGui.QApplication.UnicodeUTF8))
         self.label_2_note_doc.setText(QtGui.QApplication.translate("DialogDocumentazione_tipo_doc", "Note", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget_tab_doc.setTabText(self.tabWidget_tab_doc.indexOf(self.tab_2_doc), QtGui.QApplication.translate("DialogDocumentazione_tipo_doc", "Note", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_exp_elenco_doc.setText(QtGui.QApplication.translate("DialogDocumentazione_tipo_doc", "Esporta elenco documentazione", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButton_exp_scheda_doc.setText(QtGui.QApplication.translate("DialogDocumentazione_tipo_doc", "Esporta scheda documentazione", None, QtGui.QApplication.UnicodeUTF8))
+        self.tabWidget_tab_doc.setTabText(self.tabWidget_tab_doc.indexOf(self.tab), QtGui.QApplication.translate("DialogDocumentazione_tipo_doc", "Tools", None, QtGui.QApplication.UnicodeUTF8))
 
 import resources_rc

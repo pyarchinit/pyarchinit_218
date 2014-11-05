@@ -640,10 +640,11 @@ class Pyarchinit_db_management:
 		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
 		session = Session()
 		
+		'''
 		t = open("/test_import.txt", "w")
 		t.write(str(query_str))
 		t.close()
-
+		'''
 		return eval(query_str)
 
 
