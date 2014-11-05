@@ -392,9 +392,9 @@ class Documentazione_index_pdf_sheet:
 
 
 		if self.tipo_documentazione == None:
-			tipo_documentazione = Paragraph("<b>N. Tipo documentazione</b><br/>",styNormal)
+			tipo_documentazione = Paragraph("<b>Tipo</b><br/>",styNormal)
 		else:
-			tipo_documentazione = Paragraph("<b>N. Tipo documentazione</b><br/>" + str(self.tipo_documentazione),styNormal)
+			tipo_documentazione = Paragraph("<b>Tipo</b><br/>" + str(self.tipo_documentazione),styNormal)
 
 		if self.nome_doc == "None":
 			nome_doc = Paragraph("<b>Nome documentazione</b><br/>",styNormal)

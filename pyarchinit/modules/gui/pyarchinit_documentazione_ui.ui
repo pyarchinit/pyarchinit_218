@@ -595,7 +595,7 @@
    <item row="8" column="0">
     <widget class="QTabWidget" name="tabWidget_tab_doc">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_1_doc">
       <attribute name="title">
@@ -774,6 +774,37 @@
        </property>
        <property name="text">
         <string>Note</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Tools</string>
+      </attribute>
+      <widget class="QPushButton" name="pushButton_exp_elenco_doc">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>20</y>
+         <width>171</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Esporta elenco documentazione</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_exp_scheda_doc">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>20</y>
+         <width>171</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Esporta scheda documentazione</string>
        </property>
       </widget>
      </widget>
