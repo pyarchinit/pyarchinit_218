@@ -269,12 +269,9 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 
 		settings = Settings(con_sett)
 		settings.set_configuration()
-		
-		
+
 		#("sito" = 'Scavo esame' AND "tipo_doc" =  'Sezione'  AND "nome_doc" = 'AA1')  OR ("sito" = 'Scavo esame' AND "tipo_doc" =  'Sezione'  AND "nome_doc" = 'AA1') 
-		
-		
-		
+
 		if settings.SERVER == 'sqlite':
 			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
 			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
@@ -283,31 +280,59 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			if len(data) > 1:
 				for i in range(len(data)):
 					docstr += " OR (sito = '" + str(data[i].sito) +"' AND tipo_doc = '" + str(data[i].tipo_documentazione) +" AND nome_doc = '"+ str(data[i].nome_doc)+ "')"
-					
+
 			uri = QgsDataSourceURI()
 			uri.setDatabase(db_file_path)
-			
-			layer_name = str(data[0].tipo_documentazione) + ": " + str(data[0].nome_doc)
+
+			layer_name_pos = str(data[0].tipo_documentazione) + ": " + str(data[0].nome_doc)
 
 			uri.setDataSource('','pyarchinit_us_view', 'the_geom', docstr, "ROWID")
-			layerUS=QgsVectorLayer(uri.uri(), layer_name, 'spatialite')
+			layerPos=QgsVectorLayer(uri.uri(), layer_name_pos, 'spatialite')
 
-			if  layerUS.isValid() == True:
+			if  layerPos.isValid() == True:
 				QMessageBox.warning(self, "TESTER", "OK Layer US valido",QMessageBox.Ok)
+				QgsMapLayerRegistry.instance().addMapLayers([layerPos], True)
+				self.canvas = QgsMapCanvas()
+				self.canvas.setExtent(layerPos.extent())
 
 				#self.USLayerId = layerUS.getLayerID()
 				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view_splite.qml')
 				#style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
 
 				#layerUS.loadNamedStyle(style_path)
-				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
+
+				#originalSubsetString = layerUS.subsetString() 4D dimension
+				#newSubSetString = "%s OR id_us = '0'" % (originalSubsetString) 4D dimension
+
+				#layerUS.setSubsetString(newSubSetString)
+
+			layer_name_neg = str(data[0].tipo_documentazione) + ": " + str(data[0].nome_doc) + " - negative"
+
+			docstrn =  "(sito_n = '" + str(data[0].sito) + "' AND nome_doc_n = '" + str(data[0].nome_doc) + "' AND tipo_doc_n = '" + str(data[0].tipo_documentazione) + "')"
+			if len(data) > 1:
+				for i in range(len(data)):
+					docstr += " OR (sito_n = '" + str(data[i].sito) +"' AND tipo_doc_n = '" + str(data[i].tipo_documentazione) +" AND nome_doc_n = '"+ str(data[i].nome_doc)+ "')"
+
+			uri.setDataSource('','pyarchinit_us_negative_doc_view', 'geom', docstrn, "ROWID")
+			layerNeg=QgsVectorLayer(uri.uri(), layer_name_neg, 'spatialite')
+
+			if  layerNeg.isValid() == True:
+				QMessageBox.warning(self, "TESTER", "OK Layer US Negative valido",QMessageBox.Ok)
+				QgsMapLayerRegistry.instance().addMapLayers([layerNeg], True)
+
+				#self.USLayerId = layerUS.getLayerID()
+				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view_splite.qml')
+				#style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
+
+				#layerUS.loadNamedStyle(style_path)
+
 				#originalSubsetString = layerUS.subsetString() 4D dimension
 				#newSubSetString = "%s OR id_us = '0'" % (originalSubsetString) 4D dimension
 
 				#layerUS.setSubsetString(newSubSetString)
 
 			else:
-				QMessageBox.warning(self, "TESTER", "Layer US non valido",QMessageBox.Ok)
+				QMessageBox.warning(self, "TESTER", "Layer US Negative non valido",QMessageBox.Ok)
 
 			#implementare sistema per quote se si vogliono visualizzare sulle piante
 			"""
@@ -402,8 +427,6 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
 			db_file_path = ('%s%s') % (self.HOME, sqliteDB_path)
 
-
-			
 			doc_from_us_str = "sito = '" + sito + "' AND area = '" + area + "' AND us = '" + us + "' AND tipo_doc = '" + tipo_documentazione + "' AND nome_doc = '" + nome_doc + "'"
 			#if len(data) > 1:
 				#for i in range(len(data)):
@@ -429,7 +452,32 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 
 				#layerUS.setSubsetString(newSubSetString)
 
-			
+			doc_from_us_neg_str = "sito = '" + sito + "' AND area = '" + area + "' AND us = '" + us + "' AND tipo_doc_n = '" + tipo_documentazione + "' AND nome_doc_n = '" + nome_doc + "'"
+			#if len(data) > 1:
+				#for i in range(len(data)):
+					#doc_from_us_str += " OR (sito = '" + str(data[i].sito) +" AND tipo_documentazione = '" + str(data[i].tipo_documentazione) +" AND nome_doc = '"+ str(data[i].nome_doc)
+					
+			uri = QgsDataSourceURI()
+			uri.setDatabase(db_file_path)
+
+			uri.setDataSource('','pyarchinit_us_negative_doc_view', 'geom', doc_from_us_neg_str, "ROWID")
+			layerUSneg=QgsVectorLayer(uri.uri(), 'US Negative in doc', 'spatialite')
+
+			if  layerUSneg.isValid() == True:
+				QMessageBox.warning(self, "TESTER", "OK Layer US negative valido",QMessageBox.Ok)
+
+				#self.USLayerId = layerUS.getLayerID()
+				#style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view_splite.qml')
+				#style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
+
+				#layerUS.loadNamedStyle(style_path)
+				QgsMapLayerRegistry.instance().addMapLayers([layerUSneg], True)
+				#originalSubsetString = layerUS.subsetString() 4D dimension
+				#newSubSetString = "%s OR id_us = '0'" % (originalSubsetString) 4D dimension
+
+				#layerUS.setSubsetString(newSubSetString)
+
+
 			doc_from_us_str = "sito = '" + sito + "' AND tipo_doc = '" + tipo_documentazione + "' AND nome_doc = '" + nome_doc + "'"
 			#if len(data) > 1:
 				#for i in range(len(data)):
@@ -1209,6 +1257,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				#self.USLayerId = layerUS.getLayerID()
 ##				style_path = ('%s%s') % (self.LAYER_STYLE_PATH_SPATIALITE, 'us_view.qml')
 ##				layerUS.loadNamedStyle(style_path)
+
 				self.iface.mapCanvas().setExtent(layerSITE.extent())
 				QgsMapLayerRegistry.instance().addMapLayers([layerSITE], True)
 			else:

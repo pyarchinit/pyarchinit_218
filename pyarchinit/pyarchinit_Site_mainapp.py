@@ -339,7 +339,8 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 			unicode(self.comboBox_comune.currentText()), 			#4 - comune
 			unicode(self.textEdit_descrizione_site.toPlainText()),		#5 - descrizione
 			unicode(self.comboBox_provincia.currentText()), 			#6 - comune
-			unicode(self.comboBox_definizione_sito.currentText())) 	#7 - definizione sito
+			unicode(self.comboBox_definizione_sito.currentText()),	#7 - definizione sito
+			0																		) 	#8 - find check
 
 			try:
 				self.DB_MANAGER.insert_data_session(data)

@@ -261,7 +261,6 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 		tipo_doc_item = self.tableWidget_documentazione.item(rowIndex,0)
 		nome_doc_item = self.tableWidget_documentazione.item(rowIndex,1)
-		
 
 		tipo_doc = unicode(tipo_doc_item.text())
 		nome_doc = unicode(nome_doc_item.text())
@@ -465,7 +464,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.delegateRS.def_editable('False')
 		self.tableWidget_rapporti.setItemDelegateForColumn(0,self.delegateRS)
 
-		valuesDoc = ["Fotografie", "Diapositive", "Sezioni", "Planimetrie", "Prospetti", "Video", "Fotopiano"]
+		valuesDoc = ["Fotografia", "Diapositiva", "Sezione", "Planimetria", "Prospetto", "Video", "Fotopiano"]
 		self.delegateDoc = ComboBoxDelegate()
 		self.delegateDoc.def_values(valuesDoc)
 		self.delegateDoc.def_editable('False')

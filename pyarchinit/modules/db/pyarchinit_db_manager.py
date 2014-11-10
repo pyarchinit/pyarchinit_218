@@ -166,7 +166,8 @@ class Pyarchinit_db_management:
 						arg[4],
 						arg[5],
 						arg[6],
-						arg[7])
+						arg[7],
+						arg[8])
 
 		return sito
 
@@ -984,12 +985,24 @@ class Pyarchinit_db_management:
 	def select_quote_from_db_sql(self, sito, area, us):
 		sql_query_string = ("SELECT * FROM pyarchinit_quote WHERE sito_q = '%s' AND area_q = '%s' AND us_q = '%s'") %  (sito, area, us)
 		res = self.engine.execute(sql_query_string)
-		return res
+		return res	
 
 	def select_us_from_db_sql(self, sito, area, us, stratigraph_index_us):
 		sql_query_string = ("SELECT * FROM pyunitastratigrafiche WHERE scavo_s = '%s' AND area_s = '%s' AND us_s = '%s' AND stratigraph_index_us = '%s'") % (sito, area, us, stratigraph_index_us)
 		res = self.engine.execute(sql_query_string)
 		return res
+
+
+	def select_us_doc_from_db_sql(self, sito, tipo_doc, nome_doc):
+		sql_query_string = ("SELECT * FROM pyunitastratigrafiche WHERE scavo_s = '%s' AND tipo_doc = '%s' AND nome_doc = '%s'") % (sito, tipo_doc, nome_doc)
+		res = self.engine.execute(sql_query_string)
+		return res
+
+	def select_usneg_doc_from_db_sql(self, sito, tipo_doc, nome_doc):
+		sql_query_string = ("SELECT * FROM pyarchinit_us_negative_doc WHERE sito_n = '%s' AND  tipo_doc_n = '%s' AND nome_doc_n = '%s'") % (sito, tipo_doc, nome_doc)
+		res = self.engine.execute(sql_query_string)
+		return res
+
 
 	def select_db_sql(self, table):
 		sql_query_string = ("SELECT * FROM %s") % table

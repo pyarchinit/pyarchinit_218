@@ -160,11 +160,11 @@ class single_Documentazione_pdf_sheet:
 
 		#schema
 		cell_schema = [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
-							[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'],					#0 row ok
-							[sito, '01', '02', '03', '04','05','06', '07', '08', '09'],		#1 row ok
-							[tipo_documentazione, '01', '02',nome_doc, '04','05','06',scala, '08', '09'], 					#2 row ok
-							[note, '01','02', '03', '04', '05','06', '07', '08', '09'],						#3 row ok
-							[data,'01', '02', '03', '04', disegnatore, '06', '07', '08', '09']	#4 row ok
+							[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'],						#0 row ok
+							[sito, '01', '02', '03', '04','05','06', '07', '08', '09'],									#1 row ok
+							[tipo_documentazione, '01', '02',nome_doc, '04','05','06',scala, '08', '09'], 	#2 row ok
+							[note, '01','02', '03', '04', '05','06', '07', '08', '09'],									#3 row ok
+							[data,'01', '02', '03', '04', disegnatore, '06', '07', '08', '09']						#4 row ok
 							]
 
 
@@ -375,7 +375,7 @@ class Documentazione_index_pdf_sheet:
 		self.sorgente = data[4]										#5 - Sorgente
 		self.scala = data[5]										#6 - Scala
 		self.disegnatore =  data[6]									#7 - Disegnatore
-		self.note = data[7]											#8 - Note
+		self.us = data[8]											#8 - Note
 #		self.nr_cassa = data[8]									#9 - nr cassa
 
 	def getTable(self):
@@ -391,40 +391,40 @@ class Documentazione_index_pdf_sheet:
 #		num_campione = Paragraph("<b>N. Camp.</b><br/>" + str(self.numero_campione),styNormal)
 
 
-		if self.tipo_documentazione == None:
+		if self.tipo_documentazione == "":
 			tipo_documentazione = Paragraph("<b>Tipo</b><br/>",styNormal)
 		else:
 			tipo_documentazione = Paragraph("<b>Tipo</b><br/>" + str(self.tipo_documentazione),styNormal)
 
-		if self.nome_doc == "None":
+		if self.nome_doc == "":
 			nome_doc = Paragraph("<b>Nome documentazione</b><br/>",styNormal)
 		else:
 			nome_doc = Paragraph("<b>Nome documentazione</b><br/>" + str(self.nome_doc),styNormal)
 
-		if self.scala == None:
+		if self.scala == "":
 			scala = Paragraph("<b>Scala</b><br/>",styNormal)
 		else:
 			scala = Paragraph("<b>Scala</b><br/>" + str(self.scala),styNormal)
 
-		if self.sorgente == None:
+		if self.sorgente == "":
 			sorgente = Paragraph("<b>Sorgente</b><br/>",styNormal)
 		else:
 			sorgente = Paragraph("<b>Sorgente</b><br/>" + str(self.sorgente),styNormal)
 
-		if self.data == "None":
+		if self.data == "":
 			data = Paragraph("<b>Data</b><br/>",styNormal)
 		else:
 			data = Paragraph("<b>Data</b><br/>" + str(self.data),styNormal)
 
-		if self.disegnatore == None:
+		if self.disegnatore == "":
 			disegnatore = Paragraph("<b>Disegnatore</b><br/>",styNormal)
 		else:
 			disegnatore = Paragraph("<b>Disegnatore</b><br/>" + str(self.disegnatore),styNormal)
 
-		if self.note == None:
-			note = Paragraph("<b>Note</b><br/>",styNormal)
+		if self.us == "":
+			us = Paragraph("<b>Elenco US</b><br/>",styNormal)
 		else:
-			note = Paragraph("<b>Note</b><br/>" + str(self.note),styNormal)
+			us = Paragraph("<b>Elenco US</b><br/>" + str(self.us),styNormal)
 
 		data = [tipo_documentazione,
 				nome_doc,
@@ -432,7 +432,7 @@ class Documentazione_index_pdf_sheet:
 				sorgente,
 				data,
 				disegnatore,
-				note]
+				us]
 
 		return data
 

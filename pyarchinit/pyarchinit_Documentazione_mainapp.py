@@ -207,74 +207,85 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 
 
 	#buttons functions
-
-
-
-#BUTTARE
-
-
-	#buttons functions
 	def generate_list_pdf(self):
 		data_list = []
 		for i in range(len(self.DATA_LIST)):
+
+			sito =  unicode(self.DATA_LIST[i].sito)
+			tipo_doc = unicode(self.DATA_LIST[i].tipo_documentazione)
+			nome_doc = unicode(self.DATA_LIST[i].nome_doc)
+
+			res_us_doc = self.DB_MANAGER.select_us_doc_from_db_sql(sito, tipo_doc, nome_doc)
+
+			res_usneg_doc = self.DB_MANAGER.select_usneg_doc_from_db_sql(sito, tipo_doc, nome_doc)
+
+			elenco_us_doc = []
+			elenco_usneg_doc = []
+
+			if bool(res_us_doc) == True:
+				for sing_rec in res_us_doc:
+					tup_area_us = (int(sing_rec[1]),int(sing_rec[3]))
+					elenco_us_doc.append(tup_area_us)
+
+			if bool(res_usneg_doc) == True:
+				for sing_rec in res_usneg_doc:
+					tup_area_usneg = (int(sing_rec[2]),int(sing_rec[3]))
+					elenco_usneg_doc.append(tup_area_usneg)
+
+			elenco_us_pdf = elenco_us_doc+elenco_usneg_doc
+
+			elenco_us_pdf.sort()
+
+			area_corr = str(elenco_us_pdf[0][0])
+			us_elenco = ""
+
+			string_to_pdf = ""
+
+			for rec_us in range(len(elenco_us_pdf)):
+				if area_corr == str(elenco_us_pdf[rec_us][0]):
+					us_elenco += str(elenco_us_pdf[rec_us][1]) + ", "
+				else:
+					if string_to_pdf == "":
+						string_to_pdf = "Area " + area_corr + ": "+ us_elenco[:-2]
+						area_corr = str(elenco_us_pdf[rec_us][0])
+						us_elenco = str(elenco_us_pdf[rec_us][1]) + ", " 
+					else:
+						string_to_pdf += "<br/>Area " + area_corr + ": "+ us_elenco[:-2]
+						area_corr = str(elenco_us_pdf[rec_us][0])
+						us_elenco = str(elenco_us_pdf[rec_us][1]) + ", " 
+
+			string_to_pdf += "<br/>Area " + area_corr + ": "+ us_elenco[:-2]
+
 			data_list.append([
-			unicode(self.DATA_LIST[i].sito), 									#1 - Sito
-			unicode(self.DATA_LIST[i].nome_doc),									#2 - Area
-#			int(self.DATA_LIST[i].us),												#3 - US
-			unicode(self.DATA_LIST[i].data),						#4 - definizione stratigrafica
-			unicode(self.DATA_LIST[i].tipo_documentazione),						#5 - definizione intepretata
+			unicode(self.DATA_LIST[i].sito), 								#1 - Sito
+			unicode(self.DATA_LIST[i].nome_doc),						#2 - Area
+			unicode(self.DATA_LIST[i].data),								#4 - definizione stratigrafica
+			unicode(self.DATA_LIST[i].tipo_documentazione),			#5 - definizione intepretata
 			unicode(self.DATA_LIST[i].sorgente),							#6 - descrizione
-			unicode(self.DATA_LIST[i].scala),						#7 - interpretazione
+			unicode(self.DATA_LIST[i].scala),								#7 - interpretazione
 			unicode(self.DATA_LIST[i].disegnatore),						#8 - periodo iniziale
-			unicode(self.DATA_LIST[i].note),							#9 - fase iniziale
-#			unicode(self.DATA_LIST[i].periodo_finale),						#10 - periodo finale iniziale
-#			unicode(self.DATA_LIST[i].fase_finale), 							#11 - fase finale
-#			unicode(self.DATA_LIST[i].scavato),								#12 - scavato
-#			unicode(self.DATA_LIST[i].attivita),									#13 - attivita
-#			unicode(self.DATA_LIST[i].anno_scavo),							#14 - anno scavo
-#			unicode(self.DATA_LIST[i].metodo_di_scavo),					#15 - metodo
-#			unicode(self.DATA_LIST[i].inclusi),									#16 - inclusi
-#			unicode(self.DATA_LIST[i].campioni),								#17 - campioni
-#			unicode(self.DATA_LIST[i].rapporti),								#18 - rapporti
-#			unicode(self.DATA_LIST[i].data_schedatura),					#19 - data schedatura
-#			unicode(self.DATA_LIST[i].schedatore),							#20 - schedatore
-#			unicode(self.DATA_LIST[i].formazione),							#21 - formazione
-#			unicode(self.DATA_LIST[i].stato_di_conservazione),			#22 - conservazione
-#			unicode(self.DATA_LIST[i].colore),									#23 - colore
-#			unicode(self.DATA_LIST[i].consistenza),							#24 - consistenza
-#			unicode(self.DATA_LIST[i].struttura),								#25 - struttura
-#			unicode(quota_min),														#26 - quota_min
-#			unicode(quota_max),													#27 - quota_max
-#			unicode(piante),															#28 - piante
-#			unicode(self.DATA_LIST[i].documentazione)						#29 - documentazione
-		])
+			unicode(self.DATA_LIST[i].note),								#9 - fase iniziale
+			string_to_pdf
+									])
 		return data_list
 
 
 	def on_pushButton_disegno_doc_pressed(self):
 		sing_layer = [self.DATA_LIST[self.REC_CORR]]
 		self.pyQGIS.charge_vector_layers_doc(sing_layer)
-	'''
+
 	def on_pushButton_exp_scheda_doc_pressed(self):
 		single_Documentazione_pdf_sheet = generate_documentazione_pdf()
 		data_list = self.generate_list_pdf()
 		single_Documentazione_pdf_sheet.build_Documentazione_sheets(data_list)
-	'''
+
 
 	def on_pushButton_exp_elenco_doc_pressed(self):
 		Documentazione_index_pdf = generate_documentazione_pdf()
 		data_list = self.generate_list_pdf()
 		Documentazione_index_pdf.build_index_Documentazione(data_list, data_list[0][0])
-#BUTTARE
 
 
-
-	'''
-	def on_pushButton_exp_index_us_pressed(self):
-		US_index_pdf = generate_US_pdf()
-		data_list = self.generate_list_pdf()
-		US_index_pdf.build_index_US(data_list, data_list[0][0])
-	'''
 
 	def on_pushButton_sort_pressed(self):
 		if self.check_record_state() == 1:

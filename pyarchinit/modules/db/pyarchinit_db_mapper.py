@@ -365,7 +365,8 @@ class SITE(object):
 	comune,
 	descrizione,
 	provincia,
-	definizione_sito
+	definizione_sito,
+	find_check
 	):
 		self.id_sito = id_sito 							#0
 		self.sito = sito 								#1
