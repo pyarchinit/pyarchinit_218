@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'pyarchinit_documentazione_ui.ui'
 #
-# Created: Mon Nov 03 14:59:06 2014
+# Created: Wed Nov 12 14:37:12 2014
 #      by: PyQt4 UI code generator 4.8.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -361,17 +361,26 @@ class Ui_DialogDocumentazione_tipo_doc(object):
         self.tabWidget_tab_doc.addTab(self.tab_2_doc, _fromUtf8(""))
         self.tab = QtGui.QWidget()
         self.tab.setObjectName(_fromUtf8("tab"))
+        self.gridLayout_8 = QtGui.QGridLayout(self.tab)
+        self.gridLayout_8.setObjectName(_fromUtf8("gridLayout_8"))
         self.pushButton_exp_elenco_doc = QtGui.QPushButton(self.tab)
-        self.pushButton_exp_elenco_doc.setGeometry(QtCore.QRect(30, 20, 171, 21))
         self.pushButton_exp_elenco_doc.setObjectName(_fromUtf8("pushButton_exp_elenco_doc"))
+        self.gridLayout_8.addWidget(self.pushButton_exp_elenco_doc, 0, 0, 1, 1)
+        self.pushButtonPreview = QtGui.QPushButton(self.tab)
+        self.pushButtonPreview.setObjectName(_fromUtf8("pushButtonPreview"))
+        self.gridLayout_8.addWidget(self.pushButtonPreview, 3, 0, 1, 1)
         self.pushButton_exp_scheda_doc = QtGui.QPushButton(self.tab)
-        self.pushButton_exp_scheda_doc.setGeometry(QtCore.QRect(310, 20, 171, 21))
         self.pushButton_exp_scheda_doc.setObjectName(_fromUtf8("pushButton_exp_scheda_doc"))
+        self.gridLayout_8.addWidget(self.pushButton_exp_scheda_doc, 1, 0, 1, 1)
+        spacerItem2 = QtGui.QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        self.gridLayout_8.addItem(spacerItem2, 4, 0, 1, 1)
+        spacerItem3 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.gridLayout_8.addItem(spacerItem3, 0, 1, 1, 1)
         self.tabWidget_tab_doc.addTab(self.tab, _fromUtf8(""))
         self.gridLayout_7.addWidget(self.tabWidget_tab_doc, 8, 0, 1, 1)
 
         self.retranslateUi(DialogDocumentazione_tipo_doc)
-        self.tabWidget_tab_doc.setCurrentIndex(2)
+        self.tabWidget_tab_doc.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(DialogDocumentazione_tipo_doc)
 
     def retranslateUi(self, DialogDocumentazione_tipo_doc):
@@ -424,6 +433,7 @@ class Ui_DialogDocumentazione_tipo_doc(object):
         self.label_2_note_doc.setText(QtGui.QApplication.translate("DialogDocumentazione_tipo_doc", "Note", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget_tab_doc.setTabText(self.tabWidget_tab_doc.indexOf(self.tab_2_doc), QtGui.QApplication.translate("DialogDocumentazione_tipo_doc", "Note", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_exp_elenco_doc.setText(QtGui.QApplication.translate("DialogDocumentazione_tipo_doc", "Esporta elenco documentazione", None, QtGui.QApplication.UnicodeUTF8))
+        self.pushButtonPreview.setText(QtGui.QApplication.translate("DialogDocumentazione_tipo_doc", "Open Preview", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_exp_scheda_doc.setText(QtGui.QApplication.translate("DialogDocumentazione_tipo_doc", "Esporta scheda documentazione", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget_tab_doc.setTabText(self.tabWidget_tab_doc.indexOf(self.tab), QtGui.QApplication.translate("DialogDocumentazione_tipo_doc", "Tools", None, QtGui.QApplication.UnicodeUTF8))
 

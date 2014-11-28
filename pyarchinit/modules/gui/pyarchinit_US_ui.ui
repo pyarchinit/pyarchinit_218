@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>647</width>
-    <height>775</height>
+    <width>540</width>
+    <height>547</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -859,7 +859,7 @@
       </font>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -1799,7 +1799,7 @@ p, li { white-space: pre-wrap; }
          </item>
         </layout>
        </item>
-       <item row="3" column="0" colspan="3">
+       <item row="3" column="0" colspan="4">
         <widget class="QTableWidget" name="tableWidget_documentazione">
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
@@ -1841,7 +1841,7 @@ p, li { white-space: pre-wrap; }
          </column>
         </widget>
        </item>
-       <item row="0" column="2">
+       <item row="0" column="3">
         <widget class="QPushButton" name="pushButton_draw_doc">
          <property name="text">
           <string>Visualizza documentazione</string>
@@ -1860,6 +1860,13 @@ p, li { white-space: pre-wrap; }
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="0" column="2">
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Aggiorna doc</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -2175,8 +2182,8 @@ p, li { white-space: pre-wrap; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>676</width>
-                <height>336</height>
+                <width>461</width>
+                <height>222</height>
                </rect>
               </property>
               <attribute name="label">

@@ -19,6 +19,7 @@
  *                                                                         *
  ***************************************************************************/
 """
+
 import sys, os
 from PyQt4 import QtCore, QtGui
 from PyQt4.QtCore import *
@@ -46,6 +47,8 @@ from  pyarchinit_exp_Documentazionesheet_pdf import *
 
 from  pyarchinit_pyqgis import Pyarchinit_pyqgis
 from  sortpanelmain import SortPanelMain
+
+from pyarchinit_documentazione_preview_mainapp import pyarchinit_doc_preview
 
 #from  pyarchinit_exp_Campsheet_pdf import *
 
@@ -285,6 +288,21 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 		data_list = self.generate_list_pdf()
 		Documentazione_index_pdf.build_index_Documentazione(data_list, data_list[0][0])
 
+	def on_pushButtonPreview_pressed(self):
+		#sing_layer =self.DATA_LIST[self.REC_CORR]
+
+		docstr = (' \"%s\"=\'%s\' AND \"%s\"=\'%s\' AND \"%s\"=\'%s\' ')  % ('sito',
+																											str(self.DATA_LIST[self.REC_CORR].sito),
+																											'nome_doc',
+																											str(self.DATA_LIST[self.REC_CORR].nome_doc),
+																											'tipo_doc',
+																											str(self.DATA_LIST[self.REC_CORR].tipo_documentazione))
+
+		QMessageBox.warning(self, "query", str(docstr),  QMessageBox.Ok)
+
+		dlg = pyarchinit_doc_preview(self, docstr)
+
+		dlg.exec_()
 
 
 	def on_pushButton_sort_pressed(self):

@@ -483,6 +483,9 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			""" if has geometry column load to map canvas """
 			gidstr =  self.ID_TABLE + " = " + str(eval("self.DATA_LIST[int(self.REC_CORR)]." + self.ID_TABLE))
 			layerToSet = self.pyQGIS.loadMapPreview(gidstr)
+
+			QMessageBox.warning(self, "layer to set", str(layerToSet), QMessageBox.Ok)
+
 			self.mapPreview.setLayerSet(layerToSet)
 			self.mapPreview.zoomToFullExtent()
 		elif mode == 1:
@@ -844,7 +847,6 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 ####
 
 
-		
 	def launch_order_layer_if(self, msg):
 		if msg == 1:
 

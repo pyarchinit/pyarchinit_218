@@ -693,6 +693,30 @@ class Pyarchinit_db_management:
 
 		return eval(query_cmd)
 
+	def query_distinct_sql(self,table, query_params, distinct_field_name_params):
+		#u = Utility()
+		#params = u.remove_empty_items_fr_dict(params)
+		##		return session.query(INVENTARIO_MATERIALI.area,INVENTARIO_MATERIALI.us ).filter(INVENTARIO_MATERIALI.sito=='Sito archeologico').distinct().order_by(INVENTARIO_MATERIALI.area,INVENTARIO_MATERIALI.us )
+
+		query_string = ""
+		for i in query_params:
+			if query_string == '':
+				query_string =  '%s=%s' % (i[0], i[1])
+			else:
+				query_string = query_string + ' AND %s=%s' % (i[0], i[1])
+
+		distinct_string = ""
+		for i in distinct_field_name_params:
+			if distinct_string == '':
+				distinct_string =  '%s' % (i)
+			else:
+				distinct_string = distinct_string + ',%s' % (i)
+
+		query_cmd = "SELECT DISTINCT " + distinct_string +  " FROM "+ table + ' WHERE '+query_string
+		#self.connection()
+		res = self.engine.execute(query_cmd)
+		return res
+
 
 
 
@@ -957,7 +981,7 @@ class Pyarchinit_db_management:
 		session = Session()
 
 		string = ('%s%s%s%s%s') %  ('session.query(US).filter_by(', 'sito', "='", str(self.sito), "')")
-		print string
+		#print string
 		lista_us = eval(string)
 
 		for i in lista_us:
@@ -985,7 +1009,7 @@ class Pyarchinit_db_management:
 	def select_quote_from_db_sql(self, sito, area, us):
 		sql_query_string = ("SELECT * FROM pyarchinit_quote WHERE sito_q = '%s' AND area_q = '%s' AND us_q = '%s'") %  (sito, area, us)
 		res = self.engine.execute(sql_query_string)
-		return res	
+		return res
 
 	def select_us_from_db_sql(self, sito, area, us, stratigraph_index_us):
 		sql_query_string = ("SELECT * FROM pyunitastratigrafiche WHERE scavo_s = '%s' AND area_s = '%s' AND us_s = '%s' AND stratigraph_index_us = '%s'") % (sito, area, us, stratigraph_index_us)
@@ -1087,26 +1111,24 @@ class Pyarchinit_db_management:
 ##		return res_list
 
 def main():
-	pass
-	"""
 	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
 	db.connection()
-	res = db.query_sort([1, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67],['id_invmat'],'asc', 'INVENTARIO_MATERIALI', 'id_invmat')
-	#res = db.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"']], ['area', 'us'])
-	print len(res)
+	#res = db.query_sort([1, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67],['id_invmat'],'asc', 'INVENTARIO_MATERIALI', 'id_invmat')
+	res = db.query_distinct_sql('pyunitastratigrafiche',[['scavo_s','"San_Costanzo_PU_Cimitero"'], ['tipo_doc','"Sezione"']], ['scavo_s', 'area_s', 'us_s', 'tipo_doc', 'nome_doc'])
+
 	for i in res:
-		print "record: ", str(i.sito)
+		print "record: ", i
 
 if __name__ == '__main__':
 	main()
-	"""
+
 
 
 """
 def main():
 	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
 	db.connection()
-	res = db.query_bool({"sito": "'Sito archeologico'", "nr_individuo":"'1'"}, "SCHEDAIND")
+	res = db.query_bool({"sito": "'San_Costanzo_py'", "nr_individuo":"'1'"}, "SCHEDAIND")
 	#res = db.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"']], ['area', 'us'])
 	print len(res)
 	for i in res:
@@ -1115,178 +1137,177 @@ def main():
 
 if __name__ == '__main__':
 	main()
-
-	for rec in data:
-
-		id_invmat = rec.id_invmat
-		misurazioni = eval(rec.misurazioni)
-		tecnologie = eval(rec.tecnologie)
-		rif_biblio = eval(rec.rif_biblio)
-		elementi_reperto = eval(rec.elementi_reperto)
-		#print str(misurazioni)
-##		misurazioni_update = []
-##		for mis in misurazioni:
-##			temp_list = []
-##			for i in mis:
-##				temp_list.append(unicode(i))
-##			misurazioni_update.append(temp_list)
-##		print misurazioni_update
-##		try:
-##			#misurazioni_update = [[u'peso', u'g', u'2490']]	#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
-##			db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['misurazioni'], [unicode(misurazioni_update)])
-##		except Exception, e:
-##			print str(e)
-		
-##		tecnologie_update = []
-##		for tec in tecnologie:
-##			temp_list = []
-##			for i in tec:
-##				temp_list.append(unicode(i))
-##			tecnologie_update.append(temp_list)
-##		print tecnologie_update
-##		try:
-##			#misurazioni_update = [[u'peso', u'g', u'2490']]	#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
-##			db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['tecnologie'], [unicode(tecnologie_update)])
-##		except Exception, e:
-##			print str(e)
-
-##		rif_biblio_update = []
-##		for rfbib in rif_biblio:
-##			temp_list = []
-##			for i in rfbib:
-##				temp_list.append(unicode(i))
-##			rif_biblio_update.append(temp_list)
-##		print rif_biblio_update
-##		try:
-##			db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['rif_biblio'], [unicode(rif_biblio_update)])
-##		except Exception, e:
-##			print str(e)
-
-		elem_rep_update = []
-		for elem_rep in elementi_reperto:
-			temp_list = []
-			for i in elem_rep:
-				temp_list.append(unicode(i))
-			elem_rep_update.append(temp_list)
-		print elem_rep_update
-		try:
-			#misurazioni_update = [[u'peso', u'g', u'2490']]	#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
-			db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['elementi_reperto'], [unicode(elem_rep_update)])
-		except Exception, e:
-			print str(e)
-
-##		
-##		for mis in misurazioni:
-##			if mis[0] == 'forme minime':
-##				try:
-##					print int(mis[1])
-##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
-##					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['forme_minime'], [int(mis[1])] )
-##				except Exception, e:
-##					print str(e)
 ##
-##		for mis in misurazioni:
-##			if mis[0] == 'conservazione orlo':
-##				print "mis2: " + str(mis[2])
-##				try:
-##					#print int(mis[1])
-##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
-##					if mis[2].find(',') != -1:
-##						misura = mis[2].replace(',', '.')
-##						misura = float(misura)
-##					else:
-##						misura = float(mis[2])
-##					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['eve_orlo'], [misura])
-##				except Exception, e:
-##					print str(e) + str(rec.numero_inventario)
+####	for rec in data:
+####
+####		id_invmat = rec.id_invmat
+####		misurazioni = eval(rec.misurazioni)
+####		tecnologie = eval(rec.tecnologie)
+####		rif_biblio = eval(rec.rif_biblio)
+####		elementi_reperto = eval(rec.elementi_reperto)
+####		#print str(misurazioni)
+######		misurazioni_update = []
+######		for mis in misurazioni:
+######			temp_list = []
+######			for i in mis:
+######				temp_list.append(unicode(i))
+######			misurazioni_update.append(temp_list)
+######		print misurazioni_update
+######		try:
+######			#misurazioni_update = [[u'peso', u'g', u'2490']]	#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+######			db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['misurazioni'], [unicode(misurazioni_update)])
+######		except Exception, e:
+######			print str(e)
+####		
+######		tecnologie_update = []
+######		for tec in tecnologie:
+######			temp_list = []
+######			for i in tec:
+######				temp_list.append(unicode(i))
+######			tecnologie_update.append(temp_list)
+######		print tecnologie_update
+######		try:
+######			#misurazioni_update = [[u'peso', u'g', u'2490']]	#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+######			db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['tecnologie'], [unicode(tecnologie_update)])
+######		except Exception, e:
+######			print str(e)
+####
+######		rif_biblio_update = []
+######		for rfbib in rif_biblio:
+######			temp_list = []
+######			for i in rfbib:
+######				temp_list.append(unicode(i))
+######			rif_biblio_update.append(temp_list)
+######		print rif_biblio_update
+######		try:
+######			db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['rif_biblio'], [unicode(rif_biblio_update)])
+######		except Exception, e:
+######			print str(e)
+####
+####		elem_rep_update = []
+####		for elem_rep in elementi_reperto:
+####			temp_list = []
+####			for i in elem_rep:
+####				temp_list.append(unicode(i))
+####			elem_rep_update.append(temp_list)
+####		print elem_rep_update
+####		try:
+####			#misurazioni_update = [[u'peso', u'g', u'2490']]	#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+####			db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['elementi_reperto'], [unicode(elem_rep_update)])
+####		except Exception, e:
+####			print str(e)
 ##
-##		for mis in misurazioni:
-##			if mis[0] == 'diametro orlo':
-##				print "mis2: " + str(mis[2])
-##				try:
-##					#print int(mis[1])
-##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
-##					if mis[2].find(',') != -1:
-##						misura = mis[2].replace(',', '.')
-##						misura = float(misura)
-##					else:
-##						misura = float(mis[2])
-##					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['diametro_orlo'], [misura])
-##				except Exception, e:
-##					print str(e) + str(rec.numero_inventario)
+####		
+####		for mis in misurazioni:
+####			if mis[0] == 'forme minime':
+####				try:
+####					print int(mis[1])
+####					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+####					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['forme_minime'], [int(mis[1])] )
+####				except Exception, e:
+####					print str(e)
+####
+####		for mis in misurazioni:
+####			if mis[0] == 'conservazione orlo':
+####				print "mis2: " + str(mis[2])
+####				try:
+####					#print int(mis[1])
+####					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+####					if mis[2].find(',') != -1:
+####						misura = mis[2].replace(',', '.')
+####						misura = float(misura)
+####					else:
+####						misura = float(mis[2])
+####					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['eve_orlo'], [misura])
+####				except Exception, e:
+####					print str(e) + str(rec.numero_inventario)
+####
+####		for mis in misurazioni:
+####			if mis[0] == 'diametro orlo':
+####				print "mis2: " + str(mis[2])
+####				try:
+####					#print int(mis[1])
+####					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+####					if mis[2].find(',') != -1:
+####						misura = mis[2].replace(',', '.')
+####						misura = float(misura)
+####					else:
+####						misura = float(mis[2])
+####					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['diametro_orlo'], [misura])
+####				except Exception, e:
+####					print str(e) + str(rec.numero_inventario)
+####
+####		for mis in misurazioni:
+####			if mis[0] == 'peso':
+####				print "mis2: " + str(mis[2])
+####				try:
+####					#print int(mis[1])
+####					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+####					if mis[2].find(',') != -1:
+####						misura = mis[2].replace(',', '.')
+####						misura = float(misura)
+####					else:
+####						misura = float(mis[2])
+####					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['peso'], [misura])
+####				except Exception, e:
+####					print str(e) + str(rec.numero_inventario)
+####
+####		for mis in misurazioni:
+####			if mis[0] == 'forme massime':
+####				try:
+####					print int(mis[1])
+####					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+####					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['forme_massime'], [int(mis[1])] )
+####				except Exception, e:
+####					print str(e)
+####
+####		for tec in tecnologie:
+####			if tec[0] == 'Impasto':
+####				try:
+####					#print int(mis[1])
+####					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+####					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['corpo_ceramico'], [str(tec[1])] )
+####				except Exception, e:
+####					print str(e)
+####
+####			if tec[0] == 'Vernice':
+####				try:
+####					#print int(mis[1])
+####					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
+####					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['rivestimento'], [str(tec[1])] )
+####				except Exception, e:
+####					print str(e)
+####if __name__ == '__main__':
+####	main()
+####			try:
+####				temp_dataset = (str(self.DATA_LIST[i].definizione), int(mis[1]))
+####				contatore += int(mis[1])
+####				dataset.append(temp_dataset)
+####			except:
+####				pass
+####
+####	for i in range(len(data)):
+####		try:
+####			print data[i]
+####		except Exception, e:
+####			print str(e)
 ##
-##		for mis in misurazioni:
-##			if mis[0] == 'peso':
-##				print "mis2: " + str(mis[2])
-##				try:
-##					#print int(mis[1])
-##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
-##					if mis[2].find(',') != -1:
-##						misura = mis[2].replace(',', '.')
-##						misura = float(misura)
-##					else:
-##						misura = float(mis[2])
-##					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['peso'], [misura])
-##				except Exception, e:
-##					print str(e) + str(rec.numero_inventario)
+##	#f = open("/database.txt", "w")
+##	#f.write(str(db))
+##	#f.close()
+###db.update_for()
+##"""
+####def query_in_idusb(self):
+####	Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
+####	session = Session()
+####	value_list = ["[u'Coperto da', u'1']", "[u'Coperto da', u'2']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']"]
+####	res_list = []
+####	n = len(value_list)-1
+####	while value_list:
+####		chunk = value_list[0:n]
+####		value_list = value_list[n:]
+####		res_list.extend(session.query(US).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
+####		#res_list.extend(us for us, in session.query(US.us).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
+####
+####	return res_list
 ##
-##		for mis in misurazioni:
-##			if mis[0] == 'forme massime':
-##				try:
-##					print int(mis[1])
-##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
-##					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['forme_massime'], [int(mis[1])] )
-##				except Exception, e:
-##					print str(e)
-##
-##		for tec in tecnologie:
-##			if tec[0] == 'Impasto':
-##				try:
-##					#print int(mis[1])
-##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
-##					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['corpo_ceramico'], [str(tec[1])] )
-##				except Exception, e:
-##					print str(e)
-##
-##			if tec[0] == 'Vernice':
-##				try:
-##					#print int(mis[1])
-##					#update(self, table_class_str, id_table_str, value_id_list, columns_name_list, values_update_list):
-##					db.update( 'INVENTARIO_MATERIALI', 'id_invmat', [id_invmat], ['rivestimento'], [str(tec[1])] )
-##				except Exception, e:
-##					print str(e)
-if __name__ == '__main__':
-	main()
-##			try:
-##				temp_dataset = (str(self.DATA_LIST[i].definizione), int(mis[1]))
-##				contatore += int(mis[1])
-##				dataset.append(temp_dataset)
-##			except:
-##				pass
-##
-##	for i in range(len(data)):
-##		try:
-##			print data[i]
-##		except Exception, e:
-##			print str(e)
-
-	#f = open("/database.txt", "w")
-	#f.write(str(db))
-	#f.close()
-
-	#db.update_for()
-"""
-##def query_in_idusb(self):
-##	Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
-##	session = Session()
-##	value_list = ["[u'Coperto da', u'1']", "[u'Coperto da', u'2']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']", "[u'Coperto da', u'5']"]
-##	res_list = []
-##	n = len(value_list)-1
-##	while value_list:
-##		chunk = value_list[0:n]
-##		value_list = value_list[n:]
-##		res_list.extend(session.query(US).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
-##		#res_list.extend(us for us, in session.query(US.us).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
-##
-##	return res_list
-
