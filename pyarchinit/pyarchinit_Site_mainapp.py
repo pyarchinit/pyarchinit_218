@@ -2,13 +2,11 @@
 #-*- coding: utf-8 -*-
 """
 /***************************************************************************
-        pyArchInit Plugin  - A QGIS plugin to manage archaeological dataset
-        					 stored in Postgres
-                             -------------------
-    begin                : 2007-12-01
-    copyright            : (C) 2008 by Luca Mandolesi
-    email                : mandoluca at gmail.com
- ***************************************************************************/
+	pyArchInit Plugin  - A QGIS plugin to manage archaeological dataset stored in Database
+	begin                : 2007-12-01
+	copyright            : (C) 2008 by Luca Mandolesi
+	email                : mandoluca at gmail.com
+***************************************************************************/
 
 /***************************************************************************
  *                                                                         *
@@ -49,7 +47,9 @@ from test_area import Test_area
 ##from 
 
 class pyarchinit_Site(QDialog, Ui_DialogSite):
-	MSG_BOX_TITLE = "PyArchInit - Scheda Sito vv"
+	"""This class provides to manage the Site Sheet"""
+
+	MSG_BOX_TITLE = "pyArchInit - Scheda Sito"
 	DATA_LIST = []
 	DATA_LIST_REC_CORR = []
 	DATA_LIST_REC_TEMP = []
@@ -97,6 +97,8 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 				"definizione_sito"
 				]
 
+	DB_SERVER = "not defined" ####nuovo sistema sort
+
 	def __init__(self, iface):
 		self.iface = iface
 		self.pyQGIS = Pyarchinit_pyqgis(self.iface)
@@ -105,11 +107,12 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		self.currentLayerId = None
 		try:
 			self.on_pushButton_connect_pressed()
-		except:
-			pass
-			
+		except Exception, e:
+			QMessageBox.warning(self, "Sistema di connessione", str(e),  QMessageBox.Ok)
 
 	def enable_button(self, n):
+		"""This method Unable or Enable the GUI buttons on browse modality"""
+
 		self.pushButton_connect.setEnabled(n)
 
 		self.pushButton_new_rec.setEnabled(n)
@@ -129,10 +132,12 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		self.pushButton_new_search.setEnabled(n)
 
 		self.pushButton_search_go.setEnabled(n)
-		
+
 		self.pushButton_sort.setEnabled(n)
 
 	def enable_button_search(self, n):
+		"""This method Unable or Enable the GUI buttons on searching modality"""
+
 		self.pushButton_connect.setEnabled(n)
 
 		self.pushButton_new_rec.setEnabled(n)
@@ -154,9 +159,18 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		self.pushButton_sort.setEnabled(n)
 
 	def on_pushButton_connect_pressed(self):
+		"""This method establishes a connection between GUI and database"""
+
 		from pyarchinit_conn_strings import *
 		conn = Connection()
+
 		conn_str = conn.conn_str()
+
+		test_conn = conn_str.find('sqlite')
+
+		if test_conn == 0:
+			self.DB_SERVER = "sqlite"
+
 		try:
 			self.DB_MANAGER = Pyarchinit_db_management(conn_str)
 			self.DB_MANAGER.connection()
@@ -171,7 +185,6 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 				self.set_rec_counter(len(self.DATA_LIST), self.REC_CORR+1)
 				self.charge_list()
 				self.fill_fields()
-
 			else:
 				QMessageBox.warning(self, "BENVENUTO", "Benvenuto in pyArchInit" + self.NOME_SCHEDA + ". Il database e' vuoto. Premi 'Ok' e buon lavoro!",  QMessageBox.Ok)
 				self.charge_list()
@@ -220,7 +233,6 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		self.comboBox_definizione_sito.addItems(d_sito_vl)
 
 
-
 	#buttons functions
 	def on_pushButton_pdf_pressed(self):
 		pass
@@ -245,6 +257,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 			id_list = []
 			for i in self.DATA_LIST:
 				id_list.append(eval("i." + self.ID_TABLE))
+
 			self.DATA_LIST = []
 
 			temp_data_list = self.DB_MANAGER.query_sort(id_list, self.SORT_ITEMS_CONVERTED, self.SORT_MODE, self.MAPPER_TABLE_CLASS, self.ID_TABLE)
@@ -280,7 +293,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 			self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			self.empty_fields()
 			self.label_sort.setText(self.SORTED_ITEMS["n"])
-			
+
 			self.setComboBoxEnable(["self.comboBox_sito"],"True")
 			self.setComboBoxEditable(["self.comboBox_sito"],1)
 			self.setComboBoxEnable(["self.comboBox_definizione_sito"],"True")
@@ -368,6 +381,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 			return 0 #non ci sono errori di immissione
 
 	def on_pushButton_view_all_pressed(self):
+		
 		if self.check_record_state() == 1:
 			pass
 		else:
@@ -518,6 +532,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 				QMessageBox.warning(self, "ATTENZIONE", "Non e' stata impostata alcuna ricerca!!!",  QMessageBox.Ok)
 			else:
 				res = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS)
+
 				if bool(res) == False:
 					QMessageBox.warning(self, "ATTENZIONE", "Non e' stato trovato alcun record!",  QMessageBox.Ok)
 
@@ -531,15 +546,14 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 					self.setComboBoxEnable(["self.comboBox_sito"],"False")
 					self.setComboBoxEnable(["self.comboBox_definizione_sito"],"True")
 					self.setComboBoxEnable(["self.textEdit_descrizione_site"],"True")
-
 				else:
 					self.DATA_LIST = []
-
 					for i in res:
 						self.DATA_LIST.append(i)
-					
-					for i in self.DATA_LIST:
-						self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, self.ID_TABLE, [i.id_sito], ['find_check'], [1])
+
+##					if self.DB_SERVER == 'sqlite':
+##						for i in self.DATA_LIST:
+##							self.DB_MANAGER.update(self.MAPPER_TABLE_CLASS, self.ID_TABLE, [i.id_sito], ['find_check'], [1])
 
 					self.REC_TOT, self.REC_CORR = len(self.DATA_LIST), 0
 					self.DATA_LIST_REC_TEMP = self.DATA_LIST_REC_CORR = self.DATA_LIST[0] ####darivedere
@@ -584,11 +598,11 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		test.run_test()
 
 	def on_pushButton_draw_pressed(self):
-		self.pyQGIS.charge_layers_for_draw(["1", "2", "3", "4", "5", "7", "8", "9", "10", "12"])
+		self.pyQGIS.charge_layers_for_draw(["1", "2", "3", "4", "5", "7", "8", "9", "10", "12", "14", "16"])
 
 	def on_pushButton_sites_geometry_pressed(self):
 		sito = unicode(self.comboBox_sito.currentText())
-		self.pyQGIS.charge_sites_geometry(["1", "2", "3", "4", "8"], "sito", sito)
+		self.pyQGIS.charge_sites_geometry(["1", "2", "3", "4", "5", "7", "8", "9", "10", "11", "12", "13","14", "16"], "sito", sito)
 
 	def on_pushButton_draw_sito_pressed(self):
 		sing_layer = [self.DATA_LIST[self.REC_CORR]]
@@ -599,7 +613,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		if check == 1:
 			erp = exp_rel_pdf(unicode(self.comboBox_sito.currentText()))
 			erp.export_rel_pdf()
-			
+
 
 	def on_toolButton_draw_siti_toggled(self):
 		if self.toolButton_draw_siti.isChecked() == True:
@@ -639,14 +653,25 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 	#custom functions
 	def charge_records(self):
 		self.DATA_LIST = []
-		id_list = []
-		for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
-			id_list.append(eval("i."+ self.ID_TABLE))
 
-		temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+		if self.DB_SERVER == 'sqlite':
+			for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
+				self.DATA_LIST.append(i)
+		else:
+			id_list = []
+			for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
+				id_list.append(eval("i."+ self.ID_TABLE))
 
-		for i in temp_data_list:
-			self.DATA_LIST.append(i)
+			temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+
+			for i in temp_data_list:
+				self.DATA_LIST.append(i)
+
+		##		id_list = []
+		##		for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
+		##			id_list.append(eval("i."+ self.ID_TABLE))
+		##
+		##		temp_data_list = self.DB_MANAGER.query_sort([1], [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
 
 	def datestrfdate(self):
 		now = date.today()

@@ -104,6 +104,8 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 				"luogo_conservazione"
 				]
 
+	DB_SERVER = 'not defined'
+
 	def __init__(self, iface):
 		self.iface = iface
 		self.pyQGIS = Pyarchinit_pyqgis(self.iface)
@@ -112,8 +114,8 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 		self.currentLayerId = None
 		try:
 			self.on_pushButton_connect_pressed()
-		except:
-			pass
+		except Exception, e:
+			QMessageBox.warning(self, "Sistema di connessione", str(e),  QMessageBox.Ok)
 			
 
 	def enable_button(self, n):
@@ -164,6 +166,10 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 		from pyarchinit_conn_strings import *
 		conn = Connection()
 		conn_str = conn.conn_str()
+		test_conn = conn_str.find('sqlite')
+
+		if test_conn == 0:
+			self.DB_SERVER = "sqlite"
 		try:
 			self.DB_MANAGER = Pyarchinit_db_management(conn_str)
 			self.DB_MANAGER.connection()

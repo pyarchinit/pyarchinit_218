@@ -54,7 +54,22 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 							"9" : "pyarchinit_siti",
 							"10" : "pyarchinit_strutture_ipotesi",
 							"11" : "pyarchinit_us_view",
-							"12" : "pyunitastratigrafiche"}
+							"12" : "pyunitastratigrafiche",
+							"13" : "pyarchinit_documentazione",
+							"14" : "pyarchinit_doc_view",
+							"15" : "pyarchinit_us_view", #per documentazione
+							"16" : "pyarchinit_us_negative_doc", #per documentazione
+							"17" : "pyarchinit_us_negative_doc_view", #per documentazione
+							"18" : "pyarchinit_site_view",
+							"19" : "pyarchinit_siti_polygonal",
+							"20" : "pyarchinit_siti_polygonal_view",
+							"21" : "pyarchinit_site_view",
+							"22" : "pyarchinit_strutture_view",
+							"23" : "pyarchinit_tafonomia_view",
+							"24" : "pyarchinit_tafonomia",
+
+
+}
 
 	LAYERS_CONVERT_DIZ = {"pyarchinit_campionature": "Punti di campionatura", 
 						"pyarchinit_individui": "Individui", 

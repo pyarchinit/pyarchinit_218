@@ -101,6 +101,9 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 					'cont_per'
 					]
 
+	DB_SERVER = "not defined" ####nuovo sistema sort
+
+
 	def __init__(self, iface):
 		self.iface = iface
 		self.pyQGIS = Pyarchinit_pyqgis(self.iface)
@@ -163,6 +166,11 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 		from pyarchinit_conn_strings import *
 		conn = Connection()
 		conn_str = conn.conn_str()
+		test_conn = conn_str.find('sqlite')
+
+		if test_conn == 0:
+			self.DB_SERVER = "sqlite"
+
 		try:
 			self.DB_MANAGER = Pyarchinit_db_management(conn_str)
 			self.DB_MANAGER.connection()
@@ -736,13 +744,20 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 					
 	#custom functions
 	def charge_records(self):
-		id_list = []
 		self.DATA_LIST = []
-		for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
-			id_list.append(eval("i." + self.ID_TABLE))
-		temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
-		for i in temp_data_list:
-			self.DATA_LIST.append(i)
+
+		if self.DB_SERVER == 'sqlite':
+			for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
+				self.DATA_LIST.append(i)
+		else:
+			id_list = []
+			for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
+				id_list.append(eval("i."+ self.ID_TABLE))
+
+			temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+
+			for i in temp_data_list:
+				self.DATA_LIST.append(i)
 
 
 	def setComboBoxEditable(self, f, n):

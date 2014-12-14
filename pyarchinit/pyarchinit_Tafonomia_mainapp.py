@@ -180,20 +180,22 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 				"misure_tafonomia"
 				]
 
+	DB_SERVER = "not defined" ####nuovo sistema sort
+
 	def __init__(self, iface):
 		self.iface = iface
 		self.pyQGIS = Pyarchinit_pyqgis(self.iface)
-
 		QDialog.__init__(self)
 		self.setupUi(self)
-		
-		self.customize_GUI() #call for GUI customizations
 		self.currentLayerId = None
 		try:
 			self.on_pushButton_connect_pressed()
-		except:
-			pass
-		
+		except Exception, e:
+			QMessageBox.warning(self, "Sistema di connessione", str(e),  QMessageBox.Ok)
+		self.customize_GUI() #call for GUI customizations
+
+
+
 		#SIGNALS & SLOTS Functions
 		self.connect(self.comboBox_sito, SIGNAL("currentIndexChanged(int)"), self.charge_struttura_list)  
 		self.connect(self.comboBox_sito, SIGNAL("currentIndexChanged(int)"), self.charge_individuo_list)
@@ -265,9 +267,13 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 
 	def on_pushButton_connect_pressed(self):
 		from pyarchinit_conn_strings import *
-
 		conn = Connection()
 		conn_str = conn.conn_str()
+		test_conn = conn_str.find('sqlite')
+
+		if test_conn == 0:
+			self.DB_SERVER = "sqlite"
+
 		try:
 			self.DB_MANAGER = Pyarchinit_db_management(conn_str)
 			self.DB_MANAGER.connection()
@@ -1431,12 +1437,20 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 	#custom functions
 	def charge_records(self):
 		self.DATA_LIST = []
-		id_list = []
-		for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
-			id_list.append(eval("i."+ self.ID_TABLE))
-		temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
-		for i in temp_data_list:
-			self.DATA_LIST.append(i)
+
+		if self.DB_SERVER == 'sqlite':
+			for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
+				self.DATA_LIST.append(i)
+		else:
+			id_list = []
+			for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
+				id_list.append(eval("i."+ self.ID_TABLE))
+
+			temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+
+			for i in temp_data_list:
+				self.DATA_LIST.append(i)
+
 
 
 	def datestrfdate(self):

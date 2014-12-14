@@ -789,6 +789,32 @@ class Pyarchinit_db_management:
 
 		eval(session_exec_str)
 
+	def update_find_check(self, table_class_str, id_table_str, value_id, find_check_value):
+		self.table_class_str = table_class_str
+		self.id_table_str = id_table_str
+		self.value_id = value_id
+		self.find_check_value = find_check_value
+
+		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
+		session = Session()
+
+		session_exec_str = 'session.query(%s).filter(%s.%s == %s)).update(values = {"find_check": %d})' % (self.table_class_str, self.table_class_str, self.id_table_str, self.value_id, find_check_value)
+
+		eval(session_exec_str)
+
+
+	def empty_find_check(self, table_class_str, find_check_value):
+		self.table_class_str = table_class_str
+		self.find_check_value = find_check_value
+
+		Session = sessionmaker(bind=self.engine, autoflush=True, autocommit=True)
+		session = Session()
+
+		session_exec_str = 'session.query(%s).update(values = {"find_check": %d})' % (self.table_class_str, 0)
+
+		eval(session_exec_str)
+
+
 	def delete_one_record(self, tn, id_col, id_rec):
 		self.table_name = tn
 		self.id_column = id_col
@@ -856,6 +882,9 @@ class Pyarchinit_db_management:
 		session = Session()
 
 		cmd_str = "session.query(" + self.table_class + ").filter(" + self.table_class + "." + self.id_name + ".in_(id_list)).order_by(" + filter_params + ").all()"
+
+##		if self.conn_str.find("sqlite") == 1:
+##			cmd_str = "session.query(" + self.table_class + ").filter(" + self.table_class + ".fin_check" + ".in_([1])).order_by(" + filter_params + ").all()"
 
 		return eval(cmd_str)
 

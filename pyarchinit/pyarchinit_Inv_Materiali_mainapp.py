@@ -212,6 +212,8 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 	
 	QUANT_PATH = ('%s%s%s') % (HOME, os.sep, "pyarchinit_Quantificazioni_folder")
 
+	DB_SERVER = 'not defined'
+
 	def __init__(self, iface):
 		self.iface = iface
 
@@ -219,10 +221,11 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		self.setupUi(self)
 		self.customize_gui()
 		self.currentLayerId = None
-		#try:
-		self.on_pushButton_connect_pressed()
-		#except:
-		#pass
+		try:
+			self.on_pushButton_connect_pressed()
+		except Exception, e:
+			QMessageBox.warning(self, "Sistema di connessione", str(e),  QMessageBox.Ok)
+
 
 	def on_pushButtonQuant_pressed(self):
 		dlg = QuantPanelMain(self)
@@ -469,6 +472,12 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		#self.setComboBoxEditable(["self.comboBox_sito"],1)
 		conn = Connection()
 		conn_str = conn.conn_str()
+
+		test_conn = conn_str.find('sqlite')
+
+		if test_conn == 0:
+			self.DB_SERVER = "sqlite"
+
 		try:
 			self.DB_MANAGER = Pyarchinit_db_management(conn_str)
 			self.DB_MANAGER.connection()
@@ -1516,15 +1525,33 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		return rec_to_update
 
 	#custom functions
+######old system
+##	def charge_records(self):
+##		self.DATA_LIST = []
+##		id_list = []
+##		for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
+##			id_list.append(eval("i."+ self.ID_TABLE))
+##
+##		temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+##		for i in temp_data_list:
+##			self.DATA_LIST.append(i)
+
+
 	def charge_records(self):
 		self.DATA_LIST = []
-		id_list = []
-		for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
-			id_list.append(eval("i."+ self.ID_TABLE))
 
-		temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
-		for i in temp_data_list:
-			self.DATA_LIST.append(i)
+		if self.DB_SERVER == 'sqlite':
+			for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
+				self.DATA_LIST.append(i)
+		else:
+			id_list = []
+			for i in self.DB_MANAGER.query(eval(self.MAPPER_TABLE_CLASS)):
+				id_list.append(eval("i."+ self.ID_TABLE))
+
+			temp_data_list = self.DB_MANAGER.query_sort(id_list, [self.ID_TABLE], 'asc', self.MAPPER_TABLE_CLASS, self.ID_TABLE)
+			for i in temp_data_list:
+				self.DATA_LIST.append(i)
+
 
 	def setComboBoxEditable(self, f, n):
 		field_names = f

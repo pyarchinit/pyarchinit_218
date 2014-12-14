@@ -31,7 +31,7 @@ import sys
 ##  return "Under Testing - Use for testing only - PyArchInit it's tool to manage archaeological dataset - Only Windows 7 Tested"
 ##
 ##def version():
-##  return "0.1.2"
+##  return "0.1.6"
 ##
 ##def plugin_type():
 ##  return QgisPlugin.UI # UI plugin
