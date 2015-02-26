@@ -4,9 +4,9 @@
 /***************************************************************************
         pyArchInit Plugin  - A QGIS plugin to manage archaeological dataset
                              -------------------
-    begin                : 2007-12-01
-    copyright            : (C) 2008 by Luca Mandolesi
-    email                : mandoluca at gmail.com
+        begin                : 2007-12-01
+        copyright            : (C) 2008 by Luca Mandolesi
+        email                : mandoluca at gmail.com
  ***************************************************************************/
 
 /***************************************************************************
@@ -73,9 +73,30 @@ from pyarchinit_Thesaurus_mainapp import pyarchinit_Thesaurus
 from pyarchinit_Documentazione_mainapp import pyarchinit_Documentazione
 
 class PyArchInitPlugin:
+
+	if os.name == 'posix':
+		HOME = os.environ['HOME']
+	elif os.name == 'nt':
+		HOME = os.environ['HOMEPATH']
+
+	PARAMS_DICT={'SERVER':'',
+				'HOST': '',
+				'DATABASE':'',
+				'PASSWORD':'',
+				'PORT':'',
+				'USER':'',
+				'THUMB_PATH':'',
+				'EXPERIMENTAL':''}
+
+
+	path_rel = os.path.join(os.sep, str(HOME), 'pyarchinit_DB_folder', 'config.cfg')
+	conf = open(path_rel, "r")
+	data = conf.read()
+	PARAMS_DICT = eval(data)
+
+
 	def __init__(self, iface):
 		self.iface = iface
-		
 		userPluginPath = QFileInfo( QgsApplication.qgisUserDbFilePath() ).path() + "/python/plugins/pyarchinit"
 		systemPluginPath = QgsApplication.prefixPath() + "/python/plugins/pyarchinit"
 
@@ -90,225 +111,315 @@ class PyArchInitPlugin:
 		else:
 			translationPath = systemPluginPath + "/i18n/pyarchinit_plugin_" + localeFullName + ".qm"
 
-
 		self.localePath = translationPath
 		if QFileInfo( self.localePath ).exists():
 			self.translator = QTranslator()
 			self.translator.load( self.localePath )
 			QCoreApplication.installTranslator( self.translator )
 
-
 	def initGui(self):
+		settings = QSettings()
 		self.action = QAction(QIcon(":/plugins/pyarchinit/icons/pai_us.png"), "pyArchInit Main Panel", self.iface.mainWindow())
 		QObject.connect(self.action, SIGNAL("triggered()"), self.showHideDockWidget)
-		
+
 		# dock widget
 		self.dockWidget = PyarchinitPluginDialog(self.iface)
 		self.iface.addDockWidget(Qt.LeftDockWidgetArea, self.dockWidget)
-		
+
+		#TOOLBAR
+		self.toolBar = self.iface.addToolBar("pyArchInit")
+		self.toolBar.setObjectName("pyArchInit")
+
+		self.dataToolButton = QToolButton(self.toolBar)
+		self.dataToolButton.setPopupMode(QToolButton.MenuButtonPopup)
+
+		######  Section dedicated to the basic data entry
+		#add Actions data
 		icon_site = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconSite.png'))
-		self.actionSite = QAction(QIcon(icon_site), "Scheda sito", self.iface.mainWindow())
-		self.actionSite.setWhatsThis("Scheda sito")
+		self.actionSite = QAction(QIcon(icon_site), "Siti", self.iface.mainWindow())
+		self.actionSite.setWhatsThis("Siti")
 		QObject.connect(self.actionSite, SIGNAL("triggered()"), self.runSite)
 
-		icon_per = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconPer.png'))
-		self.actionPer = QAction(QIcon(icon_per), "Scheda periodizzazione", self.iface.mainWindow())
-		self.actionPer.setWhatsThis("Scheda periodizzazione")
-		QObject.connect(self.actionPer, SIGNAL("triggered()"), self.runPer)
-
-		icon_Struttura = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconStrutt.png'))
-		self.actionStruttura = QAction(QIcon(icon_Struttura), "Scheda struttura", self.iface.mainWindow())
-		QObject.connect(self.actionStruttura, SIGNAL("triggered()"), self.runStruttura)
-
 		icon_US = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconSus.png'))
-		self.actionUS = QAction(QIcon((icon_US)), u"Scheda unità stratigrafica - US", self.iface.mainWindow())
-		self.actionUS.setWhatsThis(u"Scheda di unità stratigrafica - US")
+		self.actionUS = QAction(QIcon((icon_US)), u"US", self.iface.mainWindow())
+		self.actionUS.setWhatsThis(u"US")
 		QObject.connect(self.actionUS, SIGNAL("triggered()"), self.runUS)
 
 		icon_Finds = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconFinds.png'))
-		self.actionInr = QAction(QIcon(icon_Finds), "Scheda inventario reperti", self.iface.mainWindow())
-		self.actionInr.setWhatsThis("Scheda inventario reperti")
+		self.actionInr = QAction(QIcon(icon_Finds), "Reperti", self.iface.mainWindow())
+		self.actionInr.setWhatsThis("Reperti")
 		QObject.connect(self.actionInr, SIGNAL("triggered()"), self.runInr)
 
-##		icon_Upd = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconUpd.png'))
-##		self.actionUpd = QAction(QIcon(icon_Upd), "Aggiornamento valori - deprecatere", self.iface.mainWindow())
-##		self.actionUpd.setWhatsThis("Aggiornamento Valori")
-##		QObject.connect(self.actionUpd, SIGNAL("triggered()"), self.runUpd)
-		
-		icon_Con = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconConn.png'))
-		self.actionConf = QAction(QIcon(icon_Con), "Configurazione parametri di connessione al Database", self.iface.mainWindow())
-		self.actionConf.setWhatsThis("Configurazione parametri di connessione al Database")
-		QObject.connect(self.actionConf, SIGNAL("triggered()"), self.runConf)
+		icon_camp_exp = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','champion.png'))
+		self.actionCampioni = QAction(QIcon(icon_camp_exp), "Campioni", self.iface.mainWindow())
+		self.actionCampioni.setWhatsThis("Campioni")
+		QObject.connect(self.actionCampioni, SIGNAL("triggered()"), self.runCampioni)
 
-		icon_Info = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconInfo.png'))
-		self.actionInfo = QAction(QIcon(icon_Info), "Plugin info", self.iface.mainWindow())
-		self.actionInfo.setWhatsThis("Plugin info")
-		QObject.connect(self.actionInfo, SIGNAL("triggered()"), self.runInfo)
+		self.dataToolButton.addActions( [ self.actionSite, self.actionUS, self.actionInr, self.actionCampioni ] )
+		self.dataToolButton.setDefaultAction(self.actionSite)
 
-		icon_GisTimeController = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconTimeControll.png'))
-		self.actionGisTimeController = QAction(QIcon(icon_GisTimeController), "Gis-Time controller", self.iface.mainWindow())
-		self.actionGisTimeController.setWhatsThis("Gis-Time controller")
-		QObject.connect(self.actionGisTimeController, SIGNAL("triggered()"), self.runGisTimeController)
+##		self.actionSite.setCheckable(True)
+##		self.actionUS.setCheckable(True)
+##		self.actionInr.setCheckable(True)
+##		self.actionCampioni.setCheckable(True)
 
-		icon_imageViewer = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','photo.png'))
-		self.actionimageViewer = QAction(QIcon(icon_imageViewer), "Image viewer", self.iface.mainWindow())
-		self.actionimageViewer.setWhatsThis("Image viewer")
-		QObject.connect(self.actionimageViewer, SIGNAL("triggered()"), self.runImageViewer)
+		self.toolBar.addWidget( self.dataToolButton )
+
+		self.toolBar.addSeparator()
+
+		######  Section dedicated to the interpretations
+		#add Actions interpretation
+		self.interprToolButton = QToolButton(self.toolBar)
+		self.interprToolButton.setPopupMode(QToolButton.MenuButtonPopup)
+
+		icon_per = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconPer.png'))
+		self.actionPer = QAction(QIcon(icon_per), "Periodizzazione", self.iface.mainWindow())
+		self.actionPer.setWhatsThis("Periodizzazione")
+		QObject.connect(self.actionPer, SIGNAL("triggered()"), self.runPer)
+
+		icon_Struttura = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconStrutt.png'))
+		self.actionStruttura = QAction(QIcon(icon_Struttura), "Strutture", self.iface.mainWindow())
+		self.actionPer.setWhatsThis("Strutture")
+		QObject.connect(self.actionStruttura, SIGNAL("triggered()"), self.runStruttura)
+
+		self.interprToolButton.addActions( [ self.actionStruttura, self.actionPer ] )
+		self.interprToolButton.setDefaultAction(self.actionStruttura)
+
+##		self.actionPer.setCheckable(True)
+##		self.actionStruttura.setCheckable(True)
+
+		self.toolBar.addWidget( self.interprToolButton )
+
+		self.toolBar.addSeparator()
+
+		######  Section dedicated to the funerary archaeology
+		#add Actions funerary archaeology
+		self.funeraryToolButton = QToolButton(self.toolBar)
+		self.funeraryToolButton.setPopupMode(QToolButton.MenuButtonPopup)
 
 		icon_Schedaind = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconIND.png'))
-		self.actionSchedaind = QAction(QIcon(icon_Schedaind), "Scheda individuo", self.iface.mainWindow())
-		self.actionSchedaind.setWhatsThis("Scheda individuo")
+		self.actionSchedaind = QAction(QIcon(icon_Schedaind), "Individui", self.iface.mainWindow())
+		self.actionSchedaind.setWhatsThis("Individui")
 		QObject.connect(self.actionSchedaind, SIGNAL("triggered()"), self.runSchedaind)
 
-		icon_Detsesso = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconSesso.png'))
-		self.actionDetsesso = QAction(QIcon(icon_Detsesso), "Scheda determinazione del sesso", self.iface.mainWindow())
-		self.actionDetsesso.setWhatsThis("Scheda determinazione del sesso")
-		QObject.connect(self.actionDetsesso, SIGNAL("triggered()"), self.runDetsesso)
-
-		icon_Deteta = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconEta.png'))
-		self.actionDeteta = QAction(QIcon(icon_Deteta), "Scheda determinazione dell'età", self.iface.mainWindow())
-		self.actionSchedaind.setWhatsThis("Scheda determinazione dell'età")
-		QObject.connect(self.actionDeteta, SIGNAL("triggered()"), self.runDeteta)
-
 		icon_Tafonomia = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconGrave.png'))
-		self.actionTafonomia = QAction(QIcon(icon_Tafonomia), "Scheda tafonomica", self.iface.mainWindow())
-		self.actionTafonomia.setWhatsThis("Scheda tafonomica")
+		self.actionTafonomia = QAction(QIcon(icon_Tafonomia), "Tafonomica/Sepolture", self.iface.mainWindow())
+		self.actionTafonomia.setWhatsThis("Tafonomica/Sepolture")
 		QObject.connect(self.actionTafonomia, SIGNAL("triggered()"), self.runTafonomia)
 
-		icon_Archeozoology = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconMegacero.png'))
-		self.actionArcheozoology = QAction(QIcon(icon_Archeozoology), "Scheda archeozoologia", self.iface.mainWindow())
-		self.actionArcheozoology.setWhatsThis("Scheda archeozoologia")
-		QObject.connect(self.actionArcheozoology, SIGNAL("triggered()"), self.runArcheozoology)
+		if self.PARAMS_DICT['EXPERIMENTAL'] == 'Si':
+			icon_Detsesso = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconSesso.png'))
+			self.actionDetsesso = QAction(QIcon(icon_Detsesso), "Determinazione Sesso", self.iface.mainWindow())
+			self.actionDetsesso.setWhatsThis("Determinazione del sesso")
+			QObject.connect(self.actionDetsesso, SIGNAL("triggered()"), self.runDetsesso)
 
-		icon_UT = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconUT.png'))
-		self.actionUT = QAction(QIcon(icon_UT), "Scheda UT", self.iface.mainWindow())
-		self.actionUT.setWhatsThis("Scheda UT")
-		QObject.connect(self.actionUT, SIGNAL("triggered()"), self.runUT)
+			icon_Deteta = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconEta.png'))
+			self.actionDeteta = QAction(QIcon(icon_Deteta), u"Determinazione dell'età", self.iface.mainWindow())
+			self.actionSchedaind.setWhatsThis(u"Determinazione dell'età")
+			QObject.connect(self.actionDeteta, SIGNAL("triggered()"), self.runDeteta)
 
-		icon_Directory_export = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','directoryExp.png'))
-		self.actionImages_Directory_export = QAction(QIcon(icon_Directory_export), "Esportazione immagini per directory", self.iface.mainWindow())
-		self.actionImages_Directory_export.setWhatsThis("Esportazione immagini per directory")
-		QObject.connect(self.actionImages_Directory_export, SIGNAL("triggered()"),self.runImages_directory_export)
+		self.funeraryToolButton.addActions( [ self.actionSchedaind, self.actionTafonomia ] )
+		self.funeraryToolButton.setDefaultAction(self.actionSchedaind)
 
-		icon_Comparision = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','comparision.png'))
-		self.actionComparision = QAction(QIcon(icon_Comparision), "Comparazione immagini", self.iface.mainWindow())
-		self.actionComparision.setWhatsThis("Comparazione immagini")
-		QObject.connect(self.actionComparision, SIGNAL("triggered()"),self.runComparision)
+		if self.PARAMS_DICT['EXPERIMENTAL'] == 'Si':
+			self.funeraryToolButton.addActions( [ self.actionDetsesso, self.actionDeteta ] )
+
+##		self.actionSchedaind.setCheckable(True)
+##		self.actionTafonomia.setCheckable(True)
+
+		self.toolBar.addWidget( self.funeraryToolButton )
+
+		self.toolBar.addSeparator()
+
+		######  Section dedicated to the topographical research
+		if self.PARAMS_DICT['EXPERIMENTAL'] == 'Si':
+			self.topoToolButton = QToolButton(self.toolBar)
+			self.topoToolButton.setPopupMode(QToolButton.MenuButtonPopup)
+
+			icon_UT = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconUT.png'))
+			self.actionUT = QAction(QIcon(icon_UT), u"Unità Topografiche", self.iface.mainWindow())
+			self.actionUT.setWhatsThis(u"Unità Topografiche")
+			QObject.connect(self.actionUT, SIGNAL("triggered()"), self.runUT)
+
+			self.topoToolButton.addActions( [ self.actionUT ] )
+			self.topoToolButton.setDefaultAction(self.actionUT)
+
+##			self.actionUT.setCheckable(True)
+
+			self.toolBar.addWidget( self.topoToolButton )
+
+			self.toolBar.addSeparator()
+
+		######  Section dedicated to the documentation
+		#add Actions documentation
+		self.docToolButton = QToolButton(self.toolBar)
+		self.docToolButton.setPopupMode(QToolButton.MenuButtonPopup)
+
+		icon_documentazione = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','icondoc.png'))
+		self.actionDocumentazione = QAction(QIcon(icon_documentazione), "Scheda Documentazione", self.iface.mainWindow())
+		self.actionDocumentazione.setWhatsThis("Documentazione")
+		QObject.connect(self.actionDocumentazione, SIGNAL("triggered()"), self.runDocumentazione)
+
+		if self.PARAMS_DICT['EXPERIMENTAL'] == 'Si':
+			icon_imageViewer = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','photo.png'))
+			self.actionimageViewer = QAction(QIcon(icon_imageViewer), "Gestione immagini", self.iface.mainWindow())
+			self.actionimageViewer.setWhatsThis("Gestione immagini")
+			QObject.connect(self.actionimageViewer, SIGNAL("triggered()"), self.runImageViewer)
+
+			icon_Directory_export = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','directoryExp.png'))
+			self.actionImages_Directory_export = QAction(QIcon(icon_Directory_export), "Esportazione immagini", self.iface.mainWindow())
+			self.actionImages_Directory_export.setWhatsThis("Esportazione immagini")
+			QObject.connect(self.actionImages_Directory_export, SIGNAL("triggered()"),self.runImages_directory_export)
+
+			icon_pdf_exp = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','pdf-icon.png'))
+			self.actionpdfExp = QAction(QIcon(icon_pdf_exp), "Esportazione PDF", self.iface.mainWindow())
+			self.actionpdfExp.setWhatsThis("Esportazione PDF")
+			QObject.connect(self.actionpdfExp, SIGNAL("triggered()"), self.runPdfexp)
+
+		self.docToolButton.addActions( [ self.actionDocumentazione ] )
+
+		if self.PARAMS_DICT['EXPERIMENTAL'] == 'Si':
+			self.docToolButton.addActions( [ self.actionpdfExp, self.actionimageViewer, self.actionpdfExp, self.actionImages_Directory_export] )
+
+		self.docToolButton.setDefaultAction( self.actionDocumentazione)
+
+##		self.actionDocumentazione.setCheckable(True)
+
+		if self.PARAMS_DICT['EXPERIMENTAL'] == 'Si':
+			self.actionImages_Directory_export.setCheckable(True)
+			self.actionpdfExp.setCheckable(True)
+			self.actionimageViewer.setCheckable(True)
+
+		self.toolBar.addWidget( self.docToolButton )
+
+		self.toolBar.addSeparator()
+
+		######  Section dedicated to elaborations
+		if self.PARAMS_DICT['EXPERIMENTAL'] == 'Si':
+			self.elabToolButton = QToolButton(self.toolBar)
+			self.elabToolButton.setPopupMode(QToolButton.MenuButtonPopup)
+
+			#add Actions elaboration
+			icon_Archeozoology = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconMegacero.png'))
+			self.actionArcheozoology = QAction(QIcon(icon_Archeozoology), "Statistiche Archeozoologiche", self.iface.mainWindow())
+			self.actionArcheozoology.setWhatsThis("Statistiche Archeozoologiche")
+			QObject.connect(self.actionArcheozoology, SIGNAL("triggered()"), self.runArcheozoology)
+
+			icon_GisTimeController = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconTimeControll.png'))
+			self.actionGisTimeController = QAction(QIcon(icon_GisTimeController), "Time Manager", self.iface.mainWindow())
+			self.actionGisTimeController.setWhatsThis("Time Manager")
+			QObject.connect(self.actionGisTimeController, SIGNAL("triggered()"), self.runGisTimeController)
+
+			icon_Comparision = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','comparision.png'))
+			self.actionComparision = QAction(QIcon(icon_Comparision), "Comparazione immagini", self.iface.mainWindow())
+			self.actionComparision.setWhatsThis("Comparazione immagini")
+			QObject.connect(self.actionComparision, SIGNAL("triggered()"),self.runComparision)
+
+			self.elabToolButton.addActions( [ self.actionArcheozoology, self.actionComparision,self.actionGisTimeController ] )
+			self.elabToolButton.setDefaultAction(self.actionArcheozoology)
+
+##			self.actionArcheozoology.setCheckable(True)
+##			self.actionComparision.setCheckable(True)
+##			self.actionGisTimeController.setCheckable(True)
+
+			self.toolBar.addWidget( self.elabToolButton )
+
+			self.toolBar.addSeparator()
+
+		######  Section dedicated to the plugin management
+
+		self.manageToolButton = QToolButton(self.toolBar)
+		self.manageToolButton.setPopupMode(QToolButton.MenuButtonPopup)
+
+		icon_thesaurus = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','thesaurusicon.png'))
+		self.actionThesaurus = QAction(QIcon(icon_thesaurus), "Thesaurus sigle", self.iface.mainWindow())
+		self.actionThesaurus.setWhatsThis("Thesaurus sigle")
+		QObject.connect(self.actionThesaurus, SIGNAL("triggered()"), self.runThesaurus)
+
+		icon_Con = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconConn.png'))
+		self.actionConf = QAction(QIcon(icon_Con), "Configurazione plugin", self.iface.mainWindow())
+		self.actionConf.setWhatsThis("Configurazione plugin")
+		QObject.connect(self.actionConf, SIGNAL("triggered()"), self.runConf)
 
 		icon_Dbmanagment = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','backup.png'))
 		self.actionDbmanagment = QAction(QIcon(icon_Dbmanagment), "Gestione database", self.iface.mainWindow())
 		self.actionDbmanagment.setWhatsThis("Gestione database")
 		QObject.connect(self.actionDbmanagment, SIGNAL("triggered()"), self.runDbmanagment)
 
-		icon_pdf_exp = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','pdf-icon.png'))
-		self.actionpdfExp = QAction(QIcon(icon_pdf_exp), "Sistema di esportazione PDF", self.iface.mainWindow())
-		self.actionpdfExp.setWhatsThis("Sistema di esportazione PDF")
-		QObject.connect(self.actionpdfExp, SIGNAL("triggered()"), self.runPdfexp)
+		icon_Info = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','iconInfo.png'))
+		self.actionInfo = QAction(QIcon(icon_Info), "Plugin info", self.iface.mainWindow())
+		self.actionInfo.setWhatsThis("Plugin info")
+		QObject.connect(self.actionInfo, SIGNAL("triggered()"), self.runInfo)
 
-		icon_camp_exp = ('%s%s')	 % (filepath, os.path.join(os.sep, 'icons','champion.png'))
-		self.actionCampioni = QAction(QIcon(icon_camp_exp), "Scheda campioni", self.iface.mainWindow())
-		self.actionCampioni.setWhatsThis("Scheda campioni")
-		QObject.connect(self.actionCampioni, SIGNAL("triggered()"), self.runCampioni)
+		self.manageToolButton.addActions( [ self.actionConf, self.actionThesaurus, self.actionDbmanagment, self.actionInfo ] )
+		self.manageToolButton.setDefaultAction( self.actionConf )
 
-		icon_thesaurus = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','thesaurusicon.png'))
-		self.actionThesaurus = QAction(QIcon(icon_thesaurus), "Scheda thesaurus sigle", self.iface.mainWindow())
-		self.actionThesaurus.setWhatsThis("Scheda thesaurus sigle")
-		QObject.connect(self.actionThesaurus, SIGNAL("triggered()"), self.runThesaurus)
+##			self.actionThesaurus.setCheckable(True)
+##			self.actionConf.setCheckable(True)
+##			self.actionDbmanagment.setCheckable(True)
+##			self.actionInfo.setCheckable(True)
 
-		icon_documentazione = ('%s%s') % (filepath, os.path.join(os.sep, 'icons','icondoc.png'))
-		self.actionDocumentazione = QAction(QIcon(icon_documentazione), "Scheda Documentazione sigle", self.iface.mainWindow())
-		self.actionDocumentazione.setWhatsThis("Scheda Documentazione sigle")
-		QObject.connect(self.actionDocumentazione, SIGNAL("triggered()"), self.runDocumentazione)
+		self.toolBar.addWidget( self.manageToolButton )
 
+		self.toolBar.addSeparator()
+
+		#menu
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionSite)
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionUS)
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionInr)
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionCampioni)
+
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionStruttura)
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionPer)
+
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionSchedaind)
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionTafonomia)
+
+		if self.PARAMS_DICT['EXPERIMENTAL'] == 'Si':
+			self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionDetsesso)
+			self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionDeteta)
+			self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionUT)
+
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionDocumentazione)
+
+		if self.PARAMS_DICT['EXPERIMENTAL'] == 'Si':
+			self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionimageViewer)
+			self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionpdfExp)
+			self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionImages_Directory_export)
+
+			self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionArcheozoology)
+			self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionComparision)
+			self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionGisTimeController)
+
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionConf)
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionThesaurus)
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionDbmanagment)
+		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionInfo)
 
 		#MENU
 		self.menu=QMenu("pyArchInit")
-
 		#self.pyarchinitSite = pyarchinit_Site(self.iface)
-
 		self.menu.addActions([self.actionSite, self.actionUS, self.actionInr, self.actionCampioni])
 		self.menu.addSeparator()
 		self.menu.addActions([self.actionPer, self.actionStruttura])
 		self.menu.addSeparator()
-		self.menu.addActions([self.actionTafonomia, self.actionSchedaind,self.actionDetsesso,self.actionDeteta])
+		self.menu.addActions([self.actionTafonomia, self.actionSchedaind])
+		if self.PARAMS_DICT['EXPERIMENTAL'] == 'Si':
+			self.menu.addActions([self.actionDetsesso,self.actionDeteta])
 		self.menu.addSeparator()
-		self.menu.addActions([self.actionArcheozoology])
+		if self.PARAMS_DICT['EXPERIMENTAL'] == 'Si':
+			self.menu.addActions([self.actionUT])
+		self.menu.addActions([self.actionDocumentazione])
+		if self.PARAMS_DICT['EXPERIMENTAL'] == 'Si':
+			self.menu.addActions([self.actionimageViewer, self.actionpdfExp, self.actionImages_Directory_export])
 		self.menu.addSeparator()
-		self.menu.addActions([self.actionUT])
+		if self.PARAMS_DICT['EXPERIMENTAL'] == 'Si':
+			self.menu.addActions([self.actionArcheozoology, self.actionComparision, self.actionGisTimeController])
 		self.menu.addSeparator()
-		self.menu.addActions([self.actionGisTimeController])
-		self.menu.addSeparator()
-		self.menu.addActions([self.actionimageViewer, self.actionImages_Directory_export, self.actionpdfExp, self.actionComparision, self.actionDocumentazione])
-		self.menu.addSeparator()
-		self.menu.addActions([self.actionConf, self.actionThesaurus])
-		self.menu.addSeparator()
-		self.menu.addActions([self.actionInfo])
-		self.menu.addSeparator()
-		self.menu.addActions([self.actionDbmanagment])
-
-
+		self.menu.addActions([self.actionConf, self.actionThesaurus, self.actionDbmanagment, self.actionInfo])
 		menuBar = self.iface.mainWindow().menuBar()
 		menuBar.addMenu(self.menu)
-
-		#TOOLBAR
-		self.toolBar = self.iface.addToolBar("pyArchInit - Archaeological GIS Tools")
-		self.toolBar.addAction(self.actionSite)
-		self.toolBar.addAction(self.actionPer)
-		self.toolBar.addAction(self.actionStruttura)
-		self.toolBar.addAction(self.actionUS)
-		self.toolBar.addAction(self.actionInr)
-		self.toolBar.addAction(self.actionCampioni)
-		self.toolBar.addSeparator()
-		self.toolBar.addAction(self.actionTafonomia)
-		self.toolBar.addAction(self.actionSchedaind)
-		self.toolBar.addAction(self.actionDetsesso)
-		self.toolBar.addAction(self.actionDeteta)
-		self.toolBar.addSeparator()
-		self.toolBar.addAction(self.actionArcheozoology)
-		self.toolBar.addSeparator()
-		self.toolBar.addAction(self.actionUT)
-		self.toolBar.addSeparator()
-		self.toolBar.addAction(self.actionGisTimeController)
-		#self.toolBar.addAction(self.actionUpd)
-		self.toolBar.addSeparator()
-		self.toolBar.addAction(self.actionimageViewer)
-		self.toolBar.addAction(self.actionImages_Directory_export)
-		self.toolBar.addAction(self.actionpdfExp)
-		self.toolBar.addAction(self.actionComparision)
-		self.toolBar.addAction(self.actionDocumentazione)
-		self.toolBar.addSeparator()
-		self.toolBar.addAction(self.actionConf)
-		self.toolBar.addAction(self.actionThesaurus)
-		self.toolBar.addSeparator()
-		self.toolBar.addAction(self.actionInfo)
-		self.toolBar.addSeparator()
-		self.toolBar.addAction(self.actionDbmanagment)
-
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionSite)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionPer)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionStruttura)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionUS)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionInr)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionCampioni)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionTafonomia)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionSchedaind)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionDetsesso)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionDeteta)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionArcheozoology)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionUT)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionGisTimeController)
-		#self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionUpd)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionimageViewer)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionComparision)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionDocumentazione)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionImages_Directory_export)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionpdfExp)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionConf)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionThesaurus)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionInfo)
-		self.iface.addPluginToMenu("&pyArchInit - Archaeological GIS Tools", self.actionDbmanagment)
-
-
+##
 	def runSite(self):
 		pluginGui = pyarchinit_Site(self.iface)
 		pluginGui.show()
@@ -343,11 +454,6 @@ class PyArchInitPlugin:
 		pluginGui = pyarchinit_Gis_Time_Controller(self.iface)
 		pluginGui.show()
 		self.pluginGui = pluginGui # save
-
-##	def runUpd(self):
-##		pluginGui = pyarchinit_Upd_Values(self.iface)
-##		pluginGui.show()
-##		self.pluginGui = pluginGui # save
 
 	def runConf(self):
 		pluginConfGui = pyArchInitDialog_Config()
@@ -405,7 +511,7 @@ class PyArchInitPlugin:
 		self.pluginGui = pluginComparision # save
 
 	def runDbmanagment(self):
-		pluginDbmanagment = pyarchinit_dbmanagment(self)
+		pluginDbmanagment = pyarchinit_dbmanagment(self.iface)
 		pluginDbmanagment.show()
 		self.pluginGui = pluginDbmanagment # save
 
@@ -415,12 +521,12 @@ class PyArchInitPlugin:
 		self.pluginGui =pluginPdfexp # save
 
 	def runThesaurus(self):
-		pluginThesaurus = pyarchinit_Thesaurus(self)
+		pluginThesaurus = pyarchinit_Thesaurus(self.iface)
 		pluginThesaurus.show()
 		self.pluginGui =pluginThesaurus # save
 
 	def runDocumentazione(self):
-		pluginDocumentazione = pyarchinit_Documentazione(self)
+		pluginDocumentazione = pyarchinit_Documentazione(self.iface)
 		pluginDocumentazione.show()
 		self.pluginGui =pluginDocumentazione # save
 
@@ -433,22 +539,22 @@ class PyArchInitPlugin:
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionInr)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionCampioni)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionSchedaind)
-		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionDetsesso)
-		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionDeteta)
-		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionTafonomia)
-		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionArcheozoology)
-		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionUT)
-		#self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionUpd)
-		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionimageViewer)
-		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionImages_Directory_export)
-		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionpdfExp)
-		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionComparision)
+		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionDocumentazione)
+		if self.PARAMS_DICT['EXPERIMENTAL'] == 'Si':
+			self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionDetsesso)
+			self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionDeteta)
+			self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionTafonomia)
+			self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionArcheozoology)
+			self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionUT)
+			self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionimageViewer)
+			self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionImages_Directory_export)
+			self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionpdfExp)
+			self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionComparision)
+			self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionGisTimeController)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionConf)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionThesaurus)
-		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionGisTimeController)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionInfo)
 		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionDbmanagment)
-		self.iface.removePluginMenu("&pyArchInit - Archaeological GIS Tools",self.actionDocumentazione)
 
 		self.iface.removeToolBarIcon(self.actionSite)
 		self.iface.removeToolBarIcon(self.actionPer)
@@ -458,21 +564,22 @@ class PyArchInitPlugin:
 		self.iface.removeToolBarIcon(self.actionCampioni)
 		self.iface.removeToolBarIcon(self.actionTafonomia)
 		self.iface.removeToolBarIcon(self.actionSchedaind)
-		self.iface.removeToolBarIcon(self.actionDetsesso)
-		self.iface.removeToolBarIcon(self.actionDeteta)
-		self.iface.removeToolBarIcon(self.actionArcheozoology)
-		self.iface.removeToolBarIcon(self.actionUT)
-		#self.iface.removeToolBarIcon(self.actionUpd)
-		self.iface.removeToolBarIcon(self.actionimageViewer)
-		self.iface.removeToolBarIcon(self.actionImages_Directory_export)
-		self.iface.removeToolBarIcon(self.actionpdfExp)
-		self.iface.removeToolBarIcon(self.actionComparision)
-		self.iface.removeToolBarIcon(self.actionGisTimeController)
+		self.iface.removeToolBarIcon(self.actionDocumentazione)
+		if self.PARAMS_DICT['EXPERIMENTAL'] == 'Si':
+			self.iface.removeToolBarIcon(self.actionDetsesso)
+			self.iface.removeToolBarIcon(self.actionDeteta)
+			self.iface.removeToolBarIcon(self.actionArcheozoology)
+			self.iface.removeToolBarIcon(self.actionUT)
+			#self.iface.removeToolBarIcon(self.actionUpd)
+			self.iface.removeToolBarIcon(self.actionimageViewer)
+			self.iface.removeToolBarIcon(self.actionImages_Directory_export)
+			self.iface.removeToolBarIcon(self.actionpdfExp)
+			self.iface.removeToolBarIcon(self.actionComparision)
+			self.iface.removeToolBarIcon(self.actionGisTimeController)
 		self.iface.removeToolBarIcon(self.actionConf)
 		self.iface.removeToolBarIcon(self.actionThesaurus)
 		self.iface.removeToolBarIcon(self.actionInfo)
 		self.iface.removeToolBarIcon(self.actionDbmanagment)
-		self.iface.removeToolBarIcon(self.actionDocumentazione)
 
 		# remove tool bar
 		del self.toolBar

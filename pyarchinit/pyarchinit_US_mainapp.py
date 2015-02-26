@@ -186,6 +186,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.charge_periodo_iniz_list()
 		self.charge_periodo_fin_list()
 		self.fill_fields()
+		self.customize_GUI()
 
 	def charge_periodo_iniz_list(self):
 		sito =unicode(self.comboBox_sito.currentText())

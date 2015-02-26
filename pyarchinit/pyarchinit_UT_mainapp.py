@@ -705,27 +705,32 @@ class pyarchinit_UT(QDialog, Ui_DialogUT):
 			else:
 				nr_ut = None
 
+			if self.lineEdit_quota.text() != "":
+				quota = float(self.lineEdit_quota.text())
+			else:
+				quota = None
+
 			search_dict = {
 			self.TABLE_FIELDS[0]  : "'"+str(self.comboBox_progetto.currentText())+"'", 									#1 - Sito
-			self.TABLE_FIELDS[1]  : nr_us,									#2 - Area
-			self.TABLE_FIELDS[2]  : "'"+str(self.lineEdit_ut_letterale.text())+"'",																				#3 - US
-			self.TABLE_FIELDS[3]  : "'"+str(self.lineEdit_def_ut.text())+"'",											#6 - descrizione
+			self.TABLE_FIELDS[1]  : nr_ut,																								#2 - Area
+			self.TABLE_FIELDS[2]  : "'"+str(self.lineEdit_ut_letterale.text())+"'",												#3 - US
+			self.TABLE_FIELDS[3]  : "'"+str(self.lineEdit_def_ut.text())+"'",													#6 - descrizione
 			self.TABLE_FIELDS[6]  : "'"+str(self.comboBox_nazione.currentText())+"'",
-			self.TABLE_FIELDS[7]  : "'"+str(self.comboBox_regione.currentText())+"'",											#7 - interpretazione
-			self.TABLE_FIELDS[8]  : "'"+str(self.comboBox_provincia.currentText())+"'",								#8 - periodo iniziale
-			self.TABLE_FIELDS[9]  : "'"+str(self.comboBox_comune.currentText())+"'",								#9 - fase iniziale
-			self.TABLE_FIELDS[10]  : "'"+str(self.comboBox_frazione.currentText())+"'",	 							#10 - periodo finale iniziale
-			self.TABLE_FIELDS[11] : "'"+str(self.comboBox_localita.currentText())+"'", 								#11 - fase finale
-			self.TABLE_FIELDS[12] : "'"+str(self.lineEdit_indirizzo.text())+"'",								#12 - attivita  
-			self.TABLE_FIELDS[13] : "'"+str(self.lineEdit_nr_civico.text())+"'",										#13 - attivita  
-			self.TABLE_FIELDS[14] : "'"+str(self.lineEdit_carta_topo_igm.text())+"'", 								#15 - metodo
-			self.TABLE_FIELDS[15] : "'"+str(self.lineEdit_carta_ctr.text())+"'",								#16 - data schedatura
-			self.TABLE_FIELDS[16] : "'"+str(self.lineEdit_coord_geografiche.text())+"'",							#17 - schedatore
-			self.TABLE_FIELDS[17] : "'"+str(self.lineEdit_coord_piane.text())+"'",							#18 - formazione
-			self.TABLE_FIELDS[18] : quota,							#19 - conservazione
-			self.TABLE_FIELDS[19] : "'"+str(self.lineEdit_andamento_terreno_pendenza.text())+"'",								#20 - colore
-			self.TABLE_FIELDS[20] : "'"+str(self.lineEdit_utilizzo_suolo_vegetazione.text())+"'",							#21 - consistenza							#23 - codice_periodo
-			self.TABLE_FIELDS[23] : "'"+str(self.lineEdit_metodo_rilievo_e_ricognizione.text())+"'",
+			self.TABLE_FIELDS[7]  : "'"+str(self.comboBox_regione.currentText())+"'",									#7 - interpretazione
+			self.TABLE_FIELDS[8]  : "'"+str(self.comboBox_provincia.currentText())+"'",									#8 - periodo iniziale
+			self.TABLE_FIELDS[9]  : "'"+str(self.comboBox_comune.currentText())+"'",									#9 - fase iniziale
+			self.TABLE_FIELDS[10]  : "'"+str(self.comboBox_frazione.currentText())+"'",	 								#10 - periodo finale iniziale
+			self.TABLE_FIELDS[11] : "'"+str(self.comboBox_localita.currentText())+"'", 									#11 - fase finale
+			self.TABLE_FIELDS[12] : "'"+str(self.lineEdit_indirizzo.text())+"'",													#12 - attivita  
+			self.TABLE_FIELDS[13] : "'"+str(self.lineEdit_nr_civico.text())+"'",												#13 - attivita  
+			self.TABLE_FIELDS[14] : "'"+str(self.lineEdit_carta_topo_igm.text())+"'", 										#15 - metodo
+			self.TABLE_FIELDS[15] : "'"+str(self.lineEdit_carta_ctr.text())+"'",												#16 - data schedatura
+			self.TABLE_FIELDS[16] : "'"+str(self.lineEdit_coord_geografiche.text())+"'",									#17 - schedatore
+			self.TABLE_FIELDS[17] : "'"+str(self.lineEdit_coord_piane.text())+"'",											#18 - formazione
+			self.TABLE_FIELDS[18] : quota,																								#19 - conservazione
+			self.TABLE_FIELDS[19] : "'"+str(self.lineEdit_andamento_terreno_pendenza.text())+"'",					#20 - colore
+			self.TABLE_FIELDS[20] : "'"+str(self.lineEdit_utilizzo_suolo_vegetazione.text())+"'",							#21 - consistenza	
+			self.TABLE_FIELDS[23] : "'"+str(self.lineEdit_metodo_rilievo_e_ricognizione.text())+"'",						#23 - codice_periodo
 			self.TABLE_FIELDS[24] : "'"+str(self.lineEdit_geometria.text())+"'",
 			self.TABLE_FIELDS[26] : "'"+str(self.lineEdit_data.text())+"'",
 			self.TABLE_FIELDS[27] : "'"+str(self.lineEdit_ora_meteo.text())+"'",

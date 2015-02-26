@@ -78,7 +78,7 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 		#self.charge_data()
 
 	def connect(self):
-		QMessageBox.warning(self, "Alert", "Sistema sperimentale. Esporta le schede PFF in /vostro_utente/pyarchinit_DB_folder. Sostituisce i documenti gia' presenti. Se volete conservarli fatene una copia o rinominateli." ,  QMessageBox.Ok)
+		QMessageBox.warning(self, "Alert", "Sistema sperimentale. Esporta le schede PDF in /vostro_utente/pyarchinit_DB_folder. Sostituisce i documenti gia' presenti. Se volete conservarli fatene una copia o rinominateli." ,  QMessageBox.Ok)
 		from pyarchinit_conn_strings import *
 
 		conn = Connection()
@@ -134,17 +134,18 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 				id_list = []
 				for i in range(len(us_res)):
 					id_list.append(us_res[i].id_us)
-					
+
 				temp_data_list = self.DB_MANAGER.query_sort(id_list, ['area', 'us'], 'asc', 'US', 'id_us')
 				for i in temp_data_list:
 					self.DATA_LIST.append(i)
-				
 
-				US_pdf_sheet = generate_US_pdf()
-				data_list = self.generate_list_US_pdf()
-				US_pdf_sheet.build_US_sheets(self.DATA_LIST)							#export sheet
-				US_pdf_sheet.build_index_US(self.DATA_LIST, self.DATA_LIST[0][0])		#export list
-
+				if len(self.DATA_LIST) < 1:
+					QMessageBox.warning(self, "Alert", "Attenzione non vi sono schede da stampare",  QMessageBox.Ok)
+				else:
+					US_pdf_sheet = generate_US_pdf()
+					data_list = self.generate_list_US_pdf()
+					US_pdf_sheet.build_US_sheets(self.DATA_LIST)									#export sheet
+					US_pdf_sheet.build_index_US(self.DATA_LIST, self.DATA_LIST[0][0])		#export list
 
 			self.DATA_LIST = []
 
@@ -231,25 +232,25 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 
 			self.DATA_LIST = []
 
-		if self.checkBox_individui.isChecked() == True:
-			individui_res = self.db_search_DB('SCHEDAIND','sito', sito)
-
-			if bool(individui_res) == True:
-				id_list = []
-				for i in range(len(individui_res)):
-					id_list.append(individui_res[i].id_scheda_ind)
-
-				temp_data_list = self.DB_MANAGER.query_sort(id_list, ['nr_individuo'], 'asc', 'SCHEDAIND', 'id_scheda_ind')
-
-				for i in temp_data_list:
-					self.DATA_LIST.append(i)
-
-				Individui_pdf_sheet = generate_pdf()
-				data_list = self.generate_list_individui_pdf()
-				Individui_pdf_sheet.build_Individui_sheets(self.DATA_LIST)
-				Individui_pdf_sheet.build_index_individui(self.DATA_LIST, self.DATA_LIST[0][0])
-
-			self.DATA_LIST = []
+##		if self.checkBox_individui.isChecked() == True:
+##			individui_res = self.db_search_DB('SCHEDAIND','sito', sito)
+##
+##			if bool(individui_res) == True:
+##				id_list = []
+##				for i in range(len(individui_res)):
+##					id_list.append(individui_res[i].id_scheda_ind)
+##
+##				temp_data_list = self.DB_MANAGER.query_sort(id_list, ['nr_individuo'], 'asc', 'SCHEDAIND', 'id_scheda_ind')
+##
+##				for i in temp_data_list:
+##					self.DATA_LIST.append(i)
+##
+##				Individui_pdf_sheet = generate_pdf()
+##				data_list = self.generate_list_individui_pdf()
+##				Individui_pdf_sheet.build_Individui_sheets(self.DATA_LIST)
+##				Individui_pdf_sheet.build_index_individui(self.DATA_LIST, self.DATA_LIST[0][0])
+##
+##			self.DATA_LIST = []
 
 	def db_search_DB(self, table_class, field, value):
 		self.table_class = table_class
@@ -269,7 +270,7 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 		data_list = []
 		for i in range(len(self.DATA_LIST)):
 			#assegnazione valori di quota mn e max
-			sito =  unicode(self.DATA_LIST[i].sito)
+			sito = unicode(self.DATA_LIST[i].sito)
 			area = unicode(self.DATA_LIST[i].area)
 			us = unicode(self.DATA_LIST[i].us)
 
@@ -310,6 +311,11 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 			else:
 				piante = "US disegnata su base GIS"
 
+
+			d_str= str(self.DATA_LIST[i].d_stratigrafica)
+			QMessageBox.warning(self, "Alert", unicode(self.DATA_LIST[i]), QMessageBox.Ok)
+			sito =  unicode(self.DATA_LIST[i].sito)
+
 			data_list.append([
 			unicode(self.DATA_LIST[i].sito), 									#1 - Sito
 			unicode(self.DATA_LIST[i].area),									#2 - Area
@@ -341,6 +347,7 @@ class pyarchinit_pdf_export(QDialog, Ui_Dialog_pdf_exp):
 			unicode(piante),															#28 - piante
 			unicode(self.DATA_LIST[i].documentazione)						#29 - documentazione
 		])
+
 		return data_list
 
 
