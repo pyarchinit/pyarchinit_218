@@ -216,7 +216,9 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 			self.comboBox_experimental.setEditText(self.PARAMS_DICT['EXPERIMENTAL'])
 		except:
 			self.comboBox_experimental.setEditText("No")
-
+		###############
+	def test_def(self):
+		pass
 	def on_pushButton_import_pressed(self):
 		id_table_class_mapper_conv_dict = {
 		'US' : 'id_us',
@@ -309,6 +311,8 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 			QMessageBox.warning(self, "Alert", "Errore di connessione: <br>" + str(test) ,  QMessageBox.Ok)
 		mapper_class_write = str(self.comboBox_mapper_read.currentText())
 		####inserisce i dati dentro al database
+		
+		#### US TABLE
 		if mapper_class_write == 'US':
 			for sing_rec in range(len(data_list_toimp)):
 				data = self.DB_MANAGER_write.insert_values(
@@ -353,6 +357,7 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 ##					QMessageBox.warning(self, "Errore", "Attenzione 1 ! \n"+ str(msg),  QMessageBox.Ok)
 ##					return 0
 ##
+		####SITE TABLE
 		if mapper_class_write == 'SITE':
 			for sing_rec in range(len(data_list_toimp)):
 				data = self.DB_MANAGER_write.insert_site_values(
@@ -377,6 +382,7 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 ##					QMessageBox.warning(self, "Errore", "Attenzione 1 ! \n"+ str(msg),  QMessageBox.Ok)
 ##					return 0
 ##
+####PERIODIZZAZIONE TABLE
 		if mapper_class_write == 'PERIODIZZAZIONE':
 			for sing_rec in range(len(data_list_toimp)):
 				data = self.DB_MANAGER_write.insert_periodizzazione_values(
@@ -401,6 +407,7 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 ##					QMessageBox.warning(self, "Errore", "Attenzione 1 ! \n"+ str(msg),  QMessageBox.Ok)
 ##					return 0
 ##
+####INVENTARIO MATERIALI TABLE
 		if mapper_class_write == 'INVENTARIO_MATERIALI':
 			for sing_rec in range(len(data_list_toimp)):
 				data = self.DB_MANAGER_write.insert_values_reperti(
@@ -445,6 +452,7 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 ##					QMessageBox.warning(self, "Errore", "Attenzione 1 ! \n"+ str(msg),  QMessageBox.Ok)
 ##					return 0
 ##
+####STRUTTURA TABLE
 		if mapper_class_write == 'STRUTTURA':
 			for sing_rec in range(len(data_list_toimp)):
 				data = self.DB_MANAGER_write.insert_struttura_values(
@@ -479,6 +487,7 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 ##					QMessageBox.warning(self, "Errore", "Attenzione 1 ! \n"+ str(msg),  QMessageBox.Ok)
 ##					return 0
 ##
+####TAFONOMIA TABLE
 		if mapper_class_write == 'TAFONOMIA':
 			for sing_rec in range(len(data_list_toimp)):
 				data = self.DB_MANAGER_write.insert_values_tafonomia(
@@ -518,6 +527,151 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 																	data_list_toimp[sing_rec].datazione_estesa,
 																	data_list_toimp[sing_rec].misure_tafonomia
 																	)
+##				try:
+				self.DB_MANAGER_write.insert_data_session(data)
+##				except Exception, e:
+##					e_str = str(e)
+##					QMessageBox.warning(self, "Errore", "Attenzione 1 ! \n"+ str(e_str),  QMessageBox.Ok)
+##					if e_str.__contains__("Integrity"):
+##						msg = 'id_us' + " gia' presente nel database"
+##					else:
+##						msg = e
+##					QMessageBox.warning(self, "Errore", "Attenzione 1 ! \n"+ str(msg),  QMessageBox.Ok)
+##					return 0
+##
+####INDIVIDUI TABLE
+		if mapper_class_write == 'SCHEDAIND':
+			for sing_rec in range(len(data_list_toimp)):
+				data = self.DB_MANAGER_write.insert_values_ind(
+																	self.DB_MANAGER_write.max_num_id(mapper_class_write, id_table_class_mapper_conv_dict[mapper_class_write])+1,
+																	data_list_toimp[sing_rec].sito,
+																	data_list_toimp[sing_rec].area,
+																	data_list_toimp[sing_rec].us,
+																	data_list_toimp[sing_rec].nr_individuo,
+																	data_list_toimp[sing_rec].data_schedatura,
+																	data_list_toimp[sing_rec].schedatore,
+																	data_list_toimp[sing_rec].sesso,
+																	data_list_toimp[sing_rec].eta_min,
+																	data_list_toimp[sing_rec].eta_max,
+																	data_list_toimp[sing_rec].classi_eta,
+																	data_list_toimp[sing_rec].osservazioni
+																	)
+##				try:
+				self.DB_MANAGER_write.insert_data_session(data)
+##				except Exception, e:
+##					e_str = str(e)
+##					QMessageBox.warning(self, "Errore", "Attenzione 1 ! \n"+ str(e_str),  QMessageBox.Ok)
+##					if e_str.__contains__("Integrity"):
+##						msg = 'id_us' + " gia' presente nel database"
+##					else:
+##						msg = e
+##					QMessageBox.warning(self, "Errore", "Attenzione 1 ! \n"+ str(msg),  QMessageBox.Ok)
+##					return 0
+##
+####CAMPIONE TABLE
+		if mapper_class_write == 'CAMPIONE':
+			for sing_rec in range(len(data_list_toimp)):
+				data = self.DB_MANAGER_write.insert_values_campioni(
+																	self.DB_MANAGER_write.max_num_id(mapper_class_write, id_table_class_mapper_conv_dict[mapper_class_write])+1,
+																	data_list_toimp[sing_rec].sito,
+																	data_list_toimp[sing_rec].area,
+																	data_list_toimp[sing_rec].nr_campione,
+																	data_list_toimp[sing_rec].tipo_campione,
+																	data_list_toimp[sing_rec].descrizione,
+																	data_list_toimp[sing_rec].area,
+																	data_list_toimp[sing_rec].us,
+																	data_list_toimp[sing_rec].numero_inventario_materiale,
+																	data_list_toimp[sing_rec].nr_cassa,
+																	data_list_toimp[sing_rec].luogo_conservazione
+																	)
+##				try:
+				self.DB_MANAGER_write.insert_data_session(data)
+##				except Exception, e:
+##					e_str = str(e)
+##					QMessageBox.warning(self, "Errore", "Attenzione 1 ! \n"+ str(e_str),  QMessageBox.Ok)
+##					if e_str.__contains__("Integrity"):
+##						msg = 'id_us' + " gia' presente nel database"
+##					else:
+##						msg = e
+##					QMessageBox.warning(self, "Errore", "Attenzione 1 ! \n"+ str(msg),  QMessageBox.Ok)
+##					return 0
+##
+####DOCUMENTAZIONE TABLE
+		if mapper_class_write == 'DOCUMENTAZIONE':
+			for sing_rec in range(len(data_list_toimp)):
+				data = self.DB_MANAGER_write.insert_values_documentazione(
+																	self.DB_MANAGER_write.max_num_id(mapper_class_write, id_table_class_mapper_conv_dict[mapper_class_write])+1,
+																	data_list_toimp[sing_rec].sito,
+																	data_list_toimp[sing_rec].nome_doc,
+																	data_list_toimp[sing_rec].data,
+																	data_list_toimp[sing_rec].tipo_documentazione,
+																	data_list_toimp[sing_rec].sorgente,
+																	data_list_toimp[sing_rec].scala,
+																	data_list_toimp[sing_rec].disegnatore,
+																	data_list_toimp[sing_rec].note
+																	)
+
+##				try:
+				self.DB_MANAGER_write.insert_data_session(data)
+##				except Exception, e:
+##					e_str = str(e)
+##					QMessageBox.warning(self, "Errore", "Attenzione 1 ! \n"+ str(e_str),  QMessageBox.Ok)
+##					if e_str.__contains__("Integrity"):
+##						msg = 'id_us' + " gia' presente nel database"
+##					else:
+##						msg = e
+##					QMessageBox.warning(self, "Errore", "Attenzione 1 ! \n"+ str(msg),  QMessageBox.Ok)
+##					return 0
+##
+####UT TABLE
+		if mapper_class_write == 'UT':
+			for sing_rec in range(len(data_list_toimp)):
+				data = self.DB_MANAGER_write.insert_ut_values(
+																	self.DB_MANAGER_write.max_num_id(mapper_class_write, id_table_class_mapper_conv_dict[mapper_class_write])+1,
+																	data_list_toimp[sing_rec].sito,
+																	data_list_toimp[sing_rec].progetto,
+																	data_list_toimp[sing_rec].nr_ut,
+																	data_list_toimp[sing_rec].ut_letterale,
+																	data_list_toimp[sing_rec].def_ut,
+																	data_list_toimp[sing_rec].descrizione_ut,
+																	data_list_toimp[sing_rec].interpretazione_ut,
+																	data_list_toimp[sing_rec].nazione,
+																	data_list_toimp[sing_rec].regione,
+																	data_list_toimp[sing_rec].provincia,
+																	data_list_toimp[sing_rec].comune,
+																	data_list_toimp[sing_rec].frazione,
+																	data_list_toimp[sing_rec].localita,
+																	data_list_toimp[sing_rec].indirizzo,
+																	data_list_toimp[sing_rec].nr_civico,
+																	data_list_toimp[sing_rec].carta_topo_igm,
+																	data_list_toimp[sing_rec].coord_geografiche,
+																	data_list_toimp[sing_rec].coord_piane,
+																	data_list_toimp[sing_rec].andamento_terreno_pendenza,
+																	data_list_toimp[sing_rec].utilizzo_suolo_vegetazione,
+																	data_list_toimp[sing_rec].descrizione_empirica_suolo,
+																	data_list_toimp[sing_rec].descrizione_luogo,
+																	data_list_toimp[sing_rec].metodo_rilievo_e_ricognizione,
+																	data_list_toimp[sing_rec].geometria,
+																	data_list_toimp[sing_rec].bibliografia,
+																	data_list_toimp[sing_rec].data,
+																	data_list_toimp[sing_rec].ora_meteo,
+																	data_list_toimp[sing_rec].descrizione_luogo,
+																	data_list_toimp[sing_rec].responsabile,
+																	data_list_toimp[sing_rec].dimensioni_ut,
+																	data_list_toimp[sing_rec].rep_per_mq,
+																	data_list_toimp[sing_rec].rep_datanti,
+																	data_list_toimp[sing_rec].periodo_I,
+																	data_list_toimp[sing_rec].datazione_I,
+																	data_list_toimp[sing_rec].responsabile,
+																	data_list_toimp[sing_rec].interpretazione_I,
+																	data_list_toimp[sing_rec].periodo_II,
+																	data_list_toimp[sing_rec].datazione_II,
+																	data_list_toimp[sing_rec].interpretazione_II,
+																	data_list_toimp[sing_rec].documentazione,
+																	data_list_toimp[sing_rec].enti_tutela_vincoli,
+																	data_list_toimp[sing_rec].indagini_preliminari
+																	)
+
 ##				try:
 				self.DB_MANAGER_write.insert_data_session(data)
 ##				except Exception, e:
