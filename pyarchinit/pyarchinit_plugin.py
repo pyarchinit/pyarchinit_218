@@ -93,6 +93,11 @@ class PyArchInitPlugin:
 	conf = open(path_rel, "r")
 	data = conf.read()
 	PARAMS_DICT = eval(data)
+	if PARAMS_DICT.has_key('EXPERIMENTAL') == False:
+		PARAMS_DICT['EXPERIMENTAL'] = 'No'
+		f = open(path_rel, "w")
+		f.write(str(PARAMS_DICT))
+		f.close()
 
 
 	def __init__(self, iface):
