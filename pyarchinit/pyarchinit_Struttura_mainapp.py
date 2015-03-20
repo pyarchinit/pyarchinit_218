@@ -157,6 +157,7 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 		self.charge_periodo_iniz_list()
 		self.charge_periodo_fin_list()
 		self.fill_fields()
+		self.customize_GUI()
 
 	def enable_button(self, n):
 		self.pushButton_connect.setEnabled(n)

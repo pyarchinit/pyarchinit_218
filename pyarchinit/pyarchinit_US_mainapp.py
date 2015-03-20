@@ -394,11 +394,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		conn = Connection()
 		conn_str = conn.conn_str()
 		test_conn = conn_str.find('sqlite')
-
 		if test_conn == 0:
 			self.DB_SERVER = "sqlite"
-
-
 		try:
 			self.DB_MANAGER = Pyarchinit_db_management(conn_str)
 			self.DB_MANAGER.connection()
@@ -1490,6 +1487,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	#insert new row into tableWidget
 	def on_pushButton_insert_row_rapporti_pressed(self):
 		self.insert_new_row('self.tableWidget_rapporti')
+
 	def on_pushButton_remove_row_rapporti_pressed(self):
 		self.remove_row('self.tableWidget_rapporti')
 
@@ -1837,9 +1835,6 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			for i in temp_data_list:
 				self.DATA_LIST.append(i)
 
-
-
-
 	def datestrfdate(self):
 		now = date.today()
 		today = now.strftime("%d-%m-%Y")
@@ -1897,6 +1892,13 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				item = QTableWidgetItem(unicode(self.data_list[row][col]))
 				exec_str = ('%s.setItem(%d,%d,item)') % (self.table_name,row,col)
 				eval(exec_str)
+
+##		max_row_num = len(self.data_list)
+##		value = eval(self.table_name+".item(max_row_num,1)")
+##		if value == '':
+##			cmd = ("%s.removeRow(%d)") % (self.table_name, max_row_num)
+##			eval(cmd)
+
 
 	def insert_new_row(self, table_name):
 		"""insert new row into a table based on table_name"""
