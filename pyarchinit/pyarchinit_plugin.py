@@ -21,6 +21,7 @@
 import sys
 import os
 
+
 filepath = os.path.dirname(__file__)
 
 gui_path = ('%s%s') % (filepath, os.path.join(os.sep, 'modules', 'gui'))

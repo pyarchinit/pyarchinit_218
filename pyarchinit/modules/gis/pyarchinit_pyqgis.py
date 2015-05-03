@@ -79,10 +79,23 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 						"pyarchinit_quote_view" : "Quote US Vista",
 						"pyarchinit_ripartizioni_spaziali" : "Ripartizioni spaziali",
 						"pyarchinit_sezioni" : "Sezioni di scavo",
-						"pyarchinit_siti" : "Localizzazione siti" ,
+						"pyarchinit_siti" : "Localizzazione siti puntuale" ,
 						"pyarchinit_strutture_ipotesi": "Ipotesi strutture da scavo",
 						"pyarchinit_us_view": "US Vista",
-						"pyunitastratigrafiche": "Unita Stratigrafiche disegno"}
+						"pyunitastratigrafiche": "Unita Stratigrafiche disegno",
+						"pyarchinit_documentazione" : "Resgistro documentazione",
+						"pyarchinit_doc_view" : "Documentazione Vista",
+						"pyarchinit_us_negative_doc" : "US Negative per sezioni/elevati",
+						 "pyarchinit_us_negative_doc_view" : "Vista US Negative per sezioni/elevati",
+						"pyarchinit_site_view" : "Localizzazione siti Vista",
+						"pyarchinit_siti_polygonal" : "Perimetrazione siti poligonali",
+						"pyarchinit_siti_polygonal_view" : "Perimetrazione siti poligonali Vista",
+						"pyarchinit_site_view" : "Localizzazione siti puntuale Vista" ,
+						"pyarchinit_strutture_view" : "Ipotesi strutture da scavo Vista",
+						"pyarchinit_tafonomia_view" : "Tafonomia Vista",
+						"pyarchinit_tafonomia" : "Tafonomia"
+
+}
 
 	def __init__(self, iface):
 		self.iface = iface
@@ -1044,7 +1057,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 					##ayerUS.loadNamedStyle(style_path)
 					QgsMapLayerRegistry.instance().addMapLayers([layer], True)
 				else:
-					QMessageBox.warning(self, "TESTER", "Layer non valido",QMessageBox.Ok)
+					QMessageBox.warning(self, "TESTER", "Layer non valido: "+str(layer_name),QMessageBox.Ok)
 
 				###AGGIUNGERE IL SISTEMA PER POSTGRES#####
 		elif settings.SERVER == 'postgres':

@@ -77,9 +77,9 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 	DB_MANAGER = ""
 	TABLE_NAME = 'inventario_materiali_table'
 	MAPPER_TABLE_CLASS = "INVENTARIO_MATERIALI"
-	NOME_SCHEDA = "Scheda 	Inventario Materiali"
+	NOME_SCHEDA = "Scheda Inventario Materiali"
 	ID_TABLE = "id_invmat"
-	
+
 	CONVERSION_DICT = {
 	ID_TABLE:ID_TABLE,
 	"Sito" : "sito",
@@ -422,8 +422,7 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 			exec_str = ' -' + paramentro[:4] + ": " + eval(exec_str)
 			parameter2 += exec_str
 		return parameter2
-		
-		
+
 
 	def plot_chart(self, d, t, yl):
 		self.data_list = d
