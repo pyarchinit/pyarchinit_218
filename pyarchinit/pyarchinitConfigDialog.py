@@ -417,6 +417,7 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 																	data_list_toimp[sing_rec].tipo_reperto,
 																	data_list_toimp[sing_rec].criterio_schedatura,
 																	data_list_toimp[sing_rec].definizione,
+																	data_list_toimp[sing_rec].descrizione,
 																	data_list_toimp[sing_rec].area,
 																	data_list_toimp[sing_rec].us,
 																	data_list_toimp[sing_rec].lavato,
