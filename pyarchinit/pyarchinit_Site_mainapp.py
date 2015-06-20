@@ -64,7 +64,7 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 	DB_MANAGER = ""
 	TABLE_NAME = 'site_table'
 	MAPPER_TABLE_CLASS = "SITE"
-	NOME_SCHEDA = "Scheda Sito"
+	NOME_SCHEDA = "Scheda di Sito"
 	ID_TABLE = "id_sito"
 	CONVERSION_DICT = {
 	ID_TABLE:ID_TABLE, 
