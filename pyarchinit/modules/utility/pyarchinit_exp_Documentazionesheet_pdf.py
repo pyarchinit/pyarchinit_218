@@ -422,9 +422,9 @@ class Documentazione_index_pdf_sheet:
 			disegnatore = Paragraph("<b>Disegnatore</b><br/>" + str(self.disegnatore),styNormal)
 
 		if self.us == "":
-			us = Paragraph("<b>Elenco US</b><br/>",styNormal)
+			us = Paragraph("<b>Note</b><br/>",styNormal)
 		else:
-			us = Paragraph("<b>Elenco US</b><br/>" + str(self.us),styNormal)
+			us = Paragraph("<b>Note</b><br/>" + unicode(self.us),styNormal)
 
 		data = [tipo_documentazione,
 				nome_doc,
