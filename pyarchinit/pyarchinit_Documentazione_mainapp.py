@@ -222,6 +222,7 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 			sito =  unicode(self.DATA_LIST[i].sito)
 			tipo_doc = unicode(self.DATA_LIST[i].tipo_documentazione)
 			nome_doc = unicode(self.DATA_LIST[i].nome_doc)
+			note = unicode(self.DATA_LIST[i].note)
 
 			res_us_doc = self.DB_MANAGER.select_us_doc_from_db_sql(sito, tipo_doc, nome_doc)
 
@@ -242,27 +243,33 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 
 			elenco_us_pdf = elenco_us_doc+elenco_usneg_doc
 
-			elenco_us_pdf.sort()
-
-			area_corr = str(elenco_us_pdf[0][0])
-			us_elenco = ""
-
 			string_to_pdf = ""
 
-			for rec_us in range(len(elenco_us_pdf)):
-				if area_corr == str(elenco_us_pdf[rec_us][0]):
-					us_elenco += str(elenco_us_pdf[rec_us][1]) + ", "
-				else:
-					if string_to_pdf == "":
-						string_to_pdf = "Area " + area_corr + ": "+ us_elenco[:-2]
-						area_corr = str(elenco_us_pdf[rec_us][0])
-						us_elenco = str(elenco_us_pdf[rec_us][1]) + ", " 
-					else:
-						string_to_pdf += "<br/>Area " + area_corr + ": "+ us_elenco[:-2]
-						area_corr = str(elenco_us_pdf[rec_us][0])
-						us_elenco = str(elenco_us_pdf[rec_us][1]) + ", " 
+			if bool(elenco_us_pdf) == True:
 
-			string_to_pdf += "<br/>Area " + area_corr + ": "+ us_elenco[:-2]
+				elenco_us_pdf.sort()
+
+				area_corr = str(elenco_us_pdf[0][0])
+				us_elenco = ""
+
+				string_to_pdf = ""
+
+				for rec_us in range(len(elenco_us_pdf)):
+					if area_corr == str(elenco_us_pdf[rec_us][0]):
+						us_elenco += str(elenco_us_pdf[rec_us][1]) + ", "
+					else:
+						if string_to_pdf == "":
+							string_to_pdf = "Area " + area_corr + ": "+ us_elenco[:-2]
+							area_corr = str(elenco_us_pdf[rec_us][0])
+							us_elenco = str(elenco_us_pdf[rec_us][1]) + ", " 
+						else:
+							string_to_pdf += "<br/>Area " + area_corr + ": "+ us_elenco[:-2]
+							area_corr = str(elenco_us_pdf[rec_us][0])
+							us_elenco = str(elenco_us_pdf[rec_us][1]) + ", " 
+
+				string_to_pdf += "<br/>Area " + area_corr + ": "+ us_elenco[:-2]
+			else:
+				pass
 
 			data_list.append([
 			unicode(self.DATA_LIST[i].sito), 								#1 - Sito
@@ -273,8 +280,8 @@ class pyarchinit_Documentazione(QDialog, Ui_DialogDocumentazione_tipo_doc):
 			unicode(self.DATA_LIST[i].scala),								#7 - interpretazione
 			unicode(self.DATA_LIST[i].disegnatore),						#8 - periodo iniziale
 			unicode(self.DATA_LIST[i].note),								#9 - fase iniziale
-			string_to_pdf
-									])
+			note])
+
 		return data_list
 
 
