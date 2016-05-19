@@ -67,7 +67,7 @@ class pyarchinit_Struttura(QDialog, Ui_DialogStruttura):
 	DB_MANAGER = ""
 	TABLE_NAME = 'struttura_table'
 	MAPPER_TABLE_CLASS = 'STRUTTURA'
-	NOME_SCHEDA = "Scheda Struttura"
+	NOME_SCHEDA = "Scheda Ipotesi Struttura"
 	ID_TABLE = "id_struttura"
 	CONVERSION_DICT = {
 	ID_TABLE:ID_TABLE,
