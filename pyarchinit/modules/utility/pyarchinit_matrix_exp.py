@@ -52,7 +52,7 @@ class HARRIS_MATRIX_EXP:
 	def export_matrix(self):
 		G = p.AGraph(directed=True)
 		G.graph_attr['dpi']=300
-		G.graph_attr['label']='pyArchInit - Harris Matrix Exportation System'
+		G.graph_attr['label']='pyArchInit - Harris Matrix Export System'
 
 		elist = []
 
