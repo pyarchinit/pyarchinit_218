@@ -551,7 +551,7 @@ class US_index_pdf_sheet:
 		styNormal.spaceBefore = 20
 		styNormal.spaceAfter = 20
 		styNormal.alignment = 0 #LEFT
-		styNormal.fontSize = 9
+		styNormal.fontSize = 6
 
 		self.unzip_rapporti_stratigrafici()
 
