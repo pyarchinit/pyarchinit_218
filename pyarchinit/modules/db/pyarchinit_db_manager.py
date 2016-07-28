@@ -1140,13 +1140,19 @@ class Pyarchinit_db_management:
 ##		return res_list
 
 def main():
-	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
+	##	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
+	db = Pyarchinit_db_management('postgresql://postgres:xanu8ese@10.0.1.5:5432/pyarchinit')
+	
 	db.connection()
 	#res = db.query_sort([1, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67],['id_invmat'],'asc', 'INVENTARIO_MATERIALI', 'id_invmat')
-	res = db.query_distinct_sql('pyunitastratigrafiche',[['scavo_s','"San_Costanzo_PU_Cimitero"'], ['tipo_doc','"Sezione"']], ['scavo_s', 'area_s', 'us_s', 'tipo_doc', 'nome_doc'])
+	#res = db.query_distinct_sql('pyunitastratigrafiche',[['scavo_s','"San_Costanzo_PU_Cimitero"'], ['tipo_doc','"Sezione"']], ['scavo_s', 'area_s', 'us_s', 'tipo_doc', 'nome_doc'])
+	res_ind = db.query_bool({"sito":'"Rimini_(RN)_via_Arnaldo_da_Brescia_Scuole_XX_Settembre_2015"',"nr_individuo":'"20"'},"SCHEDAIND")
+	print str(bool(res_ind))
+	print len(res_ind)
 
-	for i in res:
-		print "record: ", i
+	ls = []
+	for i in res_ind:
+		print i.us
 
 if __name__ == '__main__':
 	main()

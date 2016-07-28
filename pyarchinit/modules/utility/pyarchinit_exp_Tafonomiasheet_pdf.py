@@ -18,6 +18,7 @@ from datetime import date, time
 from pyarchinit_OS_utility import *
 from pyarchinit_utility import Utility
 
+from decimal import *
 
 class NumberedCanvas_TAFONOMIAsheet(canvas.Canvas):
 	def __init__(self, *args, **kwargs):
@@ -76,20 +77,20 @@ class Tafonomia_index_pdf_sheet:
 
 	def __init__(self, data):
 		self.nr_scheda_taf =  				data[1]
-		self.sigla_struttura =  				data[2]
-		self.nr_struttura =  					data[3]
-		self.nr_individuo =  					data[4]
-		self.rito =  								data[5]
+		self.sigla_struttura =  			data[2]
+		self.nr_struttura =  				data[3]
+		self.nr_individuo =  				data[4]
+		self.rito =  						data[5]
 		self.tipo_contenitore_resti = 		data[13]
 		self.orientamento_asse = 			data[14]
-		self.orientamento_azimut = 		data[15]
+		self.orientamento_azimut = 			data[15]
 		self.corredo_presenza = 			data[16]
 		self.completo_si_no =  				data[24]
 		self.disturbato_si_no =  			data[25]
 		self.in_connessione_si_no = 	 	data[26]
-		self.periodo_iniziale = 				data[28]
-		self.fase_iniziale =	 				data[29]
-		self.periodo_finale = 					data[30]
+		self.periodo_iniziale = 			data[28]
+		self.fase_iniziale =	 			data[29]
+		self.periodo_finale = 				data[30]
 		self.fase_finale = 					data[31]
 		self.datazione_estesa = 			data[32]
 
@@ -198,42 +199,160 @@ class Tafonomia_index_pdf_sheet:
 
 
 
+class Tafonomia_index_II_pdf_sheet:
+	PU = Utility()
+		#this model includes str.n., area/sett, descrizione, rito
+		#corredo,orient., UUSS/UUSSMM, quotemax, misure, datazione
+		
+	us_ind_print = ''
+	us_str_print = ''
+
+	def __init__(self, data):
+		self.nr_scheda_taf =  				data[1]
+		self.sigla_struttura =  			data[2]
+		self.nr_struttura =  				data[3]
+		self.nr_individuo =  				data[4]
+		self.rito =  						data[5]
+		self.corredo_presenza = 			data[16]
+		self.orientamento_asse = 			data[14]
+		self.orientamento_azimut = 			data[15]
+		self.us_ind_list = 					data[38]
+		self.us_str_list = 					data[39]
+		self.quota_min_strutt = 			data[36]
+		self.quota_max_strutt = 			data[37]
+		self.misure_tafonomia = 			data[33]
+		self.datazione_estesa = 			data[32]
+
+	def getTable(self):
+		styleSheet = getSampleStyleSheet()
+		styNormal = styleSheet['Normal']
+		styNormal.spaceBefore = 20
+		styNormal.spaceAfter = 20
+		styNormal.alignment = 0 #LEFT
+		styNormal.fontSize = 9
+
+		#self.unzip_rapporti_stratigrafici()
+
+		num_scheda = Paragraph("<b>Nr.Scheda</b><br/>" + str(self.nr_scheda_taf),styNormal)
+
+		sigla_num_struttura = Paragraph("<b>Sigla Str.</b><br/>" + str(self.sigla_struttura)+str(self.nr_struttura),styNormal)
+
+		numero_individuo = Paragraph("<b>Nr.Ind</b><br/>" + str(self.nr_individuo),styNormal)
+
+		if self.rito == None:
+			rito = Paragraph("<b>Rito</b><br/>",styNormal)
+		else:
+			rito = Paragraph("<b>Rito</b><br/>" + str(self.rito),styNormal)
+
+		if self.corredo_presenza == None:
+			corredo_presenza = Paragraph("<b>Corredo</b><br/>",styNormal)
+		else:
+			corredo_presenza = Paragraph("<b>Corredo</b><br/>" + str(self.corredo_presenza),styNormal)
+
+
+		if self.orientamento_asse == None:
+			orientamento_asse = Paragraph("<b>Asse</b><br/>",styNormal)
+		else:
+			orientamento_asse = Paragraph("<b>Asse</b><br/>" + str(self.orientamento_asse),styNormal)
+
+		if str(self.orientamento_azimut) == "None":
+			orientamento_azimut = Paragraph("<b>Azimut</b><br/>", styNormal)
+		else:
+			orientamento_azimut_conv = self.PU.conversione_numeri(self.orientamento_azimut)
+			orientamento_azimut = Paragraph("<b>Azimut</b><br/>"  + orientamento_azimut_conv + "°", styNormal)
+
+		if bool(self.us_ind_list) == True:
+			us_ind_temp = ""
+			for us_ind in self.us_ind_list:
+				if us_ind_temp == '':
+					us_ind_temp = '%s/%s'% (us_ind[1],us_ind[2])
+				else:
+					us_ind_temp += ',<br/>' + '%s/%s' % (us_ind[1],us_ind[2])
+					
+			self.us_ind_print = Paragraph("<b>US Ind.<br/>(Area/US)</b><br/>"+ str(us_ind_temp)+"<br/>",styNormal)
+		else:
+			self.us_ind_print = Paragraph("<b>US Ind.<br/>(Area/US)</b><br/>",styNormal)
+
+
+		if bool(self.us_str_list) == True:
+			us_str_temp = ""
+			for us_str in self.us_str_list:
+				if us_str_temp == '':
+					us_str_temp = '%s/%s' % (us_str[1],us_str[2])
+				else:
+					us_str_temp += ',<br/>' + '%s/%s' % (us_str[1],us_str[2])
+
+			self.us_str_print = Paragraph("<b>US Str<br/>(Area/US)</b><br/>"+ str(us_str_temp)+"<br/>",styNormal)
+		else:
+			self.us_str_print = Paragraph("<b>US Str<br/>(Area/US)</b><br/>",styNormal)
+
+		quota_min_max = Paragraph("<b>Quota Min-max:</b><br/>"+ self.quota_min_strutt + "-"+self.quota_max_strutt,styNormal)
+
+
+		if self.datazione_estesa == None:
+			datazione_estesa = Paragraph("<b>Datazione</b><br/>",styNormal)
+		else:
+			datazione_estesa = Paragraph("<b>Datazione estesa</b><br/>" + str(self.datazione_estesa),styNormal)
+
+		data = [num_scheda,
+		sigla_num_struttura,
+		numero_individuo,
+		rito,
+		corredo_presenza,
+		orientamento_asse,
+		orientamento_azimut,
+		self.us_ind_print,
+		self.us_str_print,
+		quota_min_max,
+		datazione_estesa]
+
+		return data
+
+	def makeStyles(self):
+		styles =TableStyle([('GRID',(0,0),(-1,-1),0.0,colors.black),('VALIGN', (0,0), (-1,-1), 'TOP')
+		])  #finale
+
+		return styles
+
+
+
+
 class single_Tafonomia_pdf_sheet:
 	PU = Utility()
 	#rapporti stratigrafici
 
 	def __init__(self, data):
-		self.sito =  								data[0]
+		self.sito =  						data[0]
 		self.nr_scheda_taf =  				data[1]
-		self.sigla_struttura =  				data[2]
-		self.nr_struttura =  					data[3]
-		self.nr_individuo =  					data[4]
-		self.rito =  								data[5]
-		self.descrizione_taf =  				data[6]
+		self.sigla_struttura =  			data[2]
+		self.nr_struttura =  				data[3]
+		self.nr_individuo =  				data[4]
+		self.rito =  						data[5]
+		self.descrizione_taf =  			data[6]
 		self.interpretazione_taf = 			data[7]
-		self.segnacoli =  						data[8]
+		self.segnacoli =  					data[8]
 		self.canale_libatorio_si_no = 		data[9]
 		self.oggetti_rinvenuti_esterno =	data[10]
 		self.stato_di_conservazione =		data[11]
 		self.copertura_tipo =  				data[12]
 		self.tipo_contenitore_resti = 		data[13]
 		self.orientamento_asse = 			data[14]
-		self.orientamento_azimut = 		data[15]
+		self.orientamento_azimut = 			data[15]
 		self.corredo_presenza = 			data[16]
-		self.corredo_tipo =  					data[17]
+		self.corredo_tipo =  				data[17]
 		self.corredo_descrizione = 			data[18]
-		self.lunghezza_scheletro = 		data[19]
-		self.posizione_cranio = 		 		data[20]
+		self.lunghezza_scheletro = 			data[19]
+		self.posizione_cranio = 		 	data[20]
 		self.posizione_scheletro =  		data[21]
 		self.posizione_arti_superiori 	=	data[22]
-		self.posizione_arti_inferiori =  		data[23]
+		self.posizione_arti_inferiori =  	data[23]
 		self.completo_si_no =  				data[24]
 		self.disturbato_si_no =  			data[25]
 		self.in_connessione_si_no = 	 	data[26]
 		self.caratteristiche = 				data[27]
-		self.periodo_iniziale = 				data[28]
-		self.fase_iniziale =	 				data[29]
-		self.periodo_finale = 					data[30]
+		self.periodo_iniziale = 			data[28]
+		self.fase_iniziale =	 			data[29]
+		self.periodo_finale = 				data[30]
 		self.fase_finale = 					data[31]
 		self.datazione_estesa = 			data[32]
 		self.misure_tafonomia = 			data[33]
@@ -241,6 +360,7 @@ class single_Tafonomia_pdf_sheet:
 		self.quota_max_ind = 				data[35]
 		self.quota_min_strutt = 			data[36]
 		self.quota_max_strutt = 			data[37]
+
 
 	def datestrfdate(self):
 		now = date.today()
@@ -588,6 +708,7 @@ class generate_tafonomia_pdf:
 
 
 	def build_index_Tafonomia(self, records, sito):
+
 		if os.name == 'posix':
 			home = os.environ['HOME']
 		elif os.name == 'nt':
@@ -603,13 +724,18 @@ class generate_tafonomia_pdf:
 
 		styleSheet = getSampleStyleSheet()
 		styNormal = styleSheet['Normal']
+		styNormal.fontSize = 8
 		styBackground = ParagraphStyle('background', parent=styNormal, backColor=colors.pink)
 		styH1 = styleSheet['Heading3']
 
 		data = self.datestrfdate()
 
+
+		###################### ELENCO SCHEDE TAFONOMICHE ###########
+
 		lst = []
 		lst.append(logo)
+
 		lst.append(Paragraph("<b>ELENCO SCHEDE TAFONOMICHE</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
 
 		table_data = []
@@ -633,3 +759,35 @@ class generate_tafonomia_pdf:
 		doc.build(lst, canvasmaker=NumberedCanvas_TAFONOMIAindex)
 
 		f.close()
+		
+		###################### ELENCO SCHEDE STRUTTURE TAFONOMICHE ###########
+
+		lst = []
+		lst.append(logo)
+
+		lst.append(Paragraph("<b>ELENCO SCHEDE STRUTTURE TAFONOMICHE</b><br/><b>Scavo: %s,  Data: %s</b>" % (sito, data), styH1))
+
+		table_data = []
+		for i in range(len(records)):
+			exp_index = Tafonomia_index_II_pdf_sheet(records[i])
+			table_data.append(exp_index.getTable())
+
+		styles = exp_index.makeStyles()
+		colWidths=[50,50,40,100,60,50,50,60,60,60,80]
+
+		table_data_formatted = Table(table_data, colWidths, style=styles)
+		table_data_formatted.hAlign = "LEFT"
+
+		lst.append(table_data_formatted)
+		#lst.append(Spacer(0,2))
+
+		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_strutture_tafonomia.pdf')
+		f = open(filename, "wb")
+
+		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)
+		doc.build(lst, canvasmaker=NumberedCanvas_TAFONOMIAindex)
+
+		f.close()
+
+
+
