@@ -254,10 +254,11 @@ class single_Individui_pdf_sheet:
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
 						[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'],
-						[sito, '01', '02', area, '04', us,'06', '07', nr_inventario, '09'], #1 row ok
-						[sesso, '01', '02', eta_min,'04', '05',eta_max, '07', '08', '09'], #2 row ok
-						[classi_eta, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #3 row ok
-						[osservazioni, '01','02', '03', '04', '05','06', '07', '08', '09'], #4 row ok
+						[sito, '01', '02', '03', '04', '05','06', '07', '08', '09'], #1 row ok
+						[area, '01', '02', us, '04', '05' ,nr_inventario, '07', '08', '09'], #2row ok
+						[sesso, '01', '02', eta_min,'04', '05',eta_max, '07', '08', '09'], #3row ok
+						[classi_eta, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #4 row ok
+						[osservazioni, '01','02', '03', '04', '05','06', '07', '08', '09'], #5 row ok
 						[data_schedatura, '01', '02', '03', '04', '05', schedatore, '07', '08', '09'] #5 row ok
 						#['https://sites.google.com/site/pyarchinit/', '01', '02', '03', '04','05', '06', '07','08', '09'] #6 row
 						]
@@ -271,26 +272,28 @@ class single_Individui_pdf_sheet:
 					('SPAN', (7,0),(9,0)), #intestazione2
 
 					#1 row
-					('SPAN', (0,1),(2,1)),  #sito
-					('SPAN', (3,1),(4,1)),  #area
-					('SPAN', (5,1),(7,1)),  #us
-					('SPAN', (8,1),(9,1)),  #nr_inventario
+					('SPAN', (0,1),(9,1)),  #sito
+					
+					#2 row
+					('SPAN', (0,2),(2,2)),  #area
+					('SPAN', (3,2),(5,2)),  #us
+					('SPAN', (6,2),(9,2)),  #nr_inventario
 
 					#2 row
-					('SPAN', (0,2),(2,2)),  #sesso
-					('SPAN', (3,2),(5,2)),  #eta_min
-					('SPAN', (6,2),(9,2)),  #eta_max
-					('VALIGN',(0,2),(9,2),'TOP'), 
+					('SPAN', (0,3),(2,3)),  #sesso
+					('SPAN', (3,3),(5,3)),  #eta_min
+					('SPAN', (6,3),(9,3)),  #eta_max
+					('VALIGN',(0,3),(9,3),'TOP'), 
 
 					#3 row
-					('SPAN', (0,3),(9,3)), #classi_eta
+					('SPAN', (0,4),(9,4)), #classi_eta
 					
 					#4 row
-					('SPAN', (0,4),(9,4)),  #osservazioni
+					('SPAN', (0,5),(9,5)),  #osservazioni
 
 					#5 row
-					('SPAN', (0,5),(5,5)),  #data_schedatura
-					('SPAN', (6,5),(9,5)),  #schedatore
+					('SPAN', (0,6),(5,6)),  #data_schedatura
+					('SPAN', (6,6),(9,6)),  #schedatore
 
 					('VALIGN',(0,0),(-1,-1),'TOP')
 					]

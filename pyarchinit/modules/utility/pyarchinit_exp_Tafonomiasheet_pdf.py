@@ -563,7 +563,8 @@ class single_Tafonomia_pdf_sheet:
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
 						[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'], #0 row  ok
-						[sito, '01', '02', '03', '04', sigla_struttura, '06', '07',nr_individuo,nr_scheda], #1 row ok
+						[sito, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #1 row ok
+						[sigla_struttura, '01', '02', '03', '04', nr_individuo, '06', '07', nr_scheda, '09'], #1 row ok
 						[periodizzazione, '01', '02', '03', '04', '07', '06', '07','08', '09'], #2 row ok
 						[periodo_iniziale, '01', '02', fase_iniziale, '04', periodo_finale, '06', fase_finale,'08','09'], #3 row ok
 						[datazione_estesa, '01', '02', '03', '04', '07', '06', '07','08', '09'], #4 row ok
@@ -593,85 +594,87 @@ class single_Tafonomia_pdf_sheet:
 					('SPAN', (7,0),(9,0)),  #intestazione
 
 					#1 row
-					('SPAN', (0,1),(4,1)),  #dati identificativi
-					('SPAN', (5,1),(7,1)),  #dati identificativi
-					('SPAN', (8,1),(8,1)),  #dati identificativi
-					('SPAN', (9,1),(9,1)),  #dati identificativi
+					('SPAN', (0,1),(9,1)),  #sito
+					
+					#2
+					('SPAN', (0,2),(4,2)),  #dati identificativi
+					('SPAN', (5,2),(7,2)),  #dati identificativi
+					('SPAN', (8,2),(9,2)),  #dati identificativi
 
 					#2 row
-					('SPAN', (0,2),(9,2)),  #Periodizzazione
+					('SPAN', (0,3),(9,3)),  #Periodizzazione
 	
 					#3 row
-					('SPAN', (0,3),(2,3)),  #
-					('SPAN', (3,3),(4,3)),  #
-					('SPAN', (5,3),(6,3)),  #
-					('SPAN', (7,3),(9,3)),  #
+					('SPAN', (0,4),(2,4)),  #
+					('SPAN', (3,4),(4,4)),  #
+					('SPAN', (5,4),(6,4)),  #
+					('SPAN', (7,4),(9,4)),  #
 					
 					#4 row
-					('SPAN', (0,4),(9,4)),  #datazione estesa
+					('SPAN', (0,5),(9,5)),  #datazione estesa
 					##################################
 					#5 row
-					('SPAN', (0,5),(9,5)),  #Elementi strutturali
+					('SPAN', (0,6),(9,6)),  #Elementi strutturali
 
 					#6 row
-					('SPAN', (0,6),(2,6)),  #
-					('SPAN', (3,6),(4,6)),  #
-					('SPAN', (5,6),(6,6)),  #
-					('SPAN', (7,6),(9,6)),  #
+					('SPAN', (0,7),(2,7)),  #
+					('SPAN', (3,7),(4,7)),  #
+					('SPAN', (5,7),(6,7)),  #
+					('SPAN', (7,7),(9,7)),  #
 
 					#7 row
-					('SPAN', (0,7),(9,7)),  #
+					('SPAN', (0,8),(9,8)),  #
 
 					#8 row
-					('SPAN', (0,8),(2,8)),  #
-					('SPAN', (3,8),(4,8)),  #
-					('SPAN', (5,8),(6,8)),  #
-					('SPAN', (7,8),(9,8)),  #
-
-					#9 row
-					('SPAN', (0,9),(1,9)),  #
-					('SPAN', (2,9),(3,9)),  #
-					('SPAN', (4,9),(6,9)),  #
+					('SPAN', (0,9),(2,9)),  #
+					('SPAN', (3,9),(4,9)),  #
+					('SPAN', (5,9),(6,9)),  #
 					('SPAN', (7,9),(9,9)),  #
 
+					#9 row
+					('SPAN', (0,10),(1,10)),  #
+					('SPAN', (2,10),(3,10)),  #
+					('SPAN', (4,10),(6,10)),  #
+					('SPAN', (7,10),(9,10)),  #
+
 					#10 row
-					('SPAN', (0,10),(9,10)),  #
+					('SPAN', (0,11),(9,11)),  #
 
 					#11 row
-					('SPAN', (0,11),(2,11)),  #
-					('SPAN', (3,11),(4,11)),  #
-					('SPAN', (5,11),(6,11)),  #
-					('SPAN', (7,11),(9,11)),  #
+					('SPAN', (0,12),(2,12)),  #
+					('SPAN', (3,12),(4,12)),  #
+					('SPAN', (5,12),(6,12)),  #
+					('SPAN', (7,12),(9,12)),  #
 
 					#12 row
-					('SPAN', (0,12),(9,12)),  #
+					('SPAN', (0,13),(9,13)),  #
 
 					#13 row
-					('SPAN', (0,13),(4,13)),  #
-					('SPAN', (5,13),(9,13)),  #
+					('SPAN', (0,14),(4,14)),  #
+					('SPAN', (5,14),(9,14)),  #
 
 					#14 row
-					('SPAN', (0,14),(9,14)),  #
-
-					#15 row
 					('SPAN', (0,15),(9,15)),  #
 
+					#15 row
+					('SPAN', (0,16),(9,16)),  #
+
 					#16 row
-					('SPAN', (0,16),(9,16)),  
+					('SPAN', (0,17),(9,17)),  
 
 					#17 row
-					('SPAN', (0,17),(9,17)),  #
-
-					#18 row
 					('SPAN', (0,18),(9,18)),  #
 
-					('SPAN', (0,19),(9,19)),  #Periodizzazione
+					#18 row
+					('SPAN', (0,19),(9,19)),  #
+
+					('SPAN', (0,20),(9,20)),  #Periodizzazione
 
 					#3 row
-					('SPAN', (0,20),(2,20)),  #
-					('SPAN', (3,20),(4,20)),  #
-					('SPAN', (5,20),(6,20)),  #
-					('SPAN', (7,20),(9,20)),  #
+					('SPAN', (0,21),(2,21)),  #
+					('SPAN', (3,21),(4,21)),  #
+					('SPAN', (5,21),(6,21)),  #
+					('SPAN', (7,21),(9,21)),  #
 
 					('VALIGN',(0,0),(-1,-1),'TOP')
 

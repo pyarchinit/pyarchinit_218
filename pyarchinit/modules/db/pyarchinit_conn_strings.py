@@ -59,6 +59,7 @@ class Connection:
 			dbname_abs = sqlite_DB_path + os.sep + conn_str_dict["db_name"]
 
 			conn_str = "%s:///%s" % (conn_str_dict["server"], dbname_abs)
+
 		return conn_str
 		
 	def thumb_path(self):
