@@ -11,12 +11,11 @@
  ***************************************************************************/
 
 /***************************************************************************
- *                                                                         											*
- *   This program is free software; you can redistribute it and/or modify 						    *
- *   it under the terms of the GNU General Public License as published by  						*
- *   the Free Software Foundation; either version 2 of the License, or    							*
- *   (at your option) any later version.                                  									*
- *                                                                         											*
+ *                                                                         	*
+ *   This program is free software; you can redistribute it and/or modify 	*
+ *   it under the terms of the GNU General Public License as published by  	*
+ *   the Free Software Foundation; either version 2 of the License, or    	*
+ *   (at your option) any later version.                                  	*																		*
  ***************************************************************************/
 """
 import sys, os
@@ -37,8 +36,6 @@ from  pyarchinit_US_ui import *
 from  pyarchinit_utility import *
 from pyarchinit_print_utility import Print_utility
 from  pyarchinit_error_check import *
-
-
 
 from  pyarchinit_pyqgis import Pyarchinit_pyqgis, Order_layer_v2
 from  sortpanelmain import SortPanelMain
@@ -2037,33 +2034,33 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			order_layer = self.lineEditOrderLayer.text()
 		#data
 		self.DATA_LIST_REC_TEMP = [
-		unicode(self.comboBox_sito.currentText()), 						#1 - Sito
-		unicode(self.comboBox_area.currentText()), 						#2 - Area
-		unicode(self.lineEdit_us.text()),											#3 - US
-		unicode(self.comboBox_def_strat.currentText()),					#4 - Definizione stratigrafica
+		unicode(self.comboBox_sito.currentText()), 					#1 - Sito
+		unicode(self.comboBox_area.currentText()), 					#2 - Area
+		unicode(self.lineEdit_us.text()),								#3 - US
+		unicode(self.comboBox_def_strat.currentText()),				#4 - Definizione stratigrafica
 		unicode(self.comboBox_def_intepret.currentText()),             #5 - Definizione intepretata
-		unicode(self.textEdit_descrizione.toPlainText()),		#6 - descrizione
-		unicode(self.textEdit_interpretazione.toPlainText()), #7 - interpretazione
+		unicode(self.textEdit_descrizione.toPlainText()),				#6 - descrizione
+		unicode(self.textEdit_interpretazione.toPlainText()), 			#7 - interpretazione
 		unicode(self.comboBox_per_iniz.currentText()),					#8 - periodo iniziale
 		unicode(self.comboBox_fas_iniz.currentText()),					#9 - fase iniziale
 		unicode(self.comboBox_per_fin.currentText()), 					#10 - periodo finale iniziale
 		unicode(self.comboBox_fas_fin.currentText()), 					#11 - fase finale
 		unicode(self.comboBox_scavato.currentText()),					#12 - scavato
-		unicode(self.lineEdit_attivita.text()),                             		#13 - attivita
-		unicode(self.lineEdit_anno.text()),                                 		#14 - anno scavo
+		unicode(self.lineEdit_attivita.text()),                        #13 - attivita
+		unicode(self.lineEdit_anno.text()),                            #14 - anno scavo
 		unicode(self.comboBox_metodo.currentText()), 					#15 - metodo
-		unicode(inclusi),																#16 - inclusi
-		unicode(campioni),															#17 - campioni
-		unicode(rapporti),															#18 - rapporti
-		unicode(self.lineEdit_data_schedatura.text()),						#19 - data schedatura
-		unicode(self.comboBox_schedatore.currentText()),              #20 - schedatore
-		unicode(self.comboBox_formazione.currentText()),              #21 - formazione
-		unicode(self.comboBox_conservazione.currentText()),          #22 - conservazione
-		unicode(self.comboBox_colore.currentText()),						#23 - colore
+		unicode(inclusi),												#16 - inclusi
+		unicode(campioni),												#17 - campioni
+		unicode(rapporti),												#18 - rapporti
+		unicode(self.lineEdit_data_schedatura.text()),					#19 - data schedatura
+		unicode(self.comboBox_schedatore.currentText()),             	#20 - schedatore
+		unicode(self.comboBox_formazione.currentText()),              	#21 - formazione
+		unicode(self.comboBox_conservazione.currentText()),          	#22 - conservazione
+		unicode(self.comboBox_colore.currentText()),					#23 - colore
 		unicode(self.comboBox_consistenza.currentText()),              #24 - consistenza
-		unicode(self.lineEdit_struttura.text()),									#25 - struttura
-		unicode(self.lineEdit_codice_periodo.text()),							#26 - codice periodo
-		unicode(order_layer),														#27 - order layer era str(order_layer)
+		unicode(self.lineEdit_struttura.text()),						#25 - struttura
+		unicode(self.lineEdit_codice_periodo.text()),					#26 - codice periodo
+		unicode(order_layer),											#27 - order layer era str(order_layer)
 		unicode(documentazione)
 		]
 
@@ -2075,6 +2072,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def records_equal_check(self):
 		self.set_LIST_REC_TEMP()
 		self.set_LIST_REC_CORR()
+		tes = str(self.DATA_LIST_REC_CORR) + str(self.DATA_LIST_REC_TEMP)
+		self.testing("C:\\Users\\Luca\\pyarchinit_Test_folder\\tes_equal.txt", tes)
 		#QMessageBox.warning(self, "Errore", str(self.DATA_LIST_REC_CORR) + str(self.DATA_LIST_REC_TEMP),  QMessageBox.Ok)
 		if self.DATA_LIST_REC_CORR == self.DATA_LIST_REC_TEMP:
 			return 0

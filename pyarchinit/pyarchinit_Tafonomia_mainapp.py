@@ -1279,15 +1279,28 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 		for i in range(len(self.DATA_LIST)):
 			sito =  unicode(self.DATA_LIST[i].sito)
 			nr_individuo = unicode(self.DATA_LIST[i].nr_individuo)
+			nr_individuo_find = int(self.DATA_LIST[i].nr_individuo)
 			sigla_struttura = ('%s%s') % (unicode(self.DATA_LIST[i].sigla_struttura), unicode(self.DATA_LIST[i].nr_struttura))
-			
-			self.testing("/sigla_struttura.txt", str(sigla_struttura))
-			res_ind = self.DB_MANAGER.query_bool({"sito": "'" + str(sito) + "'", "nr_individuo" : "'" + str(nr_individuo) + "'"}, "SCHEDAIND")
+
+			#res_ind = self.DB_MANAGER.query_bool({"sito":"'"+ str(sito)+"'","nr_individuo":"'"+str(nr_individuo)+"'"},"SCHEDAIND")
+			#res_ind = self.DB_MANAGER.query_bool({"sito":'"Rimini_(RN)_via_Arnaldo_da_Brescia_Scuole_XX_Settembre_2015"',"nr_individuo":'"23"'},"SCHEDAIND")
+			#res_ind = self.DB_MANAGER.query_bool({"sito":"'"+ sito + "'","nr_individuo":"'"+ nr_individuo + "'"},"SCHEDAIND")
+
+			res_ind = self.DB_MANAGER.query_bool({"sito":"'" + sito + "'","nr_individuo": nr_individuo_find},"SCHEDAIND")
+			#ls = []
+			#for ns in res_ind:
+				#ls.append(ns.us)
+			#test = str(ns.us)
+
+			#self.testing("C:\\Users\\Luca\pyarchinit_Test_folder\\res_individuo.txt", test)
 
 			us_ind_list = []
 			if bool(res_ind) == True:
 				for ri in res_ind:
 					us_ind_list.append([str(ri.sito), str(ri.area), str(ri.us)])
+				us_ind_list.sort()
+
+			#self.testing('C:\Users\Luca\pyarchinit_Test_folder\lista_strutture.txt', str(res_ind))
 
 			quote_ind = []
 			if bool(us_ind_list) == True:
@@ -1319,14 +1332,14 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			if bool(res_strutt) == True:
 				for rs in res_strutt:
 					us_strutt_list.append([str(rs.sito), str(rs.area), str(rs.us)])
-				
+				us_strutt_list.sort()
 
 			quote_strutt = []
-			self.testing("/res_struttura.txt", str(us_strutt_list))
+			#self.testing("/res_struttura.txt", str(us_strutt_list))
 			if bool(us_strutt_list) == True:
 				for sing_us in us_strutt_list:
 					res_quote_strutt = self.DB_MANAGER.select_quote_from_db_sql(sing_us[0], sing_us[1], sing_us[2])
-					self.testing("/res_quote_strutt.txt", str(res_quote_strutt))
+					#self.testing("/res_quote_strutt.txt", str(res_quote_strutt))
 					if bool(res_quote_strutt) == True:
 						for sing_us in res_quote_strutt:
 							sing_quota_value = str(sing_us[5])
@@ -1348,44 +1361,46 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 
 			data_list.append([
 			unicode(self.DATA_LIST[i].sito), 									#0 - Sito
-			unicode(self.DATA_LIST[i].nr_scheda_taf),						#1 - numero scheda taf
+			unicode(self.DATA_LIST[i].nr_scheda_taf),							#1 - numero scheda taf
 			unicode(self.DATA_LIST[i].sigla_struttura),						#2 - sigla struttura
 			unicode(self.DATA_LIST[i].nr_struttura),							#3 - nr struttura
 			unicode(self.DATA_LIST[i].nr_individuo),							#4 - nr individuo
-			unicode(self.DATA_LIST[i].rito),										#5 - rito
+			unicode(self.DATA_LIST[i].rito),									#5 - rito
 			unicode(self.DATA_LIST[i].descrizione_taf),						#6 - descrizione
 			unicode(self.DATA_LIST[i].interpretazione_taf),					#7 - interpretazione
 			unicode(self.DATA_LIST[i].segnacoli),								#8 - segnacoli
-			unicode(self.DATA_LIST[i].canale_libatorio_si_no),				#9- canale libatorio l
-			unicode(self.DATA_LIST[i].oggetti_rinvenuti_esterno),			#10- oggetti rinvenuti esterno
-			unicode(self.DATA_LIST[i].stato_di_conservazione),			#11 - stato_di_conservazione
+			unicode(self.DATA_LIST[i].canale_libatorio_si_no),					#9- canale libatorio l
+			unicode(self.DATA_LIST[i].oggetti_rinvenuti_esterno),				#10- oggetti rinvenuti esterno
+			unicode(self.DATA_LIST[i].stato_di_conservazione),					#11 - stato_di_conservazione
 			unicode(self.DATA_LIST[i].copertura_tipo), 						#12 - copertura tipo
-			unicode(self.DATA_LIST[i].tipo_contenitore_resti),				#13 - tipo contenitore resti
-			unicode(self.DATA_LIST[i].orientamento_asse),					#14 - orientamento asse
-			self.DATA_LIST[i].orientamento_azimut,							#15 orientamento azimut
-			unicode(self.DATA_LIST[i].corredo_presenza),					#16-  corredo presenza
+			unicode(self.DATA_LIST[i].tipo_contenitore_resti),					#13 - tipo contenitore resti
+			unicode(self.DATA_LIST[i].orientamento_asse),						#14 - orientamento asse
+			self.DATA_LIST[i].orientamento_azimut,								#15 orientamento azimut
+			unicode(self.DATA_LIST[i].corredo_presenza),						#16-  corredo presenza
 			unicode(self.DATA_LIST[i].corredo_tipo),							#17 - corredo tipo
-			unicode(self.DATA_LIST[i].corredo_descrizione),				#18 - corredo descrizione
-			self.DATA_LIST[i].lunghezza_scheletro,							#19 - lunghezza scheletro
+			unicode(self.DATA_LIST[i].corredo_descrizione),					#18 - corredo descrizione
+			self.DATA_LIST[i].lunghezza_scheletro,								#19 - lunghezza scheletro
 			unicode(self.DATA_LIST[i].posizione_cranio),						#20 - posizione cranio
 			unicode(self.DATA_LIST[i].posizione_scheletro),					#21 - posizione cranio
-			unicode(self.DATA_LIST[i].posizione_arti_superiori),			#22 - posizione arti superiori
+			unicode(self.DATA_LIST[i].posizione_arti_superiori),				#22 - posizione arti superiori
 			unicode(self.DATA_LIST[i].posizione_arti_inferiori),				#23 - posizione arti inferiori
-			unicode(self.DATA_LIST[i].completo_si_no),						#24 - completo
-			unicode(self.DATA_LIST[i].disturbato_si_no),					#25- disturbato
-			unicode(self.DATA_LIST[i].in_connessione_si_no),				#26 - in connessione
+			unicode(self.DATA_LIST[i].completo_si_no),							#24 - completo
+			unicode(self.DATA_LIST[i].disturbato_si_no),						#25- disturbato
+			unicode(self.DATA_LIST[i].in_connessione_si_no),					#26 - in connessione
 			unicode(self.DATA_LIST[i].caratteristiche),						#27 - caratteristiche
 			unicode(self.DATA_LIST[i].periodo_iniziale),						#28 - periodo iniziale
 			unicode(self.DATA_LIST[i].fase_iniziale),							#29 - fase iniziale
-			unicode(self.DATA_LIST[i].periodo_finale),						#30 - periodo finale
+			unicode(self.DATA_LIST[i].periodo_finale),							#30 - periodo finale
 			unicode(self.DATA_LIST[i].fase_finale),							#31 - fase finale
-			unicode(self.DATA_LIST[i].datazione_estesa),					#32 - datazione estesa
-			unicode(self.DATA_LIST[i].misure_tafonomia),					#33 - misure tafonomia
-			quota_min_ind,															#34 - quota min individuo
-			quota_max_ind,															#35 - quota max individuo
-			quota_min_strutt,															#36 - quota min struttura
-			quota_max_strutt															#37 - quota max struttura
-		])
+			unicode(self.DATA_LIST[i].datazione_estesa),						#32 - datazione estesa
+			unicode(self.DATA_LIST[i].misure_tafonomia),						#33 - misure tafonomia
+			quota_min_ind,														#34 - quota min individuo
+			quota_max_ind,														#35 - quota max individuo
+			quota_min_strutt,													#36 - quota min struttura
+			quota_max_strutt,													#37 - quota max struttura
+			us_ind_list,														#38 - us individuo
+			us_strutt_list														#39 - us struttura
+			])
 			
 		return data_list
 

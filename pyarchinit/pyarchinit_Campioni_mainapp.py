@@ -683,9 +683,9 @@ class pyarchinit_Campioni(QDialog, Ui_DialogCampioni):
 			n_inv_res_list = ""
 			for i in range(len(res_inv_list)):
 				if i != len(res_inv_list)-1:
-					n_inv_res_list += "N.inv:" + str(res_inv_list[i].nr_campione) + "/"+ str(res_inv_list[i].tipo_campione)+","
+					n_inv_res_list += " N.inv:" + str(res_inv_list[i].nr_campione) + "/"+ str(res_inv_list[i].tipo_campione)+","
 				else:
-					n_inv_res_list += "N.inv:" + str(res_inv_list[i].nr_campione) + "/"+ str(res_inv_list[i].tipo_campione)
+					n_inv_res_list += " N.inv:" + str(res_inv_list[i].nr_campione) + "/"+ str(res_inv_list[i].tipo_campione)
 					
 			#inserisce l'elenco degli inventari
 			single_cassa.append(n_inv_res_list)

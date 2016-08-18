@@ -4,19 +4,19 @@
 /***************************************************************************
         pyArchInit Plugin  - A QGIS plugin to manage archaeological dataset
         					 stored in Postgres
-    ---------------------------------------------------------------------------------------------------------------------
+    ------------------------------------------------------------------------
     begin                : 2007-12-01
     copyright            : (C) 2008 by Luca Mandolesi
-    email                : mandoluca at gmail.com
+    email                : pyarchinit at gmail.com
  ***************************************************************************/
 
 /***************************************************************************/
-*                                                                                                                      *
- *   This program is free software; you can redistribute it and/or modify                          *
-*   it under the terms of the GNU General Public License as published by                          *
- *   the Free Software Foundation; either version 2 of the License, or                              *
-*   (at your option) any later version.                                                                        *
- *                                                                                                                      *
+*                                                                         	*
+*   This program is free software; you can redistribute it and/or modify   *
+*   it under the terms of the GNU General Public License as published by    *
+*   the Free Software Foundation; either version 2 of the License, or      *
+*   (at your option) any later version.                                     *
+*                                                                          *
 /***************************************************************************/
 """
 from sqlalchemy.orm import sessionmaker
@@ -83,25 +83,27 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 		QMessageBox.warning(self, "ok","Per rendere effettive le modifiche e' necessario riavviare Qgis. Grazie.",  QMessageBox.Ok)
 		self.on_pushButton_save_pressed()
 
-###############################################################
-##	def on_pushButton_exp_directories_pressed(self):																#
-##		module_path_rel = os.path.join(os.sep, '.qgis', 'python','plugins', 'pyarchinit', 'modules', 'utility')	#
-##		module_path = ('%s%s') % (home, module_path_rel)													#
-##																																	#
-##		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')							#
-##																																	#
-##		config_copy_from_path_rel = os.path.join(os.sep, 'DBfiles', 'config.cfg')								#
-##		config_copy_from_path =  ('%s%s') % (module_path, config_copy_from_path_rel)				#
-##		config_copy_to_path = ('%s%s%s') % (home_DB_path, os.sep, 'config.cfg')						#
-##																																	#
-##		db_copy_from_path_rel = os.path.join(os.sep, 'DBfiles', 'pyarchinit_db.sqlite')						#
-##		db_copy_from_path = ('%s%s') % (module_path, db_copy_from_path_rel)						#
-##		db_copy_to_path = ('%s%s%s') % (home_DB_path, os.sep, 'pyarchinit_db.sqlite')				#
-##																																	#
-##		OS_utility = pyarchinit_OS_Utility()																				#
-##																																	#
-##		OS_utility.create_dir(str(home_DB_path))																		#
-###############################################################
+
+	"""
+	def on_pushButton_exp_directories_pressed(self):																#
+		module_path_rel = os.path.join(os.sep, '.qgis', 'python','plugins', 'pyarchinit', 'modules', 'utility')		#
+		module_path = ('%s%s') % (home, module_path_rel)													#
+																																	#
+		home_DB_path = ('%s%s%s') % (home, os.sep, 'pyarchinit_DB_folder')							#
+																																	#
+		config_copy_from_path_rel = os.path.join(os.sep, 'DBfiles', 'config.cfg')								#
+		config_copy_from_path =  ('%s%s') % (module_path, config_copy_from_path_rel)				#
+		config_copy_to_path = ('%s%s%s') % (home_DB_path, os.sep, 'config.cfg')						#
+																																	#
+		db_copy_from_path_rel = os.path.join(os.sep, 'DBfiles', 'pyarchinit_db.sqlite')						#
+		db_copy_from_path = ('%s%s') % (module_path, db_copy_from_path_rel)						#
+		db_copy_to_path = ('%s%s%s') % (home_DB_path, os.sep, 'pyarchinit_db.sqlite')				#
+																																	#
+		OS_utility = pyarchinit_OS_Utility()																				#
+																																	#
+		OS_utility.create_dir(str(home_DB_path))										
+
+	"""
 
 	def on_pushButton_save_pressed(self):
 		self.PARAMS_DICT['SERVER'] = str(self.comboBox_Database.currentText())
@@ -191,6 +193,12 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 		from pyarchinit_conn_strings import *
 		conn = Connection()
 		conn_str = conn.conn_str()
+		
+		f = open("C:\\Users\\Luca\\pyarchinit_Test_folder\\conn_str_from_config.txt", "w")
+		f.write(str(conn_str))
+		f.close
+		
+		
 		from  pyarchinit_db_manager import *
 		self.DB_MANAGER = Pyarchinit_db_management(conn_str)  #sqlite:///\Users\Windows\pyarchinit_DB_folder\pyarchinit_db.sqlite 
 		test = self.DB_MANAGER.connection()
@@ -200,7 +208,7 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 		elif test.find("create_engine") != -1:
 			QMessageBox.warning(self, "Alert", "Verifica i parametri di connessione. <br> Se sono corretti RIAVVIA QGIS" ,  QMessageBox.Ok)
 		else:
-			QMessageBox.warning(self, "Alert", "Errore di connessione: <br>" + str(test) ,  QMessageBox.Ok)
+			QMessageBox.warning(self, "Alert", "Errore di connessione: <br>" + str(test) +  "<br> Cambia i parametri e riprova a connetterti. Se cambi server (Postgres o Sqlite) ricordati di cliccare su connetti e RIAVVIARE Qgis",  QMessageBox.Ok)
 
 	def charge_data(self):
 		#load data from config.cfg file

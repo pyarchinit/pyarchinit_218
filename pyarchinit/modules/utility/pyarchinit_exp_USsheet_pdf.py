@@ -12,7 +12,7 @@ from reportlab.platypus import Table, PageBreak, SimpleDocTemplate, Paragraph, S
 from reportlab.platypus.paragraph import Paragraph
 
 from datetime import date, time
-
+import datetime
 from pyarchinit_OS_utility import *
 
 
@@ -84,35 +84,35 @@ class single_US_pdf_sheet:
 
 
 	def __init__(self, data):
-		self.sito = 								data[0]
+		self.sito = 							data[0]
 		self.area = 							data[1]
-		self.us   = 								data[2]
-		self.d_stratigrafica = 				data[3]
+		self.us   = 							data[2]
+		self.d_stratigrafica = 					data[3]
 		self.d_interpretativa = 				data[4]
-		self.descrizione = 					data[5]
-		self.interpretazione = 				data[6]
+		self.descrizione = 						data[5]
+		self.interpretazione = 					data[6]
 		self.periodo_iniziale = 				data[7]
 		self.fase_iniziale = 					data[8]
 		self.periodo_finale = 					data[9]
-		self.fase_finale = 					data[10]
-		self.scavato = 						data[11]
-		self.attivita = 							data[12]
-		self.anno_scavo = 					data[13]
-		self.metodo_di_scavo = 			data[14]
-		self.inclusi = 							data[15]
-		self.campioni = 						data[16]
-		self.rapporti = 						data[17]
-		self.data_schedatura = 			data[18]
-		self.schedatore = 					data[19]
-		self.formazione = 					data[20]
+		self.fase_finale = 							data[10]
+		self.scavato = 								data[11]
+		self.attivita = 									data[12]
+		self.anno_scavo = 						data[13]
+		self.metodo_di_scavo = 				data[14]
+		self.inclusi = 									data[15]
+		self.campioni = 								data[16]
+		self.rapporti = 								data[17]
+		self.data_schedatura = 				data[18]
+		self.schedatore = 							data[19]
+		self.formazione = 							data[20]
 		self.stato_di_conservazione = 	data[21]
-		self.colore = 							data[22]
-		self.consistenza = 					data[23]
-		self.struttura = 						data[24]
-		self.quota_min = 						data[25]
-		self.quota_max = 					data[26]
-		self.piante = 							data[27]
-		self.documentazione =				data[28]
+		self.colore = 									data[22]
+		self.consistenza = 						data[23]
+		self.struttura = 								data[24]
+		self.quota_min = 							data[25]
+		self.quota_max = 							data[26]
+		self.piante = 									data[27]
+		self.documentazione =					data[28]
 
 	def unzip_rapporti_stratigrafici(self):
 		rapporti = eval(self.rapporti)
@@ -471,9 +471,9 @@ class US_index_pdf_sheet:
 
 
 	def __init__(self, data):
-		self.sito = 								data[0]
+		self.sito = 							data[0]
 		self.area = 							data[1]
-		self.us   = 								data[2]
+		self.us   = 							data[2]
 		self.d_stratigrafica =					data[3]
 		self.rapporti = 						data[17]
 
@@ -551,7 +551,7 @@ class US_index_pdf_sheet:
 		styNormal.spaceBefore = 20
 		styNormal.spaceAfter = 20
 		styNormal.alignment = 0 #LEFT
-		styNormal.fontSize = 9
+		styNormal.fontSize = 6
 
 		self.unzip_rapporti_stratigrafici()
 
@@ -623,13 +623,15 @@ class generate_US_pdf:
 		return today
 
 	def build_US_sheets(self, records):
+	
 		elements = []
 		for i in range(len(records)):
 			single_us_sheet = single_US_pdf_sheet(records[i])
 			elements.append(single_us_sheet.create_sheet())
 			elements.append(PageBreak())
-
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'scheda_US.pdf')
+		
+		dt = datetime.datetime.now()
+		filename = ('%s%s%s_%s_%s_%s_%s_%s_%s%s') % (self.PDF_path, os.sep, 'scheda_US', dt.day, dt.month, dt.year, dt.hour, dt.minute, dt.second, ".pdf")
 		f = open(filename, "wb")
 
 		doc = SimpleDocTemplate(f, pagesize=A4)
@@ -675,8 +677,10 @@ class generate_US_pdf:
 
 		lst.append(table_data_formatted)
 		lst.append(Spacer(0,2))
-
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_us.pdf')
+		
+		
+		dt = datetime.datetime.now()
+		filename = ('%s%s%s_%s_%s_%s_%s_%s_%s%s') % (self.PDF_path, os.sep, 'elenco_us', dt.day, dt.month, dt.year, dt.hour, dt.minute, dt.second, ".pdf")
 		f = open(filename, "wb")
 
 		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0)

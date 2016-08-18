@@ -1843,12 +1843,12 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 		#data
 		self.DATA_LIST_REC_TEMP = [
-		unicode(self.comboBox_sito.currentText()), 								#1 - Sito
-		unicode(self.lineEdit_num_inv.text()), 									#2 - num_inv
-		unicode(self.comboBox_tipo_reperto.currentText()), 						#3 - tipo_reperto
+		unicode(self.comboBox_sito.currentText()), 							#1 - Sito
+		unicode(self.lineEdit_num_inv.text()), 								#2 - num_inv
+		unicode(self.comboBox_tipo_reperto.currentText()), 					#3 - tipo_reperto
 		unicode(self.comboBox_criterio_schedatura.currentText()),				#4 - criterio schedatura
 		unicode(self.comboBox_definizione.currentText()), 						#5 - definizione
-		unicode(self.textEdit_descrizione_reperto.toPlainText()),	#6 - descrizione
+		unicode(self.textEdit_descrizione_reperto.toPlainText()),	            #6 - descrizione
 		unicode(area),															#7 - area
 		unicode(us),															#8 - us
 		unicode(self.comboBox_lavato.currentText()),							#9 - lavato
@@ -1859,18 +1859,18 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 		unicode(elementi_reperto), 												#14 - elementi reperto
 		unicode(misurazioni),													#15 - misurazioni
 		unicode(rif_biblio),													#16 - rif_biblio
-		unicode(tecnologie),														#17 - tecnologie
-		unicode(forme_minime),														#17 - tecnologie
-		unicode(forme_massime),														#17 - tecnologie
-		unicode(totale_frammenti),														#17 - tecnologie
-		unicode(self.lineEditCorpoCeramico.text()),														#17 - tecnologie
-		unicode(self.lineEditRivestimento.text()),
-		unicode(diametro_orlo),
-		unicode(peso),																#17 - tecnologie
-		unicode(self.lineEdit_tipo.text()),
-		unicode(eve_orlo),														#17 - tecnologie
-		unicode(self.comboBox_repertato.currentText()),							#9 - lavato
-		unicode(self.comboBox_diagnostico.currentText()),							#9 - lavato
+		unicode(tecnologie),													#17 - tecnologie
+		unicode(forme_minime),													#18 - forme minime
+		unicode(forme_massime),													#19 - forme massime
+		unicode(totale_frammenti),												#20 - totale frammenti
+		unicode(self.lineEditCorpoCeramico.text()),							#21 - corpoceramico
+		unicode(self.lineEditRivestimento.text()),								#22 - riverstimento 
+		unicode(diametro_orlo),													#23 - diametro orlo
+		unicode(peso),															#24 - peso
+		unicode(self.lineEdit_tipo.text()),									#25 - tipo
+		unicode(eve_orlo),														#26 - eve orlo
+		unicode(self.comboBox_repertato.currentText()),						#27 - repertato
+		unicode(self.comboBox_diagnostico.currentText()),						#28 - diagnostico
 		]
 
 
