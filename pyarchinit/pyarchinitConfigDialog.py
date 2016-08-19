@@ -56,15 +56,57 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 		self.setupUi(self)
 		self.load_dict()
 		self.charge_data()
-		self.connect(self.comboBox_Database, SIGNAL("editTextChanged (const QString&)"), self.set_db_name)
+		self.connect(self.comboBox_Database, SIGNAL("editTextChanged (const QString&)"), self.set_db_parameter)
+		self.connect(self.comboBox_server_read, SIGNAL("editTextChanged (const QString&)"), self.set_db_import_from_parameter)
+		self.connect(self.comboBox_server_write, SIGNAL("editTextChanged (const QString&)"), self.set_db_import_from_parameter)
+
 		self.connect(self.comboBox_experimental, SIGNAL("editTextChanged (const QString&)"), self.message)
 
 
-	def set_db_name(self):
+	def set_db_parameter(self):
 		if str(self.comboBox_Database.currentText()) == 'postgres':
 			self.lineEdit_DBname.setText("pyarchinit")
+			self.lineEdit_Host.setText('127.0.0.1')
+			self.lineEdit_Port.setText('5432')
+			self.lineEdit_User.setText('postgres')
+
 		if str(self.comboBox_Database.currentText()) == 'sqlite':
 			self.lineEdit_DBname.setText("pyarchinit_db.sqlite")
+			self.lineEdit_Host.setText('')
+			self.lineEdit_Password.setText('')
+			self.lineEdit_Port.setText('')
+			self.lineEdit_User.setText('')
+	
+	def set_db_import_from_parameter(self):
+		if str(self.comboBox_server_read.currentText()) == 'postgres':
+			self.lineEdit_host_read.setText('127.0.0.1')
+			self.lineEdit_username_read('postgres')
+			self.lineEdit_database_read('pyarchinit')
+			self.lineEdit_port_read('5432')
+			
+		if str(self.comboBox_server_read.currentText()) == 'sqlite':
+			self.lineEdit_host_read.setText('')
+			self.lineEdit_username_read('')
+			self.lineEdit_lineEdit_pass_read('')
+			self.lineEdit_database_read('pyarchinit_db.sqlite')
+			self.lineEdit_port_read('')
+			
+	def set_db_import_to_parameter(self):
+		if str(self.comboBox_server_write.currentText()) == 'postgres':
+			self.lineEdit_host_read.setText('127.0.0.1')
+			self.lineEdit_username_read('postgres')
+			self.lineEdit_database_read('pyarchinit')
+			self.lineEdit_port_read('5432')
+			
+		if str(self.comboBox_server_write.currentText()) == 'sqlite':
+			self.lineEdit_host_read.setText('')
+			self.lineEdit_username_read('')
+			self.lineEdit_lineEdit_pass_read('')
+			self.lineEdit_database_read('pyarchinit_db.sqlite')
+			self.lineEdit_port_read('')
+			
+
+
 
 	def load_dict(self):
 		path_rel = os.path.join(os.sep, str(self.HOME), 'pyarchinit_DB_folder', 'config.cfg')
@@ -275,18 +317,22 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 			QMessageBox.warning(self, "Alert", "Verifica i parametri di connessione. <br> Se sono corretti RIAVVIA QGIS" ,  QMessageBox.Ok)
 		else:
 			QMessageBox.warning(self, "Alert", "Errore di connessione: <br>" + str(test) ,  QMessageBox.Ok)
+
 		####LEGGE I RECORD IN BASE AL PARAMETRO CAMPO=VALORE
 		search_dict = {
 			self.lineEdit_field_read.text() : "'"+str(self.lineEdit_value_read.text())+"'"
 			}
 		mapper_class_read = str(self.comboBox_mapper_read.currentText())
 		res_read =self.DB_MANAGER_read.query_bool(search_dict,mapper_class_read)
+		
 		####INSERISCE I DATI DA UPLOADARE DENTRO ALLA LISTA DATA_LIST_TOIMP
 		data_list_toimp = []
-		for i in res_read:
+		for i in res_read:				
 			data_list_toimp.append(i)
-		QMessageBox.warning(self, "Len", str(len(data_list_toimp)), QMessageBox.Ok)
+
+		QMessageBox.warning(self, "Totale record da importare", str(len(data_list_toimp)), QMessageBox.Ok)
 		#creazione del cursore di scrittura
+
 		####RICAVA I DATI IN LETTURA PER LA CONNESSIONE DALLA GUI
 		conn_str_dict_write = {
 										"server": str(self.comboBox_server_write.currentText()),
@@ -296,6 +342,7 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 										"port": str(self.lineEdit_port_write.text()),
 										"db_name": str(self.lineEdit_database_write.text())
 										}
+
 		####CREA LA STRINGA DI CONNESSIONE IN LETTURA
 		if conn_str_dict_write["server"] == 'postgres':
 			try:
@@ -308,15 +355,18 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 			conn_str_write = "%s:///%s" % (conn_str_dict_write["server"], dbname_abs)
 			QMessageBox.warning(self, "Alert", str(conn_str_dict_write["db_name"]),  QMessageBox.Ok)
 		####SI CONNETTE AL DATABASE IN SCRITTURA
+		
 		self.DB_MANAGER_write = Pyarchinit_db_management(conn_str_write)
 		test =self.DB_MANAGER_write.connection()
 		test = str(test)
+
 		if test == "":
 			QMessageBox.warning(self, "Messaggio", "Connessione avvenuta con successo",  QMessageBox.Ok)
 		elif test.find("create_engine") != -1:
 			QMessageBox.warning(self, "Alert", "Verifica i parametri di connessione. <br> Se sono corretti RIAVVIA QGIS" ,  QMessageBox.Ok)
 		else:
 			QMessageBox.warning(self, "Alert", "Errore di connessione: <br>" + str(test) ,  QMessageBox.Ok)
+
 		mapper_class_write = str(self.comboBox_mapper_read.currentText())
 		####inserisce i dati dentro al database
 		
@@ -499,6 +549,18 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 ####TAFONOMIA TABLE
 		if mapper_class_write == 'TAFONOMIA':
 			for sing_rec in range(len(data_list_toimp)):
+				test_azimut = data_list_toimp[sing_rec].orientamento_azimut
+				if test_azimut == "" or orientamento_azimut == None:
+					orientamento_azimut = None
+				else:
+					orientamento_azimut = data_list_toimp[sing_rec].orientamento_azimut
+
+				if data_list_toimp[sing_rec].lunghezza_scheletro == "" or data_list_toimp[sing_rec].lunghezza_scheletro == None:
+					lunghezza_scheletro = None
+				else:
+					lunghezza_scheletro = data_list_toimp[sing_rec].lunghezza_scheletro
+
+				
 				data = self.DB_MANAGER_write.insert_values_tafonomia(
 																	self.DB_MANAGER_write.max_num_id(mapper_class_write, id_table_class_mapper_conv_dict[mapper_class_write])+1,
 																	data_list_toimp[sing_rec].sito,
@@ -516,12 +578,12 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 																	data_list_toimp[sing_rec].copertura_tipo,
 																	data_list_toimp[sing_rec].tipo_contenitore_resti,
 																	data_list_toimp[sing_rec].orientamento_asse,
-																	data_list_toimp[sing_rec].orientamento_azimut,
+																	orientamento_azimut,
 																	data_list_toimp[sing_rec].riferimenti_stratigrafici,
 																	data_list_toimp[sing_rec].corredo_presenza,
 																	data_list_toimp[sing_rec].corredo_tipo,
 																	data_list_toimp[sing_rec].corredo_descrizione,
-																	data_list_toimp[sing_rec].lunghezza_scheletro,
+																	lunghezza_scheletro,
 																	data_list_toimp[sing_rec].posizione_scheletro,
 																	data_list_toimp[sing_rec].posizione_cranio,
 																	data_list_toimp[sing_rec].posizione_arti_superiori,

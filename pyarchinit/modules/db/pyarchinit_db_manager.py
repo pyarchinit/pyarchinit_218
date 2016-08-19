@@ -11,12 +11,12 @@
  ***************************************************************************/
 
 /***************************************************************************
- *                                                                                                                      *
- *   This program is free software; you can redistribute it and/or modify                           *
- *   it under the terms of the GNU General Public License as published by                          *
- *   the Free Software Foundation; either version 2 of the License, or                               *
- *   (at your option) any later version.                                                                       *
- *                                                                                                                      *
+ *                                                                          *
+ *   This program is free software; you can redistribute it and/or modify   *
+ *   it under the terms of the GNU General Public License as published by   *
+ *   the Free Software Foundation; either version 2 of the License, or      *
+ *   (at your option) any later version.                                    *
+ *                                                                          *
  ***************************************************************************/
 """
 import sys, os
@@ -555,6 +555,22 @@ class Pyarchinit_db_management:
 										arg[9])
 
 		return campioni
+
+
+	def insert_relationship_check_values(self, *arg):
+		"""Istanzia la classe RELATIONSHIP_CHECK da pyarchinit_db_mapper"""
+		relationship_check = RELATIONSHIP_CHECK(arg[0],
+												arg[1],
+												arg[2],
+												arg[3],
+												arg[4],
+												arg[5],
+												arg[6],
+												arg[7],
+												arg[8],
+												arg[9])
+
+		return relationship_check
 
 
 	def execute_sql_create_db(self):

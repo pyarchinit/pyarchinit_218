@@ -879,39 +879,39 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			data = self.DB_MANAGER.insert_values_tafonomia(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
 			str(self.comboBox_sito.currentText()), 								#1 - Sito
-			int(self.lineEdit_nr_scheda.text()),										#2 - nr scheda tafonomica
-			str(self.comboBox_sigla_struttura.currentText()),					#3 - tipo struttura
-			int(self.comboBox_nr_struttura.currentText()),						#4 - nr struttura
-			int(self.comboBox_nr_individuo.currentText()),						#5 - nr  individuo
+			int(self.lineEdit_nr_scheda.text()),									#2 - nr scheda tafonomica
+			str(self.comboBox_sigla_struttura.currentText()),						#3 - tipo struttura
+			int(self.comboBox_nr_struttura.currentText()),							#4 - nr struttura
+			int(self.comboBox_nr_individuo.currentText()),							#5 - nr  individuo
 			str(self.comboBox_rito.currentText()),									#6 - rito
-			unicode(self.textEdit_descrizione_taf.toPlainText()),				#7 - descrizione
-			unicode(self.textEdit_interpretazione_taf.toPlainText()),			#8 - interpretazione
+			unicode(self.textEdit_descrizione_taf.toPlainText()),					#7 - descrizione
+			unicode(self.textEdit_interpretazione_taf.toPlainText()),				#8 - interpretazione
 			str(self.comboBox_segnacoli.currentText()),							#9 - segnacoli
-			str(self.comboBox_canale_libatorio.currentText()),					#10 - canale libatorio
-			str(self.comboBox_oggetti_esterno.currentText()),					#11 - oggetti esterno
-			str(self.comboBox_conservazione_taf.currentText()),				#12 - conservazione
-			str(self.comboBox_copertura_tipo.currentText()),					#13 - copertura
-			str(self.comboBox_tipo_contenitore_resti.currentText()),			#14 - tipo contenitore resti
+			str(self.comboBox_canale_libatorio.currentText()),						#10 - canale libatorio
+			str(self.comboBox_oggetti_esterno.currentText()),						#11 - oggetti esterno
+			str(self.comboBox_conservazione_taf.currentText()),					#12 - conservazione
+			str(self.comboBox_copertura_tipo.currentText()),						#13 - copertura
+			str(self.comboBox_tipo_contenitore_resti.currentText()),				#14 - tipo contenitore resti
 			str(self.lineEdit_orientamento_asse.text()),							#15 - orientamento asse
-			orientamento_azimut,														#16 - orientamento azimut
-			str(self.comboBox_corredo_presenza.currentText()),				#17 - corredo presenza
-			str(corredo_tipo),																#18 - corredo tipo
-			unicode(self.textEdit_descrizione_corredo.toPlainText()),			#19 - descrizione corredo
-			lunghezza_scheletro,															#20 - lunghezza scheletro
-			str(self.comboBox_posizione_scheletro.currentText()),			#21 - posizione scheletro
-			str(self.comboBox_posizione_cranio.currentText()),				#22 - posizione cranio
+			orientamento_azimut,													#16 - orientamento azimut
+			str(self.comboBox_corredo_presenza.currentText()),						#17 - corredo presenza
+			str(corredo_tipo),														#18 - corredo tipo
+			unicode(self.textEdit_descrizione_corredo.toPlainText()),				#19 - descrizione corredo
+			lunghezza_scheletro,													#20 - lunghezza scheletro
+			str(self.comboBox_posizione_scheletro.currentText()),					#21 - posizione scheletro
+			str(self.comboBox_posizione_cranio.currentText()),						#22 - posizione cranio
 			str(self.comboBox_arti_superiori.currentText()),						#23 - arti inferiori
 			str(self.comboBox_arti_inferiori.currentText()),						#24 - arti superiori
-			str(self.comboBox_completo.currentText()),							#25 - completo
-			str(self.comboBox_disturbato.currentText()),						#26 - disturbato
-			str(self.comboBox_in_connessione.currentText()), 				#27 - in connessione
-			str(caratteristiche),															#28 - caratteristiche
-			per_iniz,																			#29 - periodo iniziale
-			fas_iniz,																			#30 - fase iniziale
-			per_fin, 																			#31 - periodo finale iniziale
-			fas_fin, 																			#32 - fase finale
-			str(self.lineEdit_datazione_estesa.text()),								#33 - datazione estesa
-			str(misurazioni))																#34 - misurazioni
+			str(self.comboBox_completo.currentText()),								#25 - completo
+			str(self.comboBox_disturbato.currentText()),							#26 - disturbato
+			str(self.comboBox_in_connessione.currentText()), 						#27 - in connessione
+			str(caratteristiche),													#28 - caratteristiche
+			per_iniz,																#29 - periodo iniziale
+			fas_iniz,																#30 - fase iniziale
+			per_fin, 																#31 - periodo finale iniziale
+			fas_fin, 																#32 - fase finale
+			str(self.lineEdit_datazione_estesa.text()),							#33 - datazione estesa
+			str(misurazioni))														#34 - misurazioni
 
 			try:
 				self.DB_MANAGER.insert_data_session(data)
