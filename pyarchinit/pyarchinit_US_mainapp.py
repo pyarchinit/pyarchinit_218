@@ -1229,8 +1229,12 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def on_pushButton_rapp_check_pressed(self):
 		sito_check = unicode(self.comboBox_sito_rappcheck.currentText())
 		area_check = unicode(self.comboBox_area_rappcheck.currentText())
-		self.rapporti_stratigrafici_check(sito_check, area_check)
-		QMessageBox.warning(self, "Messaggio", "Controllo Rapporti Stratigrafici. \n Controllo eseguito con successo",  QMessageBox.Ok)
+		try:
+			self.rapporti_stratigrafici_check(sito_check, area_check)
+		except Exception, e:
+			QMessageBox.warning(self, "Messaggio", str(e),  QMessageBox.Ok)
+		else:
+			QMessageBox.warning(self, "Messaggio", "Controllo Rapporti Stratigrafici. \n Controllo eseguito con successo",  QMessageBox.Ok)
 
 	def data_error_check(self):
 		test = 0
@@ -1393,6 +1397,49 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 						if bool(us_rapp) == False:
 							report = '\bSito: %s, \bArea: %s, \bUS: %d %s US: %d: Scheda US non esistente' % (sito, area, int(us), sing_rapp[0], int(sing_rapp[1]))
+						
+							#new system rapp_check
+							"""
+							data = self.DB_MANAGER.insert_values(
+							self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
+							unicode(self.comboBox_sito.currentText()), 				#1 - Sito
+							unicode(self.comboBox_area.currentText()), 				#2 - Area
+							int(self.lineEdit_us.text()),									#3 - US
+							unicode(self.comboBox_def_strat.currentText()),			#4 - Definizione stratigrafica
+							unicode(self.comboBox_def_intepret.currentText()),		#5 - Definizione intepretata
+							unicode(self.textEdit_descrizione.toPlainText()),		#6 - descrizione
+							unicode(self.textEdit_interpretazione.toPlainText()),#7 - interpretazione
+							unicode(self.comboBox_per_iniz.currentText()),			#8 - periodo iniziale
+							unicode(self.comboBox_fas_iniz.currentText()),			#9 - fase iniziale
+							unicode(self.comboBox_per_fin.currentText()), 			#10 - periodo finale iniziale
+							unicode(self.comboBox_fas_fin.currentText()), 			#11 - fase finale
+							unicode(self.comboBox_scavato.currentText()),			#12 - scavato
+							unicode(self.lineEdit_attivita.text()),							#13 - attivita  
+							unicode(self.lineEdit_anno.text()),								#14 - anno scavo
+							unicode(self.comboBox_metodo.currentText()), 			#15 - metodo
+							unicode(inclusi),														#16 - inclusi
+							unicode(campioni),													#17 - campioni
+							unicode(rapporti),													#18 - rapporti
+							unicode(self.lineEdit_data_schedatura.text()),				#19 - data schedatura
+							unicode(self.comboBox_schedatore.currentText()),		#20 - schedatore
+							unicode(self.comboBox_formazione.currentText()),		#21 - formazione
+							unicode(self.comboBox_conservazione.currentText()),	#22 - conservazione
+							unicode(self.comboBox_colore.currentText()),				#23 - colore
+							unicode(self.comboBox_consistenza.currentText()),		#24 - consistenza
+							unicode(self.lineEdit_struttura.text()),							#25 - struttura
+							unicode(self.lineEdit_codice_periodo.text()),					#26 - continuita  periodo
+							order_layer,													#27 - order layer
+							unicode(documentazione))										#28 - documentazione
+							try:
+								self.DB_MANAGER.insert_data_session(data)
+							except:
+								pass
+							"""
+							
+							
+							
+								
+						
 						else:
 							rapporti_check = eval(us_rapp[0].rapporti)
 							us_rapp_check = ('%s') % str(us)
@@ -1919,24 +1966,24 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		inclusi_row_count = self.tableWidget_inclusi.rowCount()
 		documentazione_row_count = self.tableWidget_documentazione.rowCount()
 		
-		self.comboBox_sito.setEditText("")  								#1 - Sito
+		self.comboBox_sito.setEditText("")  							#1 - Sito
 		self.comboBox_area.setEditText("") 								#2 - Area
-		self.lineEdit_us.clear()													#3 - US
+		self.lineEdit_us.clear()										#3 - US
 		self.comboBox_def_strat.setEditText("")							#4 - Definizione stratigrafica
 		self.comboBox_def_intepret.setEditText("")						#5 - Definizione intepretata
-		self.textEdit_descrizione.clear()										#6 - descrizione
-		self.textEdit_interpretazione.clear()									#7 - interpretazione
-		self.comboBox_per_iniz.setEditText("")								#8 - periodo iniziale
-		self.comboBox_fas_iniz.setEditText("")								#9 - fase iniziale
+		self.textEdit_descrizione.clear()								#6 - descrizione
+		self.textEdit_interpretazione.clear()							#7 - interpretazione
+		self.comboBox_per_iniz.setEditText("")							#8 - periodo iniziale
+		self.comboBox_fas_iniz.setEditText("")							#9 - fase iniziale
 		self.comboBox_per_fin.setEditText("") 							#10 - periodo finale iniziale
-		self.comboBox_fas_fin.setEditText("") 								#11 - fase finale
+		self.comboBox_fas_fin.setEditText("") 							#11 - fase finale
 		self.comboBox_scavato.setEditText("")							#12 - scavato
-		self.lineEdit_attivita.clear()												#13 - attivita
+		self.lineEdit_attivita.clear()									#13 - attivita
 		if self.BROWSE_STATUS == "n":
-			self.lineEdit_anno.setText(self.yearstrfdate())					#14 - anno scavo
+			self.lineEdit_anno.setText(self.yearstrfdate())			#14 - anno scavo
 		else:
 			self.lineEdit_anno.clear()
-		self.comboBox_metodo.setEditText("")				#15 - metodo
+		self.comboBox_metodo.setEditText("")							#15 - metodo
 		for i in range(inclusi_row_count):
 			self.tableWidget_inclusi.removeRow(0) 					
 		self.insert_new_row("self.tableWidget_inclusi")					#16 - inclusi
@@ -1948,19 +1995,19 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		#self.insert_new_row("self.tableWidget_rapporti")				#18 - rapporti
 		for i in range(documentazione_row_count):
 			self.tableWidget_documentazione.removeRow(0) 					
-		self.insert_new_row("self.tableWidget_documentazione")		#19 - documentazione
+		self.insert_new_row("self.tableWidget_documentazione")			#19 - documentazione
 		if self.BROWSE_STATUS == "n":
 			self.lineEdit_data_schedatura.setText(self.datestrfdate())	#20 - data schedatura
 		else:
-			self.lineEdit_data_schedatura.setText("")	#20 - data schedatura
+			self.lineEdit_data_schedatura.setText("")					#20 - data schedatura
 		self.comboBox_schedatore.setEditText("")						#21 - schedatore
-		self.comboBox_formazione.setEditText("")				#22 - formazione
-		self.comboBox_conservazione.setEditText("")					#23 - conservazione
-		self.comboBox_colore.setEditText("")								#24 - colore
+		self.comboBox_formazione.setEditText("")						#22 - formazione
+		self.comboBox_conservazione.setEditText("")						#23 - conservazione
+		self.comboBox_colore.setEditText("")							#24 - colore
 		self.comboBox_consistenza.setEditText("")						#25 - consistenza
-		self.lineEdit_struttura.clear()											#26 - struttura
-		self.lineEdit_codice_periodo.clear()									#27 - codice periodo
-		self.lineEditOrderLayer.clear()											#28 - order layer
+		self.lineEdit_struttura.clear()									#26 - struttura
+		self.lineEdit_codice_periodo.clear()							#27 - codice periodo
+		self.lineEditOrderLayer.clear()									#28 - order layer
 
 	def fill_fields(self, n=0):
 		self.rec_num = n
@@ -2072,9 +2119,13 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	def records_equal_check(self):
 		self.set_LIST_REC_TEMP()
 		self.set_LIST_REC_CORR()
+		
+		"""
+		area TEST
 		tes = str(self.DATA_LIST_REC_CORR) + str(self.DATA_LIST_REC_TEMP)
 		self.testing("C:\\Users\\Luca\\pyarchinit_Test_folder\\tes_equal.txt", tes)
 		#QMessageBox.warning(self, "Errore", str(self.DATA_LIST_REC_CORR) + str(self.DATA_LIST_REC_TEMP),  QMessageBox.Ok)
+		"""
 		if self.DATA_LIST_REC_CORR == self.DATA_LIST_REC_TEMP:
 			return 0
 		else:

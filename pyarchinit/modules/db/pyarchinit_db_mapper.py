@@ -24,7 +24,7 @@ from sqlalchemy import *
 
 from sqlalchemy.orm import mapper
 try:
-	from pyarchinit_db_structure import Documentazione_table, PDF_administrator, US_table, UT_table, US_table_toimp, Site_table, Periodizzazione_table, Inventario_materiali_table, Struttura_table, Media_table, Media_thumb_table,Media_to_Entity_table, Tafonomia_table, Inventario_materiali_table_toimp, Pyarchinit_thesaurus_sigle, SCHEDAIND_table, DETSESSO_table, DETETA_table, Archeozoology_table, Campioni_table
+	from pyarchinit_db_structure import Relashionship_check_table, Documentazione_table, PDF_administrator, US_table, UT_table, US_table_toimp, Site_table, Periodizzazione_table, Inventario_materiali_table, Struttura_table, Media_table, Media_thumb_table,Media_to_Entity_table, Tafonomia_table, Inventario_materiali_table_toimp, Pyarchinit_thesaurus_sigle, SCHEDAIND_table, DETSESSO_table, DETETA_table, Archeozoology_table, Campioni_table
 except:
 	pass
 
@@ -826,27 +826,27 @@ try:
 		datazione_estesa,
 		misure_tafonomia
 		):
-			self.id_tafonomia = id_tafonomia
-			self.sito = sito
-			self.nr_scheda_taf = nr_scheda_taf
-			self.sigla_struttura = sigla_struttura
-			self.nr_struttura = nr_struttura
-			self.nr_individuo = nr_individuo
-			self.rito = rito
-			self.descrizione_taf = descrizione_taf
-			self.interpretazione_taf = interpretazione_taf
-			self.segnacoli = segnacoli 
-			self.canale_libatorio_si_no = canale_libatorio_si_no 
-			self.oggetti_rinvenuti_esterno = oggetti_rinvenuti_esterno 
-			self.stato_di_conservazione = stato_di_conservazione 
-			self.copertura_tipo = copertura_tipo 
-			self.tipo_contenitore_resti = tipo_contenitore_resti 
-			self.orientamento_asse = orientamento_asse 
-			self.orientamento_azimut = orientamento_azimut 
-			self.corredo_presenza = corredo_presenza 
-			self.corredo_tipo = corredo_tipo
-			self.corredo_descrizione = corredo_descrizione
-			self.lunghezza_scheletro = lunghezza_scheletro 
+			self.id_tafonomia = id_tafonomia                                #0
+			self.sito = sito                             					#1
+			self.nr_scheda_taf = nr_scheda_taf                              #2
+			self.sigla_struttura = sigla_struttura                          #3
+			self.nr_struttura = nr_struttura                                #4
+			self.nr_individuo = nr_individuo                                #5
+			self.rito = rito                                                #6
+			self.descrizione_taf = descrizione_taf                          #7
+			self.interpretazione_taf = interpretazione_taf                  #8
+			self.segnacoli = segnacoli                                      #9
+			self.canale_libatorio_si_no = canale_libatorio_si_no            #10
+			self.oggetti_rinvenuti_esterno = oggetti_rinvenuti_esterno      #11
+			self.stato_di_conservazione = stato_di_conservazione            #12
+			self.copertura_tipo = copertura_tipo             				#13
+			self.tipo_contenitore_resti = tipo_contenitore_resti            #14
+			self.orientamento_asse = orientamento_asse                      #15
+			self.orientamento_azimut = orientamento_azimut                  #16
+			self.corredo_presenza = corredo_presenza                        #17
+			self.corredo_tipo = corredo_tipo                        #18
+			self.corredo_descrizione = corredo_descrizione                        #19
+			self.lunghezza_scheletro = lunghezza_scheletro                         #20
 			self.posizione_scheletro = posizione_scheletro 
 			self.posizione_cranio = posizione_cranio 
 			self.posizione_arti_superiori = posizione_arti_superiori
@@ -1529,5 +1529,120 @@ try:
 			)
 	#mapper
 	mapper(DOCUMENTAZIONE, Documentazione_table.documentazione_table)
+
+	class PDF_ADMINISTRATOR(object):
+		#def __init__"
+		def __init__(self,
+		id_pdf_administrator,
+		table_name,
+		schema_griglia,
+		schema_fusione_celle,
+		modello
+		):
+			self.id_pdf_administrator= id_pdf_administrator 				#0
+			self.table_name = table_name 									#1
+			self.schema_griglia = schema_griglia 							#2
+			self.schema_fusione_celle = schema_fusione_celle 			#3
+			self.modello = modello 												#4
+
+		#def __repr__"
+		def __repr__(self):
+			return "<PDF_ADMINISTRATOR('%d', '%s', '%s', '%s', '%s')>" % (
+			self.id_pdf_administrator,		#0
+			self.table_name,					#1
+			self.schema_griglia,				#2
+			self.schema_fusione_celle,		#3
+			self.modello				 			#4
+			)
+	#mapper
+
+	mapper(PDF_ADMINISTRATOR, PDF_administrator.pdf_administrator_table)
+
+	class CAMPIONI(object):
+		#def __init__"
+		def __init__(self,
+		id_campione, #0
+		sito, #1
+		nr_campione, #2
+		tipo_campione,  #3
+		descrizione, #4
+		area, #5
+		us, #6
+		numero_inventario_materiale, #7
+		nr_cassa, #8
+		luogo_conservazione #9
+		):
+			self.id_campione = id_campione  #0
+			self.sito =sito  #1
+			self.nr_campione =nr_campione  #2
+			self.tipo_campione =tipo_campione  #3
+			self.descrizione =descrizione  #4
+			self.area =area  #5
+			self.us = us  #6
+			self.numero_inventario_materiale = numero_inventario_materiale  #7
+			self.nr_cassa = nr_cassa  #8
+			self.luogo_conservazione = luogo_conservazione  #9
+
+		#def __repr__"
+		def __repr__(self):
+			return "<CAMPIONI('%d', '%s', '%d', '%s', '%s', '%s', '%d', '%d', '%d', '%s')>" % (
+			self.id_campione,#0
+			self.sito,#1
+			self.nr_campione, #2
+			self.tipo_campione,#3
+			self.descrizione,#4
+			self.area,#5
+			self.us,#6
+			self.numero_inventario_materiale, #7
+			self.nr_cassa, #8
+			self.luogo_conservazione #9
+			)
+	#mapper
+	mapper(CAMPIONI, Campioni_table.campioni_table)
+
+
+	class RELATIONSHIP_CHECK(object):
+		#def __init__"
+		def __init__(self,
+		id_rel_check,
+		sito,
+		area,
+		us,
+		rel_type,
+		sito_rel,
+		area_rel,
+		us_rel,
+		error_type,
+		note
+		):
+
+			self.rel_check = rel_check						  #0 d
+			self.sito =sito									  #1 s
+			self.area = area								  #2 s 
+			self.us = us									  #3 d
+			self.rel_type = rel_type                          #4 s
+			self.sito_rel = sito_rel                          #5 s
+			self.area_rel = area_rel                          #6 s
+			self.us_rel = us_rel                              #7 d
+			self.error_type = error_type                      #8 s
+			self.note = note                                  #9 s
+
+		#def __repr__"
+		def __repr__(self):
+			return "<RELATIONSHIP_CHECK('%d', '%s', '%s', '%d', '%s', '%s', '%s', '%d', '%s', '%s')>" % (
+			self.rel_check,					                  #0 d
+			self.sito,							          	  #1 s
+			self.area,                                        #2 s 
+			self.us,       									  #3 d
+			self.rel_type,                                    #4 s
+			self.sito_rel,                                    #5 s
+			self.area_rel,                                    #6 s
+			self.us_rel,                                      #7 d
+			self.error_type,                                  #8 s
+			self.note                                         #9 s
+			)
+	#mapper
+	mapper(RELATIONSHIP_CHECK, Relashionship_check_table.relashionship_check_table)
+
 except:
 	pass
