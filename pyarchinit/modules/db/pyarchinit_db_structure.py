@@ -824,6 +824,34 @@ try:
 		)
 
 		metadata.create_all(engine)
+		
+
+	class Relashionship_check_table:
+		# connection string postgres"
+		internal_connection = Connection()
+
+		# create engine and metadata
+
+		engine = create_engine(internal_connection.conn_str(), echo=True, convert_unicode = True)
+		metadata = MetaData(engine)
+
+		# define tables
+		documentazione_table = Table('relashionship_check_table', metadata,
+		Column('id_rel_check', Integer, primary_key=True),
+		Column('sito', Text),
+		Column('area', Text),
+		Column('us', Integer),
+		Column('rel_type', Text),
+		Column('sito_rel', Text),
+		Column('area_rel', Text),
+		Column('us_rel', Text),
+		Column('error_type', Text),
+		Column('note', Text))
+		
+		metadata.create_all(engine)
+		
+		
+		
 
 except:
 	pass
