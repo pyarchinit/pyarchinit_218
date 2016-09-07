@@ -515,6 +515,32 @@ class Pyarchinit_db_management:
 
 		return archeozoology
 
+	def insert_values_Lapidei(self, *arg):
+		"""Istanzia la classe Inventario_Lapidei da pyarchinit_db_mapper"""
+
+		inventario_lapidei = INVENTARIO_LAPIDEI(arg[0],
+																		arg[1],
+																		arg[2],
+																		arg[3],
+																		arg[4],
+																		arg[5],
+																		arg[6],
+																		arg[7],
+																		arg[8],
+																		arg[9],
+																		arg[10],
+																		arg[11],
+																		arg[12],
+																		arg[13],
+																		arg[14],
+																		arg[15],
+																		arg[16],
+																		arg[17],
+																		arg[18],
+																		arg[19])
+
+		return inventario_lapidei
+
 	def insert_values_documentazione(self, *arg):
 		"""Istanzia la classe DOCUMENTAZIONE da pyarchinit_db_mapper"""
 
