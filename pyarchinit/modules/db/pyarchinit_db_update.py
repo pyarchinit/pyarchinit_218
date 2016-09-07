@@ -165,6 +165,54 @@ class DB_update:
 			pass
 			#verificare se aggiorna le tabelle con i campi nuovi
 
+		####inventario_lapidei_table
+		table = Table("inventario_lapidei_table", self.metadata, autoload=True)
+		table_column_names_list = []
+		for i in table.columns:
+			table_column_names_list.append(str(i.name))
+
+		if table_column_names_list.__contains__('cronologia') == False:
+			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN cronologia text")
+
+		if table_column_names_list.__contains__('bibliografia') == False:
+			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN bibliografia text")
+		
+		if table_column_names_list.__contains__('d_letto_posa') == False:
+			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN d_letto_posa Numeric(4,2) DEFAULT 0")
+		
+		if table_column_names_list.__contains__('d_letto_attesa') == False:
+			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN d_letto_attesa Numeric(4,2) DEFAULT 0")
+		
+		if table_column_names_list.__contains__('toro') == False:
+			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN toro Numeric(4,2) DEFAULT 0")
+
+		if table_column_names_list.__contains__('spessore') == False:
+			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN spessore Numeric(4,2) DEFAULT 0")
+		
+		if table_column_names_list.__contains__('larghezza') == False:
+			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN larghezza Numeric(4,2) DEFAULT 0")
+		
+		if table_column_names_list.__contains__('lunghezza') == False:
+			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN lunghezza Numeric(4,2) DEFAULT 0")
+
+		if table_column_names_list.__contains__('h') == False:
+			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN h Numeric(4,2) DEFAULT 0")
+
+		if table_column_names_list.__contains__('descrizione') == False:
+			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN descrizione text")
+
+		if table_column_names_list.__contains__('lavorazione_e_stato_di_conservazione') == False:
+			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN lavorazione_e_stato_di_conservazione text")
+
+		if table_column_names_list.__contains__('confronti') == False:
+			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN confronti text")
+
+		if table_column_names_list.__contains__('compilatore') == False:
+			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN compilatore text")
+
+#		if table_column_names_list.__contains__('compilatore') == False:
+#			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN compilatore integer DEFAULT 0")
+
 
 
 if __name__ == '__main__':
