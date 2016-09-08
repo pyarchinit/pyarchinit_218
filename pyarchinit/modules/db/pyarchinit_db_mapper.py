@@ -1339,384 +1339,378 @@ try:
 			self.ecto_max
 			)
 	#mapper
+        mapper(DETETA, DETETA_table.deteta_table)
 
-	mapper(DETETA, DETETA_table.deteta_table)
+        class ARCHEOZOOLOGY(object):
+            #def __init__"
+            def __init__(self,
+            id_archzoo,
+            sito,
+            area,
+            us,
+            quadrato,
+            coord_x,
+            coord_y,
+            coord_z,
+            bos_bison,
+            calcinati,
+            camoscio,
+            capriolo,
+            cervo,
+            combusto,
+            coni,
+            pdi,
+            stambecco,
+            strie,
+            canidi,
+            ursidi,
+            megacero
+            ):
+                self.id_archzoo = id_archzoo
+                self.sito = sito
+                self.area = area
+                self.us = us
+                self.quadrato = quadrato
+                self.coord_x = coord_x
+                self.coord_y = coord_y
+                self.coord_z = coord_z
+                self.bos_bison = bos_bison
+                self.calcinati = calcinati
+                self.camoscio = camoscio
+                self.capriolo = capriolo
+                self.cervo = cervo
+                self.combusto = combusto
+                self.coni = coni
+                self.pdi = pdi
+                self.stambecco = stambecco
+                self.strie = strie
+                self.canidi = canidi
+                self.ursidi = ursidi
+                self.megacero = megacero
+            #def __repr__"
+            def __repr__(self):
+                return "<ARCHEOZOOLOGY('%d', '%s', '%d', '%d', '%s', '%r', '%r', '%r', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')>" % (
+                self.id_archzoo,
+                self.sito,
+                self.area,
+                self.us,
+                self.quadrato,
+                self.coord_x,
+                self.coord_y,
+                self.coord_z,
+                self.bos_bison,
+                self.calcinati,
+                self.camoscio,
+                self.capriolo,
+                self.cervo,
+                self.combusto,
+                self.coni,
+                self.pdi,
+                self.stambecco,
+                self.strie,
+                self.canidi,
+                self.ursidi,
+                self.megacero
+                )
+        #mapper
+            mapper(ARCHEOZOOLOGY, Archeozoology_table.archeozoology_table)
 
+        class INVENTARIO_LAPIDEI(object):
+            #def __init__"
+            def __init__(self,
+            id_invlap,
+            sito,
+            scheda_numero,
+            collocazione,
+            oggetto,
+            tipologia,
+            materiale,
+            d_letto_posa,
+            d_letto_attesa,
+            toro,
+            spessore,
+            larghezza,
+            lunghezza,
+            h,
+            descrizione,
+            lavorazione_e_stato_di_conservazione,
+            confronti,
+            cronologia,
+            bibliografia,
+            compilatore
+            ):
+                self.id_invlap = id_invlap 								#0
+                self.sito = sito 										#1
+                self.scheda_numero = scheda_numero 			            #2
+                self.collocazione = collocazione 						#3
+                self.oggetto = oggetto 		                            #4
+                self.tipologia = tipologia 								#5
+                self.materiale = materiale 								#6
+                self.d_letto_posa = d_letto_posa 						#7
+                self.d_letto_attesa = d_letto_attesa 					#8
+                self.toro = toro 									    #9
+                self.spessore = spessore 						    	#10
+                self.larghezza = larghezza 	                            #11
+                self.lunghezza = lunghezza 	                            #12
+                self.h = h 			                                    #13
+                self.descrizione = descrizione				            #14
+                self.lavorazione_e_stato_di_conservazione = lavorazione_e_stato_di_conservazione #15
+                self.confronti = confronti 								#16
+                self.cronologia = cronologia 					        #17
+                self.bibliografia = bibliografia 				        #18
+                self.compilatore = compilatore 				            #19
 
-    class ARCHEOZOOLOGY(object):
-		#def __init__"
-		def __init__(self,
-		id_archzoo,
-		sito,
-		area,
-		us,
-		quadrato,
-		coord_x,
-		coord_y,
-		coord_z,
-		bos_bison,
-		calcinati,
-		camoscio,
-		capriolo,
-		cervo,
-		combusto,
-		coni,
-		pdi,
-		stambecco,
-		strie,
-		canidi,
-		ursidi,
-		megacero
-		):
-			self.id_archzoo = id_archzoo
-			self.sito = sito
-			self.area = area
-			self.us = us
-			self.quadrato = quadrato
-			self.coord_x = coord_x
-			self.coord_y = coord_y
-			self.coord_z = coord_z
-			self.bos_bison = bos_bison
-			self.calcinati = calcinati
-			self.camoscio = camoscio
-			self.capriolo = capriolo
-			self.cervo = cervo
-			self.combusto = combusto
-			self.coni = coni
-			self.pdi = pdi
-			self.stambecco = stambecco
-			self.strie = strie
-			self.canidi = canidi
-			self.ursidi = ursidi
-			self.megacero = megacero
-
-		#def __repr__"
-		def __repr__(self):
-			return "<ARCHEOZOOLOGY('%d', '%s', '%d', '%d', '%s', '%r', '%r', '%r', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')>" % (
-			self.id_archzoo,
-			self.sito,
-			self.area,
-			self.us,
-			self.quadrato,
-			self.coord_x,
-			self.coord_y,
-			self.coord_z,
-			self.bos_bison,
-			self.calcinati,
-			self.camoscio,
-			self.capriolo,
-			self.cervo,
-			self.combusto,
-			self.coni,
-			self.pdi,
-			self.stambecco,
-			self.strie,
-			self.canidi,
-			self.ursidi,
-			self.megacero
-			)
-	#mapper
-	mapper(ARCHEOZOOLOGY, Archeozoology_table.archeozoology_table)
-	##############
-
-    class INVENTARIO_LAPIDEI(object):
-        #def __init__"
-        def __init__(self,
-        id_invlap,
-        sito,
-        scheda_numero,
-        collocazione,
-        oggetto,
-        tipologia,
-        materiale,
-        d_letto_posa,
-        d_letto_attesa,
-        toro,
-        spessore,
-        larghezza,
-        lunghezza,
-        h,
-        descrizione,
-        lavorazione_e_stato_di_conservazione,
-        confronti,
-        cronologia,
-        bibliografia,
-        compilatore
-        ):
-            self.id_invlap = id_invlap 								#0
-            self.sito = sito 										#1
-            self.scheda_numero = scheda_numero 			            #2
-            self.collocazione = collocazione 						#3
-            self.oggetto = oggetto 		                            #4
-            self.tipologia = tipologia 								#5
-            self.materiale = materiale 								#6
-            self.d_letto_posa = d_letto_posa 						#7
-            self.d_letto_attesa = d_letto_attesa 					#8
-            self.toro = toro 									    #9
-            self.spessore = spessore 						    	#10
-            self.larghezza = larghezza 	                            #11
-            self.lunghezza = lunghezza 	                            #12
-            self.h = h 			                                    #13
-            self.descrizione = descrizione				            #14
-            self.lavorazione_e_stato_di_conservazione = lavorazione_e_stato_di_conservazione #15
-            self.confronti = confronti 								#16
-            self.cronologia = cronologia 					        #17
-            self.bibliografia = bibliografia 				        #18
-            self.compilatore = compilatore 				            #19
-
-        #def __repr__"
-        def __repr__(self):
-            return "<INVENTARIO_LAPIDEI('%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s' )>" % (
-            self.id_invlap,
-            self.sito,
-            self.scheda_numero,
-            self.collocazione,
-            self.oggetto,
-            self.tipologia,
-            self.materiale,
-            self.d_letto_posa,
-            self.d_letto_attesa,
-            self.toro,
-            self.spessore,
-            self.larghezza,
-            self.lunghezza,
-            self.h,
-            self.descrizione,
-            self.lavorazione_e_stato_di_conservazione,
-            self.confronti,
-            self.cronologia,
-            self.bibliografia,
-            self.compilatore,
-            )
-    #mapper
-        mapper(INVENTARIO_LAPIDEI, Inventario_Lapidei_table.inventario_lapidei_table)
+            #def __repr__"
+            def __repr__(self):
+                return "<INVENTARIO_LAPIDEI('%d', '%s', '%d', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s' )>" % (
+                self.id_invlap,
+                self.sito,
+                self.scheda_numero,
+                self.collocazione,
+                self.oggetto,
+                self.tipologia,
+                self.materiale,
+                self.d_letto_posa,
+                self.d_letto_attesa,
+                self.toro,
+                self.spessore,
+                self.larghezza,
+                self.lunghezza,
+                self.h,
+                self.descrizione,
+                self.lavorazione_e_stato_di_conservazione,
+                self.confronti,
+                self.cronologia,
+                self.bibliografia,
+                self.compilatore,
+                )
+        #mapper
+            mapper(INVENTARIO_LAPIDEI, Inventario_Lapidei_table.inventario_lapidei_table)
 
 
-    ##############
+        class PDF_ADMINISTRATOR(object):
+            #def __init__"
+            def __init__(self,
+            id_pdf_administrator,
+            table_name,
+            schema_griglia,
+            schema_fusione_celle,
+            modello
+            ):
+                self.id_pdf_administrator= id_pdf_administrator 				#0
+                self.table_name = table_name 									#1
+                self.schema_griglia = schema_griglia 							#2
+                self.schema_fusione_celle = schema_fusione_celle 			#3
+                self.modello = modello 												#4
 
-	class PDF_ADMINISTRATOR(object):
-		#def __init__"
-		def __init__(self,
-		id_pdf_administrator,
-		table_name,
-		schema_griglia,
-		schema_fusione_celle,
-		modello
-		):
-			self.id_pdf_administrator= id_pdf_administrator 				#0
-			self.table_name = table_name 									#1
-			self.schema_griglia = schema_griglia 							#2
-			self.schema_fusione_celle = schema_fusione_celle 			#3
-			self.modello = modello 												#4
+            #def __repr__"
+            def __repr__(self):
+                return "<PDF_ADMINISTRATOR('%d', '%s', '%s', '%s', '%s')>" % (
+                self.id_pdf_administrator,		#0
+                self.table_name,					#1
+                self.schema_griglia,				#2
+                self.schema_fusione_celle,		#3
+                self.modello				 			#4
+                )
+        #mapper
 
-		#def __repr__"
-		def __repr__(self):
-			return "<PDF_ADMINISTRATOR('%d', '%s', '%s', '%s', '%s')>" % (
-			self.id_pdf_administrator,		#0
-			self.table_name,					#1
-			self.schema_griglia,				#2
-			self.schema_fusione_celle,		#3
-			self.modello				 			#4
-			)
-	#mapper
+        mapper(PDF_ADMINISTRATOR, PDF_administrator.pdf_administrator_table)
 
-	mapper(PDF_ADMINISTRATOR, PDF_administrator.pdf_administrator_table)
+        class CAMPIONI(object):
+            #def __init__"
+            def __init__(self,
+            id_campione, #0
+            sito, #1
+            nr_campione, #2
+            tipo_campione,  #3
+            descrizione, #4
+            area, #5
+            us, #6
+            numero_inventario_materiale, #7
+            nr_cassa, #8
+            luogo_conservazione #9
+            ):
+                self.id_campione = id_campione  #0
+                self.sito =sito  #1
+                self.nr_campione =nr_campione  #2
+                self.tipo_campione =tipo_campione  #3
+                self.descrizione =descrizione  #4
+                self.area =area  #5
+                self.us = us  #6
+                self.numero_inventario_materiale = numero_inventario_materiale  #7
+                self.nr_cassa = nr_cassa  #8
+                self.luogo_conservazione = luogo_conservazione  #9
 
-	class CAMPIONI(object):
-		#def __init__"
-		def __init__(self,
-		id_campione, #0
-		sito, #1
-		nr_campione, #2
-		tipo_campione,  #3
-		descrizione, #4
-		area, #5
-		us, #6
-		numero_inventario_materiale, #7
-		nr_cassa, #8
-		luogo_conservazione #9
-		):
-			self.id_campione = id_campione  #0
-			self.sito =sito  #1
-			self.nr_campione =nr_campione  #2
-			self.tipo_campione =tipo_campione  #3
-			self.descrizione =descrizione  #4
-			self.area =area  #5
-			self.us = us  #6
-			self.numero_inventario_materiale = numero_inventario_materiale  #7
-			self.nr_cassa = nr_cassa  #8
-			self.luogo_conservazione = luogo_conservazione  #9
-
-		#def __repr__"
-		def __repr__(self):
-			return "<CAMPIONI('%d', '%s', '%d', '%s', '%s', '%s', '%d', '%d', '%d', '%s')>" % (
-			self.id_campione,#0
-			self.sito,#1
-			self.nr_campione, #2
-			self.tipo_campione,#3
-			self.descrizione,#4
-			self.area,#5
-			self.us,#6
-			self.numero_inventario_materiale, #7
-			self.nr_cassa, #8
-			self.luogo_conservazione #9
-			)
-	#mapper
-	mapper(CAMPIONI, Campioni_table.campioni_table)
+            #def __repr__"
+            def __repr__(self):
+                return "<CAMPIONI('%d', '%s', '%d', '%s', '%s', '%s', '%d', '%d', '%d', '%s')>" % (
+                self.id_campione,#0
+                self.sito,#1
+                self.nr_campione, #2
+                self.tipo_campione,#3
+                self.descrizione,#4
+                self.area,#5
+                self.us,#6
+                self.numero_inventario_materiale, #7
+                self.nr_cassa, #8
+                self.luogo_conservazione #9
+                )
+        #mapper
+        mapper(CAMPIONI, Campioni_table.campioni_table)
 
 
-	class DOCUMENTAZIONE(object):
-		#def __init__"
-		def __init__(self,
-		id_documentazione, #0
-		sito, #1
-		nome_doc, #2
-		data, #3
-		tipo_documentazione, #4
-		sorgente,  #5
-		scala, #6
-		disegnatore, #7
-		note, #8
-		):
-			self.id_documentazione = id_documentazione  #0
-			self.sito =sito  #1
-			self.nome_doc =nome_doc  #2
-			self.data =data #3
-			self.tipo_documentazione =tipo_documentazione  #4
-			self.sorgente =sorgente  #5
-			self.scala =scala  #6
-			self.disegnatore = disegnatore  #7
-			self.note = note  #8
+        class DOCUMENTAZIONE(object):
+            #def __init__"
+            def __init__(self,
+            id_documentazione, #0
+            sito, #1
+            nome_doc, #2
+            data, #3
+            tipo_documentazione, #4
+            sorgente,  #5
+            scala, #6
+            disegnatore, #7
+            note, #8
+            ):
+                self.id_documentazione = id_documentazione  #0
+                self.sito =sito  #1
+                self.nome_doc =nome_doc  #2
+                self.data =data #3
+                self.tipo_documentazione =tipo_documentazione  #4
+                self.sorgente =sorgente  #5
+                self.scala =scala  #6
+                self.disegnatore = disegnatore  #7
+                self.note = note  #8
 
-		#def __repr__"
-		def __repr__(self):
-			return "<DOCUMENTAZIONE('%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s')>" % (
-			self.id_documentazione,#0
-			self.sito,#1
-			self.nome_doc, #2
-			self.data, #3
-			self.tipo_documentazione, #4
-			self.sorgente,#5
-			self.scala,#6
-			self.disegnatore,#7
-			self.note,#8
-			)
-	#mapper
-	mapper(DOCUMENTAZIONE, Documentazione_table.documentazione_table)
+            #def __repr__"
+            def __repr__(self):
+                return "<DOCUMENTAZIONE('%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s')>" % (
+                self.id_documentazione,#0
+                self.sito,#1
+                self.nome_doc, #2
+                self.data, #3
+                self.tipo_documentazione, #4
+                self.sorgente,#5
+                self.scala,#6
+                self.disegnatore,#7
+                self.note,#8
+                )
+        #mapper
+        mapper(DOCUMENTAZIONE, Documentazione_table.documentazione_table)
 
-	class PDF_ADMINISTRATOR(object):
-		#def __init__"
-		def __init__(self,
-		id_pdf_administrator,
-		table_name,
-		schema_griglia,
-		schema_fusione_celle,
-		modello
-		):
-			self.id_pdf_administrator= id_pdf_administrator 				#0
-			self.table_name = table_name 									#1
-			self.schema_griglia = schema_griglia 							#2
-			self.schema_fusione_celle = schema_fusione_celle 			#3
-			self.modello = modello 												#4
+        class PDF_ADMINISTRATOR(object):
+            #def __init__"
+            def __init__(self,
+            id_pdf_administrator,
+            table_name,
+            schema_griglia,
+            schema_fusione_celle,
+            modello
+            ):
+                self.id_pdf_administrator= id_pdf_administrator 				#0
+                self.table_name = table_name 									#1
+                self.schema_griglia = schema_griglia 							#2
+                self.schema_fusione_celle = schema_fusione_celle 			#3
+                self.modello = modello 												#4
 
-		#def __repr__"
-		def __repr__(self):
-			return "<PDF_ADMINISTRATOR('%d', '%s', '%s', '%s', '%s')>" % (
-			self.id_pdf_administrator,		#0
-			self.table_name,					#1
-			self.schema_griglia,				#2
-			self.schema_fusione_celle,		#3
-			self.modello				 			#4
-			)
-	#mapper
+            #def __repr__"
+            def __repr__(self):
+                return "<PDF_ADMINISTRATOR('%d', '%s', '%s', '%s', '%s')>" % (
+                self.id_pdf_administrator,		#0
+                self.table_name,					#1
+                self.schema_griglia,				#2
+                self.schema_fusione_celle,		#3
+                self.modello				 			#4
+                )
+        #mapper
 
-	mapper(PDF_ADMINISTRATOR, PDF_administrator.pdf_administrator_table)
+        mapper(PDF_ADMINISTRATOR, PDF_administrator.pdf_administrator_table)
 
-	class CAMPIONI(object):
-		#def __init__"
-		def __init__(self,
-		id_campione, #0
-		sito, #1
-		nr_campione, #2
-		tipo_campione,  #3
-		descrizione, #4
-		area, #5
-		us, #6
-		numero_inventario_materiale, #7
-		nr_cassa, #8
-		luogo_conservazione #9
-		):
-			self.id_campione = id_campione  #0
-			self.sito =sito  #1
-			self.nr_campione =nr_campione  #2
-			self.tipo_campione =tipo_campione  #3
-			self.descrizione =descrizione  #4
-			self.area =area  #5
-			self.us = us  #6
-			self.numero_inventario_materiale = numero_inventario_materiale  #7
-			self.nr_cassa = nr_cassa  #8
-			self.luogo_conservazione = luogo_conservazione  #9
+        class CAMPIONI(object):
+            #def __init__"
+            def __init__(self,
+            id_campione, #0
+            sito, #1
+            nr_campione, #2
+            tipo_campione,  #3
+            descrizione, #4
+            area, #5
+            us, #6
+            numero_inventario_materiale, #7
+            nr_cassa, #8
+            luogo_conservazione #9
+            ):
+                self.id_campione = id_campione  #0
+                self.sito =sito  #1
+                self.nr_campione =nr_campione  #2
+                self.tipo_campione =tipo_campione  #3
+                self.descrizione =descrizione  #4
+                self.area =area  #5
+                self.us = us  #6
+                self.numero_inventario_materiale = numero_inventario_materiale  #7
+                self.nr_cassa = nr_cassa  #8
+                self.luogo_conservazione = luogo_conservazione  #9
 
-		#def __repr__"
-		def __repr__(self):
-			return "<CAMPIONI('%d', '%s', '%d', '%s', '%s', '%s', '%d', '%d', '%d', '%s')>" % (
-			self.id_campione,#0
-			self.sito,#1
-			self.nr_campione, #2
-			self.tipo_campione,#3
-			self.descrizione,#4
-			self.area,#5
-			self.us,#6
-			self.numero_inventario_materiale, #7
-			self.nr_cassa, #8
-			self.luogo_conservazione #9
-			)
-	#mapper
-	mapper(CAMPIONI, Campioni_table.campioni_table)
+            #def __repr__"
+            def __repr__(self):
+                return "<CAMPIONI('%d', '%s', '%d', '%s', '%s', '%s', '%d', '%d', '%d', '%s')>" % (
+                self.id_campione,#0
+                self.sito,#1
+                self.nr_campione, #2
+                self.tipo_campione,#3
+                self.descrizione,#4
+                self.area,#5
+                self.us,#6
+                self.numero_inventario_materiale, #7
+                self.nr_cassa, #8
+                self.luogo_conservazione #9
+                )
+        #mapper
+        mapper(CAMPIONI, Campioni_table.campioni_table)
 
 
-	class RELATIONSHIP_CHECK(object):
-		#def __init__"
-		def __init__(self,
-		id_rel_check,
-		sito,
-		area,
-		us,
-		rel_type,
-		sito_rel,
-		area_rel,
-		us_rel,
-		error_type,
-		note
-		):
+        class RELATIONSHIP_CHECK(object):
+            #def __init__"
+            def __init__(self,
+            id_rel_check,
+            sito,
+            area,
+            us,
+            rel_type,
+            sito_rel,
+            area_rel,
+            us_rel,
+            error_type,
+            note
+            ):
 
-			self.rel_check = rel_check						  #0 d
-			self.sito =sito									  #1 s
-			self.area = area								  #2 s 
-			self.us = us									  #3 d
-			self.rel_type = rel_type                          #4 s
-			self.sito_rel = sito_rel                          #5 s
-			self.area_rel = area_rel                          #6 s
-			self.us_rel = us_rel                              #7 d
-			self.error_type = error_type                      #8 s
-			self.note = note                                  #9 s
+                self.rel_check = rel_check						  #0 d
+                self.sito =sito									  #1 s
+                self.area = area								  #2 s 
+                self.us = us									  #3 d
+                self.rel_type = rel_type                          #4 s
+                self.sito_rel = sito_rel                          #5 s
+                self.area_rel = area_rel                          #6 s
+                self.us_rel = us_rel                              #7 d
+                self.error_type = error_type                      #8 s
+                self.note = note                                  #9 s
 
-		#def __repr__"
-		def __repr__(self):
-			return "<RELATIONSHIP_CHECK('%d', '%s', '%s', '%d', '%s', '%s', '%s', '%d', '%s', '%s')>" % (
-			self.rel_check,					                  #0 d
-			self.sito,							          	  #1 s
-			self.area,                                        #2 s 
-			self.us,       									  #3 d
-			self.rel_type,                                    #4 s
-			self.sito_rel,                                    #5 s
-			self.area_rel,                                    #6 s
-			self.us_rel,                                      #7 d
-			self.error_type,                                  #8 s
-			self.note                                         #9 s
-			)
-	#mapper
-	mapper(RELATIONSHIP_CHECK, Relashionship_check_table.relashionship_check_table)
+            #def __repr__"
+            def __repr__(self):
+                return "<RELATIONSHIP_CHECK('%d', '%s', '%s', '%d', '%s', '%s', '%s', '%d', '%s', '%s')>" % (
+                self.rel_check,					                  #0 d
+                self.sito,							          	  #1 s
+                self.area,                                        #2 s 
+                self.us,       									  #3 d
+                self.rel_type,                                    #4 s
+                self.sito_rel,                                    #5 s
+                self.area_rel,                                    #6 s
+                self.us_rel,                                      #7 d
+                self.error_type,                                  #8 s
+                self.note                                         #9 s
+                )
+        #mapper
+        mapper(RELATIONSHIP_CHECK, Relashionship_check_table.relashionship_check_table)
 
 except:
 	pass
