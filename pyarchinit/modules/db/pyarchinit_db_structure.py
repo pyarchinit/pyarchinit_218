@@ -29,11 +29,11 @@ INTERNAL_CONNECTION = Connection()
 ENGINE = create_engine(INTERNAL_CONNECTION.conn_str(), echo=False, convert_unicode = True)
 METATDATA = MetaData(ENGINE)
 
-
-f = open("C:\\Users\\Luca\\pyarchinit_Test_folder\\test_connection.txt", "w")
-f.write(str(METATDATA.is_bound()))
-f.close()
-
+##
+##f = open("C:\\Users\\Luca\\pyarchinit_Test_folder\\test_connection.txt", "w")
+##f.write(str(METATDATA.is_bound()))
+##f.close()
+##
 
 try:
 	class US_table:
