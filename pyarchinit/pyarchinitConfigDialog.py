@@ -57,9 +57,8 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 		self.load_dict()
 		self.charge_data()
 		self.connect(self.comboBox_Database, SIGNAL("editTextChanged (const QString&)"), self.set_db_parameter)
-		self.connect(self.comboBox_server_read, SIGNAL("editTextChanged (const QString&)"), self.set_db_import_from_parameter)
-		self.connect(self.comboBox_server_write, SIGNAL("editTextChanged (const QString&)"), self.set_db_import_from_parameter)
-
+		self.connect(self.comboBox_server_rd,  SIGNAL("editTextChanged (const QString&)"), self.set_db_import_from_parameter)
+		self.connect(self.comboBox_server_wt, SIGNAL("editTextChanged (const QString&)"), self.set_db_import_to_parameter)
 		self.connect(self.comboBox_experimental, SIGNAL("editTextChanged (const QString&)"), self.message)
 
 
@@ -78,32 +77,43 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 			self.lineEdit_User.setText('')
 	
 	def set_db_import_from_parameter(self):
-		if str(self.comboBox_server_read.currentText()) == 'postgres':
-			self.lineEdit_host_read.setText('127.0.0.1')
-			self.lineEdit_username_read('postgres')
-			self.lineEdit_database_read('pyarchinit')
-			self.lineEdit_port_read('5432')
+		QMessageBox.warning(self, "ok","entrato in read.",  QMessageBox.Ok)
+
+		if str(self.comboBox_server_rd.currentText()) == 'postgres':
+			QMessageBox.warning(self, "ok","entrato in if",  QMessageBox.Ok)
+			self.lineEdit_host_rd.setText('127.0.0.1')
+			self.lineEdit_username_rd.setText('postgres')
+			self.lineEdit_database_rd.setText('pyarchinit')
+			self.lineEdit_port_rd.setText('5432')
 			
-		if str(self.comboBox_server_read.currentText()) == 'sqlite':
-			self.lineEdit_host_read.setText('')
-			self.lineEdit_username_read('')
-			self.lineEdit_lineEdit_pass_read('')
-			self.lineEdit_database_read('pyarchinit_db.sqlite')
-			self.lineEdit_port_read('')
+		if str(self.comboBox_server_rd.currentText()) == 'sqlite':
+			QMessageBox.warning(self, "ok","entrato in if",  QMessageBox.Ok)
+
+			self.lineEdit_host_rd.setText.setText('')
+			self.lineEdit_username_rd.setText('')
+			self.lineEdit_lineEdit_pass_rd.setText('')
+			self.lineEdit_database_rd.setText('pyarchinit_db.sqlite')
+			self.lineEdit_port_rd.setText('')
 			
 	def set_db_import_to_parameter(self):
-		if str(self.comboBox_server_write.currentText()) == 'postgres':
-			self.lineEdit_host_read.setText('127.0.0.1')
-			self.lineEdit_username_read('postgres')
-			self.lineEdit_database_read('pyarchinit')
-			self.lineEdit_port_read('5432')
+		QMessageBox.warning(self, "ok","entrato in write",  QMessageBox.Ok)
+
+		if str(self.comboBox_server_wt.currentText()) == 'postgres':
+			QMessageBox.warning(self, "ok","entrato in if",  QMessageBox.Ok)
+
+			self.lineEdit_host_wt.setText('127.0.0.1')
+			self.lineEdit_username_wt.setText('postgres')
+			self.lineEdit_database_wt.setText('pyarchinit')
+			self.lineEdit_port_wt.setText('5432')
 			
-		if str(self.comboBox_server_write.currentText()) == 'sqlite':
-			self.lineEdit_host_read.setText('')
-			self.lineEdit_username_read('')
-			self.lineEdit_lineEdit_pass_read('')
-			self.lineEdit_database_read('pyarchinit_db.sqlite')
-			self.lineEdit_port_read('')
+		if str(self.comboBox_server_wt.currentText()) == 'sqlite':
+			QMessageBox.warning(self, "ok","entrato in if",  QMessageBox.Ok)
+
+			self.lineEdit_host_wt.setText.setText('')
+			self.lineEdit_username_wt.setText('')
+			self.lineEdit_lineEdit_pass_wt.setText('')
+			self.lineEdit_database_wt.setText('pyarchinit_db.sqlite')
+			self.lineEdit_port_wt.setText('')
 			
 
 
@@ -289,12 +299,12 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 			home = os.environ['HOMEPATH']
 		####RICAVA I DATI IN LETTURA PER LA CONNESSIONE DALLA GUI
 		conn_str_dict_read = {
-								"server": str(self.comboBox_server_read.currentText()),
-								"user": str(self.lineEdit_username_read.text()),
-								"password" : str(self.lineEdit_pass_read.text()),
-								"host": str(self.lineEdit_host_read.text()),
-								"port": str(self.lineEdit_port_read.text()),
-								"db_name": str(self.lineEdit_database_read.text())
+								"server": str(self.comboBox_server_rd.currentText()),
+								"user": str(self.lineEdit_username_rd.text()),
+								"password" : str(self.lineEdit_pass_rd.text()),
+								"host": str(self.lineEdit_host_rd.text()),
+								"port": str(self.lineEdit_port_rd.text()),
+								"db_name": str(self.lineEdit_database_rd.text())
 								}
 		####CREA LA STRINGA DI CONNESSIONE IN LETTURA
 		if conn_str_dict_read["server"] == 'postgres':
@@ -320,7 +330,7 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 
 		####LEGGE I RECORD IN BASE AL PARAMETRO CAMPO=VALORE
 		search_dict = {
-			self.lineEdit_field_read.text() : "'"+str(self.lineEdit_value_read.text())+"'"
+			self.lineEdit_field_rd.text() : "'"+str(self.lineEdit_value_rd.text())+"'"
 			}
 		mapper_class_read = str(self.comboBox_mapper_read.currentText())
 		res_read =self.DB_MANAGER_read.query_bool(search_dict,mapper_class_read)
@@ -335,12 +345,12 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 
 		####RICAVA I DATI IN LETTURA PER LA CONNESSIONE DALLA GUI
 		conn_str_dict_write = {
-										"server": str(self.comboBox_server_write.currentText()),
-										"user": str(self.lineEdit_username_write.text()),
-										"password" : str(self.lineEdit_pass_write.text()),
-										"host": str(self.lineEdit_host_write.text()),
-										"port": str(self.lineEdit_port_write.text()),
-										"db_name": str(self.lineEdit_database_write.text())
+										"server": str(self.comboBox_server_wt.currentText()),
+										"user": str(self.lineEdit_username_wt.text()),
+										"password" : str(self.lineEdit_pass_wt.text()),
+										"host": str(self.lineEdit_host_wt.text()),
+										"port": str(self.lineEdit_port_wt.text()),
+										"db_name": str(self.lineEdit_database_wt.text())
 										}
 
 		####CREA LA STRINGA DI CONNESSIONE IN LETTURA
@@ -549,54 +559,100 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 ####TAFONOMIA TABLE
 		if mapper_class_write == 'TAFONOMIA':
 			for sing_rec in range(len(data_list_toimp)):
+				
+				#blocco oritentamento_azimut
 				test_azimut = data_list_toimp[sing_rec].orientamento_azimut
-				if test_azimut == "" or orientamento_azimut == None:
+
+				if test_azimut == "" or test_azimut == None:
 					orientamento_azimut = None
 				else:
-					orientamento_azimut = data_list_toimp[sing_rec].orientamento_azimut
+					orientamento_azimut = float(data_list_toimp[sing_rec].orientamento_azimut)
+##					if conn_str_dict_write['server'] == 'postgres':
+##						orientamento_azimut = float(orientamento_azimut)
+##
 
-				if data_list_toimp[sing_rec].lunghezza_scheletro == "" or data_list_toimp[sing_rec].lunghezza_scheletro == None:
+				#blocco oritentamento_azimut
+				test_lunghezza_scheletro = data_list_toimp[sing_rec].lunghezza_scheletro
+				
+				if test_lunghezza_scheletro == "" or test_lunghezza_scheletro == None:
 					lunghezza_scheletro = None
 				else:
-					lunghezza_scheletro = data_list_toimp[sing_rec].lunghezza_scheletro
+					lunghezza_scheletro = float(data_list_toimp[sing_rec].lunghezza_scheletro)
+
+				
+				#blocco periodo_iniziale
+				test_per_iniz = data_list_toimp[sing_rec].periodo_iniziale
+				
+				if test_per_iniz == "" or test_per_iniz == None:
+					per_iniz = None
+				else:
+					per_iniz = int(data_list_toimp[sing_rec].periodo_iniziale)
+
+				
+				#blocco fase_iniziale
+				test_fas_iniz = data_list_toimp[sing_rec].fase_iniziale
+				
+				if test_fas_iniz == "" or test_fas_iniz == None:
+					fase_iniz = None
+				else:
+					fase_iniz = int(data_list_toimp[sing_rec].fase_iniziale)
+
+
+				#blocco periodo_finale
+				test_per_fin = data_list_toimp[sing_rec].periodo_finale
+				
+				if test_per_fin == "" or test_per_fin == None:
+					per_fin = None
+				else:
+					per_fin = int(data_list_toimp[sing_rec].periodo_finale)
+
+				#blocco fase_finale
+				test_fas_fin = data_list_toimp[sing_rec].fase_finale
+				
+				if test_fas_fin == "" or test_fas_fin == None:
+					fase_fin = None
+				else:
+					fase_fin = int(data_list_toimp[sing_rec].fase_finale)
+
 
 				
 				data = self.DB_MANAGER_write.insert_values_tafonomia(
+
 																	self.DB_MANAGER_write.max_num_id(mapper_class_write, id_table_class_mapper_conv_dict[mapper_class_write])+1,
-																	data_list_toimp[sing_rec].sito,
-																	data_list_toimp[sing_rec].nr_scheda_taf,
-																	data_list_toimp[sing_rec].sigla_struttura,
-																	data_list_toimp[sing_rec].nr_struttura,
-																	data_list_toimp[sing_rec].nr_individuo,
-																	data_list_toimp[sing_rec].rito,
-																	data_list_toimp[sing_rec].descrizione_taf,
-																	data_list_toimp[sing_rec].interpretazione_taf,
-																	data_list_toimp[sing_rec].segnacoli,
-																	data_list_toimp[sing_rec].canale_libatorio_si_no,
-																	data_list_toimp[sing_rec].oggetti_rinvenuti_esterno,
-																	data_list_toimp[sing_rec].stato_di_conservazione,
-																	data_list_toimp[sing_rec].copertura_tipo,
-																	data_list_toimp[sing_rec].tipo_contenitore_resti,
-																	data_list_toimp[sing_rec].orientamento_asse,
+																	str(data_list_toimp[sing_rec].sito),
+																	int(data_list_toimp[sing_rec].nr_scheda_taf),
+																	str(data_list_toimp[sing_rec].sigla_struttura),
+																	int(data_list_toimp[sing_rec].nr_struttura),
+																	int(data_list_toimp[sing_rec].nr_individuo),
+																	str(data_list_toimp[sing_rec].rito),
+																	unicode(data_list_toimp[sing_rec].descrizione_taf),
+																	unicode(data_list_toimp[sing_rec].interpretazione_taf),
+																	str(data_list_toimp[sing_rec].segnacoli),
+																	str(data_list_toimp[sing_rec].canale_libatorio_si_no),
+																	str(data_list_toimp[sing_rec].oggetti_rinvenuti_esterno),
+																	str(data_list_toimp[sing_rec].stato_di_conservazione),
+																	str(data_list_toimp[sing_rec].copertura_tipo),
+																	unicode(data_list_toimp[sing_rec].tipo_contenitore_resti),
+																	str(data_list_toimp[sing_rec].orientamento_asse),
 																	orientamento_azimut,
-																	data_list_toimp[sing_rec].riferimenti_stratigrafici,
-																	data_list_toimp[sing_rec].corredo_presenza,
-																	data_list_toimp[sing_rec].corredo_tipo,
-																	data_list_toimp[sing_rec].corredo_descrizione,
+																	str(data_list_toimp[sing_rec].corredo_presenza),
+																	str(data_list_toimp[sing_rec].corredo_tipo),
+																	unicode(data_list_toimp[sing_rec].corredo_descrizione),
 																	lunghezza_scheletro,
-																	data_list_toimp[sing_rec].posizione_scheletro,
-																	data_list_toimp[sing_rec].posizione_cranio,
-																	data_list_toimp[sing_rec].posizione_arti_superiori,
-																	data_list_toimp[sing_rec].posizione_arti_inferiori,
-																	data_list_toimp[sing_rec].completo_si_no,
-																	data_list_toimp[sing_rec].disturbato_si_no,
-																	data_list_toimp[sing_rec].caratteristiche,
-																	data_list_toimp[sing_rec].periodo_iniziale,
-																	data_list_toimp[sing_rec].fase_iniziale,
-																	data_list_toimp[sing_rec].periodo_finale,
-																	data_list_toimp[sing_rec].fase_finale,
-																	data_list_toimp[sing_rec].datazione_estesa,
-																	data_list_toimp[sing_rec].misure_tafonomia
+																	str(data_list_toimp[sing_rec].posizione_scheletro),
+																	str(data_list_toimp[sing_rec].posizione_cranio),
+																	str(data_list_toimp[sing_rec].posizione_arti_superiori),
+																	str(data_list_toimp[sing_rec].posizione_arti_inferiori),
+																	str(data_list_toimp[sing_rec].completo_si_no),
+																	str(data_list_toimp[sing_rec].disturbato_si_no),
+																	str(data_list_toimp[sing_rec].in_connessione_si_no),
+																	str(data_list_toimp[sing_rec].caratteristiche),
+																	per_iniz,
+																	fase_iniz,
+																	per_fin,
+																	fase_fin,
+																	unicode(data_list_toimp[sing_rec].datazione_estesa),
+																	str(data_list_toimp[sing_rec].misure_tafonomia)
 																	)
 ##				try:
 				self.DB_MANAGER_write.insert_data_session(data)
