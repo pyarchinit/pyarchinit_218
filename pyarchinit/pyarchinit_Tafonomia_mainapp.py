@@ -765,12 +765,13 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			self.label_status_2.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 			self.empty_fields()
 
+			self.setComboBoxEnable(["self.lineEdit_nr_scheda"],"True")
+
 			self.setComboBoxEditable(["self.comboBox_sito"],0)
 			self.setComboBoxEditable(["self.comboBox_sigla_struttura"],1)
 			self.setComboBoxEditable(["self.comboBox_nr_struttura"],1)
 			self.setComboBoxEditable(["self.comboBox_nr_individuo"],1)
 			
-			self.setComboBoxEnable(["self.lineEdit_nr_scheda"],"True")
 			self.setComboBoxEnable(["self.comboBox_sito"],"True")
 			self.setComboBoxEnable(["self.comboBox_sigla_struttura"],"True")
 			self.setComboBoxEnable(["self.comboBox_nr_struttura"],"True")
@@ -890,8 +891,8 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			str(self.comboBox_canale_libatorio.currentText()),						#10 - canale libatorio
 			str(self.comboBox_oggetti_esterno.currentText()),						#11 - oggetti esterno
 			str(self.comboBox_conservazione_taf.currentText()),					#12 - conservazione
-			str(self.comboBox_copertura_tipo.currentText()),						#13 - copertura
-			str(self.comboBox_tipo_contenitore_resti.currentText()),				#14 - tipo contenitore resti
+			unicode(self.comboBox_copertura_tipo.currentText()),						#13 - copertura
+			unicode(self.comboBox_tipo_contenitore_resti.currentText()),				#14 - tipo contenitore resti
 			str(self.lineEdit_orientamento_asse.text()),							#15 - orientamento asse
 			orientamento_azimut,													#16 - orientamento azimut
 			str(self.comboBox_corredo_presenza.currentText()),						#17 - corredo presenza
@@ -910,7 +911,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			fas_iniz,																#30 - fase iniziale
 			per_fin, 																#31 - periodo finale iniziale
 			fas_fin, 																#32 - fase finale
-			str(self.lineEdit_datazione_estesa.text()),							#33 - datazione estesa
+			unicode(self.lineEdit_datazione_estesa.text()),							#33 - datazione estesa
 			str(misurazioni))														#34 - misurazioni
 
 			try:
@@ -1588,76 +1589,77 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 
 	def fill_fields(self, n=0):
 		self.rec_num = n
-		try:
+		if bool(self.DATA_LIST) == True:
+			try:
 
-			self.comboBox_sito.setEditText(str(self.DATA_LIST[self.rec_num].sito))															#1 - Sito
-			self.lineEdit_nr_scheda.setText(str(self.DATA_LIST[self.rec_num].nr_scheda_taf))												#2 - nr_scheda_taf
-			self.comboBox_sigla_struttura.setEditText(self.DATA_LIST[self.rec_num].sigla_struttura) 										#3 - sigla_struttura
-			self.comboBox_nr_struttura.setEditText(str(self.DATA_LIST[self.rec_num].nr_struttura)) 											#4 - nr_struttura
-			self.comboBox_nr_individuo.setEditText(str(self.DATA_LIST[self.rec_num].nr_individuo)) 											#5 - nr_individuo
-			self.comboBox_rito.setEditText(str(self.DATA_LIST[self.rec_num].rito))															#6 - rito
-			unicode(self.textEdit_descrizione_taf.setText(self.DATA_LIST[self.rec_num].descrizione_taf))									#7 - descrizione_taf
-			unicode(self.textEdit_interpretazione_taf.setText(self.DATA_LIST[self.rec_num].interpretazione_taf))							#8 - interpretazione_taf
-			self.comboBox_segnacoli.setEditText(self.DATA_LIST[self.rec_num].segnacoli)														#9 - segnacoli
-			self.comboBox_canale_libatorio.setEditText(self.DATA_LIST[self.rec_num].canale_libatorio_si_no)									#10 - canale_libatorio_si_no
-			self.comboBox_oggetti_esterno.setEditText(self.DATA_LIST[self.rec_num].oggetti_rinvenuti_esterno)								#11 -  oggetti_rinvenuti_esterno
-			self.comboBox_conservazione_taf.setEditText(self.DATA_LIST[self.rec_num].stato_di_conservazione)								#12 - stato_di_conservazione
-			self.comboBox_copertura_tipo.setEditText(self.DATA_LIST[self.rec_num].copertura_tipo)											#13 - copertura_tipo
-			self.comboBox_tipo_contenitore_resti.setEditText(self.DATA_LIST[self.rec_num].tipo_contenitore_resti)							#14 - tipo contenitore resti tipo_contenitore_resti
-			self.lineEdit_orientamento_asse.setText(self.DATA_LIST[self.rec_num].orientamento_asse)											#15 - orientamento asse
-			self.comboBox_corredo_presenza.setEditText(str(self.DATA_LIST[self.rec_num].corredo_presenza))									#16 - corredo presenza
-			unicode(self.textEdit_descrizione_corredo.setText(self.DATA_LIST[self.rec_num].corredo_descrizione))							#17 - descrizione corredo
-			self.comboBox_posizione_scheletro.setEditText(self.DATA_LIST[self.rec_num].posizione_scheletro)									#18 - posizione scheletro
-			self.comboBox_posizione_cranio.setEditText(self.DATA_LIST[self.rec_num].posizione_cranio)										#19 - posizione cranio
-			self.comboBox_arti_superiori.setEditText(self.DATA_LIST[self.rec_num].posizione_arti_superiori)									#20 - arti superiori
-			self.comboBox_arti_inferiori.setEditText(self.DATA_LIST[self.rec_num].posizione_arti_inferiori)									#21 - arti inferiori 
-			self.comboBox_completo.setEditText(self.DATA_LIST[self.rec_num].completo_si_no)													#22 - completo
-			self.comboBox_disturbato.setEditText(self.DATA_LIST[self.rec_num].disturbato_si_no)												#23 - disturbato
-			self.comboBox_in_connessione.setEditText(self.DATA_LIST[self.rec_num].in_connessione_si_no) 									#24 - in connessione
-			self.lineEdit_datazione_estesa.setText(str(self.DATA_LIST[self.rec_num].datazione_estesa))								#12 - datazione estesa
-			self.tableInsertData("self.tableWidget_caratteristiche", self.DATA_LIST[self.rec_num].caratteristiche)							#26 - caratteristiche
-			self.tableInsertData("self.tableWidget_corredo_tipo", self.DATA_LIST[self.rec_num].corredo_tipo)								#27 - corredo tipo
-			self.tableInsertData("self.tableWidget_misurazioni", self.DATA_LIST[self.rec_num].misure_tafonomia)					#16 - misure struttura
-
-
-			if self.DATA_LIST[self.rec_num].periodo_iniziale == None:
-				self.comboBox_per_iniz.setEditText("")
-			else:
-				self.comboBox_per_iniz.setEditText(str(self.DATA_LIST[self.rec_num].periodo_iniziale))
-
-			if self.DATA_LIST[self.rec_num].fase_iniziale == None:
-				self.comboBox_fas_iniz.setEditText("")
-			else:
-				self.comboBox_fas_iniz.setEditText(str(self.DATA_LIST[self.rec_num].fase_iniziale))
-
-			if self.DATA_LIST[self.rec_num].periodo_finale == None:
-				self.comboBox_per_fin.setEditText("")
-			else:
-				self.comboBox_per_fin.setEditText(str(self.DATA_LIST[self.rec_num].periodo_finale))
-
-			if self.DATA_LIST[self.rec_num].fase_finale == None:
-				self.comboBox_fas_fin.setEditText("")
-			else:
-				self.comboBox_fas_fin.setEditText(str(self.DATA_LIST[self.rec_num].fase_finale))
-
-			if self.DATA_LIST[self.rec_num].orientamento_azimut == None:
-				self.lineEdit_orientamento_azimut.setText("")
-			else:
-				self.lineEdit_orientamento_azimut.setText(str(self.DATA_LIST[self.rec_num].orientamento_azimut))		#14 - orientamento azimut
-
-			if self.DATA_LIST[self.rec_num].lunghezza_scheletro == None:
-				self.lineEdit_lunghezza_scheletro.setText("")
-			else:
-				self.lineEdit_lunghezza_scheletro.setText(str(self.DATA_LIST[self.rec_num].lunghezza_scheletro))		#14 - orientamento azimut
+				self.comboBox_sito.setEditText(str(self.DATA_LIST[self.rec_num].sito))															#1 - Sito
+				self.lineEdit_nr_scheda.setText(str(self.DATA_LIST[self.rec_num].nr_scheda_taf))												#2 - nr_scheda_taf
+				self.comboBox_sigla_struttura.setEditText(self.DATA_LIST[self.rec_num].sigla_struttura) 										#3 - sigla_struttura
+				self.comboBox_nr_struttura.setEditText(str(self.DATA_LIST[self.rec_num].nr_struttura)) 										#4 - nr_struttura
+				self.comboBox_nr_individuo.setEditText(str(self.DATA_LIST[self.rec_num].nr_individuo)) 										#5 - nr_individuo
+				self.comboBox_rito.setEditText(str(self.DATA_LIST[self.rec_num].rito))															#6 - rito
+				unicode(self.textEdit_descrizione_taf.setText(self.DATA_LIST[self.rec_num].descrizione_taf))									#7 - descrizione_taf
+				unicode(self.textEdit_interpretazione_taf.setText(self.DATA_LIST[self.rec_num].interpretazione_taf))							#8 - interpretazione_taf
+				self.comboBox_segnacoli.setEditText(self.DATA_LIST[self.rec_num].segnacoli)													#9 - segnacoli
+				self.comboBox_canale_libatorio.setEditText(self.DATA_LIST[self.rec_num].canale_libatorio_si_no)								#10 - canale_libatorio_si_no
+				self.comboBox_oggetti_esterno.setEditText(self.DATA_LIST[self.rec_num].oggetti_rinvenuti_esterno)								#11 -  oggetti_rinvenuti_esterno
+				self.comboBox_conservazione_taf.setEditText(self.DATA_LIST[self.rec_num].stato_di_conservazione)								#12 - stato_di_conservazione
+				self.comboBox_copertura_tipo.setEditText(self.DATA_LIST[self.rec_num].copertura_tipo)											#13 - copertura_tipo
+				self.comboBox_tipo_contenitore_resti.setEditText(self.DATA_LIST[self.rec_num].tipo_contenitore_resti)							#14 - tipo contenitore resti tipo_contenitore_resti
+				self.lineEdit_orientamento_asse.setText(self.DATA_LIST[self.rec_num].orientamento_asse)										#15 - orientamento asse
+				self.comboBox_corredo_presenza.setEditText(str(self.DATA_LIST[self.rec_num].corredo_presenza))									#16 - corredo presenza
+				unicode(self.textEdit_descrizione_corredo.setText(self.DATA_LIST[self.rec_num].corredo_descrizione))							#17 - descrizione corredo
+				self.comboBox_posizione_scheletro.setEditText(self.DATA_LIST[self.rec_num].posizione_scheletro)								#18 - posizione scheletro
+				self.comboBox_posizione_cranio.setEditText(self.DATA_LIST[self.rec_num].posizione_cranio)										#19 - posizione cranio
+				self.comboBox_arti_superiori.setEditText(self.DATA_LIST[self.rec_num].posizione_arti_superiori)								#20 - arti superiori
+				self.comboBox_arti_inferiori.setEditText(self.DATA_LIST[self.rec_num].posizione_arti_inferiori)								#21 - arti inferiori 
+				self.comboBox_completo.setEditText(self.DATA_LIST[self.rec_num].completo_si_no)												#22 - completo
+				self.comboBox_disturbato.setEditText(self.DATA_LIST[self.rec_num].disturbato_si_no)											#23 - disturbato
+				self.comboBox_in_connessione.setEditText(self.DATA_LIST[self.rec_num].in_connessione_si_no) 									#24 - in connessione
+				self.lineEdit_datazione_estesa.setText(str(self.DATA_LIST[self.rec_num].datazione_estesa))										#12 - datazione estesa
+				self.tableInsertData("self.tableWidget_caratteristiche", self.DATA_LIST[self.rec_num].caratteristiche)							#26 - caratteristiche
+				self.tableInsertData("self.tableWidget_corredo_tipo", self.DATA_LIST[self.rec_num].corredo_tipo)								#27 - corredo tipo
+				self.tableInsertData("self.tableWidget_misurazioni", self.DATA_LIST[self.rec_num].misure_tafonomia)							#28 - misure struttura
 
 
-			#gestione tool
-			if self.toolButtonPreview.isChecked() == True:
-				self.loadMapPreview()
-			if self.toolButtonPreviewMedia.isChecked() == True:
-				self.loadMediaPreview()
-		except Exception, e:
-			QMessageBox.warning(self, "Errore fill", str(e),  QMessageBox.Ok)
+				if self.DATA_LIST[self.rec_num].periodo_iniziale == None:
+					self.comboBox_per_iniz.setEditText("")
+				else:
+					self.comboBox_per_iniz.setEditText(str(self.DATA_LIST[self.rec_num].periodo_iniziale))
+
+				if self.DATA_LIST[self.rec_num].fase_iniziale == None:
+					self.comboBox_fas_iniz.setEditText("")
+				else:
+					self.comboBox_fas_iniz.setEditText(str(self.DATA_LIST[self.rec_num].fase_iniziale))
+
+				if self.DATA_LIST[self.rec_num].periodo_finale == None:
+					self.comboBox_per_fin.setEditText("")
+				else:
+					self.comboBox_per_fin.setEditText(str(self.DATA_LIST[self.rec_num].periodo_finale))
+
+				if self.DATA_LIST[self.rec_num].fase_finale == None:
+					self.comboBox_fas_fin.setEditText("")
+				else:
+					self.comboBox_fas_fin.setEditText(str(self.DATA_LIST[self.rec_num].fase_finale))
+
+				if self.DATA_LIST[self.rec_num].orientamento_azimut == None:
+					self.lineEdit_orientamento_azimut.setText("")
+				else:
+					self.lineEdit_orientamento_azimut.setText(str(self.DATA_LIST[self.rec_num].orientamento_azimut))		#14 - orientamento azimut
+
+				if self.DATA_LIST[self.rec_num].lunghezza_scheletro == None:
+					self.lineEdit_lunghezza_scheletro.setText("")
+				else:
+					self.lineEdit_lunghezza_scheletro.setText(str(self.DATA_LIST[self.rec_num].lunghezza_scheletro))		#14 - orientamento azimut
+
+
+				#gestione tool
+				if self.toolButtonPreview.isChecked() == True:
+					self.loadMapPreview()
+				if self.toolButtonPreviewMedia.isChecked() == True:
+					self.loadMediaPreview()
+			except Exception, e:
+				QMessageBox.warning(self, "Errore fill", str(e),  QMessageBox.Ok)
 
 	def set_rec_counter(self, t, c):
 		self.rec_tot = t
