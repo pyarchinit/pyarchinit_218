@@ -11,12 +11,12 @@
  ***************************************************************************/
 
 /***************************************************************************
- *                                                                          *
- *   This program is free software; you can redistribute it and/or modify   *
- *   it under the terms of the GNU General Public License as published by   *
- *   the Free Software Foundation; either version 2 of the License, or      *
- *   (at your option) any later version.                                    *
- *                                                                          *
+ *                                                                                                                      *
+ *   This program is free software; you can redistribute it and/or modify                           *
+ *   it under the terms of the GNU General Public License as published by                          *
+ *   the Free Software Foundation; either version 2 of the License, or                               *
+ *   (at your option) any later version.                                                                       *
+ *                                                                                                                      *
  ***************************************************************************/
 """
 import sys, os
@@ -519,27 +519,28 @@ class Pyarchinit_db_management:
 		"""Istanzia la classe Inventario_Lapidei da pyarchinit_db_mapper"""
 
 		inventario_lapidei = INVENTARIO_LAPIDEI(arg[0],
-								arg[1],
-								arg[2],
-								arg[3],
-								arg[4],
-								arg[5],
-								arg[6],
-								arg[7],
-								arg[8],
-								arg[9],
-								arg[10],
-								arg[11],
-								arg[12],
-								arg[13],
-								arg[14],
-								arg[15],
-								arg[16],
-								arg[17],
-								arg[18],
-								arg[19])
+																		arg[1],
+																		arg[2],
+																		arg[3],
+																		arg[4],
+																		arg[5],
+																		arg[6],
+																		arg[7],
+																		arg[8],
+																		arg[9],
+																		arg[10],
+																		arg[11],
+																		arg[12],
+																		arg[13],
+																		arg[14],
+																		arg[15],
+																		arg[16],
+																		arg[17],
+																		arg[18],
+																		arg[19])
 
 		return inventario_lapidei
+
 
 	def insert_values_documentazione(self, *arg):
 		"""Istanzia la classe DOCUMENTAZIONE da pyarchinit_db_mapper"""
@@ -581,22 +582,6 @@ class Pyarchinit_db_management:
 										arg[9])
 
 		return campioni
-
-
-	def insert_relationship_check_values(self, *arg):
-		"""Istanzia la classe RELATIONSHIP_CHECK da pyarchinit_db_mapper"""
-		relationship_check = RELATIONSHIP_CHECK(arg[0],
-												arg[1],
-												arg[2],
-												arg[3],
-												arg[4],
-												arg[5],
-												arg[6],
-												arg[7],
-												arg[8],
-												arg[9])
-
-		return relationship_check
 
 
 	def execute_sql_create_db(self):
@@ -1182,19 +1167,13 @@ class Pyarchinit_db_management:
 ##		return res_list
 
 def main():
-	##	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
-	db = Pyarchinit_db_management('postgresql://postgres:xanu8ese@10.0.1.5:5432/pyarchinit')
-	
+	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
 	db.connection()
 	#res = db.query_sort([1, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67],['id_invmat'],'asc', 'INVENTARIO_MATERIALI', 'id_invmat')
-	#res = db.query_distinct_sql('pyunitastratigrafiche',[['scavo_s','"San_Costanzo_PU_Cimitero"'], ['tipo_doc','"Sezione"']], ['scavo_s', 'area_s', 'us_s', 'tipo_doc', 'nome_doc'])
-	res_ind = db.query_bool({"sito":'"Rimini_(RN)_via_Arnaldo_da_Brescia_Scuole_XX_Settembre_2015"',"nr_individuo":'"20"'},"SCHEDAIND")
-	print str(bool(res_ind))
-	print len(res_ind)
+	res = db.query_distinct_sql('pyunitastratigrafiche',[['scavo_s','"San_Costanzo_PU_Cimitero"'], ['tipo_doc','"Sezione"']], ['scavo_s', 'area_s', 'us_s', 'tipo_doc', 'nome_doc'])
 
-	ls = []
-	for i in res_ind:
-		print i.us
+	for i in res:
+		print "record: ", i
 
 if __name__ == '__main__':
 	main()

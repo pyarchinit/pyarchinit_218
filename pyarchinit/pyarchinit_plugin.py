@@ -167,7 +167,7 @@ class PyArchInitPlugin:
 		self.actionLapidei.setWhatsThis("Lapidei")
 		QObject.connect(self.actionLapidei, SIGNAL("triggered()"), self.runLapidei)
 
-		self.dataToolButton.addActions( [ self.actionSite, self.actionUS, self.actionInr, self.actionCampioni, self.actionLapidei] )
+		self.dataToolButton.addActions( [ self.actionSite, self.actionUS, self.actionInr, self.actionCampioni, self.actionLapidei ] )
 		self.dataToolButton.setDefaultAction(self.actionSite)
 
 ##		self.actionSite.setCheckable(True)
