@@ -155,27 +155,30 @@ class single_Finds_pdf_sheet:
 
 		#1 row
 		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
-		area = Paragraph("<b>Area</b><br/>"  + str(self.area), styNormal)
-		us = Paragraph("<b>US</b><br/>"  + str(self.us), styNormal)
 		nr_inventario = Paragraph("<b>Nr. Inventario</b><br/>"  + str(self.numero_inventario), styNormal)
 
 		#2 row
+		riferimenti_stratigrafici = Paragraph("<b>Riferimenti stratigrafici</b>",styNormal)
+		area = Paragraph("<b>Area</b><br/>"  + str(self.area), styNormal)
+		us = Paragraph("<b>US</b><br/>"  + str(self.us), styNormal)
+
+		#3 row
 		criterio_schedatura = Paragraph("<b>Criterio schedatura</b><br/>"  + self.criterio_schedatura, styNormal)
 		tipo_reperto = Paragraph("<b>Tipo reperto</b><br/>"  + self.tipo_reperto, styNormal)
 		definizione = Paragraph("<b>Definizione</b><br/>"  + self.definizione, styNormal)
 
-		#3 row
+		#4 row
 		stato_conservazione = Paragraph("<b>Stato Conservazione</b><br/>"  + self.stato_conservazione, styNormal)
 		datazione = Paragraph("<b>Datazione</b><br/>"  + self.datazione_reperto, styNormal)
 		
-		#4 row
+		#5 row
 		descrizione = ''
 		try:
 			descrizione = Paragraph("<b>Descrizione</b><br/>" + unicode(self.descrizione), styDescrizione)
 		except:
 			pass
 
-		#5 row
+		#6 row
 		elementi_reperto = ''
 		if eval(self.elementi_reperto) > 0 :
 			for i in eval(self.elementi_reperto):
@@ -192,7 +195,7 @@ class single_Finds_pdf_sheet:
 
 		elementi_reperto = Paragraph("<b>Elementi reperto</b><br/>"  + elementi_reperto, styNormal)
 
-		#6 row
+		#7 row
 		misurazioni = ''
 		if eval(self.misurazioni) > 0:
 			for i in eval(self.misurazioni):
@@ -208,7 +211,7 @@ class single_Finds_pdf_sheet:
 						pass
 		misurazioni = Paragraph("<b>Misurazioni</b><br/>"  + misurazioni, styNormal)
 
-		#7 row
+		#8 row
 		tecnologie = ''
 		if eval(self.tecnologie) > 0:
 			for i in eval(self.tecnologie):
@@ -224,7 +227,7 @@ class single_Finds_pdf_sheet:
 						pass
 		tecnologie = Paragraph("<b>Tecnologie</b><br/>"  + tecnologie, styNormal)
 
-		#8 row
+		#9 row
 		rif_biblio = ''
 		if eval(self.rif_biblio) > 0:
 			for i in eval(self.rif_biblio): #gigi
@@ -241,36 +244,35 @@ class single_Finds_pdf_sheet:
 
 		rif_biblio = Paragraph("<b>Riferimenti bibliografici</b><br/>"  + rif_biblio, styNormal)
 
-		#9 row
-		riferimenti_stratigrafici = Paragraph("<b>Riferimenti stratigrafici</b>",styNormal)
 
-		#10 row
+		#11 row
 		repertato = Paragraph("<b>Repertato</b><br/>" + self.repertato,styNormal)
 		diagnostico = Paragraph("<b>Diagnostico</b><br/>" + self.diagnostico,styNormal)
 
-		#11 row
+		#12 row
 		riferimenti_magazzino = Paragraph("<b>Riferimenti magazzino</b>",styNormal)
 
-		#12 row
+		#13 row
 		lavato  = Paragraph("<b>Lavato</b><br/>" + self.lavato,styNormal)
 		nr_cassa = Paragraph("<b>Nr. Cassa</b><br/>" + self.nr_cassa,styNormal)
 		luogo_conservazione = Paragraph("<b>Luogo di conservazione</b><br/>" + self.luogo_conservazione,styNormal)
 
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
-						[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'],
-						[sito, '01', '02', area, '04', us,'06', '07', nr_inventario, '09'], #1 row ok
-						[tipo_reperto, '01', '02', criterio_schedatura,'04', '05',definizione, '07', '08', '09'], #2 row ok
-						[datazione, '01', '02', '03', '04', stato_conservazione, '06', '07', '08', '09'], #3 row ok
-						[descrizione, '01','02', '03', '04', '05','06', '07', '08', '09'], #4 row ok
-						[elementi_reperto, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #5 row ok
-						[misurazioni, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #6 row ok
-						[tecnologie, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #7 row ok
-						[rif_biblio, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #8 row ok
-						[riferimenti_stratigrafici, '02', '03', '04', '05', '06', '07', '08', '09'], #9 row ok
-						[repertato, '01', '02', diagnostico,'04', '05', '06', '07', '08', '09'], #10 row ok
-						[riferimenti_magazzino, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #11 row ok
-						[lavato, '01', '02', nr_cassa, '04', '05', luogo_conservazione, '07', '08', '09'] #12 row ok
+						[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'], 						#0 row ok
+						[sito, '01', '02', '03', '04', '05','06', '07', nr_inventario, '09'], 						#1 row ok
+						[riferimenti_stratigrafici, '01', '02', '03', area, '05','06',us, '08', '09'], 			#2 row ok
+						[tipo_reperto, '01', '02', criterio_schedatura,'04', '05',definizione, '07', '08', '09'], 	#3 row ok
+						[datazione, '01', '02', '03', '04', stato_conservazione, '06', '07', '08', '09'],			#4 row ok
+						[descrizione, '01','02', '03', '04', '05','06', '07', '08', '09'], 						#5 row ok
+						[elementi_reperto, '01', '02', '03', '04', '05', '06', '07', '08', '09'], 					#6 row ok
+						[misurazioni, '01', '02', '03', '04', '05', '06', '07', '08', '09'], 						#7 row ok
+						[tecnologie, '01', '02', '03', '04', '05', '06', '07', '08', '09'], 						#8 row ok
+						[rif_biblio, '01', '02', '03', '04', '05', '06', '07', '08', '09'], 						#9 row ok
+						[riferimenti_stratigrafici, '02', '03', '04', '05', '06', '07', '08', '09'], 				#10 row ok
+						[repertato, '01', '02', diagnostico,'04', '05', '06', '07', '08', '09'], 					#11 row ok
+						[riferimenti_magazzino, '01', '02', '03', '04', '05', '06', '07', '08', '09'], 			#12 row ok
+						[lavato, '01', '02', nr_cassa, '04', '05', luogo_conservazione, '07', '08', '09'] 			#13 row ok
 						]
 
 
@@ -278,55 +280,61 @@ class single_Finds_pdf_sheet:
 		table_style=[
 
 					('GRID',(0,0),(-1,-1),0.5,colors.black),
+
 					#0 row
-					('SPAN', (0,0),(6,0)),  #intestazione
+					('SPAN', (0,0),(6,0)), #intestazione
 					('SPAN', (7,0),(9,0)), #intestazione
 
 					#1 row
-					('SPAN', (0,1),(2,1)),  #dati identificativi
-					('SPAN', (3,1),(4,1)),  #dati identificativi
-					('SPAN', (5,1),(7,1)),  #dati identificativi
-					('SPAN', (8,1),(9,1)),   #dati identificativi
+					('SPAN', (0,1),(7,1)),  #sito
+					('SPAN', (8,1),(9,1)),  #nr_inventario
 
 					#2 row
-					('SPAN', (0,2),(2,2)),  #definizione
-					('SPAN', (3,2),(5,2)),  #definizione
-					('SPAN', (6,2),(9,2)),  #definizione
+					('SPAN', (0,2),(3,2)),  #rif stratigrafici
+					('SPAN', (4,2),(6,2)),  #area
+					('SPAN', (7,2),(9,2)),  #us
 					('VALIGN',(0,2),(9,2),'TOP'), 
 
 					#3 row
-					('SPAN', (0,3),(4,3)), #datazione
-					('SPAN', (5,3),(9,3)),  #conservazione
-					
-					#4 row
-					('SPAN', (0,4),(9,4)),  #descrizione
+					('SPAN', (0,3),(2,3)),  #tipo_reperto
+					('SPAN', (3,3),(5,3)),  #criterio_schedatura
+					('SPAN', (6,3),(9,3)),  #definizione
+					('VALIGN',(0,3),(9,3),'TOP'), 
 
+
+					#4 row
+					('SPAN', (0,4),(4,4)), #datazione
+					('SPAN', (5,4),(9,4)),  #conservazione
+					
 					#5 row
-					('SPAN', (0,5),(9,5)),  #elementi_reperto
+					('SPAN', (0,5),(9,5)),  #descrizione
 
 					#6 row
-					('SPAN', (0,6),(9,6)),  #misurazioni
-					
+					('SPAN', (0,6),(9,6)),  #elementi_reperto
+
 					#7 row
-					('SPAN', (0,7),(9,7)),  #tecnologie
-
-					#8 row
-					('SPAN', (0,8),(9,8)),  #bibliografia
+					('SPAN', (0,7),(9,7)),  #misurazioni
 					
-					#9 row
-					('SPAN', (0,9),(9,9)),  #Riferimenti stratigrafici - Titolo
+					#8 row
+					('SPAN', (0,8),(9,8)),  #tecnologie
 
-					#10 row
-					('SPAN', (0,10),(2,10)),  #Riferimenti stratigrafici - area
-					('SPAN', (3,10),(9,10)),  #Riferimenti stratigrafici - us
+					#9 row
+					('SPAN', (0,9),(9,9)),  #bibliografia
+					
+					#10 row	
+					('SPAN', (0,10),(9,10)),  #Riferimenti stratigrafici - Titolo
 
 					#11 row
-					('SPAN', (0,11),(9,11)),  #Riferimenti magazzino - Titolo
+					('SPAN', (0,11),(2,11)),  #Riferimenti stratigrafici - area
+					('SPAN', (3,11),(9,11)),  #Riferimenti stratigrafici - us
 
 					#12 row
-					('SPAN', (0,12),(2,12)),  #Riferimenti magazzino - lavato
-					('SPAN', (3,12),(5,12)),  #Riferimenti magazzino - nr_cassa
-					('SPAN', (6,12),(9,12)),   #Riferimenti magazzino - luogo conservazione
+					('SPAN', (0,12),(9,12)),  #Riferimenti magazzino - Titolo
+
+					#13 row
+					('SPAN', (0,13),(2,13)),  #Riferimenti magazzino - lavato
+					('SPAN', (3,13),(5,13)),  #Riferimenti magazzino - nr_cassa
+					('SPAN', (6,13),(9,13)),   #Riferimenti magazzino - luogo conservazione
 
 					('VALIGN',(0,0),(-1,-1),'TOP')
 

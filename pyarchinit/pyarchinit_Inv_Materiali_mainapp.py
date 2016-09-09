@@ -1943,8 +1943,8 @@ class pyarchinit_Inventario_reperti(QDialog, Ui_DialogInventarioMateriali):
 
 		
 		#area TEST
-		tes = str(self.DATA_LIST_REC_CORR) + str(self.DATA_LIST_REC_TEMP)
-		self.testing("C:\\Users\\Luca\\pyarchinit_Test_folder\\tes_equal.txt", tes)
+		#tes = str(self.DATA_LIST_REC_CORR) + str(self.DATA_LIST_REC_TEMP)
+		#self.testing("C:\\Users\\Luca\\pyarchinit_Test_folder\\tes_equal.txt", tes)
 		#QMessageBox.warning(self, "Errore", str(self.DATA_LIST_REC_CORR) + str(self.DATA_LIST_REC_TEMP),  QMessageBox.Ok)
 		
 		check_str = str(self.DATA_LIST_REC_CORR) + " " + str(self.DATA_LIST_REC_TEMP)
