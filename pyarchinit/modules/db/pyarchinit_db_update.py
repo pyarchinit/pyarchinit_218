@@ -61,6 +61,63 @@ class DB_update:
 
 		if table_column_names_list.__contains__('documentazione') == False:
 			self.engine.execute("ALTER TABLE us_table ADD COLUMN documentazione varchar DEFAULT")
+		
+		"""
+
+		#nuovi campi per USM 1/9/2016
+
+		if table_column_names_list.__contains__('settore') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN settore varchar DEFAULT")
+
+
+		if table_column_names_list.__contains__('unita_tipo') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN unita_tipo varchar DEFAULT")
+
+
+		if table_column_names_list.__contains__('quadrato') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN quadrato varchar DEFAULT")
+
+		if table_column_names_list.__contains__('saggio') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN saggio varchar DEFAULT")
+
+
+		if table_column_names_list.__contains__('ambiente') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN ambiente varchar DEFAULT")
+
+		if table_column_names_list.__contains__('funz_statica_usm') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN funz_statica_usm varchar DEFAULT")
+
+		if table_column_names_list.__contains__('unita_edilizia_riassuntiva_usm') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN unita_edilizia_riassuntiva_usm varchar DEFAULT")
+
+		if table_column_names_list.__contains__('qmax_usm') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN qmax_usm varchar DEFAULT")
+
+		if table_column_names_list.__contains__('qmin_usm') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN qmin_usm varchar DEFAULT")
+
+		if table_column_names_list.__contains__('lavorazione_usm') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN lavorazione_usm varchar DEFAULT")
+
+		if table_column_names_list.__contains__('posa_in_opera_usm') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN posa_in_opera_usm varchar DEFAULT")
+
+		if table_column_names_list.__contains__('reimpiego_usm') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN reimpiego_usm varchar DEFAULT")
+
+		if table_column_names_list.__contains__('spessore_giunti_usm') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN spessore_giunti_usm varchar DEFAULT")
+
+		if table_column_names_list.__contains__('letti_di_posa_giunti_usm') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN letti_di_posa_giunti_usm varchar DEFAULT")
+
+		if table_column_names_list.__contains__('letti_di_posa_giunti_usm') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN letti_di_posa_giunti_usm varchar DEFAULT")
+
+		"""
+
+			
+			
 
 		####periodizzazione_table
 		table = Table("periodizzazione_table", self.metadata, autoload=True)
@@ -164,54 +221,7 @@ class DB_update:
 		except:
 			pass
 			#verificare se aggiorna le tabelle con i campi nuovi
-		
-		####inventario_lapidei_table
-		table = Table("inventario_lapidei_table", self.metadata, autoload=True)
-		table_column_names_list = []
-		for i in table.columns:
-			table_column_names_list.append(str(i.name))
 
-		if table_column_names_list.__contains__('cronologia') == False:
-			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN cronologia text")
-
-		if table_column_names_list.__contains__('bibliografia') == False:
-			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN bibliografia text")
-		
-		if table_column_names_list.__contains__('d_letto_posa') == False:
-			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN d_letto_posa Numeric(4,2) DEFAULT 0")
-		
-		if table_column_names_list.__contains__('d_letto_attesa') == False:
-			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN d_letto_attesa Numeric(4,2) DEFAULT 0")
-		
-		if table_column_names_list.__contains__('toro') == False:
-			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN toro Numeric(4,2) DEFAULT 0")
-
-		if table_column_names_list.__contains__('spessore') == False:
-			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN spessore Numeric(4,2) DEFAULT 0")
-		
-		if table_column_names_list.__contains__('larghezza') == False:
-			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN larghezza Numeric(4,2) DEFAULT 0")
-		
-		if table_column_names_list.__contains__('lunghezza') == False:
-			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN lunghezza Numeric(4,2) DEFAULT 0")
-
-		if table_column_names_list.__contains__('h') == False:
-			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN h Numeric(4,2) DEFAULT 0")
-
-		if table_column_names_list.__contains__('descrizione') == False:
-			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN descrizione text")
-
-		if table_column_names_list.__contains__('lavorazione_e_stato_di_conservazione') == False:
-			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN lavorazione_e_stato_di_conservazione text")
-
-		if table_column_names_list.__contains__('confronti') == False:
-			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN confronti text")
-
-		if table_column_names_list.__contains__('compilatore') == False:
-			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN compilatore text")
-
-#		if table_column_names_list.__contains__('compilatore') == False:
-#			self.engine.execute("ALTER TABLE inventario_lapidei_table ADD COLUMN compilatore integer DEFAULT 0")
 
 
 if __name__ == '__main__':
