@@ -584,6 +584,23 @@ class Pyarchinit_db_management:
 		return campioni
 
 
+	def insert_relationship_check_values(self, *arg):
+		"""Istanzia la classe RELATIONSHIP_CHECK da pyarchinit_db_mapper"""
+		relationship_check = RELATIONSHIP_CHECK(arg[0],
+												arg[1],
+												arg[2],
+												arg[3],
+												arg[4],
+												arg[5],
+												arg[6],
+												arg[7],
+												arg[8],
+												arg[9])
+
+		return relationship_check
+
+
+
 	def execute_sql_create_db(self):
 		path = os.path.dirname(__file__)
 		rel_path = os.path.join(os.sep, 'query_sql', 'pyarchinit_create_db.sql')
