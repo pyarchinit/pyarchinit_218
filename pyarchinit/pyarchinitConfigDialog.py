@@ -246,9 +246,9 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 		conn = Connection()
 		conn_str = conn.conn_str()
 		
-		f = open("C:\\Users\\Luca\\pyarchinit_Test_folder\\conn_str_from_config.txt", "w")
-		f.write(str(conn_str))
-		f.close
+		#f = open("C:\\Users\\Luca\\pyarchinit_Test_folder\\conn_str_from_config.txt", "w")
+		#f.write(str(conn_str))
+		#f.close
 		
 		
 		from  pyarchinit_db_manager import *

@@ -161,10 +161,11 @@ class single_Campioni_pdf_sheet:
 		#schema
 		cell_schema = [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
 							[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'],					#0 row ok
-							[sito, '01', '02', '03', '04',tipo_campione,'06', '07', nr_campione, '09'],		#1 row ok
-							[area, '01', '02', us,'04', '05',nr_inventario, '07', '08', '09'], 					#2 row ok
-							[descrizione, '01','02', '03', '04', '05','06', '07', '08', '09'],						#3 row ok
-							[nr_cassa,'01', '02', '03', '04', '05', luogo_conservazione, '07', '08', '09']	#4 row ok
+							[sito, '01', '02', '03', '04','05','06', '07', nr_campione, '09'],		                #1 row ok
+							[tipo_campione, '01', '02', '03', '04','05','06', '07', '08' '09'],		            #2 row ok
+							[area, '01', '02', us,'04', '05',nr_inventario, '07', '08', '09'], 					#3 row ok
+							[descrizione, '01','02', '03', '04', '05','06', '07', '08', '09'],						#4 row ok
+							[nr_cassa,'01', '02', '03', '04', '05', luogo_conservazione, '07', '08', '09']	        #5 row ok
 							]
 
 
@@ -173,26 +174,29 @@ class single_Campioni_pdf_sheet:
 
 					('GRID',(0,0),(-1,-1),0.5,colors.black),
 					#0 row
-					('SPAN', (0,0),(6,0)),  #intestazione
-					('SPAN', (7,0),(9,0)), #intestazione
+					('SPAN', (0,0),(6,0)),    #intestazione
+					('SPAN', (7,0),(9,0)),    #intestazione
 
 					#1 row
-					('SPAN', (0,1),(4,1)),  #dati identificativi
-					('SPAN', (5,1),(7,1)),  #dati identificativi
-					('SPAN', (8,1),(9,1)),   #dati identificativi
-
+					('SPAN', (0,1),(7,1)),    #sito
+					('SPAN', (8,1),(9,1)),    #dnr campione
+					
 					#2 row
-					('SPAN', (0,2),(2,2)),  #definizione
-					('SPAN', (3,2),(5,2)),  #definizione
-					('SPAN', (6,2),(9,2)),  #definizione
-					('VALIGN',(0,2),(9,2),'TOP'), 
+					('SPAN', (0,2),(9,2)),    #sito
+					('HALIGN',(0,2),(9,2),'CENTER'), 
 
 					#3 row
-					('SPAN', (0,3),(9,3)),  #descrizione
+					('SPAN', (0,3),(2,3)),  #area
+					('SPAN', (3,3),(5,3)),  #us
+					('SPAN', (6,3),(9,3)),  #inventario
+					('VALIGN',(0,3),(9,3),'TOP'), 
+
+					#3 row
+					('SPAN', (0,4),(9,4)),  #descrizione
 
 					#5 row
-					('SPAN', (0,4),(5,4)),  #elementi_reperto	
-					('SPAN', (6,4),(9,4)),  #elementi_reperto
+					('SPAN', (0,5),(5,5)),  #elementi_reperto	
+					('SPAN', (6,5),(9,5)),  #elementi_reperto
 
 					('VALIGN',(0,0),(-1,-1),'TOP')
 

@@ -74,9 +74,9 @@ class Struttura_index_pdf_sheet:
 		self.categoria_struttura = 		data[3]
 		self.tipologia_struttura = 		data[4]
 		self.definizione_struttura = 	data[5]
-		self.periodo_iniziale = 			data[8]
-		self.fase_iniziale = 				data[9]
-		self.periodo_finale = 				data[10]
+		self.periodo_iniziale = 		data[8]
+		self.fase_iniziale = 			data[9]
+		self.periodo_finale = 			data[10]
 		self.fase_finale = 				data[11]
 		self.datazione_estesa = 		data[12]
 
@@ -141,7 +141,7 @@ class single_Struttura_pdf_sheet:
 	misure_struttura_print = ''
 
 	def __init__(self, data):
-		self.sito = 							data[0]
+		self.sito = 					data[0]
 		self.sigla_struttura = 			data[1]
 		self.numero_struttura = 		data[2]
 		self.categoria_struttura = 		data[3]
@@ -149,16 +149,16 @@ class single_Struttura_pdf_sheet:
 		self.definizione_struttura = 	data[5]
 		self.descrizione = 				data[6]
 		self.interpretazione = 			data[7]
-		self.periodo_iniziale = 			data[8]
-		self.fase_iniziale = 				data[9]
-		self.periodo_finale = 				data[10]
+		self.periodo_iniziale = 		data[8]
+		self.fase_iniziale = 			data[9]
+		self.periodo_finale = 			data[10]
 		self.fase_finale = 				data[11]
 		self.datazione_estesa = 		data[12]
 		self.materiali_impiegati = 		data[13]
-		self.elementi_strutturali = 		data[14]
+		self.elementi_strutturali = 	data[14]
 		self.rapporti_struttura = 		data[15]
-		self.misure_struttura = 			data[16]
-		self.quota_min = 					data[17]
+		self.misure_struttura = 		data[16]
+		self.quota_min = 				data[17]
 		self.quota_max = 				data[18]
 
 	def datestrfdate(self):
@@ -200,8 +200,7 @@ class single_Struttura_pdf_sheet:
 
 		#1 row
 		sito = Paragraph("<b>Sito</b><br/>"  + str(self.sito), styNormal)
-		sigla_struttura = Paragraph("<b>Sigla struttura</b><br/>"  + str(self.sigla_struttura), styNormal)
-		numero_struttura = Paragraph("<b>Nr.</b><br/>"  + str(self.numero_struttura), styNormal)
+		sigla_struttura = Paragraph("<b>Sigla/Nr.</b><br/> %s%s" % (str(self.sigla_struttura),str(self.numero_struttura)), styNormal)
 
 		#2 row
 		categoria = Paragraph("<b>Categoria</b><br/>"  + self.categoria_struttura, styNormal)
@@ -211,13 +210,13 @@ class single_Struttura_pdf_sheet:
 		#3 row
 		descrizione = ''
 		try:
-			descrizione = Paragraph("<b>Descrizione</b><br/>" + str(self.descrizione), styDescrizione)
+			descrizione = Paragraph("<b>Descrizione</b><br/>" + unicode(self.descrizione), styDescrizione)
 		except:
 			pass
 
 		interpretazione = ''
 		try:
-			interpretazione = Paragraph("<b>Interpretazione</b><br/>" + str(self.interpretazione),styDescrizione)
+			interpretazione = Paragraph("<b>Interpretazione</b><br/>" + unicode(self.interpretazione),styDescrizione)
 		except:
 			pass
 		
@@ -328,13 +327,13 @@ class single_Struttura_pdf_sheet:
 
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
-						[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'], #0 row ok
-						[sito, '01', '02', '03', '04', sigla_struttura, '06', '07', numero_struttura, '09'], #1 row ok
-						[categoria, '01', '02','03', tipologia,'05', '06', '07', definizione, '09'], #2 row ok
-						[descrizione, '01','02', '03', '04', interpretazione, '06', '07', '08', '09'], #3 row ok
-						[periodizzazione, '02', '03', '04', '05', '06', '06', '07', '08', '09'], #4 row
-						[iniziale, '01', periodo_iniziale, '03', fase_iniziale, finale, '06',periodo_finale, '08', fase_finale], #5 row
-						[datazione_estesa, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #6 row
+						[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'],                                    #0 row ok
+						[sito, '01', '02', '03', '04', '05', '06', '07', sigla_struttura, '09'],                                #1 row ok
+						[categoria, '01', '02','03', tipologia,'05', '06', '07', definizione, '09'],                            #2 row ok
+						[descrizione, '01','02', '03', '04', interpretazione, '06', '07', '08', '09'],                          #3 row ok
+						[periodizzazione, '02', '03', '04', '05', '06', '06', '07', '08', '09'],                                #4 row
+						[iniziale, '01', periodo_iniziale, '03', fase_iniziale, finale, '06',periodo_finale, '08', fase_finale],#5 row
+						[datazione_estesa, '01', '02', '03', '04', '05', '06', '07', '08', '09'],                               #6 row
 						[rapporti_struttura, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #7 row
 						[materiali_impiegati, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #8 row
 						[elementi_strutturali, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #9 row

@@ -192,7 +192,7 @@ class single_Periodizzazione_pdf_sheet:
 		#schema
 		cell_schema =  [ #00, 01, 02, 03, 04, 05, 06, 07, 08, 09 rows
 						[intestazione, '01', '02', '03', '04','05', '06', logo, '08', '09'], #0 row ok
-						[sito, '01', '02', '03', '04', periodo, '06', '07', fase, '09'], #1 row ok
+						[sito, '01', '02', '03', '04', '05', '06', '07', periodo, fase], #1 row ok
 						[cronologia, '01', '02', '03', '04', '05', '06', '07', '08', '09'], #2 row ok
 						[cronologia_iniziale, '01', cronologia_finale, '03', datazione_ext,'05', '06', '07', '08', '09'], #3 row
 						[descrizione, '01','02', '03', '04', '05', '06', '07', '08', '09']]#4row ok
@@ -205,9 +205,9 @@ class single_Periodizzazione_pdf_sheet:
 					('SPAN', (7,0),(9,0)),  #intestazione
 
 					#1 row
-					('SPAN', (0,1),(4,1)),  #Sito
-					('SPAN', (5,1),(7,1)),  #periodo
-					('SPAN', (8,1),(9,1)),  #fase
+					('SPAN', (0,1),(7,1)),  #Sito
+					('SPAN', (8,1),(8,1)),  #periodo
+					('SPAN', (9,1),(9,1)),  #fase
 
 					#2 row
 					('SPAN', (0,2),(9,2)),  #intestazione cronologia
