@@ -350,8 +350,7 @@ class single_Struttura_pdf_sheet:
 					('SPAN', (7,0),(9,0)),  #intestazione
 
 					#1 row
-					('SPAN', (0,1),(4,1)),  #dati identificativi
-					('SPAN', (5,1),(7,1)),  #dati identificativi
+					('SPAN', (0,1),(7,1)),  #dati identificativi
 					('SPAN', (8,1),(9,1)),  #dati identificativi
 
 					#2 row
