@@ -23,10 +23,9 @@ import sqlalchemy
 from sqlalchemy import *
 
 from sqlalchemy.orm import mapper
-try:
-	from pyarchinit_db_structure import Relashionship_check_table, Documentazione_table, PDF_administrator, US_table, UT_table, US_table_toimp, Site_table, Periodizzazione_table, Inventario_materiali_table, Struttura_table, Media_table, Media_thumb_table,Media_to_Entity_table, Tafonomia_table, Inventario_materiali_table_toimp, Pyarchinit_thesaurus_sigle, SCHEDAIND_table, DETSESSO_table, DETETA_table, Archeozoology_table, Campioni_table
-except:
-	pass
+
+from pyarchinit_db_structure import  Documentazione_table, PDF_administrator, US_table, UT_table, US_table_toimp, Site_table, Periodizzazione_table, Inventario_materiali_table, Struttura_table, Media_table, Media_thumb_table,Media_to_Entity_table, Tafonomia_table, Inventario_materiali_table_toimp, Pyarchinit_thesaurus_sigle, SCHEDAIND_table, DETSESSO_table, DETETA_table, Archeozoology_table, Campioni_table, Inventario_Lapidei_table
+
 
 try:
 	class US(object):
