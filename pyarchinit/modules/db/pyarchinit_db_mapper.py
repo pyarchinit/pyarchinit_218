@@ -1599,51 +1599,50 @@ try:
 	#mapper
 	mapper(CAMPIONI, Campioni_table.campioni_table)
 
-
-	class RELATIONSHIP_CHECK(object):
-		#def __init__"
-		def __init__(self,
-		id_rel_check,
-		sito,
-		area,
-		us,
-		rel_type,
-		sito_rel,
-		area_rel,
-		us_rel,
-		error_type,
-		note
-		):
-
-			self.rel_check = rel_check						  #0 d
-			self.sito =sito									  #1 s
-			self.area = area								  #2 s 
-			self.us = us									  #3 d
-			self.rel_type = rel_type                          #4 s
-			self.sito_rel = sito_rel                          #5 s
-			self.area_rel = area_rel                          #6 s
-			self.us_rel = us_rel                              #7 d
-			self.error_type = error_type                      #8 s
-			self.note = note                                  #9 s
-
-		#def __repr__"
-		def __repr__(self):
-			return "<RELATIONSHIP_CHECK('%d', '%s', '%s', '%d', '%s', '%s', '%s', '%d', '%s', '%s')>" % (
-			self.rel_check,					                  #0 d
-			self.sito,							          	  #1 s
-			self.area,                                        #2 s 
-			self.us,       									  #3 d
-			self.rel_type,                                    #4 s
-			self.sito_rel,                                    #5 s
-			self.area_rel,                                    #6 s
-			self.us_rel,                                      #7 d
-			self.error_type,                                  #8 s
-			self.note                                         #9 s
-			)
-	#mapper
-	mapper(RELATIONSHIP_CHECK, Relashionship_check_table.relashionship_check_table)
-	
-
+##
+##	class RELATIONSHIP_CHECK(object):
+##		#def __init__"
+##		def __init__(self,
+##		id_rel_check,
+##		sito,
+##		area,
+##		us,
+##		rel_type,
+##		sito_rel,
+##		area_rel,
+##		us_rel,
+##		error_type,
+##		note
+##		):
+##
+##			self.rel_check = rel_check						  #0 d
+##			self.sito =sito									  #1 s
+##			self.area = area								  #2 s 
+##			self.us = us									  #3 d
+##			self.rel_type = rel_type                          #4 s
+##			self.sito_rel = sito_rel                          #5 s
+##			self.area_rel = area_rel                          #6 s
+##			self.us_rel = us_rel                              #7 d
+##			self.error_type = error_type                      #8 s
+##			self.note = note                                  #9 s
+##
+##		#def __repr__"
+##		def __repr__(self):
+##			return "<RELATIONSHIP_CHECK('%d', '%s', '%s', '%d', '%s', '%s', '%s', '%d', '%s', '%s')>" % (
+##			self.rel_check,					                  #0 d
+##			self.sito,							          	  #1 s
+##			self.area,                                        #2 s 
+##			self.us,       									  #3 d
+##			self.rel_type,                                    #4 s
+##			self.sito_rel,                                    #5 s
+##			self.area_rel,                                    #6 s
+##			self.us_rel,                                      #7 d
+##			self.error_type,                                  #8 s
+##			self.note                                         #9 s
+##			)
+##	#mapper
+##	mapper(RELATIONSHIP_CHECK, Relashionship_check_table.relashionship_check_table)
+##
 	class INVENTARIO_LAPIDEI(object):
 		#def __init__"
 		def __init__(self,
