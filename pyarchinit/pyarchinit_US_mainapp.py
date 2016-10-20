@@ -416,7 +416,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.pushButton_sort.setEnabled(n)
 
 	def enable_button_search(self, n):
-		self.pushButton_connect.setEnabled(n)
+		#self.pushButton_connect.setEnabled(n)
 
 		self.pushButton_new_rec.setEnabled(n)
 
@@ -2179,7 +2179,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.lineEdit_reimpiego_usm.clear()							#41 unita edilizia riassuntiva
 		self.lineEdit_posa_in_opera_usm.clear()						#42 posa in opera
 		self.lineEdit_qmin_usm.clear()										#3 - US
-		self.lineEdit_qmin_usm.clear()										#3 - US
+		self.lineEdit_qmax_usm.clear()										#3 - US
 		self.comboBox_consistenza_legante_usm.setEditText("")			#45 consitenza legante usm
 		self.comboBox_colore_legante_usm.setEditText("")				#46 colore legante usm
 		self.lineEdit_aggregati_legante_usm	.clear()				 	#47 aggregati usm
