@@ -60,64 +60,80 @@ class DB_update:
 			self.engine.execute("ALTER TABLE us_table ADD COLUMN cont_per varchar DEFAULT")
 
 		if table_column_names_list.__contains__('documentazione') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN documentazione varchar DEFAULT")
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN documentazione varchar")
 		
-		"""
-
-		#nuovi campi per USM 1/9/2016
+		#nuovi campi per USM 1/9/2016 generati correttamente
+		if table_column_names_list.__contains__('unita_tipo') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN unita_tipo varchar DEFAULT 'US' ")
 
 		if table_column_names_list.__contains__('settore') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN settore varchar DEFAULT")
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN settore text DEFAULT '' ")
 
+		if table_column_names_list.__contains__('quad_par') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN quad_par text DEFAULT '' ")
 
-		if table_column_names_list.__contains__('unita_tipo') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN unita_tipo varchar DEFAULT")
-
-
-		if table_column_names_list.__contains__('quadrato') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN quadrato varchar DEFAULT")
+		if table_column_names_list.__contains__('ambient') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN ambient text DEFAULT '' ")
 
 		if table_column_names_list.__contains__('saggio') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN saggio varchar DEFAULT")
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN saggio text DEFAULT '' ")
+
+		if table_column_names_list.__contains__('elem_datanti') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN elem_datanti text DEFAULT '' ")
+
+		if table_column_names_list.__contains__('funz_statica') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN funz_statica text DEFAULT '' ")
+
+		if table_column_names_list.__contains__('lavorazione') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN lavorazione text DEFAULT '' ")
+
+		if table_column_names_list.__contains__('spess_giunti') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN spess_giunti text DEFAULT '' ")
+
+		if table_column_names_list.__contains__('letti_posa') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN letti_posa text DEFAULT '' ")
+
+		if table_column_names_list.__contains__('alt_mod') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN alt_mod text DEFAULT '' ")
+		
+		if table_column_names_list.__contains__('un_ed_riass') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN un_ed_riass text DEFAULT '' ")
+
+		if table_column_names_list.__contains__('reimp') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN reimp text DEFAULT '' ")
 
 
-		if table_column_names_list.__contains__('ambiente') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN ambiente varchar DEFAULT")
+		if table_column_names_list.__contains__('posa_opera') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN posa_opera text DEFAULT '' ")
 
-		if table_column_names_list.__contains__('funz_statica_usm') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN funz_statica_usm varchar DEFAULT")
+		if table_column_names_list.__contains__('quota_min_usm') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN quota_min_usm NUMERIC(6,2)")
 
-		if table_column_names_list.__contains__('unita_edilizia_riassuntiva_usm') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN unita_edilizia_riassuntiva_usm varchar DEFAULT")
 
-		if table_column_names_list.__contains__('qmax_usm') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN qmax_usm varchar DEFAULT")
+		if table_column_names_list.__contains__('quota_max_usm') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN quota_max_usm NUMERIC(6,2)")
 
-		if table_column_names_list.__contains__('qmin_usm') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN qmin_usm varchar DEFAULT")
 
-		if table_column_names_list.__contains__('lavorazione_usm') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN lavorazione_usm varchar DEFAULT")
+		if table_column_names_list.__contains__('cons_legante') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN cons_legante text DEFAULT '' ")
 
-		if table_column_names_list.__contains__('posa_in_opera_usm') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN posa_in_opera_usm varchar DEFAULT")
+		if table_column_names_list.__contains__('col_legante') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN col_legante text DEFAULT '' ")
 
-		if table_column_names_list.__contains__('reimpiego_usm') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN reimpiego_usm varchar DEFAULT")
 
-		if table_column_names_list.__contains__('spessore_giunti_usm') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN spessore_giunti_usm varchar DEFAULT")
+		if table_column_names_list.__contains__('aggreg_legante') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN aggreg_legante text DEFAULT '' ")
 
-		if table_column_names_list.__contains__('letti_di_posa_giunti_usm') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN letti_di_posa_giunti_usm varchar DEFAULT")
 
-		if table_column_names_list.__contains__('letti_di_posa_giunti_usm') == False:
-			self.engine.execute("ALTER TABLE us_table ADD COLUMN letti_di_posa_giunti_usm varchar DEFAULT")
+		if table_column_names_list.__contains__('con_text_mat') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN con_text_mat text DEFAULT '' ")
 
-		"""
 
-			
-			
+		if table_column_names_list.__contains__('col_materiale') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN col_materiale text DEFAULT '' ")
+
+		if table_column_names_list.__contains__('inclusi_materiali_usm') == False:
+			self.engine.execute("ALTER TABLE us_table ADD COLUMN inclusi_materiali_usm text DEFAULT '[]' ")
 
 		####periodizzazione_table
 		table = Table("periodizzazione_table", self.metadata, autoload=True)

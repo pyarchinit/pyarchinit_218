@@ -90,7 +90,28 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	"Sigla struttura":"struttura",
 	"Scavato":"scavato",
 	"Codice periodo" : "cont_per",
-	"Indice di ordinamento" : "order_layer"
+	u"Tipo unità" : "unita_tipo", #nuovi campi per USM
+	"Settore" : "settore",
+	"Quadrato-Parete": "quad_par",
+	"Ambiente" : "ambient",
+	"Saggio" : "saggio",
+	"Elementi datanti" : "elem_datanti",
+	"Funzione statica" : "funz_statica",
+	"Lavorazione" : "lavorazione",
+	"Spessore giunti" : "spess_giunti",
+	"Letti di posa" : "letti_posa",
+	"Altezza modulo" : "alt_mod",
+	u"Unità edile rissuntiva" : "un_ed_riass",
+	"Reimpiego" : "reimp",
+	"Posa in opera" : "posa_opera",
+	"Quota minima USM" : "quota_min_usm",
+	"Quota max USM" : "quota_max_usm",
+	"Consistenza legante" : "cons_legante",
+	"Colore legante" : "col_legante",
+	"Aggregati legante" : "aggreg_legante",
+	"Consistenza-Texture" : "con_text_mat",
+	"Colore materiale" : "col_materiale",
+	"Inclusi materiali usm" : "inclusi_materiali_usm"
 	}
 
 	SORT_ITEMS = [
@@ -111,12 +132,34 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				"Sigla struttura",
 				"Scavato",
 				"Codice periodo",
-				"Indice di ordinamento"
+				"Indice di ordinamento",
+				u"Tipo unità", #nuovi campi per USM
+				"Settore",
+				"Quadrato-Parete",
+				"Ambiente",
+				"Saggio",
+				"Elementi datanti",
+				"Funzione statica",
+				"Lavorazione",
+				"Spessore giunti",
+				"Letti di posa",
+				"Altezza modulo",
+				u"Unità edile rissuntiva",
+				"Reimpiego",
+				"Posa in opera",
+				"Quota minima USM",
+				"Quota max USM",
+				"Consistenza legante",
+				"Colore legante",
+				"Aggregati legante",
+				"Consistenza-Texture",
+				"Colore materiale",
+				"Inclusi materiali usm"
 				]
 
 	TABLE_FIELDS = [
-					'sito',
-					'area',
+					'sito',    #0
+					'area',  #1
 					'us',
 					'd_stratigrafica',
 					'd_interpretativa',
@@ -142,7 +185,29 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					'struttura',
 					'cont_per',
 					'order_layer',
-					'documentazione'
+					'documentazione',
+					'unita_tipo', #nuovi campi per USM
+					'settore',
+					'quad_par',
+					'ambient',
+					'saggio',
+					'elem_datanti',
+					'funz_statica',
+					'lavorazione',
+					'spess_giunti',
+					'letti_posa',
+					'alt_mod',
+					'un_ed_riass',
+					'reimp',
+					'posa_opera',
+					'quota_min_usm',
+					'quota_max_usm',
+					'cons_legante',
+					'col_legante',
+					'aggreg_legante',
+					'con_text_mat',
+					'col_materiale',
+					'inclusi_materiali_usm'
 					]
 
 	if os.name == 'posix':
@@ -328,7 +393,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 
 	def enable_button(self, n):
-		self.pushButton_connect.setEnabled(n)
+		#self.pushButton_connect.setEnabled(n)
 
 		self.pushButton_new_rec.setEnabled(n)
 
@@ -415,9 +480,9 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		except Exception, e:
 			e = str(e)
 			if e.find("no such table"):
-				QMessageBox.warning(self, "Alert", "La connessione e' fallita <br><br> %s. E' NECESSARIO RIAVVIARE QGIS" % (str(e)),  QMessageBox.Ok)
+				QMessageBox.warning(self, "Alert -A", "La connessione e' fallita <br><br> %s. E' NECESSARIO RIAVVIARE QGIS oppure rilevato bug! Segnalarlo allo sviluppatore" % (str(e)),  QMessageBox.Ok)
 			else:
-				QMessageBox.warning(self, "Alert", "Attenzione rilevato bug! Segnalarlo allo sviluppatore<br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
+				QMessageBox.warning(self, "Alert -B", "Attenzione rilevato bug! Segnalarlo allo sviluppatore<br> Errore: <br>" + str(e) ,  QMessageBox.Ok)
 
 	def customize_GUI(self):
 		self.tableWidget_rapporti.setColumnWidth(0,380)
@@ -1252,6 +1317,11 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			QMessageBox.warning(self, "ATTENZIONE", "Campo US. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
 			test = 1
 
+		if EC.data_is_empty(unicode(self.comboBox_unita_tipo.currentText())) == 0:
+			QMessageBox.warning(self, "ATTENZIONE", "Campo Tipo US/USM. \n Il campo non deve essere vuoto",  QMessageBox.Ok)
+			test = 1
+
+
 		area = self.comboBox_area.currentText()
 		us = self.lineEdit_us.text()
 		attivita = self.lineEdit_attivita.text()
@@ -1435,11 +1505,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 							except:
 								pass
 							"""
-							
-							
-							
-								
-						
+
 						else:
 							rapporti_check = eval(us_rapp[0].rapporti)
 							us_rapp_check = ('%s') % str(us)
@@ -1473,44 +1539,84 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		campioni = self.table2dict("self.tableWidget_campioni")
 		##Documentazione
 		documentazione = self.table2dict("self.tableWidget_documentazione")
+		##Inclusi materiali usm
+		inclusi_mat_usm = self.table2dict("self.tableWidget_inclusi_materiali_usm")
 		
 		if self.lineEditOrderLayer.text() == "":
 			order_layer = 0
 		else:
 			order_layer = int(self.lineEditOrderLayer.text())
 
+		##quota min usm
+		if self.lineEdit_qmin_usm.text() == "":
+			qmin_usm = None
+		else:
+			qmin_usm = float(self.lineEdit_qmin_usm.text())
+
+
+		##quota max usm
+		if self.lineEdit_qmax_usm.text() == "":
+			qmax_usm = None
+		else:
+			qmax_usm = float(self.lineEdit_qmax_usm.text())
+
+
 		try:
 			#data
 			data = self.DB_MANAGER.insert_values(
 			self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
-			unicode(self.comboBox_sito.currentText()), 				#1 - Sito
-			unicode(self.comboBox_area.currentText()), 				#2 - Area
-			int(self.lineEdit_us.text()),									#3 - US
-			unicode(self.comboBox_def_strat.currentText()),			#4 - Definizione stratigrafica
-			unicode(self.comboBox_def_intepret.currentText()),		#5 - Definizione intepretata
-			unicode(self.textEdit_descrizione.toPlainText()),		#6 - descrizione
-			unicode(self.textEdit_interpretazione.toPlainText()),#7 - interpretazione
-			unicode(self.comboBox_per_iniz.currentText()),			#8 - periodo iniziale
-			unicode(self.comboBox_fas_iniz.currentText()),			#9 - fase iniziale
-			unicode(self.comboBox_per_fin.currentText()), 			#10 - periodo finale iniziale
-			unicode(self.comboBox_fas_fin.currentText()), 			#11 - fase finale
-			unicode(self.comboBox_scavato.currentText()),			#12 - scavato
+			unicode(self.comboBox_sito.currentText()), 						#1 - Sito
+			unicode(self.comboBox_area.currentText()), 						#2 - Area
+			int(self.lineEdit_us.text()),										#3 - US
+			unicode(self.comboBox_def_strat.currentText()),					#4 - Definizione stratigrafica
+			unicode(self.comboBox_def_intepret.currentText()),					#5 - Definizione intepretata
+			unicode(self.textEdit_descrizione.toPlainText()),					#6 - descrizione
+			unicode(self.textEdit_interpretazione.toPlainText()),				#7 - interpretazione
+			unicode(self.comboBox_per_iniz.currentText()),						#8 - periodo iniziale
+			unicode(self.comboBox_fas_iniz.currentText()),						#9 - fase iniziale
+			unicode(self.comboBox_per_fin.currentText()), 						#10 - periodo finale iniziale
+			unicode(self.comboBox_fas_fin.currentText()), 						#11 - fase finale
+			unicode(self.comboBox_scavato.currentText()),						#12 - scavato
 			unicode(self.lineEdit_attivita.text()),							#13 - attivita  
 			unicode(self.lineEdit_anno.text()),								#14 - anno scavo
-			unicode(self.comboBox_metodo.currentText()), 			#15 - metodo
-			unicode(inclusi),														#16 - inclusi
+			unicode(self.comboBox_metodo.currentText()), 						#15 - metodo
+			unicode(inclusi),													#16 - inclusi
 			unicode(campioni),													#17 - campioni
 			unicode(rapporti),													#18 - rapporti
-			unicode(self.lineEdit_data_schedatura.text()),				#19 - data schedatura
-			unicode(self.comboBox_schedatore.currentText()),		#20 - schedatore
-			unicode(self.comboBox_formazione.currentText()),		#21 - formazione
-			unicode(self.comboBox_conservazione.currentText()),	#22 - conservazione
-			unicode(self.comboBox_colore.currentText()),				#23 - colore
-			unicode(self.comboBox_consistenza.currentText()),		#24 - consistenza
+			unicode(self.lineEdit_data_schedatura.text()),						#19 - data schedatura
+			unicode(self.comboBox_schedatore.currentText()),					#20 - schedatore
+			unicode(self.comboBox_formazione.currentText()),					#21 - formazione
+			unicode(self.comboBox_conservazione.currentText()),				#22 - conservazione
+			unicode(self.comboBox_colore.currentText()),						#23 - colore
+			unicode(self.comboBox_consistenza.currentText()),					#24 - consistenza
 			unicode(self.lineEdit_struttura.text()),							#25 - struttura
-			unicode(self.lineEdit_codice_periodo.text()),					#26 - continuita  periodo
-			order_layer,													#27 - order layer
-			unicode(documentazione))										#28 - documentazione
+			unicode(self.lineEdit_codice_periodo.text()),						#26 - continuita  periodo
+			order_layer,														#27 - order layer
+			unicode(documentazione),											#28 - documentazione
+			unicode(self.comboBox_unita_tipo.currentText()),					#29 us_tipo            NUOVI CAMPI NUOVI CAMPI 
+			unicode(self.comboBox_settore.currentText()),						#30 settore
+			unicode(self.lineEdit_quadrato.text()),								#31 quadrato
+			unicode(self.lineEdit_ambiente.text()),								#32 ambiente
+			unicode(self.lineEdit_saggio.text()),								#33 saggio
+			unicode(self.textEdit_elementi_datanti.toPlainText()),				#34 elementi datanti
+			unicode(self.comboBox_funz_statica_usm.currentText()),				#35 funzione statica
+			unicode(self.lineEdit_lavorazione_usm.text()),						#36 lavorazione usm
+			unicode(self.lineEdit_spessore_giunti_usm.text()),					#37 spessore giunti
+			unicode(self.lineEdit_letti_di_posa_giunti_usm.text()),				#38 letti posa giunti usm
+			unicode(self.lineEdit_h_modulo_c_corsi_usm.text()),					#39 altezza modulo corsi usm
+			unicode(self.lineEdit_unita_edilizia_riassuntiva_usm.text()),		#40 unita edilizia riassuntiva
+			unicode(self.lineEdit_reimpiego_usm.text()),						#41 unita edilizia riassuntiva
+			unicode(self.lineEdit_posa_in_opera_usm.text()),					#42 posa in opera
+			qmin_usm,															#43 quota minima
+			qmax_usm,															#44 quota massima
+			unicode(self.comboBox_consistenza_legante_usm.currentText()),		#45 consitenza legante usm
+			unicode(self.comboBox_colore_legante_usm.currentText()),			#46 colore legante usm
+			unicode(self.lineEdit_aggregati_legante_usm.text())	,			 	#47 aggregati usm
+			unicode(self.comboBox_consistenza_texture_mat_usm.currentText()),	#48 consistenza text mat
+			unicode(self.comboBox_colore_materiale_usm.currentText()),			#49 colore materiale usm
+			unicode(inclusi_mat_usm)											#50 inclusi_mat_usm
+
+				)
 			try:
 				self.DB_MANAGER.insert_data_session(data)
 				return 1
@@ -1531,7 +1637,6 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 	#insert new row into tableWidget
 	def on_pushButton_insert_row_rapporti_pressed(self):
 		self.insert_new_row('self.tableWidget_rapporti')
-
 	def on_pushButton_remove_row_rapporti_pressed(self):
 		self.remove_row('self.tableWidget_rapporti')
 
@@ -1549,6 +1654,11 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.insert_new_row('self.tableWidget_documentazione')
 	def on_pushButton_remove_row_documentazione_pressed(self):
 		self.remove_row('self.tableWidget_documentazione')
+
+	def on_pushButton_insert_row_inclusi_materiali_pressed(self):
+		self.insert_new_row('self.tableWidget_inclusi_materiali_usm')
+	def on_pushButton_remove_row_inclusi_materiali_pressed(self):
+		self.remove_row('self.tableWidget_inclusi_materiali_usm')
 
 	def check_record_state(self):
 		ec = self.data_error_check()
@@ -1694,7 +1804,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				self.setComboBoxEnable(["self.textEdit_descrizione"],"False")
 				self.setComboBoxEnable(["self.textEdit_interpretazione"],"False")
 				self.setTableEnable(["self.tableWidget_campioni", "self.tableWidget_rapporti","self.tableWidget_inclusi",
-				"self.tableWidget_documentazione"], "False")
+				"self.tableWidget_documentazione", "self.tableWidget_inclusi_materiali_usm"], "False")
 				###
 				self.label_status.setText(self.STATUS_ITEMS[self.BROWSE_STATUS])
 				self.set_rec_counter('','')
@@ -1735,32 +1845,68 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				us = int(self.lineEdit_us.text())
 			else:
 				us = ""
+
+			##qmin_usm
+			if self.lineEdit_qmin_usm.text() != "":
+				qmin_usm = float(self.lineEdit_qmin_usm.text())
+			else:
+				qmin_usm = None
+
+			##qmax_usm
+			if self.lineEdit_qmax_usm.text() != "":
+				qmax_usm = float(self.lineEdit_qmax_usm.text())
+			else:
+				qmax_usm = None
+
+
 			search_dict = {
-			self.TABLE_FIELDS[0]  : "'"+unicode(self.comboBox_sito.currentText())+"'", 									#1 - Sito
+			self.TABLE_FIELDS[0]  : "'"+unicode(self.comboBox_sito.currentText())+"'", 								#1 - Sito
 			self.TABLE_FIELDS[1]  : "'"+unicode(self.comboBox_area.currentText())+"'",									#2 - Area
-			self.TABLE_FIELDS[2]  : us,																								#3 - US
-			self.TABLE_FIELDS[3]  : "'"+unicode(self.comboBox_def_strat.currentText())+"'",								#4 - Definizione stratigrafica
+			self.TABLE_FIELDS[2]  : us,																					#3 - US
+			self.TABLE_FIELDS[3]  : "'"+unicode(self.comboBox_def_strat.currentText())+"'",							#4 - Definizione stratigrafica
 			self.TABLE_FIELDS[4]  : "'"+unicode(self.comboBox_def_intepret.currentText())+"'",							#5 - Definizione intepretata
-			self.TABLE_FIELDS[5]  : unicode(self.textEdit_descrizione.toPlainText()),											#6 - descrizione
-			self.TABLE_FIELDS[6]  : unicode(self.textEdit_interpretazione.toPlainText()),										#7 - interpretazione
+			self.TABLE_FIELDS[5]  : unicode(self.textEdit_descrizione.toPlainText()),									#6 - descrizione
+			self.TABLE_FIELDS[6]  : unicode(self.textEdit_interpretazione.toPlainText()),								#7 - interpretazione
 			self.TABLE_FIELDS[7]  : "'"+unicode(self.comboBox_per_iniz.currentText())+"'",								#8 - periodo iniziale
 			self.TABLE_FIELDS[8]  : "'"+unicode(self.comboBox_fas_iniz.currentText())+"'",								#9 - fase iniziale
 			self.TABLE_FIELDS[9]  : "'"+unicode(self.comboBox_per_fin.currentText())+"'",	 							#10 - periodo finale iniziale
 			self.TABLE_FIELDS[10] : "'"+unicode(self.comboBox_fas_fin.currentText())+"'", 								#11 - fase finale
 			self.TABLE_FIELDS[11] : "'"+unicode(self.comboBox_scavato.currentText())+"'",								#12 - scavato 
-			self.TABLE_FIELDS[12] : "'"+unicode(self.lineEdit_attivita.text())+"'",												#13 - attivita  
-			self.TABLE_FIELDS[13] : "'"+unicode(self.lineEdit_anno.text())+"'",													#14 - anno scavo
+			self.TABLE_FIELDS[12] : "'"+unicode(self.lineEdit_attivita.text())+"'",									#13 - attivita  
+			self.TABLE_FIELDS[13] : "'"+unicode(self.lineEdit_anno.text())+"'",										#14 - anno scavo
 			self.TABLE_FIELDS[14] : "'"+unicode(self.comboBox_metodo.currentText())+"'", 								#15 - metodo
-			self.TABLE_FIELDS[18] : "'"+unicode(self.lineEdit_data_schedatura.text())+"'",									#16 - data schedatura
+			self.TABLE_FIELDS[18] : "'"+unicode(self.lineEdit_data_schedatura.text())+"'",								#16 - data schedatura
 			self.TABLE_FIELDS[19] : "'"+unicode(self.comboBox_schedatore.currentText())+"'",							#17 - schedatore
 			self.TABLE_FIELDS[20] : "'"+unicode(self.comboBox_formazione.currentText())+"'",							#18 - formazione
 			self.TABLE_FIELDS[21] : "'"+unicode(self.comboBox_conservazione.currentText())+"'",						#19 - conservazione
 			self.TABLE_FIELDS[22] : "'"+unicode(self.comboBox_colore.currentText())+"'",								#20 - colore
 			self.TABLE_FIELDS[23] : "'"+unicode(self.comboBox_consistenza.currentText())+"'",							#21 - consistenza
-			self.TABLE_FIELDS[24] : "'"+unicode(self.lineEdit_struttura.text())+"'",											#22 - struttura
-			self.TABLE_FIELDS[25] : "'"+unicode(self.lineEdit_codice_periodo.text())+"'",									#23 - codice_periodo
-			self.TABLE_FIELDS[26] : "'"+unicode(self.lineEditOrderLayer.text())+"'"											#24 - order layer
-			}
+			self.TABLE_FIELDS[24] : "'"+unicode(self.lineEdit_struttura.text())+"'",									#22 - struttura
+			self.TABLE_FIELDS[25] : "'"+unicode(self.lineEdit_codice_periodo.text())+"'",								#23 - codice_periodo
+			self.TABLE_FIELDS[26] : "'"+unicode(self.lineEditOrderLayer.text())+"'",									#24 - order layer
+			self.TABLE_FIELDS[28] : "'"+unicode(self.comboBox_unita_tipo.currentText())+"'",									#24 - order layer
+			self.TABLE_FIELDS[29] : "'"+unicode(self.comboBox_settore.currentText())+"'",									#24 - order layer
+			self.TABLE_FIELDS[30] : "'"+unicode(self.lineEdit_quadrato.text())+"'",								#30 quadrato
+			self.TABLE_FIELDS[31] : "'"+unicode(self.lineEdit_ambiente.text())+"'",								#30 quadrato
+			self.TABLE_FIELDS[32] : "'"+unicode(self.lineEdit_saggio.text())+"'",								#30 quadrato
+			self.TABLE_FIELDS[33]  : 	unicode(self.textEdit_elementi_datanti.toPlainText()),									#6 - descrizione
+			self.TABLE_FIELDS[34] : "'"+unicode(self.comboBox_funz_statica_usm.currentText())+"'",									#24 - order layer
+			self.TABLE_FIELDS[35] : "'"+unicode(self.lineEdit_lavorazione_usm.text())+"'",								#30 quadrato
+			self.TABLE_FIELDS[36] : "'"+unicode(self.lineEdit_spessore_giunti_usm.text())+"'",								#30 quadrato
+			self.TABLE_FIELDS[37] : "'"+unicode(self.lineEdit_letti_di_posa_giunti_usm.text())+"'",
+			self.TABLE_FIELDS[38] : "'"+unicode(self.lineEdit_h_modulo_c_corsi_usm.text())+"'",
+			self.TABLE_FIELDS[39] : "'"+unicode(self.lineEdit_unita_edilizia_riassuntiva_usm.text())+"'",
+			self.TABLE_FIELDS[40] : "'"+unicode(self.lineEdit_reimpiego_usm.text())+"'",
+			self.TABLE_FIELDS[41] : "'"+unicode(self.lineEdit_posa_in_opera_usm.text())+"'",
+			self.TABLE_FIELDS[42]  :   qmin_usm,															
+			self.TABLE_FIELDS[43]  :   qmax_usm,
+			self.TABLE_FIELDS[44] : "'"+unicode(self.comboBox_consistenza_legante_usm.currentText())+"'",									#24 - order layer
+			self.TABLE_FIELDS[45] : "'"+unicode(self.comboBox_colore_legante_usm.currentText())+"'",									#24 - order layer
+			self.TABLE_FIELDS[46] : "'"+unicode(self.lineEdit_aggregati_legante_usm.text())+"'",
+			self.TABLE_FIELDS[47] : "'"+unicode(self.comboBox_consistenza_texture_mat_usm.currentText())+"'",									#24 - order layer
+			self.TABLE_FIELDS[48] : "'"+unicode(self.comboBox_colore_materiale_usm.currentText())+"'"								#24 - order layer
+			
+			}	
 
 			u = Utility()
 			search_dict = u.remove_empty_items_fr_dict(search_dict)
@@ -1965,6 +2111,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		campioni_row_count = self.tableWidget_campioni.rowCount()
 		inclusi_row_count = self.tableWidget_inclusi.rowCount()
 		documentazione_row_count = self.tableWidget_documentazione.rowCount()
+		aggregati_row_count = self.tableWidget_inclusi_materiali_usm.rowCount()
 		
 		self.comboBox_sito.setEditText("")  							#1 - Sito
 		self.comboBox_area.setEditText("") 								#2 - Area
@@ -1979,10 +2126,12 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.comboBox_fas_fin.setEditText("") 							#11 - fase finale
 		self.comboBox_scavato.setEditText("")							#12 - scavato
 		self.lineEdit_attivita.clear()									#13 - attivita
+		
 		if self.BROWSE_STATUS == "n":
-			self.lineEdit_anno.setText(self.yearstrfdate())			#14 - anno scavo
+			self.lineEdit_anno.setText(self.yearstrfdate())				#14 - anno scavo
 		else:
 			self.lineEdit_anno.clear()
+
 		self.comboBox_metodo.setEditText("")							#15 - metodo
 		for i in range(inclusi_row_count):
 			self.tableWidget_inclusi.removeRow(0) 					
@@ -1996,10 +2145,16 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		for i in range(documentazione_row_count):
 			self.tableWidget_documentazione.removeRow(0) 					
 		self.insert_new_row("self.tableWidget_documentazione")			#19 - documentazione
+		for i in range(aggregati_row_count):
+			self.tableWidget_inclusi_materiali_usm.removeRow(0) 					
+		self.insert_new_row("self.tableWidget_inclusi_materiali_usm")			#19 - aggregati
+		
+		
 		if self.BROWSE_STATUS == "n":
 			self.lineEdit_data_schedatura.setText(self.datestrfdate())	#20 - data schedatura
 		else:
 			self.lineEdit_data_schedatura.setText("")					#20 - data schedatura
+
 		self.comboBox_schedatore.setEditText("")						#21 - schedatore
 		self.comboBox_formazione.setEditText("")						#22 - formazione
 		self.comboBox_conservazione.setEditText("")						#23 - conservazione
@@ -2008,6 +2163,29 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.lineEdit_struttura.clear()									#26 - struttura
 		self.lineEdit_codice_periodo.clear()							#27 - codice periodo
 		self.lineEditOrderLayer.clear()									#28 - order layer
+
+		self.comboBox_unita_tipo.setEditText("")						#29 us_tipo            NUOVI CAMPI NUOVI CAMPI 
+		self.comboBox_settore.setEditText("")							#30 settore
+		self.lineEdit_quadrato.clear()									#31 quadrato
+		self.lineEdit_ambiente.clear()									#32 ambiente
+		self.lineEdit_saggio.clear()									#33 saggio
+		self.textEdit_elementi_datanti.clear()					#34 elementi datanti
+		self.comboBox_funz_statica_usm.setEditText("")					#35 funzione statica
+		self.lineEdit_lavorazione_usm.clear()							#36 lavorazione usm
+		self.lineEdit_spessore_giunti_usm.clear()						#37 spessore giunti
+		self.lineEdit_letti_di_posa_giunti_usm.clear()					#38 letti posa giunti usm
+		self.lineEdit_h_modulo_c_corsi_usm.clear()						#39 altezza modulo corsi usm
+		self.lineEdit_unita_edilizia_riassuntiva_usm.clear()			#40 unita edilizia riassuntiva
+		self.lineEdit_reimpiego_usm.clear()							#41 unita edilizia riassuntiva
+		self.lineEdit_posa_in_opera_usm.clear()						#42 posa in opera
+		self.lineEdit_qmin_usm.clear()										#3 - US
+		self.lineEdit_qmin_usm.clear()										#3 - US
+		self.comboBox_consistenza_legante_usm.setEditText("")			#45 consitenza legante usm
+		self.comboBox_colore_legante_usm.setEditText("")				#46 colore legante usm
+		self.lineEdit_aggregati_legante_usm	.clear()				 	#47 aggregati usm
+		self.comboBox_consistenza_texture_mat_usm.setEditText("")		#48 consistenza text mat
+		self.comboBox_colore_materiale_usm.setEditText("")				#49 colore materiale usm
+	
 
 	def fill_fields(self, n=0):
 		self.rec_num = n
@@ -2038,7 +2216,8 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			unicode(self.comboBox_conservazione.setEditText(self.DATA_LIST[self.rec_num].stato_di_conservazione))			#23 - conservazione
 			unicode(self.comboBox_colore.setEditText(self.DATA_LIST[self.rec_num].colore))											#24 - colore
 			unicode(self.comboBox_consistenza.setEditText(self.DATA_LIST[self.rec_num].consistenza))								#25 - consistenza
-			unicode(self.lineEdit_struttura.setText(self.DATA_LIST[self.rec_num].struttura))												#26 - struttura
+			unicode(self.lineEdit_struttura.setText(self.DATA_LIST[self.rec_num].struttura))
+												#26 - struttura
 			if self.DATA_LIST[self.rec_num].cont_per == None:
 				unicode(self.lineEdit_codice_periodo.setText(""))
 			else:
@@ -2047,7 +2226,41 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			if self.DATA_LIST[self.rec_num].order_layer == None:
 				self.lineEditOrderLayer.setText("")
 			else:
-				self.lineEditOrderLayer.setText(str(self.DATA_LIST[self.rec_num].order_layer))								#28 - order layer
+				self.lineEditOrderLayer.setText(str(self.DATA_LIST[self.rec_num].order_layer))		#28 - order layer
+										
+
+			unicode(self.comboBox_unita_tipo.setEditText(self.DATA_LIST[self.rec_num].unita_tipo))									#24 - order layer
+			unicode(self.comboBox_settore.setEditText(self.DATA_LIST[self.rec_num].settore))							#24 - order layer
+			unicode(self.lineEdit_quadrato.setText(self.DATA_LIST[self.rec_num].quad_par))						#30 quadrato
+			unicode(self.lineEdit_ambiente.setText(self.DATA_LIST[self.rec_num].ambient))								#30 quadrato
+			unicode(self.lineEdit_saggio.setText(self.DATA_LIST[self.rec_num].saggio))								#30 quadrato
+			unicode(self.textEdit_elementi_datanti.setText(self.DATA_LIST[self.rec_num].elem_datanti))								#6 - descrizione
+			unicode(self.comboBox_funz_statica_usm.setEditText(self.DATA_LIST[self.rec_num].funz_statica))								#24 - order layer
+			unicode(self.lineEdit_lavorazione_usm.setText(self.DATA_LIST[self.rec_num].lavorazione))								#30 quadrato
+			unicode(self.lineEdit_spessore_giunti_usm.setText(self.DATA_LIST[self.rec_num].spess_giunti))							#30 quadrato
+			unicode(self.lineEdit_letti_di_posa_giunti_usm.setText(self.DATA_LIST[self.rec_num].letti_posa))
+			unicode(self.lineEdit_h_modulo_c_corsi_usm.setText(self.DATA_LIST[self.rec_num].alt_mod))
+			unicode(self.lineEdit_unita_edilizia_riassuntiva_usm.setText(self.DATA_LIST[self.rec_num].un_ed_riass))
+			unicode(self.lineEdit_reimpiego_usm.setText(self.DATA_LIST[self.rec_num].reimp))
+			unicode(self.lineEdit_posa_in_opera_usm.setText(self.DATA_LIST[self.rec_num].posa_opera))
+			
+			if self.DATA_LIST[self.rec_num].quota_min_usm == None:
+				unicode(self.lineEdit_qmin_usm.setText(""))
+			else:
+				self.lineEdit_qmin_usm.setText(str(self.DATA_LIST[self.rec_num].quota_min_usm))										#27 - codice periodo
+			
+			if self.DATA_LIST[self.rec_num].quota_max_usm == None:
+				unicode(self.lineEdit_qmax_usm.setText(""))
+			else:
+				self.lineEdit_qmax_usm.setText(str(self.DATA_LIST[self.rec_num].quota_max_usm))										#27 - codice periodo
+			
+			unicode(self.comboBox_consistenza_legante_usm.setEditText(self.DATA_LIST[self.rec_num].cons_legante))									#24 - order layer
+			unicode(self.comboBox_colore_legante_usm.setEditText(self.DATA_LIST[self.rec_num].col_legante))						#24 - order layer
+			unicode(self.lineEdit_aggregati_legante_usm.setText(self.DATA_LIST[self.rec_num].aggreg_legante))
+			unicode(self.comboBox_consistenza_texture_mat_usm.setEditText(self.DATA_LIST[self.rec_num].con_text_mat))									#24 - order layer
+			unicode(self.comboBox_colore_materiale_usm.setEditText(self.DATA_LIST[self.rec_num].col_materiale))							#24 - order layer
+			self.tableInsertData("self.tableWidget_inclusi_materiali_usm",self.DATA_LIST[self.rec_num].inclusi_materiali_usm)				#19 - documentazione
+
 
 		#gestione tool
 			if self.toolButtonPreview.isChecked() == True:
@@ -2075,10 +2288,26 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		##Documentazione
 		documentazione = self.table2dict("self.tableWidget_documentazione")
 
+		##Inclusi materiali aggregati
+		inclusi_mat_usm = self.table2dict("self.tableWidget_inclusi_materiali_usm")
+
 		if self.lineEditOrderLayer.text() == "":
 			order_layer = None
 		else:
 			order_layer = self.lineEditOrderLayer.text()
+
+		if self.lineEdit_qmin_usm.text() == "":
+			qmin_usm = None
+		else:
+			qmin_usm = self.lineEdit_qmin_usm.text()
+
+		if self.lineEdit_qmax_usm.text() == "":
+			qmax_usm = None
+		else:
+			qmax_usm = self.lineEdit_qmax_usm.text()
+
+
+
 		#data
 		self.DATA_LIST_REC_TEMP = [
 		unicode(self.comboBox_sito.currentText()), 					#1 - Sito
@@ -2108,7 +2337,29 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		unicode(self.lineEdit_struttura.text()),						#25 - struttura
 		unicode(self.lineEdit_codice_periodo.text()),					#26 - codice periodo
 		unicode(order_layer),											#27 - order layer era str(order_layer)
-		unicode(documentazione)
+		unicode(documentazione),
+		unicode(self.comboBox_unita_tipo.currentText()),				#29 us_tipo            NUOVI CAMPI NUOVI CAMPI 
+		unicode(self.comboBox_settore.currentText()),						#30 settore
+		unicode(self.lineEdit_quadrato.text()),								#31 quadrato
+		unicode(self.lineEdit_ambiente.text()),								#32 ambiente
+		unicode(self.lineEdit_saggio.text()),								#33 saggio
+		unicode(self.textEdit_elementi_datanti.toPlainText()),				#34 elementi datanti
+		unicode(self.comboBox_funz_statica_usm.currentText()),				#35 funzione statica
+		unicode(self.lineEdit_lavorazione_usm.text()),						#36 lavorazione usm
+		unicode(self.lineEdit_spessore_giunti_usm.text()),					#37 spessore giunti
+		unicode(self.lineEdit_letti_di_posa_giunti_usm.text()),				#38 letti posa giunti usm
+		unicode(self.lineEdit_h_modulo_c_corsi_usm.text()),					#39 altezza modulo corsi usm
+		unicode(self.lineEdit_unita_edilizia_riassuntiva_usm.text()),		#40 unita edilizia riassuntiva
+		unicode(self.lineEdit_reimpiego_usm.text()),						#41 unita edilizia riassuntiva
+		unicode(self.lineEdit_posa_in_opera_usm.text()),					#42 posa in opera
+		unicode(qmin_usm),													#43 quota minima
+		unicode(qmax_usm),													#44 quota massima
+		unicode(self.comboBox_consistenza_legante_usm.currentText()),		#45 consitenza legante usm
+		unicode(self.comboBox_colore_legante_usm.currentText()),			#46 colore legante usm
+		unicode(self.lineEdit_aggregati_legante_usm.text())	,			 	#47 aggregati usm
+		unicode(self.comboBox_consistenza_texture_mat_usm.currentText()),	#48 consistenza text mat
+		unicode(self.comboBox_colore_materiale_usm.currentText()),			#49 colore materiale usm
+		unicode(inclusi_mat_usm)											#50 inclusi_mat_usm
 		]
 
 	def set_LIST_REC_CORR(self):

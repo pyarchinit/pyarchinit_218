@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>685</width>
+    <width>683</width>
     <height>851</height>
    </rect>
   </property>
@@ -29,7 +29,7 @@
     <normaloff>:/images/iconPAI.png</normaloff>:/images/iconPAI.png</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout_24">
-   <item row="0" column="0" colspan="5">
+   <item row="0" column="0" colspan="7">
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="0" column="0">
       <widget class="QLabel" name="label_29">
@@ -739,7 +739,7 @@
      <item>
       <widget class="QComboBox" name="comboBox_unita_tipo">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="maximumSize">
         <size>
@@ -796,7 +796,7 @@
      <item>
       <widget class="QComboBox" name="comboBox_settore">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="maximumSize">
         <size>
@@ -970,7 +970,7 @@
      <item>
       <widget class="QLineEdit" name="lineEdit_quadrato">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="minimumSize">
         <size>
@@ -1007,7 +1007,7 @@
      <item>
       <widget class="QLineEdit" name="lineEdit_ambiente">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="minimumSize">
         <size>
@@ -1044,7 +1044,7 @@
      <item>
       <widget class="QLineEdit" name="lineEdit_saggio">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="minimumSize">
         <size>
@@ -1076,7 +1076,7 @@
      </item>
     </layout>
    </item>
-   <item row="6" column="0" colspan="4">
+   <item row="6" column="0" colspan="7">
     <layout class="QGridLayout" name="gridLayout_6">
      <item row="0" column="0">
       <widget class="QComboBox" name="comboBox_def_strat">
@@ -1313,7 +1313,7 @@ p, li { white-space: pre-wrap; }
            <item>
             <widget class="QLineEdit" name="lineEdit_unita_edilizia_riassuntiva_usm">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="minimumSize">
               <size>
@@ -1350,7 +1350,7 @@ p, li { white-space: pre-wrap; }
            <item>
             <widget class="QLineEdit" name="lineEdit_qmin_usm">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="minimumSize">
               <size>
@@ -1387,7 +1387,7 @@ p, li { white-space: pre-wrap; }
            <item>
             <widget class="QLineEdit" name="lineEdit_qmax_usm">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="minimumSize">
               <size>
@@ -1424,7 +1424,7 @@ p, li { white-space: pre-wrap; }
            <item>
             <widget class="QLineEdit" name="lineEdit_lavorazione_usm">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="minimumSize">
               <size>
@@ -1461,7 +1461,7 @@ p, li { white-space: pre-wrap; }
            <item>
             <widget class="QLineEdit" name="lineEdit_reimpiego_usm">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="minimumSize">
               <size>
@@ -1498,7 +1498,7 @@ p, li { white-space: pre-wrap; }
            <item>
             <widget class="QLineEdit" name="lineEdit_posa_in_opera_usm">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="minimumSize">
               <size>
@@ -1565,7 +1565,7 @@ p, li { white-space: pre-wrap; }
            <item>
             <widget class="QLineEdit" name="lineEdit_spessore_giunti_usm">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="minimumSize">
               <size>
@@ -1602,7 +1602,7 @@ p, li { white-space: pre-wrap; }
            <item>
             <widget class="QLineEdit" name="lineEdit_letti_di_posa_giunti_usm">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="minimumSize">
               <size>
@@ -1639,7 +1639,7 @@ p, li { white-space: pre-wrap; }
            <item>
             <widget class="QLineEdit" name="lineEdit_h_modulo_c_corsi_usm">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="minimumSize">
               <size>
@@ -1698,7 +1698,7 @@ p, li { white-space: pre-wrap; }
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="comboBox_coinsistenza_legante_usm">
+            <widget class="QComboBox" name="comboBox_consistenza_legante_usm">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -1814,7 +1814,7 @@ p, li { white-space: pre-wrap; }
            <item>
             <widget class="QLineEdit" name="lineEdit_aggregati_legante_usm">
              <property name="enabled">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <property name="minimumSize">
               <size>
@@ -1876,7 +1876,7 @@ p, li { white-space: pre-wrap; }
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="comboBox_coinsistenza_texture_mat_usm">
+            <widget class="QComboBox" name="comboBox_consistenza_texture_mat_usm">
              <property name="font">
               <font>
                <pointsize>10</pointsize>
@@ -1991,30 +1991,6 @@ p, li { white-space: pre-wrap; }
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_insert_row_inclusi_materiali">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>inserisci riga</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="pushButton_remove_row_inclusi_materiali">
-             <property name="font">
-              <font>
-               <pointsize>9</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>rimuovi riga</string>
-             </property>
-            </widget>
-           </item>
-           <item>
             <widget class="QTableWidget" name="tableWidget_inclusi_materiali_usm">
              <property name="maximumSize">
               <size>
@@ -2055,6 +2031,30 @@ p, li { white-space: pre-wrap; }
                <string>Inclusi</string>
               </property>
              </column>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_insert_row_inclusi_materiali">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>inserisci riga</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="pushButton_remove_row_inclusi_materiali">
+             <property name="font">
+              <font>
+               <pointsize>9</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>rimuovi riga</string>
+             </property>
             </widget>
            </item>
           </layout>
@@ -3354,8 +3354,8 @@ p, li { white-space: pre-wrap; }
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>623</width>
-                <height>324</height>
+                <width>314</width>
+                <height>222</height>
                </rect>
               </property>
               <attribute name="label">

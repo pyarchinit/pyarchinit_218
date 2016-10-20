@@ -104,7 +104,30 @@ class Pyarchinit_db_management:
 					arg[25],
 					arg[26],
 					arg[27],
-					arg[28])
+					arg[28],
+					arg[29],
+					arg[30],
+					arg[31],
+					arg[32],
+					arg[33],
+					arg[34],
+					arg[35],
+					arg[36],
+					arg[37],
+					arg[38],
+					arg[39],
+					arg[40],
+					arg[41],
+					arg[42],
+					arg[43],
+					arg[44],
+					arg[45],
+					arg[46],
+					arg[47],
+					arg[48],
+					arg[49],
+					arg[50]
+					)
 
 		return us
 

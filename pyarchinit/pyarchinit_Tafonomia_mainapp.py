@@ -891,8 +891,8 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			str(self.comboBox_canale_libatorio.currentText()),						#10 - canale libatorio
 			str(self.comboBox_oggetti_esterno.currentText()),						#11 - oggetti esterno
 			str(self.comboBox_conservazione_taf.currentText()),					#12 - conservazione
-			unicode(self.comboBox_copertura_tipo.currentText()),						#13 - copertura
-			unicode(self.comboBox_tipo_contenitore_resti.currentText()),				#14 - tipo contenitore resti
+			unicode(self.comboBox_copertura_tipo.currentText()),					#13 - copertura
+			unicode(self.comboBox_tipo_contenitore_resti.currentText()),			#14 - tipo contenitore resti
 			str(self.lineEdit_orientamento_asse.text()),							#15 - orientamento asse
 			orientamento_azimut,													#16 - orientamento azimut
 			str(self.comboBox_corredo_presenza.currentText()),						#17 - corredo presenza
@@ -911,7 +911,7 @@ class pyarchinit_Tafonomia(QDialog, Ui_Dialog_tafonomia):
 			fas_iniz,																#30 - fase iniziale
 			per_fin, 																#31 - periodo finale iniziale
 			fas_fin, 																#32 - fase finale
-			unicode(self.lineEdit_datazione_estesa.text()),							#33 - datazione estesa
+			unicode(self.lineEdit_datazione_estesa.text()),						#33 - datazione estesa
 			str(misurazioni))														#34 - misurazioni
 
 			try:
