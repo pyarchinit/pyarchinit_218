@@ -1617,6 +1617,11 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			unicode(inclusi_mat_usm)											#50 inclusi_mat_usm
 
 				)
+			#todelete
+			f = open("C:\\Users\\Luca\\pyarchinit_Report_folder\\data_insert_list.txt", "w")
+			f.write(str(data))
+			f.close
+			#todelete
 			try:
 				self.DB_MANAGER.insert_data_session(data)
 				return 1
@@ -1712,15 +1717,32 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 				self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
 			except Exception, e:
 				QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
-
+##
+##	def on_pushButton_prev_rec_pressed(self):
+##		if self.check_record_state() == 1:
+##			pass
+##		else:
+##			self.REC_CORR = self.REC_CORR-1
+##			if self.REC_CORR == -1:
+##				self.REC_CORR = 0
+##				QMessageBox.warning(self, "Errore", "Sei al primo record!",  QMessageBox.Ok)
+##			else:
+##				try:
+##					self.empty_fields()
+##					self.fill_fields(self.REC_CORR)
+##					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+##				except Exception, e:
+##					QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
+##
 	def on_pushButton_prev_rec_pressed(self):
+		rec_goto = int(self.lineEdit_goto.text())
 		if self.check_record_state() == 1:
 			pass
 		else:
-			self.REC_CORR = self.REC_CORR-1
-			if self.REC_CORR == -1:
-				self.REC_CORR = 0
-				QMessageBox.warning(self, "Errore", "Sei al primo record!",  QMessageBox.Ok)
+			self.REC_CORR = self.REC_CORR-rec_goto
+			if self.REC_CORR <= -1:
+				self.REC_CORR = self.REC_CORR+rec_goto
+				QMessageBox.warning(self, "Attenzione", "Numero troppo elevato!",  QMessageBox.Ok)
 			else:
 				try:
 					self.empty_fields()
@@ -1728,15 +1750,33 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
 				except Exception, e:
 					QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
+
+##	def on_pushButton_next_rec_pressed(self):
+##		if self.check_record_state() == 1:
+##			pass
+##		else:
+##			self.REC_CORR = self.REC_CORR+1
+##			if self.REC_CORR >= self.REC_TOT:
+##				self.REC_CORR = self.REC_CORR-1
+##				QMessageBox.warning(self, "Errore", "Sei all'ultimo record!",  QMessageBox.Ok)
+##			else:
+##				try:
+##					self.empty_fields()
+##					self.fill_fields(self.REC_CORR)
+##					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
+##				except Exception, e:
+##					QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
+
 
 	def on_pushButton_next_rec_pressed(self):
+		rec_goto = int(self.lineEdit_goto.text())
 		if self.check_record_state() == 1:
 			pass
 		else:
-			self.REC_CORR = self.REC_CORR+1
+			self.REC_CORR = self.REC_CORR+rec_goto
 			if self.REC_CORR >= self.REC_TOT:
-				self.REC_CORR = self.REC_CORR-1
-				QMessageBox.warning(self, "Errore", "Sei all'ultimo record!",  QMessageBox.Ok)
+				self.REC_CORR = self.REC_CORR-rec_goto
+				QMessageBox.warning(self, "Attenzione", "Numero troppo elevato!",  QMessageBox.Ok)
 			else:
 				try:
 					self.empty_fields()
@@ -1744,7 +1784,6 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					self.set_rec_counter(self.REC_TOT, self.REC_CORR+1)
 				except Exception, e:
 					QMessageBox.warning(self, "Errore", str(e),  QMessageBox.Ok)
-
 
 	def on_pushButton_delete_pressed(self):
 		msg = QMessageBox.warning(self,"Attenzione!!!",u"Vuoi veramente eliminare il record? \n L'azione è irreversibile", QMessageBox.Cancel,1)

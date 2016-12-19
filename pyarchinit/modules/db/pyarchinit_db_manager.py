@@ -1144,6 +1144,15 @@ class Pyarchinit_db_management:
 
 		return res_list
 
+	def insert_arbitrary_number_of_us_records(self, us_range, sito, area, n_us):
+		id_us = self.max_num_id('US', 'id_us')
+		for i in range(us_range):
+			id_us += 1
+			n_us += 1
+
+			data_ins = self.insert_values(id_us,sito, area, n_us,'','','','','','','','','','','', '', '[]', '[]', '[]', '', '', '', '', '', '', '', '', '0', '[]', 'US', '', '', '', '', '', '', '', '', '', '', '', '', '',None,None,'','','','','','[]')
+			self.insert_data_session(data_ins)
+
 
 	def select_like_from_db_sql(self, rapp_list, us_rapp_list):
 		#this is a test
@@ -1204,35 +1213,53 @@ class Pyarchinit_db_management:
 ##	##			res_list.extend(area for area, in session.query(US.area).filter(or_(*[US.rapporti.contains(v) for v in chunk])))
 
 ##		return res_list
+##
+##def main():
+##	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
+##	db.connection()
+##	#res = db.query_sort([1, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67],['id_invmat'],'asc', 'INVENTARIO_MATERIALI', 'id_invmat')
+##	res = db.query_distinct_sql('pyunitastratigrafiche',[['scavo_s','"San_Costanzo_PU_Cimitero"'], ['tipo_doc','"Sezione"']], ['scavo_s', 'area_s', 'us_s', 'tipo_doc', 'nome_doc'])
+##
+##	for i in res:
+##		print "record: ", i
+##
+##if __name__ == '__main__':
+##	main()
+##
+
+
 
 def main():
-	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
+	db = Pyarchinit_db_management('sqlite:////Users//Luca//pyarchinit_DB_folder//pyarchinit_db.sqlite')
 	db.connection()
-	#res = db.query_sort([1, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67, 2,3,4,5,6,7,8,9,10,11,22,33,44,55,66,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67,77,88,99,12, 34, 54, 65, 76, 89, 123, 43, 121, 3, 44, 121, 43, 43, 12, 67],['id_invmat'],'asc', 'INVENTARIO_MATERIALI', 'id_invmat')
-	res = db.query_distinct_sql('pyunitastratigrafiche',[['scavo_s','"San_Costanzo_PU_Cimitero"'], ['tipo_doc','"Sezione"']], ['scavo_s', 'area_s', 'us_s', 'tipo_doc', 'nome_doc'])
 
-	for i in res:
-		print "record: ", i
+	db.insert_arbitrary_number_of_records(10, 'Giorgio',1, 1) # us_range, sito, area, n_us)
+##	tot_us = 700
+##	id_us = 287
+##	area = 1
+##	n_us = 169
+##	insert_arbitrary_number_of_records('giorgio', 10, 1)
+##
+##	for i in range(tot_us):
+##		id_us += 1
+##		n_us += 1
+##
+##		data_ins = db.insert_values(id_us,'Cesena_(FC)_Piazza_della_Liberta', area, n_us,'','','','','','','','','','','2016', '', '[]', '[]', '[]', '13-12-2016', '', '', '', '', '', '', '', '0', '[]', 'US', '', '', '', '', '', '', '', '', '', '', '', '', '',None,None,'','','','','','[]')
+##		db.insert_data_session(data_ins)
 
-if __name__ == '__main__':
-	main()
-
-
-
-"""
-def main():
-	db = Pyarchinit_db_management('sqlite:////Users//Windows//pyarchinit_DB_folder//pyarchinit_db.sqlite')
-	db.connection()
-	res = db.query_bool({"sito": "'San_Costanzo_py'", "nr_individuo":"'1'"}, "SCHEDAIND")
+	#res = db.query_bool({"sito": "'San_Costanzo_py'", "nr_individuo":"'1'"}, "SCHEDAIND")
 	#res = db.query_distinct('INVENTARIO_MATERIALI',[['sito','"Sito archeologico"']], ['area', 'us'])
+	"""
 	print len(res)
 	for i in res:
 		print "record: ", str(i.sito), str(i.area), str(i.us)
 
+	"""
+
 
 if __name__ == '__main__':
 	main()
-##
+"""
 ####	for rec in data:
 ####
 ####		id_invmat = rec.id_invmat

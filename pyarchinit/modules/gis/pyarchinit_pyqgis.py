@@ -1470,10 +1470,8 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				for i in range(len(data)):
 					gidstr += " OR id_struttura = '" + str(data[i].id_struttura) +"'"
 
-			uri = QgsDataSourceURI()
-			uri.setDatabase(db_file_path)
 
-			uri.setDataSource('','pyarchinit_strutture_view', 'the_geom', gidstr, "ROWID")
+			uri.setDataSource("public",'pyarchinit_strutture_view', 'the_geom', gidstr, "gid")
 			layerSTRUTTURA=QgsVectorLayer(uri.uri(), 'pyarchinit_strutture_view', 'postgres')
 
 			if layerSTRUTTURA.isValid() == True:

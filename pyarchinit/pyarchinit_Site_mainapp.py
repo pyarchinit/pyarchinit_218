@@ -621,6 +621,8 @@ class pyarchinit_Site(QDialog, Ui_DialogSite):
 		else:
 			QMessageBox.warning(self, "Messaggio", "Modalita' GIS disattivata. Da ora le tue ricerche non verranno piu' visualizzate sul GIS", QMessageBox.Ok)
 
+	def on_pushButton_genera_us_pressed(self):
+		self.DB_MANAGER.insert_arbitrary_number_of_us_records(int(self.lineEdit_us_range.text()), unicode(self.comboBox_sito.currentText()), int(self.lineEdit_area.text()),int( self.lineEdit_n_us.text()))
 
 
 	def update_if(self, msg):
