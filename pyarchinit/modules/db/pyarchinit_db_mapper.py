@@ -1682,7 +1682,7 @@ try:
 ##		note
 ##		):
 ##
-##			self.rel_check = rel_check						  #0 d
+##			self.id_rel_check = id_rel_check						  #0 d
 ##			self.sito =sito									  #1 s
 ##			self.area = area								  #2 s 
 ##			self.us = us									  #3 d
