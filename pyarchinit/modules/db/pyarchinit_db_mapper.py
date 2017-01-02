@@ -734,7 +734,7 @@ try:
 			self.sigla_struttura,
 			self.numero_struttura,
 			self.tipologia_struttura,
-			self.categoria_struttura.
+			self.categoria_struttura,
 			self.definizione_struttura,
 			self.descrizione,
 			self.interpretazione,
