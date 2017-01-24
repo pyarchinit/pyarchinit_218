@@ -1618,9 +1618,9 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 
 				)
 			#todelete
-			f = open("C:\\Users\\Luca\\pyarchinit_Report_folder\\data_insert_list.txt", "w")
-			f.write(str(data))
-			f.close
+			#f = open("C:\\Users\\Luca\\pyarchinit_Report_folder\\data_insert_list.txt", "w")
+			#f.write(str(data))
+			#f.close
 			#todelete
 			try:
 				self.DB_MANAGER.insert_data_session(data)
