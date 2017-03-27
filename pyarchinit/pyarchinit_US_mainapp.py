@@ -1296,8 +1296,10 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		area_check = unicode(self.comboBox_area_rappcheck.currentText())
 		try:
 			self.rapporti_stratigrafici_check(sito_check, area_check)
+			
+			self.def_strati_to_rapporti_stratigrafici_check(sito_check, area_check) #SPERIMENTALE
 		except Exception, e:
-			QMessageBox.warning(self, "Messaggio", str(e),  QMessageBox.Ok)
+			QMessageBox.warning(self, "Messaggio Iniziale", str(e),  QMessageBox.Ok)
 		else:
 			QMessageBox.warning(self, "Messaggio", "Controllo Rapporti Stratigrafici. \n Controllo eseguito con successo",  QMessageBox.Ok)
 
@@ -1459,6 +1461,7 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			rapporti = eval(rapporti)
 
 			for sing_rapp in rapporti:  #itera sulla serie di rapporti
+				report = ''
 				if len(sing_rapp) == 2:
 					try:
 						rapp_converted = conversion_dict[sing_rapp[0]]
@@ -1469,42 +1472,6 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 							report = '\bSito: %s, \bArea: %s, \bUS: %d %s US: %d: Scheda US non esistente' % (sito, area, int(us), sing_rapp[0], int(sing_rapp[1]))
 						
 							#new system rapp_check
-							"""
-							data = self.DB_MANAGER.insert_values(
-							self.DB_MANAGER.max_num_id(self.MAPPER_TABLE_CLASS, self.ID_TABLE)+1,
-							unicode(self.comboBox_sito.currentText()), 				#1 - Sito
-							unicode(self.comboBox_area.currentText()), 				#2 - Area
-							int(self.lineEdit_us.text()),									#3 - US
-							unicode(self.comboBox_def_strat.currentText()),			#4 - Definizione stratigrafica
-							unicode(self.comboBox_def_intepret.currentText()),		#5 - Definizione intepretata
-							unicode(self.textEdit_descrizione.toPlainText()),		#6 - descrizione
-							unicode(self.textEdit_interpretazione.toPlainText()),#7 - interpretazione
-							unicode(self.comboBox_per_iniz.currentText()),			#8 - periodo iniziale
-							unicode(self.comboBox_fas_iniz.currentText()),			#9 - fase iniziale
-							unicode(self.comboBox_per_fin.currentText()), 			#10 - periodo finale iniziale
-							unicode(self.comboBox_fas_fin.currentText()), 			#11 - fase finale
-							unicode(self.comboBox_scavato.currentText()),			#12 - scavato
-							unicode(self.lineEdit_attivita.text()),							#13 - attivita  
-							unicode(self.lineEdit_anno.text()),								#14 - anno scavo
-							unicode(self.comboBox_metodo.currentText()), 			#15 - metodo
-							unicode(inclusi),														#16 - inclusi
-							unicode(campioni),													#17 - campioni
-							unicode(rapporti),													#18 - rapporti
-							unicode(self.lineEdit_data_schedatura.text()),				#19 - data schedatura
-							unicode(self.comboBox_schedatore.currentText()),		#20 - schedatore
-							unicode(self.comboBox_formazione.currentText()),		#21 - formazione
-							unicode(self.comboBox_conservazione.currentText()),	#22 - conservazione
-							unicode(self.comboBox_colore.currentText()),				#23 - colore
-							unicode(self.comboBox_consistenza.currentText()),		#24 - consistenza
-							unicode(self.lineEdit_struttura.text()),							#25 - struttura
-							unicode(self.lineEdit_codice_periodo.text()),					#26 - continuita  periodo
-							order_layer,													#27 - order layer
-							unicode(documentazione))										#28 - documentazione
-							try:
-								self.DB_MANAGER.insert_data_session(data)
-							except:
-								pass
-							"""
 
 						else:
 							rapporti_check = eval(us_rapp[0].rapporti)
@@ -1524,6 +1491,61 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		
 		report_path = ('%s%s%s') % (HOME, os.sep, "pyarchinit_Report_folder")
 		filename = ('%s%s%s') % (report_path, os.sep, 'rapporti_US.txt')
+		f = open(filename, "w")
+		f.write(report_rapporti)
+		f.close()
+
+	def def_strati_to_rapporti_stratigrafici_check(self, sito_check, area_check):
+		conversion_dict = {'Copre':'Coperto da',
+						   'Coperto da': 'Copre',
+						   'Riempie': 'Riempito da',
+						   'Riempito da' : 'Riempie',
+						   'Taglia': 'Tagliato da',
+						   'Tagliato da': 'Taglia',
+						   'Si appoggia a': 'Gli si appoggia',
+						   'Gli si appoggia': 'Si appoggia a',
+						   'Si lega a': 'Si lega a',
+						   'Uguale a':'Uguale a'
+						   }
+
+		search_dict = {'sito' : "'"+unicode(sito_check)+"'", 'area' : "'"+unicode(area_check)+"'"}
+
+		records = self.DB_MANAGER.query_bool(search_dict, self.MAPPER_TABLE_CLASS) #carica tutti i dati di uno scavo ordinati per numero di US
+
+		report_rapporti = '\bReport controllo Definizione Stratigrafica a Rapporti Stratigrafici - Sito: %s \n' % (sito_check)
+
+		for rec in range(len(records)):
+			sito = "'"+unicode(records[rec].sito)+"'"
+			area = "'"+unicode(records[rec].area)+"'"
+			us = int(records[rec].us)
+			def_stratigrafica = "'"+unicode(records[rec].d_stratigrafica)+"'"
+
+			rapporti = records[rec].rapporti #caricati i rapporti nella variabile
+			rapporti = eval(rapporti)
+	
+			for sing_rapp in rapporti:  #itera sulla serie di rapporti
+				report = ""
+				if def_stratigrafica.find('Strato') >= 0: #Paradosso strati che tagliano o si legano
+					if sing_rapp[0] == 'Taglia' or sing_rapp[0] == 'Si lega a':
+						report = '\bSito: %s, \bArea: %s, \bUS: %d - %s: lo strato %s US: %d: ' % (sito, area, int(us), def_stratigrafica, sing_rapp[0], int(sing_rapp[1]))
+				
+				if def_stratigrafica.find('Riempimento') >= 0: #Paradosso riempimentiche tagliano o si legano
+					if sing_rapp[0] == 'Taglia' or sing_rapp[0] == 'Si lega a':
+						report = '\bSito: %s, \bArea: %s, \bUS: %d - %s: lo strato %s US: %d: ' % (sito, area, int(us), def_stratigrafica, sing_rapp[0], int(sing_rapp[1]))
+				
+				if def_stratigrafica.find('Riempimento') >= 0: #Paradosso riempimentiche tagliano o si legano
+					if sing_rapp[0] == 'Taglia' or sing_rapp[0] == 'Si lega a':
+						report = '\bSito: %s, \bArea: %s, \bUS: %d - %s: lo strato %s US: %d: ' % (sito, area, int(us), def_stratigrafica, sing_rapp[0], int(sing_rapp[1]))
+				if report != "":
+						report_rapporti = report_rapporti + report + '\n'
+		
+		if os.name == 'posix':
+			HOME = os.environ['HOME']
+		elif os.name == 'nt':
+			HOME = os.environ['HOMEPATH']
+		
+		report_path = ('%s%s%s') % (HOME, os.sep, "pyarchinit_Report_folder")
+		filename = ('%s%s%s') % (report_path, os.sep, 'def_strat_a_rapporti_US.txt')
 		f = open(filename, "w")
 		f.write(report_rapporti)
 		f.close()

@@ -412,7 +412,30 @@ class pyArchInitDialog_Config(QDialog, Ui_Dialog_Config):
 																	data_list_toimp[sing_rec].struttura,
 																	data_list_toimp[sing_rec].cont_per,
 																	data_list_toimp[sing_rec].order_layer,
-																	data_list_toimp[sing_rec].documentazione)
+																	data_list_toimp[sing_rec].documentazione,
+																	data_list_toimp[sing_rec].unita_tipo, #campi aggiunti per USM
+																	data_list_toimp[sing_rec].settore,
+																	data_list_toimp[sing_rec].quad_par,
+																	data_list_toimp[sing_rec].ambient,
+																	data_list_toimp[sing_rec].saggio,
+																	data_list_toimp[sing_rec].elem_datanti,
+																	data_list_toimp[sing_rec].funz_statica,
+																	data_list_toimp[sing_rec].lavorazione,
+																	data_list_toimp[sing_rec].spess_giunti,
+																	data_list_toimp[sing_rec].letti_posa,
+																	data_list_toimp[sing_rec].alt_mod,
+																	data_list_toimp[sing_rec].un_ed_riass,
+																	data_list_toimp[sing_rec].reimp,
+																	data_list_toimp[sing_rec].posa_opera,
+																	data_list_toimp[sing_rec].quota_min_usm,
+																	data_list_toimp[sing_rec].quota_max_usm,
+																	data_list_toimp[sing_rec].cons_legante,
+																	data_list_toimp[sing_rec].col_legante,
+																	data_list_toimp[sing_rec].aggreg_legante,
+																	data_list_toimp[sing_rec].con_text_mat,
+																	data_list_toimp[sing_rec].col_materiale,
+																	data_list_toimp[sing_rec].inclusi_materiali_usm
+																	)
 ##				try:
 				self.DB_MANAGER_write.insert_data_session(data)
 ##				except Exception, e:
