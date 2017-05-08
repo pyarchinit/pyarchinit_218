@@ -763,9 +763,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			# set host name, port, database name, username and password
 			uri.setConnection(settings.HOST, settings.PORT, settings.DATABASE, settings.USER, settings.PASSWORD)
 			cont_per_string = "sito = '" + self.sito_p + "' AND (" + " cont_per = '" + self.cont_per + "' OR cont_per LIKE '" + self.cont_per + "/%' OR cont_per LIKE '%/" + self.cont_per + "' OR cont_per LIKE '%/" + self.cont_per + "/%')"
-			test = open("C://Users//Luca/pyarchinit_test_folder//test_query.txt", "w")
-			test.write(str(cont_per_string))
-			test.close()
+
 			srs = QgsCoordinateReferenceSystem(self.SRS, QgsCoordinateReferenceSystem.PostgisCrsId)
 			uri.setDataSource("public", "pyarchinit_us_view", "the_geom", cont_per_string, "gid")
 			layerUS = QgsVectorLayer(uri.uri(), layer_name_label_us, "postgres")
