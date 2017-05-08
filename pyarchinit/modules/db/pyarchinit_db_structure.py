@@ -292,7 +292,7 @@ class Inventario_materiali_table:
 	Column('rivestimento', String(20)),
 	Column('diametro_orlo', Numeric(7,3)),
 	Column('peso', Numeric(9,3)),
-	Column('tipo', String(20)),
+	Column('tipo', String(100)),
 	Column('eve_orlo', Numeric(7,3)),
 	Column('repertato', String(2)),
 	Column('diagnostico', String(2)),

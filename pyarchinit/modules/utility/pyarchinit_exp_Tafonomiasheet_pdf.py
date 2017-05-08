@@ -135,47 +135,47 @@ class Tafonomia_index_pdf_sheet:
 		if self.corredo_presenza == None:
 			corredo_presenza = Paragraph("<b>Corredo</b><br/>",styNormal)
 		else:
-			corredo_presenza = Paragraph("<b>Corredo</b><br/>" + str(self.corredo_presenza),styNormal)
+			corredo_presenza = Paragraph("<b>Corredo</b><br/>" + self.corredo_presenza,styNormal)
 
 		if self.completo_si_no == None:
 			completo_si_no = Paragraph("<b>Completo</b><br/>",styNormal)
 		else:
-			completo_si_no = Paragraph("<b>Completo</b><br/>" + str(self.completo_si_no),styNormal)
+			completo_si_no = Paragraph("<b>Completo</b><br/>" + self.completo_si_no,styNormal)
 
 		if self.disturbato_si_no == None:
 			disturbato_si_no = Paragraph("<b>Disturbato</b><br/>",styNormal)
 		else:
-			disturbato_si_no = Paragraph("<b>Disturbato</b><br/>" + str(self.disturbato_si_no),styNormal)
+			disturbato_si_no = Paragraph("<b>Disturbato</b><br/>" + self.disturbato_si_no,styNormal)
 
 		if self.in_connessione_si_no == None:
 			connessione_si_no = Paragraph("<b>Connessione</b><br/>",styNormal)
 		else:
-			connessione_si_no = Paragraph("<b>Connessione</b><br/>" + str(self.in_connessione_si_no),styNormal)
+			connessione_si_no = Paragraph("<b>Connessione</b><br/>" + self.in_connessione_si_no,styNormal)
 
 		if self.periodo_iniziale == None:
 			periodo_iniziale = Paragraph("<b>Periodo iniziale</b><br/>",styNormal)
 		else:
-			periodo_iniziale = Paragraph("<b>Periodo iniziale</b><br/>" + str(self.periodo_iniziale),styNormal)
+			periodo_iniziale = Paragraph("<b>Periodo iniziale</b><br/>" + self.periodo_iniziale,styNormal)
 
 		if self.fase_iniziale == None:
 			fase_iniziale = Paragraph("<b>Fase inziale</b><br/>",styNormal)
 		else:
-			fase_iniziale = Paragraph("<b>Fase iniziale</b><br/>" + str(self.fase_iniziale),styNormal)
+			fase_iniziale = Paragraph("<b>Fase iniziale</b><br/>" + self.fase_iniziale,styNormal)
 
 		if self.periodo_finale == None:
 			periodo_finale = Paragraph("<b>Periodo finale</b><br/>",styNormal)
 		else:
-			periodo_finale = Paragraph("<b>Periodo finale</b><br/>" + str(self.periodo_finale),styNormal)
+			periodo_finale = Paragraph("<b>Periodo finale</b><br/>" + self.periodo_finale,styNormal)
 
 		if self.fase_finale == None:
 			fase_finale = Paragraph("<b>Fase finale</b><br/>",styNormal)
 		else:
-			fase_finale = Paragraph("<b>Fase finale</b><br/>" + str(self.fase_finale),styNormal)
+			fase_finale = Paragraph("<b>Fase finale</b><br/>" + self.fase_finale,styNormal)
 
 		if self.datazione_estesa == None:
 			datazione_estesa = Paragraph("<b>Datazione</b><br/>",styNormal)
 		else:
-			datazione_estesa = Paragraph("<b>Datazione estesa</b><br/>" + str(self.datazione_estesa),styNormal)
+			datazione_estesa = Paragraph("<b>Datazione estesa</b><br/>" + self.datazione_estesa,styNormal)
 
 		data = [num_scheda,
 		sigla_struttura,
@@ -438,16 +438,16 @@ class single_Tafonomia_pdf_sheet:
 		if  str(self.datazione_estesa) == "None":
 			datazione_estesa = Paragraph("<b>Datazione estesa</b><br/>", styNormal)
 		else:
-			datazione_estesa = Paragraph("<b>Datazione estesa</b><br/>" + str(self.datazione_estesa), styNormal)
+			datazione_estesa = Paragraph("<b>Datazione estesa</b><br/>" + self.datazione_estesa, styNormal)
 
 		#5 row
 		elementi_strutturali = Paragraph("<b>ELEMENTI STRUTTURALI</b></b>",styNormal)
 
 		#6row
-		tipo_contenitore_resti = Paragraph("<b>Tipo contenitore resti</b><br/>"  + str(self.tipo_contenitore_resti), styNormal)
-		tipo_copertura = Paragraph("<b>Tipo copertura</b><br/>"  + str(self.copertura_tipo), styNormal)
-		segnacoli = Paragraph("<b>Segnacoli</b><br/>"  + str(self.segnacoli), styNormal)
-		canale_libatorio = Paragraph("<b>Canale libatorio</b><br/>"  + str(self.canale_libatorio_si_no), styNormal)
+		tipo_contenitore_resti = Paragraph("<b>Tipo contenitore resti</b><br/>"  + self.tipo_contenitore_resti, styNormal)
+		tipo_copertura = Paragraph("<b>Tipo copertura</b><br/>"  + self.copertura_tipo, styNormal)
+		segnacoli = Paragraph("<b>Segnacoli</b><br/>"  + self.segnacoli, styNormal)
+		canale_libatorio = Paragraph("<b>Canale libatorio</b><br/>"  + self.canale_libatorio_si_no, styNormal)
 
 		#7 row
 		dati_deposizionali = Paragraph("<b>DATI DEPOSIZIONALI INUMATO<b></b>",styNormal)
@@ -497,13 +497,13 @@ class single_Tafonomia_pdf_sheet:
 		#13 row
 		descrizione = ''
 		try:
-			descrizione = Paragraph("<b>Descrizione</b><br/>" + str(self.descrizione_taf), styDescrizione)
+			descrizione = Paragraph("<b>Descrizione</b><br/>" + self.descrizione_taf, styDescrizione)
 		except:
 			pass
 
 		interpretazione = ''
 		try:
-			interpretazione = Paragraph("<b>Interpretazione</b><br/>" + str(self.interpretazione_taf),styDescrizione)
+			interpretazione = Paragraph("<b>Interpretazione</b><br/>" + self.interpretazione_taf,styDescrizione)
 		except:
 			pass
 		
@@ -511,10 +511,10 @@ class single_Tafonomia_pdf_sheet:
 		corredo = Paragraph("<b>CORREDO</b></b>",styNormal)
 
 		#15 row
-		corredo_presente = Paragraph("<b>Presenza</b><br/>" + str(self.corredo_presenza),styDescrizione)
+		corredo_presente = Paragraph("<b>Presenza</b><br/>" + self.corredo_presenza,styDescrizione)
 		
 		#16 row
-		corredo_descrizione = Paragraph("<b>Descrizione</b><br/>" + str(self.corredo_descrizione),styDescrizione)
+		corredo_descrizione = Paragraph("<b>Descrizione</b><br/>" + self.corredo_descrizione,styDescrizione)
 
 		#17 row
 		corredo_tipo = ''

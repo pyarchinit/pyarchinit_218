@@ -705,8 +705,11 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			else:
 				QMessageBox.warning(self, "TESTER", "OK Layer Quote non valido",QMessageBox.Ok)
 
-	def charge_vector_layers_periodo(self, cont_per):
+	def charge_vector_layers_periodo(self, sito_p, cont_per, per_label, fas_label):
+		self.sito_p = sito_p
 		self.cont_per = str(cont_per)
+		self.per_label = per_label
+		self.fas_label = fas_label
 		#Clean Qgis Map Later Registry
 		#QgsMapLayerRegistry.instance().removeAllMapLayers()
 		# Get the user input, starting with the table name
@@ -718,6 +721,9 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 		conf.close()
 		settings = Settings(con_sett)
 		settings.set_configuration()
+		
+		layer_name_label_us = "Unita Stratigrafiche - Per: %s / Fas: %s" % (self.per_label, self.fas_label)
+		layer_name_label_quote = "Quote US - Per: %s / Fas: %s" % (self.per_label, self.fas_label)
 
 		if settings.SERVER == 'sqlite':
 			sqliteDB_path = os.path.join(os.sep,'pyarchinit_DB_folder', 'pyarchinit_db.sqlite')
@@ -726,10 +732,10 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			uri = QgsDataSourceURI()
 			uri.setDatabase(db_file_path)
 
-			cont_per_string =  "cont_per = '" + self.cont_per + "' OR cont_per LIKE '" + self.cont_per + "/%' OR cont_per LIKE '%/" + self.cont_per + "' OR cont_per LIKE '%/" + self.cont_per + "/%'"
+			cont_per_string = "sito = '" + self.sito_p + "' AND (" + " cont_per = '" + self.cont_per + "' OR cont_per LIKE '" + self.cont_per + "/%' OR cont_per LIKE '%/" + self.cont_per + "' OR cont_per LIKE '%/" + self.cont_per + "/%')"
 
 			uri.setDataSource('','pyarchinit_us_view', 'the_geom',cont_per_string, "ROWID")
-			layerUS=QgsVectorLayer(uri.uri(), 'pyarchinit_us_view', 'spatialite')
+			layerUS=QgsVectorLayer(uri.uri(), layer_name_label_us, 'spatialite')
 			
 			srs = QgsCoordinateReferenceSystem(self.SRS, QgsCoordinateReferenceSystem.PostgisCrsId)
 
@@ -744,7 +750,7 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				QMessageBox.warning(self, "TESTER", "OK Layer US non valido",QMessageBox.Ok)
 
 			uri.setDataSource('','pyarchinit_quote_view', 'the_geom', cont_per_string, "ROWID")
-			layerQUOTE=QgsVectorLayer(uri.uri(), 'pyarchinit_quote_view', 'spatialite')
+			layerQUOTE=QgsVectorLayer(uri.uri(), layer_name_label_quote, 'spatialite')
 			
 			if  layerQUOTE.isValid() == True:
 				#self.USLayerId = layerUS.getLayerID()
@@ -756,10 +762,13 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 			uri = QgsDataSourceURI()
 			# set host name, port, database name, username and password
 			uri.setConnection(settings.HOST, settings.PORT, settings.DATABASE, settings.USER, settings.PASSWORD)
-			cont_per_string =  "cont_per = '" + self.cont_per + "' OR cont_per LIKE '" + self.cont_per + "/%' OR cont_per LIKE '%/" + self.cont_per + "' OR cont_per LIKE '%/" + self.cont_per + "/%'"
+			cont_per_string = "sito = '" + self.sito_p + "' AND (" + " cont_per = '" + self.cont_per + "' OR cont_per LIKE '" + self.cont_per + "/%' OR cont_per LIKE '%/" + self.cont_per + "' OR cont_per LIKE '%/" + self.cont_per + "/%')"
+			test = open("C://Users//Luca/pyarchinit_test_folder//test_query.txt", "w")
+			test.write(str(cont_per_string))
+			test.close()
 			srs = QgsCoordinateReferenceSystem(self.SRS, QgsCoordinateReferenceSystem.PostgisCrsId)
 			uri.setDataSource("public", "pyarchinit_us_view", "the_geom", cont_per_string, "gid")
-			layerUS = QgsVectorLayer(uri.uri(), "Unita' Stratigrafiche", "postgres")
+			layerUS = QgsVectorLayer(uri.uri(), layer_name_label_us, "postgres")
 			if  layerUS.isValid() == True:
 				layerUS.setCrs(srs)
 				#self.USLayerId = layerUS.getLayerID()
@@ -767,8 +776,11 @@ class Pyarchinit_pyqgis(QDialog, Settings):
 				style_path = QtGui.QFileDialog.getOpenFileName(self, 'Open file',self.LAYER_STYLE_PATH)
 				layerUS.loadNamedStyle(style_path)
 				QgsMapLayerRegistry.instance().addMapLayers([layerUS], True)
+			else:
+				QMessageBox.warning(self, "TESTER", "OK Layer US non valido",QMessageBox.Ok)
+
 			uri.setDataSource("public", "pyarchinit_quote_view", "the_geom", cont_per_string, "gid")
-			layerQUOTE = QgsVectorLayer(uri.uri(), "Quote Unita' Stratigrafiche", "postgres")
+			layerQUOTE = QgsVectorLayer(uri.uri(), layer_name_label_quote, "postgres")
 			if layerQUOTE.isValid() == True:
 				layerQUOTE.setCrs(srs)
 				style_path = ('%s%s') % (self.LAYER_STYLE_PATH, 'stile_quote.qml')

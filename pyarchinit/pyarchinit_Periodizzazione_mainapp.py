@@ -271,13 +271,13 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 			
 			
 			data_list.append([
-			str(self.DATA_LIST[i].sito), 										#1 - Sito
-			str(periodo),															#2 - Area
-			str(fase),																#3 - US
-			str(cron_iniz),															#4 - definizione stratigrafica
-			str(cron_fin),															#5 - definizione intepretata
-			str(self.DATA_LIST[i].datazione_estesa),						#6 - descrizione
-			unicode(self.DATA_LIST[i].descrizione)						#7 - interpretazione
+			unicode(self.DATA_LIST[i].sito), 							#1 - Sito
+			unicode(periodo),											#2 - periodo
+			unicode(fase),												#3 - fase
+			unicode(cron_iniz),											#4 - cron iniz
+			unicode(cron_fin),											#5 - cron fin
+			unicode(self.DATA_LIST[i].datazione_estesa),				#6 - datazione_estesa
+			unicode(self.DATA_LIST[i].descrizione)						#7 - descrizione
 		])
 		return data_list
 
@@ -712,8 +712,11 @@ class pyarchinit_Periodizzazione(QDialog, Ui_DialogPeriodoFase):
 		if self.lineEdit_codice_periodo.text() == "":
 			QMessageBox.warning(self, "Messaggio", "Codice periodo non assegnato",  QMessageBox.Ok)
 		else:
+			sito_p = self.comboBox_sito.currentText()
 			cont_per = self.lineEdit_codice_periodo.text()
-			self.pyQGIS.charge_vector_layers_periodo(int(cont_per))
+			per_label = self.comboBox_periodo.currentText()
+			fas_label = self.comboBox_fase.currentText()
+			self.pyQGIS.charge_vector_layers_periodo(sito_p, int(cont_per), per_label, fas_label)
 
 
 	def update_if(self, msg):

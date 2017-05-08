@@ -68,10 +68,10 @@ class Periodizzazione_index_pdf_sheet:
 
 	def __init__(self, data):
 		self.periodo = 				data[1]			#1 - periodo
-		self.fase = 					data[2]			#2 - fase
+		self.fase = 				data[2]			#2 - fase
 		self.cron_iniziale =		data[3]			#3 - cron_iniziale
 		self.cron_finale =			data[4]			#4 - cron_finale
-		self.datazione_estesa =	data[5]			#5 - datazione_estesa
+		self.datazione_estesa =		data[5]			#5 - datazione_estesa
 
 
 	def getTable(self):
@@ -101,10 +101,10 @@ class Periodizzazione_index_pdf_sheet:
 		datazione_estesa = Paragraph("<b>Datazione estesa</b><br/>" + str(self.datazione_estesa),styNormal)
 
 		data = [periodo,
-					fase,
-					cron_iniziale,
-					cron_finale,
-					datazione_estesa
+				fase,
+				cron_iniziale,
+				cron_finale,
+				datazione_estesa
 					]
 
 		return data
@@ -185,7 +185,7 @@ class single_Periodizzazione_pdf_sheet:
 		#4 row
 		descrizione = ''
 		try:
-			descrizione = Paragraph("<b>Descrizione</b><br/>" + str(self.descrizione), styDescrizione)
+			descrizione = Paragraph("<b>Descrizione</b><br/>" + unicode(self.descrizione), styDescrizione)
 		except:
 			pass
 
