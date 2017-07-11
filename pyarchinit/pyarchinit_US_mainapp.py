@@ -534,10 +534,28 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 		self.delegateDoc.def_editable('False')
 		self.tableWidget_documentazione.setItemDelegateForColumn(0,self.delegateDoc)
 
-		valuesINCL_CAMP = ["Terra", "Pietre", "Laterizio", "Ciottoli", "Calcare", "Calce", "Carboni", "Concotto", "Ghiaia", "Cariossidi", "Malacofauna", "Sabbia", "Malta"]
+		valuesINCL_CAMP = ["Terra",
+							"Pietre",
+							"Laterizio",
+							"Ciottoli",
+							"Calcare",
+							"Calce",
+							"Carboni",
+							"Concotto",
+							"Ghiaia",
+							"Cariossidi",
+							"Malacofauna",
+							"Sabbia",
+							"Malta",
+							"Ceramica",
+							"Metalli",
+							"Fr. ossei umani",
+							"Fr. ossei animali",
+							"Fr. lapidei"]
+
 		self.delegateINCL_CAMP = ComboBoxDelegate()
 		valuesINCL_CAMP.sort()
-		self.delegateINCL_CAMP.def_values(valuesINCL_CAMP)
+		self.delegateINCL_CAMP.def_values(valuesINCL_CAMP.sort())
 		self.delegateINCL_CAMP.def_editable('False')
 		self.tableWidget_inclusi.setItemDelegateForColumn(0,self.delegateINCL_CAMP)
 		self.tableWidget_campioni.setItemDelegateForColumn(0,self.delegateINCL_CAMP)

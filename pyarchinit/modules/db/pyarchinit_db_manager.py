@@ -1089,6 +1089,11 @@ class Pyarchinit_db_management:
 				cod_cont_fin_temp = self.query_bool({'sito': "'"+str(self.sito)+"'", 'periodo': int(i.periodo_finale), 'fase': int(i.fase_finale)}, 'PERIODIZZAZIONE')
 
 				cod_cont_iniz = cod_cont_iniz_temp[0].cont_per
+
+				f = open('C:\\users\\luca\\testcodper.txt', 'w')
+				f.write(str(int(i.id_us)))
+				f.close()
+
 				cod_cont_fin = cod_cont_fin_temp[0].cont_per
 
 				cod_cont_var_n = cod_cont_iniz
