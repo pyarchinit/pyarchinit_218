@@ -370,21 +370,21 @@ class Box_labels_Finds_pdf_sheet:
 		styCassaLabel.spaceAfter = 0
 		styCassaLabel.alignment = 2 #RIGHT
 		styCassaLabel.leading = 25
-		styCassaLabel.fontSize = 30
+		styCassaLabel.fontSize = 25
 
 		stySitoLabel = styleSheet['Sito Label']
 		stySitoLabel.spaceBefore = 0
 		stySitoLabel.spaceAfter = 0
 		stySitoLabel.alignment = 0 #LEFT
 		stySitoLabel.leading = 25
-		stySitoLabel.fontSize = 18
+		stySitoLabel.fontSize = 14
 		stySitoLabel.fontStyle = 'bold'
 
 		styNormal = styleSheet['Normal']
-		styNormal.spaceBefore = 10
-		styNormal.spaceAfter = 10
+		styNormal.spaceBefore = 0
+		styNormal.spaceAfter = 0
 		styNormal.alignment = 0 #LEFT
-		styNormal.fontSize = 14
+		styNormal.fontSize = 10
 		styNormal.leading = 15
 
 
@@ -529,7 +529,7 @@ class FINDS_index_pdf_sheet:
 		styNormal.spaceBefore = 20
 		styNormal.spaceAfter = 20
 		styNormal.alignment = 0 #LEFT
-		styNormal.fontSize = 9
+		styNormal.fontSize = 8
 
 		#self.unzip_rapporti_stratigrafici()
 
@@ -710,15 +710,17 @@ class generate_reperti_pdf:
 
 		lst.append(table_data_formatted)
 		lst.append(Spacer(0,0))
+		try:
+			filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_casse.pdf')
+			f = open(filename, "wb")
 
-		filename = ('%s%s%s') % (self.PDF_path, os.sep, 'elenco_casse.pdf')
-		f = open(filename, "wb")
+			doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0, topMargin = 15, bottomMargin = 40, leftMargin = 30, rightMargin = 30)
+			#doc.build(lst, canvasmaker=NumberedCanvas_Sindex)
+			doc.build(lst)
 
-		doc = SimpleDocTemplate(f, pagesize=(29*cm, 21*cm), showBoundary=0, topMargin = 15, bottomMargin = 40, leftMargin = 30, rightMargin = 30)
-		#doc.build(lst, canvasmaker=NumberedCanvas_Sindex)
-		doc.build(lst)
-
-		f.close()
+			f.close()
+		except:
+			pass
 
 
 	def build_box_labels_Finds(self, records, sito):
