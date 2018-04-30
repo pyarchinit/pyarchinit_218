@@ -762,6 +762,18 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 					piante = "US disegnata su base GIS"
 			else:
 				piante = "US disegnata su base GIS"
+			
+			
+			if self.DATA_LIST[i].quota_min_usm == None:
+				quota_min_usm = ""
+			else:
+				quota_min_usm = str(self.DATA_LIST[i].quota_min_usm)
+			
+			if self.DATA_LIST[i].quota_max_usm == None:
+				quota_max_usm = ""
+			else:
+				quota_man_usm = str(self.DATA_LIST[i].quota_max_usm)
+
 
 			data_list.append([
 			unicode(self.DATA_LIST[i].sito), 									#1 - Sito
@@ -792,7 +804,31 @@ class pyarchinit_US(QDialog, Ui_DialogUS):
 			unicode(quota_min),														#26 - quota_min
 			unicode(quota_max),													#27 - quota_max
 			unicode(piante),															#28 - piante
-			unicode(self.DATA_LIST[i].documentazione)						#29 - documentazione
+			unicode(self.DATA_LIST[i].documentazione),						#29 - documentazione
+			##NUOVI CAMPI PER USM
+			unicode(self.DATA_LIST[i].unita_tipo),									#24 - order layer
+			unicode(self.DATA_LIST[i].settore),							#24 - order layer
+			unicode(self.DATA_LIST[i].quad_par),						#30 quadrato
+			unicode(self.DATA_LIST[i].ambient),								#30 quadrato
+			unicode(self.DATA_LIST[i].saggio),								#30 quadrato
+			unicode(self.DATA_LIST[i].elem_datanti),								#6 - descrizione
+			unicode(self.DATA_LIST[i].funz_statica),								#24 - order layer
+			unicode(self.DATA_LIST[i].lavorazione),								#30 quadrato
+			unicode(self.DATA_LIST[i].spess_giunti),							#30 quadrato
+			unicode(self.DATA_LIST[i].letti_posa),
+			unicode(self.DATA_LIST[i].alt_mod),
+			unicode(self.DATA_LIST[i].un_ed_riass),
+			unicode(self.DATA_LIST[i].reimp),
+			unicode(self.DATA_LIST[i].posa_opera),
+			unicode(quota_min_usm),
+			unicode(quota_max_usm),
+			unicode(self.DATA_LIST[i].cons_legante),									#24 - order layer
+			unicode(self.DATA_LIST[i].col_legante),						#24 - order layer
+			unicode(self.DATA_LIST[i].aggreg_legante),
+			unicode(self.DATA_LIST[i].con_text_mat),									#24 - order layer
+			unicode(self.DATA_LIST[i].col_materiale),							#24 - order layer
+			unicode(self.DATA_LIST[i].inclusi_materiali_usm)
+
 		])
 		return data_list
 

@@ -53,6 +53,7 @@ class HARRIS_MATRIX_EXP:
 		G = p.AGraph(directed=True)
 		G.graph_attr['dpi']=300
 		G.graph_attr['label']='pyArchInit - Harris Matrix Export System'
+		G.graph_attr['splines']='ortho'
 
 		elist = []
 
